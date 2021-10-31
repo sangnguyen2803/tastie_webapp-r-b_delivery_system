@@ -1,0 +1,22 @@
+body {
+  margin: 0px;
+  padding: 0px;
+  height: 100%;
+  font-family: "Noto Sans JP", sans-serif;
+}
+html {
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.main {
+  background: url(assets/home_banner.jpg);
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+  align-items: center;
+}

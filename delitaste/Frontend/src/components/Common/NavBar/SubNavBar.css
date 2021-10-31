@@ -1,0 +1,243 @@
+.nav-wrapper {
+  font-family: "Noto Sans JP", sans-serif;
+  background: rgb(61, 0, 0);
+  height: 19px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  padding: 0.5rem 0%;
+  z-index: 10;
+}
+.nav-bars {
+  left: 10%;
+  width: 40%;
+  height: auto;
+}
+.nav-category-item {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  gap: 3%;
+  width: 100%;
+}
+.nav-menu-prefix {
+  font-size: 15px;
+  color: #fff;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  text-decoration: none;
+  padding: 0% 0%;
+  height: 100%;
+  cursor: pointer;
+  width: 60%;
+  gap: 2px;
+}
+.nav-menu-surfix {
+  font-size: 15px;
+  color: #fff;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  text-decoration: none;
+  padding: 0% 2%;
+  height: 100%;
+  cursor: pointer;
+  width: 40%;
+  gap: 2px;
+}
+.nav-element {
+  text-decoration: none;
+  color: #d9d9d9;
+}
+.nav-element:hover,
+.nav-element:active {
+  color: #eab200;
+}
+.nav-icon {
+  display: block;
+  color: #fff;
+}
+/*
+@media screen and (max-width: 768px) {
+   .nav-icon {
+        display: block;
+        top: 0;
+        right: 0;
+        transform: translate(-100%, 75%);
+        font-size: 10px;
+        cursor: pointer;
+        
+    }
+    .nav-menu ,.nav-btn{
+        display:none;
+    }
+
+}
+*/
+.nav-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  border: 0;
+  background-color: #eab200;
+  border-radius: 20px;
+  width: 10%;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+  font-weight: 700;
+  border: none;
+  transition: all 0.2s ease-in-out;
+  text-decoration: none;
+  text-align: center;
+}
+.nav-btn:hover {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  border: 0;
+  border-radius: 20px;
+  width: 10%;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+  font-weight: 700;
+  border: none;
+  background-color: #c59700;
+  text-decoration: none;
+  font-weight: bold;
+  text-decoration: none;
+  text-align: center;
+}
+
+.nav-icon-prefix {
+  margin-right: 5%;
+}
+.nav-icon-surfix {
+  margin-left: 5%;
+}
+
+.display-category {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 10%;
+}
+.nav-text {
+}
+
+@media screen and (max-width: 860px) and (min-width: 0px) {
+  .display-category {
+    display: none;
+  }
+  .nav-category {
+    display: none;
+  }
+  .nav-menu-prefix {
+    font-size: 15px;
+    color: #fff;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    text-decoration: none;
+    padding: 0 2%;
+    height: 100%;
+    cursor: pointer;
+    width: 100%;
+    gap: 2px;
+    font-size: 12px;
+  }
+  .category-display {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 1380px) and (min-width: 1024px) {
+  .nav-menu-prefix {
+    font-size: 15px;
+    color: #fff;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    text-decoration: none;
+    padding: 0 2%;
+    height: 100%;
+    cursor: pointer;
+    width: 80%;
+    gap: 2px;
+  }
+}
+@media screen and (max-width: 1024px) and (min-width: 860px) {
+  .nav-menu-prefix {
+    font-size: 15px;
+    color: #fff;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    text-decoration: none;
+    padding: 0 2%;
+    height: 100%;
+    cursor: pointer;
+    width: 100%;
+    gap: 2px;
+  }
+}
+.nav-category {
+  color: #d9d9d9;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 15%;
+  background: inherit;
+}
+
+.nav-category:hover {
+  color: #c59700;
+  width: 15%;
+  background: inherit;
+}
+
+.nav-category-surfix {
+  color: #d9d9d9;
+  width: 20%;
+  padding: 1% 1% 1% 1%;
+  background: inherit
+}
+.nav-category-surfix:hover {
+  color: #c59700;
+  width: 20%;
+  padding: 1% 1% 1% 1%;
+  background: inherit;
+}
+
+.nav-category-main {
+  color: #d9d9d9;
+  padding: 1% 1% 1% 1%;
+
+  width: 20%;
+  background: inherit;
+}
+
+.nav-category-main:hover {
+  color: #d9d9d9;
+  width: 20%;
+  padding: 1% 1% 1% 1%;
+  background-color: #270000e7;
+}
