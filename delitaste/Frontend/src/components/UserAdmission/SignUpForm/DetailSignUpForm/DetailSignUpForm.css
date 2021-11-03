@@ -80,11 +80,7 @@ textarea:focus::-webkit-input-placeholder {
 input {
   font-family: "Noto Sans JP", sans-serif;
 }
-
-.sign-up-birthday {
-  width: 64%;
-  height: inherit;
-}
+/* Birthday */
 
 .form-redirect-wrapper {
   width: 100%;
@@ -162,6 +158,7 @@ input {
 }
 
 .avatar-uploader-wrapper {
+  width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -169,26 +166,13 @@ input {
   margin-bottom: 4%;
 }
 
-.date-of-birth-wrapper,
-.address-wrapper {
-  margin-top: 4%;
+.avatar-uploader-detail-wrapper {
   display: flex;
   flex-direction: row;
+  flex-wrap: nowrap;
   justify-content: flex-start;
   align-items: center;
-}
-
-.sign-up-birthday {
-  width: 64%;
-  height: inherit;
-  height: 25px;
-}
-
-.sign-up-address {
-  background-color: #c9c9c9;
-  width: 54%;
-  height: inherit;
-  height: 25px;
+  width: 100%;
 }
 
 .profile-photo-small-size {
@@ -209,11 +193,11 @@ input {
 
 .form-icon-edit,
 .form-icon-delete {
-  font-size: 16px;
-  color: #1f1f1f;
-  padding: 1%;
-  border: 2px #3d2a00 solid;
-  background-color: #dddddd;
+  font-size: 15px;
+  color: #000000;
+  padding: 1% 1.5%;
+  border: 2px #2c2c2c solid;
+  background-color: #e6e6e6;
   border-radius: 50px;
   cursor: pointer;
   margin-left: 2%;
@@ -229,23 +213,57 @@ input {
   border-radius: 50px;
   cursor: pointer;
 }
+/*Address*/
+.date-of-birth-wrapper,
+.address-wrapper {
+  margin-top: 4%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+}
 
+.sign-up-birthday {
+  margin-left: 2%;
+  width: 100%;
+  height: 30px;
+}
+
+.sign-up-address {
+  background-color: #c9c9c9;
+  width: 100%;
+  height: inherit;
+  height: 30px;
+  margin-bottom: 2%;
+}
+
+.dynamic-address-detail-wrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+}
+/* Address field */
 .address-detail-wrapper {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
 }
 .address-detail-sign-up {
-  font-size: 11px;
+  font-size: 14px;
   width: 23%;
-  color: white;
+  color: #2c2c2c;
   padding-left: 5%;
 }
 .sign-up-detail-address-input {
   width: 64%;
+  height: 30px;
 }
 .address-input-detail-wrapper {
-  margin-top: 4%;
+  margin-top: 2%;
   justify-content: flex-start;
   display: flex;
   flex-direction: row;
@@ -255,23 +273,32 @@ input {
 .sign-up-detail-address {
   width: 70%;
 }
+/*Gender field*/
 .gender-wrapper {
+  margin-top: 4%;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
   width: 100%;
 }
+.gender-detail-wrapper {
+  justify-content: flex-start;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  width: 100%;
+}
 .gender-type-wrapper {
+  font-size: 15px;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
   justify-content: flex-start;
   align-items: flex-start;
-  color: #727272;
-}
-.label-radio {
-  font-size: 14px;
+  color: #2c2c2c;
+  width: 33%;
 }
 
 .label-checkbox {
@@ -369,4 +396,78 @@ label > input[type="checkbox"] + * {
 
 .btn-sign-up-position {
   margin-left: 35%;
+}
+
+.check-icon-position-type0 {
+  /*color: rgb(85, 131, 0) !important;*/
+  color: rgb(199, 75, 75) !important;
+  position: absolute;
+  margin-right: 43%;
+  margin-top: 2.5%;
+  font-size: 16px !important;
+}
+.check-icon-position-type1 {
+  /*color: rgb(85, 131, 0) !important;*/
+  color: rgb(199, 75, 75) !important;
+  position: absolute;
+  margin-right: 2%;
+  margin-top: 2.5%;
+  font-size: 16px !important;
+}
+
+.check-icon-position-type2 {
+  /*color: rgb(85, 131, 0) !important;*/
+  position: absolute;
+  margin-right: 2%;
+  margin-top: 0%;
+  font-size: 16px !important;
+}
+.alert-icon {
+  font-size: 20px;
+}
+
+.detail-profile-wrapper {
+  width: 100%;
+}
+.button-group {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-content: center;
+  width: 96%;
+  margin-top: 5%;
+  margin-left: 2%;
+  margin-right: 2%;
+}
+
+.btn-skip-form {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  border: 0;
+  font-size: 16px;
+  background-color: #c4c4c4;
+  border-radius: 20px;
+  width: 40%;
+  color: #2c2c2c;
+  height: 35px;
+  font-weight: 700;
+  border: none;
+
+  cursor: pointer;
+}
+
+.btn-skip-form:hover {
+  background-color: #a8a8a8;
+}
+.btn-size {
+  width: 30%;
+}
+.btn-size:hover {
+  width: 30% !important;
 }

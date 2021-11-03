@@ -1,4 +1,10 @@
-import { SET_REGISTER_STEP, SET_USER_FORM_DATA } from "actions/types";
+import {
+  SET_REGISTER_STEP,
+  SET_USER_FORM_DATA,
+  REGISTER_SUCCESS,
+  REGISTER_FAIL,
+} from "actions/types";
+
 export const setRegisterStep = (stepStyle) => (dispatch) => {
   const stepStyling = {
     styling: [
@@ -19,3 +25,36 @@ export const setRegisterFormData = (formData) => (dispatch) => {
     payload: formData,
   });
 };
+
+export const submitDataForm = (formData) => {
+  const { firstname, lastname, phone, email, password } = formData;
+  async (dispatch) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const body = JSON.stringify({
+      firstname,
+      lastname,
+      phone,
+      email,
+      password,
+    });
+    try {
+      const res = await axios.post("/api/users", body, config);
+      dispatch({
+        type: REGISTER_SUCCESS,
+        payload: res.data,
+      });
+    } catch (err) {
+      const errors = err.response.data.errors;
+      //if any errors, dispatch another action here to show alerts.
+      dispatch({
+        type: REGISTER_FAIL,
+      });
+    }
+  };
+};
+
+//YUP

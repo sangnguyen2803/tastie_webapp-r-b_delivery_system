@@ -8,56 +8,47 @@
 }
 .form-icon {
   font-size: 20px;
-  color: #eab200;
 }
 .form-title {
   font-size: 20px;
   font-weight: 600;
   color: #2c2c2c;
   padding-top: 1%;
-  font-family: "Noto Sans JP", sans-serif;
   margin-left: 2%;
-  margin-bottom: 1%;
+  margin-bottom: 2%;
 }
+
 .verify-code-description {
   display: block;
   margin-bottom: 2%;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 500;
-  color: #d9d9d9;
-  font-family: "Noto Sans JP", sans-serif;
-  letter-spacing: 0.1rem;
+  color: #2c2c2c;
 }
 
 .verify-email-section {
-  width: 90%;
+  width: 100%;
 }
-.submit-section {
+
+.resend-section {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
   justify-content: flex-start;
   align-items: center;
   width: 100%;
+  padding: 3% 0%;
 }
 .resend-verify-code {
   width: 68%;
 }
 .resend-verify-code a {
   width: 50%;
-  letter-spacing: 0.1rem;
-  color: #eab200;
-  font-size: 14px;
+  color: #2c2c2c;
+  font-size: 15px;
   text-align: center;
-  font-weight: 700;
 }
 .resend-verify-code a:hover {
-  width: 50%;
-  letter-spacing: 0.1rem;
-  color: #c59700;
-  font-size: 14px;
-  text-align: center;
-  font-weight: 600;
   cursor: pointer;
 }
 .btn-verify {
@@ -79,34 +70,22 @@
   margin-bottom: 5%;
 }
 .btn-verify:hover {
-  margin-top: 5%;
-  box-sizing: border-box;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  border: 0;
   background-color: #e9ba22;
-  border-radius: 20px;
-  width: 30%;
-  color: #ffffff;
-  text-transform: uppercase;
-  letter-spacing: 0.1rem;
-  height: 30px;
-  font-weight: 700;
-  border: none;
-  margin-bottom: 5%;
   cursor: pointer;
 }
+
 .verify-code-wrapper {
+  background-color: rgb(204, 204, 204);
   display: inline-flex;
   flex-direction: row;
   flex-wrap: nowrap;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
-  height: 12vh;
+  width: 90%;
+  height: 80px;
   gap: 3%;
   margin-top: 3%;
+  padding: 5%;
 }
 
 .verify-code-digit-wrapper {
@@ -115,29 +94,47 @@
 }
 
 .verify-code-digit-wrapper input:focus {
-  background-color: rgb(59, 41, 2);
-  border: 0 0 0 1px solid;
+  background-color: rgb(233, 233, 233);
   padding: 1%;
   width: 98%;
   height: 95%;
   font-size: 42px;
   text-align: center;
-  color: #d9d9d9;
-  border: 2px #a1a1a1 solid;
+  color: #030303;
+  border: 2px #3f3f3f solid;
 }
 
 .verify-digit-box {
-  background-color: rgba(185, 140, 43, 0.548);
+  border-radius: 5%;
+  background-color: rgb(255, 255, 255);
   border: 0 0 0 1px solid;
   padding: 1%;
   width: 98%;
   height: 95%;
   font-size: 42px;
   text-align: center;
-  color: #d9d9d9;
+  color: #3b3b3b;
 }
 .resend-code-icon {
   color: #eab200;
   font-size: 20px;
   margin-right: 2%;
+}
+.change-email-icon {
+  color: #333333;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.sub-square-button {
+  margin-left: 2%;
+  background-color: rgb(231, 231, 231);
+  font-size: 15px;
+  height: 36px;
+  border-radius: 5px;
+  border-color: rgb(82, 53, 0);
+  cursor: pointer;
+}
+.sub-square-button:hover {
+  background-color: rgb(223, 223, 223);
 }

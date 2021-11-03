@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import "screens/UserAdmissionScreen/UserAdmission.css";
 import RegisterStep from "./RegisterStep";
 import { connect } from "react-redux";

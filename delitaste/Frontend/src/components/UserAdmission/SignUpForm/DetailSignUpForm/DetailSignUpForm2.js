@@ -8,6 +8,7 @@ import {
   faIdCardAlt,
   faMapMarkerAlt,
   faUpload,
+  faChevronRight,
 } from "@fortawesome/fontawesome-free-solid";
 import DefaultAvatar from "../../../../assets/default-avatar.png";
 import CurrentAvatar from "../../../../assets/avatar.png";
@@ -77,67 +78,75 @@ function DetailSignUpForm2(props) {
   };
 
   return (
-    <div>
+    <>
       <div className="detail-profile-wrapper">
         <div className="form-title-wrapper">
           <FontAwesomeIcon className="form-icon" icon={faIdCardAlt} />
           <span className="form-title">Update profile</span>
         </div>
         <div className="avatar-uploader-wrapper">
-          <div className="label-sign-up form-label">Avatar</div>
-          <div className="image-preview">
-            <img
-              className="profile-photo-small-size"
-              src={userProfilePic}
-            ></img>
+          <div className="label-sign-up form-label">Profile photo</div>
+          <div className="avatar-uploader-detail-wrapper">
+            <div className="image-preview">
+              <img
+                className="profile-photo-small-size"
+                src={userProfilePic}
+              ></img>
+            </div>
+            <button
+              disabled={avatarState === "edit"}
+              onClick={onButtonClick}
+              className="form-icon-edit"
+            >
+              <FontAwesomeIcon
+                onClick={
+                  avatarState === "upload"
+                    ? () => setAvatarState("uploading")
+                    : avatarState === "edit"
+                    ? () => setAvatarState("editting")
+                    : null
+                }
+                icon={avatarIconState}
+              />
+              <input
+                type="file"
+                id="file"
+                ref={inputFile}
+                style={{ display: "none" }}
+              />
+            </button>
+            <button
+              disabled={avatarState === "edit"}
+              onClick={onButtonClick}
+              className="form-icon-delete"
+            >
+              <FontAwesomeIcon
+                onClick={() => {
+                  setUserProfilePic(DefaultAvatar);
+                  setAvatarState("upload");
+                  setAvatarIconState(faUpload);
+                }}
+                icon={faTrashAlt}
+              />
+            </button>
           </div>
-          <button
-            disabled={avatarState === "edit"}
-            onClick={onButtonClick}
-            className="form-icon-edit"
-          >
-            <FontAwesomeIcon
-              onClick={
-                avatarState === "upload"
-                  ? () => setAvatarState("uploading")
-                  : avatarState === "edit"
-                  ? () => setAvatarState("editting")
-                  : null
-              }
-              icon={avatarIconState}
-            />
-            <input
-              type="file"
-              id="file"
-              ref={inputFile}
-              style={{ display: "none" }}
-            />
-          </button>
-
-          <FontAwesomeIcon
-            className="form-icon-delete"
-            onClick={() => {
-              setUserProfilePic(DefaultAvatar);
-              setAvatarState("upload");
-              setAvatarIconState(faUpload);
-            }}
-            icon={faTrashAlt}
-          />
         </div>
         <div className="gender-wrapper">
           <div className="label-sign-up form-label">Gender</div>
-          <label className="gender-type-wrapper">
-            <input type="radio" name="gender" value="Male" />
-            <span className="label-radio">Male</span>
-          </label>
-          <label className="gender-type-wrapper">
-            <input type="radio" name="gender" value="Female" />
-            <span className="label-radio">Female</span>
-          </label>
-          <label className="gender-type-wrapper">
-            <input type="radio" name="gender" value="Others" />
-            <span className="label-radio">Others</span>
-          </label>
+          <div className="gender-detail-wrapper">
+            <label className="gender-type-wrapper">
+              <input type="radio" name="gender" value="Male" />
+              <span className="label-radio">Male</span>
+            </label>
+            <label className="gender-type-wrapper">
+              <input type="radio" name="gender" value="Female" />
+              <span className="label-radio">Female</span>
+            </label>
+            <label className="gender-type-wrapper">
+              <input type="radio" name="gender" value="Others" />
+              <span className="label-radio">Others</span>
+            </label>
+          </div>
         </div>
         <div className="date-of-birth-wrapper">
           <div className="label-sign-up form-label">Birthday</div>
@@ -150,19 +159,21 @@ function DetailSignUpForm2(props) {
         </div>
         <div className="address-wrapper">
           <div className="label-sign-up form-label">Address</div>
-          <input
-            className="sign-up-address form-text-field"
-            value={address}
-            type="text"
-            disabled
-            id="address"
-            name="address"
-          />
-          <FontAwesomeIcon
-            onClick={openSelectMapDialog}
-            className="form-icon-map"
-            icon={faMapMarkerAlt}
-          />
+          <div className="dynamic-address-detail-wrapper">
+            <input
+              className="sign-up-address form-text-field"
+              value={address}
+              type="text"
+              disabled
+              id="address"
+              name="address"
+            />
+            <FontAwesomeIcon
+              onClick={openSelectMapDialog}
+              className="form-icon-map"
+              icon={faMapMarkerAlt}
+            />
+          </div>
         </div>
         <div className="address-detail-wrapper">
           <div className="address-input-detail-wrapper">
@@ -234,6 +245,24 @@ function DetailSignUpForm2(props) {
           </div>
         </div>
       </div>
+      <div className="button-group">
+        <button
+          className="btn-skip-form btn-size"
+          onClick={(e) => onSubmitRegistrationForm(e)}
+        >
+          <div className="none-icon"></div>
+          Skip
+          <FontAwesomeIcon className="chevron-icon" icon={faChevronRight} />
+        </button>
+        <button
+          className="btn-login-form btn-size"
+          onClick={(e) => onSubmitRegistrationForm(e)}
+        >
+          <div className="none-icon"></div>
+          Update
+          <FontAwesomeIcon className="chevron-icon" icon={faChevronRight} />
+        </button>
+      </div>
       <MapDialog
         showMapDialog={showMapDialog}
         setShowMapDialog={setShowMapDialog}
@@ -244,7 +273,7 @@ function DetailSignUpForm2(props) {
         avatarState={avatarState}
         setAvatarState={setAvatarState}
       />
-    </div>
+    </>
   );
 }
 

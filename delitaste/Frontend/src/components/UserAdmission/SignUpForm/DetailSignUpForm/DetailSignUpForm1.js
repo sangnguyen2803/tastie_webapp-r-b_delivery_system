@@ -9,7 +9,14 @@ import {
 } from "react-simple-captcha";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser, faChevronRight } from "@fortawesome/fontawesome-free-solid";
+import {
+  faUser,
+  faChevronRight,
+  faCheckCircle,
+  faCheckSquare,
+  faExclamationCircle,
+  faExclamation,
+} from "@fortawesome/fontawesome-free-solid";
 import { connect } from "react-redux";
 import {
   setRegisterStep,
@@ -53,6 +60,7 @@ function DetailSignUpForm1({
       ...userFormData,
       [e.target.name]: e.target.value,
     });
+
   const onSubmitRegistrationForm = async (e) => {
     e.preventDefault();
     setRegisterStep(["finished", "active", "default", "default"]);
@@ -65,6 +73,10 @@ function DetailSignUpForm1({
       password,
     };
     setRegisterFormData(formData);
+    //validate
+
+    //const err = validate(formData) //err - YUP
+
     const msg = "Check your email to get code.";
     loadRegisterForm("email_verification", msg);
     //validate registration form
@@ -91,6 +103,10 @@ function DetailSignUpForm1({
             autoComplete="on"
             required
           />
+          <FontAwesomeIcon
+            className="alert-icon check-icon-position-type0"
+            icon={faExclamationCircle}
+          />
           <input
             className="sign-up-lastname form-text-field"
             type="text"
@@ -101,6 +117,10 @@ function DetailSignUpForm1({
             maxLength={50}
             autoComplete="on"
             required
+          />
+          <FontAwesomeIcon
+            className="alert-icon check-icon-position-type1"
+            icon={faExclamationCircle}
           />
         </div>
       </div>
@@ -117,6 +137,10 @@ function DetailSignUpForm1({
           autoComplete="on"
           required
         />
+        <FontAwesomeIcon
+          className="alert-icon check-icon-position-type2"
+          icon={faExclamationCircle}
+        />
       </div>
 
       <div className="sign-up-phonenumber-wrapper">
@@ -131,6 +155,10 @@ function DetailSignUpForm1({
           maxLength={15}
           autoComplete="on"
           required
+        />
+        <FontAwesomeIcon
+          className="alert-icon check-icon-position-type2"
+          icon={faExclamationCircle}
         />
       </div>
 
@@ -147,6 +175,10 @@ function DetailSignUpForm1({
           autoComplete="on"
           required
         />
+        <FontAwesomeIcon
+          className="alert-icon check-icon-position-type2"
+          icon={faExclamationCircle}
+        />
       </div>
 
       <div className="password-recheck-wrapper">
@@ -162,6 +194,11 @@ function DetailSignUpForm1({
           autoComplete="on"
           required
         />
+        <FontAwesomeIcon
+          className="form-icon check-icon-position-type2"
+          icon={faCheckCircle}
+          style={{ color: "green" }}
+        />
       </div>
 
       <div className="captcha-wrapper">
@@ -174,7 +211,6 @@ function DetailSignUpForm1({
           autoComplete="off"
         ></input>
       </div>
-      <br />
       <br />
       <div className="policy-check">
         Delitaste may use your phone number to call or send text messages with

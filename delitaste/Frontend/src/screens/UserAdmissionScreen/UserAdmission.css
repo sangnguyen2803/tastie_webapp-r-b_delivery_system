@@ -6,7 +6,7 @@ body {
   overflow-x: hidden;
 }
 html {
-  background: url("assets/banner.png");
+  background: url("assets/banner.png") no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -362,16 +362,14 @@ a.sign-up-redirect:link {
   white-space: nowrap;
   text-overflow: ellipsis;
   border: 0;
+  font-size: 16px;
   background-color: #eab200;
   border-radius: 20px;
   width: 40%;
   color: #2c2c2c;
-  text-transform: uppercase;
-  letter-spacing: 0.1rem;
   height: 35px;
   font-weight: 700;
   border: none;
-
   cursor: pointer;
 }
 

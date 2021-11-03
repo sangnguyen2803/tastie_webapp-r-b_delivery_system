@@ -52,29 +52,30 @@ function SubNavBar(variant = true) {
               setCategoryContent={setCategoryContent}
             />
           </div>
+          <div className="nav-feature">
+            <div className="nav-category">
+              <div className="nav-text"> Today's deals </div>
+            </div>
 
-          <div className="nav-category">
-            <div className="nav-text"> Today's deals </div>
-          </div>
+            <div className="nav-category">
+              <div className="nav-text"> Ready To Sell </div>
+            </div>
 
-          <div className="nav-category">
-            <div className="nav-text"> Ready To Sell </div>
-          </div>
+            <div className="nav-category">
+              <div className="nav-text"> World Cuisine </div>
+            </div>
 
-          <div className="nav-category">
-            <div className="nav-text"> World Cuisine </div>
-          </div>
+            <div className="nav-category">
+              <div className="nav-text"> Trendings </div>
+            </div>
 
-          <div className="nav-category">
-            <div className="nav-text"> Trendings </div>
-          </div>
+            <div className="nav-category">
+              <div className="nav-text"> Fashion </div>
+            </div>
 
-          <div className="nav-category">
-            <div className="nav-text"> Fashion </div>
-          </div>
-
-          <div className="nav-category">
-            <div className="nav-text">Vouchers </div>
+            <div className="nav-category">
+              <div className="nav-text">Vouchers </div>
+            </div>
           </div>
         </div>
 

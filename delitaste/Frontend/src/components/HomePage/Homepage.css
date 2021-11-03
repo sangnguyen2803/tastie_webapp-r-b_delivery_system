@@ -12,7 +12,7 @@ html {
 }
 
 .main {
-  background: url(assets/home_banner.jpg);
+  background: url(assets/home_banner.jpg) no-repeat center center fixed;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
