@@ -471,3 +471,9 @@ label > input[type="checkbox"] + * {
 .btn-size:hover {
   width: 30% !important;
 }
+
+@media all and (max-width: 780px) {
+  .label-sign-up {
+    width: 40% !important;
+  }
+}

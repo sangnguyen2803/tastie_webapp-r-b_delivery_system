@@ -20,7 +20,7 @@ function SubNavBar(variant = true) {
   const [dropdownStatus, setDropdownStatus] = useState(
     variant ? faChevronUp : faChevronDown
   );
-
+  
   const useEffect = () => {
     setCategoryContent({ ...CategoryDetail, content: { clothes: {} } });
   };
@@ -52,17 +52,17 @@ function SubNavBar(variant = true) {
               setCategoryContent={setCategoryContent}
             />
           </div>
-          <div className="nav-feature">
+          <div className="nav-feature-1">
             <div className="nav-category">
-              <div className="nav-text"> Today's deals </div>
+              <div className="nav-text"> Today's Deals </div>
             </div>
 
             <div className="nav-category">
-              <div className="nav-text"> Ready To Sell </div>
+              <div className="nav-text"> Restaurants </div>
             </div>
 
             <div className="nav-category">
-              <div className="nav-text"> World Cuisine </div>
+              <div className="nav-text"> Homemade Food </div>
             </div>
 
             <div className="nav-category">
@@ -70,11 +70,11 @@ function SubNavBar(variant = true) {
             </div>
 
             <div className="nav-category">
-              <div className="nav-text"> Fashion </div>
+              <div className="nav-text"> Premium </div>
             </div>
 
             <div className="nav-category">
-              <div className="nav-text">Vouchers </div>
+              <div className="nav-text"> Vouchers </div>
             </div>
           </div>
         </div>

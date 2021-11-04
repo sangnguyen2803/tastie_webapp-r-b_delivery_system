@@ -35,39 +35,6 @@ html {
   margin-top: 1%;
   left: 5%;
 }
-@media only screen and (max-width: 500px) {
-  .brand-banner {
-    display: none;
-    width: 0px;
-  }
-  .login-wrapper {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    width: 295%;
-    background: url(../../assets/banner.png);
-  }
-}
-@media screen and (max-width: 900px) and (min-width: 501px) {
-  .brand-banner {
-    display: none;
-    width: 0px;
-  }
-  .login-wrapper {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    width: 100%;
-  }
-  .login-section,
-  .sign-up-section {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-    justify-content: center;
-    width: 100% !important;
-  }
-}
 
 .brand-banner .brand-banner-image {
   display: block;
@@ -486,4 +453,54 @@ a.sign-up-redirect:link {
   color: white;
   letter-spacing: 0.01rem;
   cursor: pointer;
+}
+
+@media all and (max-width: 780px) {
+  .sign-up-section,
+  .login-section {
+    width: 100% !important;
+  }
+  .brand-banner {
+    display: none !important;
+  }
+  .sign-up-form,
+  .login-form {
+    height: 800px !important;
+  }
+  .sign-up-form-wrapper {
+    width: 90% !important;
+  }
+  .login-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    width: 100%;
+    background: url(../../assets/banner.png);
+  }
+
+  .form-label {
+    font-size: 14px !important;
+  }
+  .form-text-field {
+    font-size: 14px;
+  }
+  .sign-up-label-gooogle,
+  .sign-up-label-facebook {
+    width: 70%;
+  }
+}
+
+@media only screen and (max-width: 1366px) and (min-width: 781px) {
+  .sign-up-section,
+  .login-section {
+    width: 50% !important;
+  }
+
+  .brand-banner {
+    width: 50%;
+  }
+  .sign-up-label-gooogle,
+  .sign-up-label-facebook {
+    width: 70%;
+  }
 }

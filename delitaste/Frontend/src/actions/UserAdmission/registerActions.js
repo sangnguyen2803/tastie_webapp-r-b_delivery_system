@@ -25,7 +25,7 @@ export const setRegisterFormData = (formData) => (dispatch) => {
     payload: formData,
   });
 };
-
+/*
 export const submitDataForm = (formData) => {
   const { firstname, lastname, phone, email, password } = formData;
   async (dispatch) => {
@@ -56,5 +56,5 @@ export const submitDataForm = (formData) => {
     }
   };
 };
-
+*/
 //YUP

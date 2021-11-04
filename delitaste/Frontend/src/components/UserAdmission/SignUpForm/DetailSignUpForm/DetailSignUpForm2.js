@@ -246,18 +246,12 @@ function DetailSignUpForm2(props) {
         </div>
       </div>
       <div className="button-group">
-        <button
-          className="btn-skip-form btn-size"
-          onClick={(e) => onSubmitRegistrationForm(e)}
-        >
+        <button className="btn-skip-form btn-size">
           <div className="none-icon"></div>
           Skip
           <FontAwesomeIcon className="chevron-icon" icon={faChevronRight} />
         </button>
-        <button
-          className="btn-login-form btn-size"
-          onClick={(e) => onSubmitRegistrationForm(e)}
-        >
+        <button className="btn-login-form btn-size">
           <div className="none-icon"></div>
           Update
           <FontAwesomeIcon className="chevron-icon" icon={faChevronRight} />

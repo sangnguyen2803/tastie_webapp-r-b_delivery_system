@@ -90,7 +90,7 @@ function DetailSignUpForm1({
         <span className="form-title">Account Registration</span>
       </div>
       <div className="sign-up-fullname-wrapper">
-        <div className="label-sign-up form-label">Full Name</div>
+        <div className="label-sign-up form-label">Full name</div>
         <div className="fullname-wrapper">
           <input
             className="sign-up-firstname form-text-field"

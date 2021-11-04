@@ -69,10 +69,36 @@
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
+  width: 20%;
 }
 .step-detail-description {
   margin-top: 10%;
   text-align: center;
   font-size: 14px;
   color: #ffffff;
+}
+
+@media all and (max-width: 780px) {
+  .step-detail-description {
+    font-size: 14px;
+    font-weight: normal !important;
+  }
+  .register-step-wrapper img {
+    width: 5%;
+    height: 10px;
+  }
+  .step-arrow {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 1366px) and (min-width: 781px) {
+  .step-detail-description {
+    font-size: 11px;
+    font-weight: normal !important;
+  }
+  .register-step-wrapper img {
+    width: 5%;
+    height: 10px;
+  }
 }

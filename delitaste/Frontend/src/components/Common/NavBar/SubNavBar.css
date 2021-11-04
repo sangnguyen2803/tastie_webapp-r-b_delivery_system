@@ -10,6 +10,7 @@
   z-index: 10;
   width: 100%;
 }
+
 .nav-bars {
   left: 10%;
   width: 40%;
@@ -23,6 +24,7 @@
   gap: 3%;
   width: 100%;
 }
+
 .nav-menu-prefix {
   font-size: 15px;
   color: #fff;
@@ -34,9 +36,10 @@
   padding: 0% 0%;
   height: 100%;
   cursor: pointer;
-  width: 60%;
+  width: 70%;
   gap: 2px;
 }
+
 .nav-menu-surfix {
   font-size: 15px;
   color: #fff;
@@ -181,7 +184,7 @@
   width: 20%;
   background: inherit;
 }
-.nav-feature {
+.nav-feature-1 {
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -189,16 +192,50 @@
   justify-content: flex-start;
   align-content: center;
 }
+.nav-feature-2 {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  background-color: #3a0000;
+  color: rgb(223, 223, 223);
+}
+.category-feature-wrapper {
+  align-self: center;
+  display: block;
+  border: 1px rgb(0, 0, 0) solid;
+  border-radius: 5px;
+  width: 100%;
+  font-size: 15px;
+  text-align: center;
+  padding-top: 1%;
+  padding-bottom: 1%;
+}
+.nav-category-item-mobile {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  width: 100%;
+}
 
-/* Media screen*/
-
-@media screen and (min-width: 0px) and (max-width: 860px) {
-  .nav-wrapper {
+/* Media screen query*/
+/* 0 -> 780 */
+@media all and (max-width: 780px) {
+  .nav-wrapper,
+  .nav-feature-1 {
     display: none !important;
   }
 }
-
-@media screen and (max-width: 1380px) and (min-width: 1024px) {
+/* 781 -> 1366 */
+@media only screen and (max-width: 1366px) and (min-width: 781px) {
+  .nav-wrapper-2,
+  .nav-feature-2,
+  .nav-feature-1 {
+    display: none !important;
+  }
   .nav-menu-prefix {
     font-size: 15px;
     color: #fff;
@@ -213,20 +250,15 @@
     width: 80%;
     gap: 2px;
   }
-}
-@media screen and (max-width: 1024px) and (min-width: 860px) {
-  .nav-menu-prefix {
-    font-size: 15px;
-    color: #fff;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    text-decoration: none;
-    padding: 0 2%;
-    height: 100%;
-    cursor: pointer;
+  .nav-menu-surfix {
     width: 100%;
-    gap: 2px;
+  }
+}
+/* 781 -> Fullscreen */
+@media screen and (min-width: 781px) {
+  .nav-category-item-mobile,
+  .nav-feature-2,
+  .nav-wrapper-2 {
+    display: none !important;
   }
 }
