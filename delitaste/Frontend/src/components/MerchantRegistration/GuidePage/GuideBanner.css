@@ -1,0 +1,121 @@
+.guide-banner {
+  width: 100%;
+  height: 550px;
+  background: url("assets/Banner/merchant-ads.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.guide-banner-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 8% 10%;
+  color: #fff;
+  width: 55%;
+  z-index: 1;
+}
+.guide-sub-title {
+  width: 60%;
+  font-size: 16px;
+  font-weight: 500;
+  text-transform: uppercase;
+  word-spacing: 0.1rem;
+}
+.guide-title {
+  width: 80%;
+  font-size: 55px;
+  font-weight: 700;
+  margin: 2% 0%;
+}
+.guide-description {
+  width: 60%;
+  font-size: 18px;
+  font-weight: 500;
+  text-indent: 5%;
+  word-spacing: 0.1rem;
+}
+
+.btn-guide-wrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  gap: 2%;
+  width: 100%;
+}
+.btn-guide-get-started {
+  width: 18%;
+  height: 40px;
+  font-size: 16px;
+  background: rgb(148, 0, 0);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.btn-guide-get-started:hover {
+  background: rgb(175, 0, 0);
+}
+.btn-guide-more-details {
+  width: 18%;
+  height: 40px;
+  font-size: 16px;
+  background: rgb(102, 102, 102);
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.btn-guide-more-details:hover {
+  background: rgb(122, 122, 122);
+}
+
+/*mobile screen*/
+@media all and (max-width: 780px) {
+  .guide-banner {
+    height: 300px;
+  }
+  .guide-banner-content {
+    width: 80%;
+  }
+  .guide-sub-title {
+    width: 100%;
+    font-size: 13px;
+  }
+  .guide-title {
+    width: 100%;
+    font-size: 24px;
+  }
+  .guide-description {
+    width: 100%;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .btn-guide-get-started,
+  .btn-guide-more-details {
+    width: 40% !important;
+    font-size: 14px;
+    height: 30px;
+  }
+}
+
+@media only screen and (max-width: 1366px) and (min-width: 781px) {
+  .guide-banner-content {
+    width: 80%;
+  }
+  .guide-sub-title {
+    width: 75%;
+    font-size: 16px;
+  }
+  .guide-title {
+    width: 65%;
+    font-size: 45px;
+  }
+  .guide-description {
+    width: 60%;
+    font-size: 18px;
+    font-weight: 500;
+  }
+}

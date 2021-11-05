@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import UserAdmission from "screens/UserAdmissionScreen/UserAdmission";
+import MerchantRegistration from "./screens/MerchantRegistrationScreen/MerchantRegistration";
 import Homepage from "./components/HomePage/Homepage";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
@@ -13,6 +14,7 @@ ReactDOM.render(
       <Switch>
         <Route path="/home" component={Homepage} />
         <Route path="/auth" component={UserAdmission} />
+        <Route path="/mms" component={MerchantRegistration} />
       </Switch>
     </Router>
   </React.StrictMode>,

@@ -1,6 +1,5 @@
 .main-nav-menu-prefix {
   font-size: 15px;
-
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
@@ -10,7 +9,6 @@
   padding: 0% 2%;
   height: 50px;
   cursor: pointer;
-  width: 100%;
   gap: 2px;
 }
 .nav-category-item-2 {
@@ -41,12 +39,12 @@
 .main-nav-menu-prefix .nav-logo {
   width: 20px;
   margin-right: 2%;
-  background-color: rgb(255, 202, 209);
+  background-color: rgb(255, 255, 255);
   border-radius: 50px;
-  padding: 0.1% 0.2%;
+  padding: 0.3% 0.4%;
 }
 .nav-logo-title {
-  margin-left: -2%;
+  margin-left: -1.75%;
   color: rgb(255, 255, 255);
   font-family: "Patua One", cursive;
   font-size: 24px;

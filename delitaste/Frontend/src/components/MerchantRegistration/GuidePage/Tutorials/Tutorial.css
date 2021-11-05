@@ -1,0 +1,57 @@
+.tutorial-section {
+  margin-top: 2%;
+  width: 100%;
+  height: 700px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.tutorial-scroll-down {
+  margin-top: 0.5%;
+  font-size: 28px;
+  transition: transform 0.2s;
+  color: rgb(197, 197, 197);
+  padding-bottom: 5%;
+  cursor: pointer;
+}
+.tutorial-scroll-down:hover {
+  color: rgb(226, 226, 226);
+  transform: scale(1.1);
+}
+.tutorial-title {
+  position: relative;
+  margin-top: 0%;
+  font-size: 22px;
+  color: rgb(197, 197, 197);
+}
+
+.tutorial-sub-title {
+  font-size: 22px;
+  color: rgb(197, 197, 197);
+  padding-bottom: 1%;
+}
+.card-details-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 70%;
+  gap: 3%;
+  margin-bottom: 1%;
+}
+
+.btn-guide-register-now {
+  width: 18%;
+  height: 40px;
+  font-size: 16px;
+  background: rgb(148, 0, 0);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-guide-register-now:hover {
+  background: rgb(197, 5, 5);
+}

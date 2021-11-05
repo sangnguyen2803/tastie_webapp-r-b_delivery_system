@@ -3,17 +3,18 @@ body {
   padding: 0px;
   height: 100%;
   font-family: "Noto Sans JP", sans-serif;
-  overflow-x: hidden;
 }
 html {
-  background: url("assets/banner.png") no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: inherit;
 }
 /*Login Section*/
 .login-container {
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background: url("assets/banner.png") no-repeat center center fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
   display: flex;
   flex-direction: column;
 }

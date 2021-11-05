@@ -20,7 +20,7 @@ import store from "store";
 
 function LoginPage(props) {
   return (
-    <>
+    <div className="user-admission">
       <Provider store={store}>
         <Router>
           <div className="login-container">
@@ -45,7 +45,7 @@ function LoginPage(props) {
           </div>
         </Router>
       </Provider>
-    </>
+    </div>
   );
 }
 

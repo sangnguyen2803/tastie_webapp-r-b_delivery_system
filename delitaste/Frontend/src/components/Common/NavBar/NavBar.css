@@ -1,6 +1,5 @@
 .navbars-wrapper {
   z-index: 1;
-  overflow: hidden;
   background-color: #333; /* Set the navbar to fixed position */
   top: 50%; /* Position the navbar at the top of the page */
   width: 100%; /* Full width */
