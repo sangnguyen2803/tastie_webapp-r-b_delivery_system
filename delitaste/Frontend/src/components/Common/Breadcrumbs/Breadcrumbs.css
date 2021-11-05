@@ -1,0 +1,22 @@
+.breadcrumb {
+  position: absolute;
+  height: 18px;
+  padding: 0.2% 4%;
+  width: 40%;
+  background-image: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0.9),
+    rgba(255, 255, 255, 0)
+  );
+  color: rgb(0, 0, 0);
+  font-size: 16px;
+  letter-spacing: 0.1rem;
+}
+.breadcrumb a {
+  text-decoration: none;
+  color: rgb(0, 0, 0);
+}
+.breadcrumb a:hover {
+  font-weight: bold;
+  text-decoration: underline;
+}

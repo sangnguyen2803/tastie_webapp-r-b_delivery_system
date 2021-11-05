@@ -11,7 +11,6 @@ import {
   faEye,
 } from "@fortawesome/fontawesome-free-solid";
 import { Link } from "react-router-dom";
-
 function LoginForm(props) {
   const [functionalIcon, setFunctionalIcon] = useState({
     enableRemoveText: false,
@@ -67,6 +66,7 @@ function LoginForm(props) {
   };
 
   return (
+    
     <div className="login-section">
       <div className="login-form">
         <div className="login-form-wrapper">

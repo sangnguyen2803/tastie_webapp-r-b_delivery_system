@@ -1,9 +1,9 @@
-import NavBar from "../Common/NavBar/NavBar";
-import Footer from "../Common/Footer/Footer";
+import NavBar from "../Common/LayoutComponents/NavBar/NavBar";
+import Footer from "../Common/LayoutComponents/Footer/Footer";
 import MainContent from "./MainContent/MainContent";
 import React, { Fragment } from "react";
-import ToolBar from "../Common/Toolbar/Toolbar";
-import VoucherToolBar from "../Common/Toolbar/VoucherToolbar";
+import ToolBar from "../Common/LayoutComponents/Toolbar/Toolbar";
+import VoucherToolBar from "../Common/LayoutComponents/Toolbar/VoucherToolbar";
 import "./Homepage.css";
 
 function Homepage(props) {

@@ -20,7 +20,14 @@ function GuideBanner(props) {
           <p className="guide-description">{bannerContent.description}</p>
           <div className="btn-guide-wrapper">
             <button className="btn-guide-get-started">Get started</button>
-            <button className="btn-guide-more-details">More Details</button>
+            <button
+              className="btn-guide-more-details"
+              onClick={() => {
+                window.scrollTo({ top: 550, behavior: "smooth" });
+              }}
+            >
+              More Details
+            </button>
           </div>
         </div>
       </div>

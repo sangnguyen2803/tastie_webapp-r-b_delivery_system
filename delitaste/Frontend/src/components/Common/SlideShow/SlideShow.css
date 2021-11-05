@@ -1,3 +1,9 @@
+.slogan {
+  display: absolute;
+  font-size: 30px;
+  color: rgb(255, 255, 255);
+  font-family: "Patua One", cursive;
+}
 span.slideshow-header {
   display: block;
   position: relative;
@@ -14,7 +20,7 @@ section.slideshow {
   border-radius: 10px;
   width: 90%;
   height: 510px;
-  background-color: rgba(0, 0, 0, 0.651);
+  background-color: rgb(99, 0, 0);
 }
 section.slideshow div.slide-holder {
   display: flex;
@@ -206,7 +212,7 @@ section.slideshow div.slideshow-controller span:active {
   white-space: nowrap;
   text-overflow: ellipsis;
   border: 0;
-  background-color: #660000;
+  background-color: #300000;
   border-radius: 20px;
   width: 20%;
   color: #ffffff;

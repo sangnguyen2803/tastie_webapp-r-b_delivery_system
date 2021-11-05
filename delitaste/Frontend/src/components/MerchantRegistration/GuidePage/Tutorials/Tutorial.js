@@ -33,13 +33,7 @@ function Tutorial(props) {
   return (
     <div className="tutorial-section">
       <span className="tutorial-title">Take your business further</span>
-      <FontAwesomeIcon
-        onClick={() => {
-          window.scrollTo({ top: 550, behavior: "smooth" });
-        }}
-        className="tutorial-scroll-down"
-        icon={faArrowDown}
-      />
+
       <span className="tutorial-sub-title">Online registration</span>
       <div className="card-details-wrapper">
         {cardDetails.map((cardDetail) => (
