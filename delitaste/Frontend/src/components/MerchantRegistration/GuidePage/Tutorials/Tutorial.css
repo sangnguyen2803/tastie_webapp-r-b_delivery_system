@@ -1,7 +1,6 @@
 .tutorial-section {
   margin-top: 2%;
   width: 100%;
-  height: 700px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -27,9 +26,11 @@
 }
 
 .tutorial-sub-title {
+  margin-top: 4%;
   font-size: 22px;
   color: rgb(197, 197, 197);
   padding-bottom: 1%;
+  font-weight: 700;
 }
 .card-details-wrapper {
   display: flex;
@@ -39,10 +40,11 @@
   width: 70%;
   gap: 3%;
   margin-bottom: 1%;
+  flex-wrap: wrap;
 }
 
 .btn-guide-register-now {
-  width: 18%;
+  width: 10%;
   height: 40px;
   font-size: 16px;
   background: rgb(148, 0, 0);
@@ -50,8 +52,39 @@
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  margin-bottom: 2%;
 }
 
 .btn-guide-register-now:hover {
   background: rgb(197, 5, 5);
+}
+
+@media all and (max-width: 780px) {
+  .tutorial-title {
+    font-size: 16px;
+    margin-bottom: 0% !important;
+  }
+  .tutorial-sub-title {
+    margin-top: 1% !important;
+    font-size: 15px;
+  }
+  .card-details-wrapper {
+    width: 90% !important;
+    gap: 5%;
+  }
+  .btn-guide-register-now {
+    width: 40% !important;
+    height: 30px;
+    margin-bottom: 5%;
+    font-size: 14px;
+  }
+}
+
+@media only screen and (max-width: 1366px) and (min-width: 781px) {
+  .btn-guide-register-now {
+    width: 30% !important;
+    height: 40px !important;
+    margin-bottom: 5%;
+    font-size: 16px;
+  }
 }

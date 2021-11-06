@@ -2,9 +2,6 @@ import "./Tutorial.css";
 import TutorialCard from "components/MerchantRegistration/GuidePage/Tutorials/TutorialCard";
 import { useState } from "react";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowDown } from "@fortawesome/fontawesome-free-solid";
-
 import RegistrationProcedureIcon1 from "assets/Banner/merchant-registration-step1.png";
 import RegistrationProcedureIcon2 from "assets/Banner/merchant-registration-step2.png";
 import RegistrationProcedureIcon3 from "assets/Banner/merchant-registration-step3.png";
@@ -33,13 +30,7 @@ function Tutorial(props) {
   return (
     <div className="tutorial-section">
       <span className="tutorial-title">Take your business further</span>
-      <FontAwesomeIcon
-        onClick={() => {
-          window.scrollTo({ top: 550, behavior: "smooth" });
-        }}
-        className="tutorial-scroll-down"
-        icon={faArrowDown}
-      />
+
       <span className="tutorial-sub-title">Online registration</span>
       <div className="card-details-wrapper">
         {cardDetails.map((cardDetail) => (
