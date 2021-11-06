@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "screens/UserAdmissionScreen/UserAdmission.css";
 import Logo from "assets/logo.png";
 import FacebookLogo from "assets/Icon/facebook.png";
 import GoogleLogo from "assets/Icon/google.png";
@@ -11,6 +10,7 @@ import {
   faEye,
 } from "@fortawesome/fontawesome-free-solid";
 import { Link } from "react-router-dom";
+
 function LoginForm(props) {
   const [functionalIcon, setFunctionalIcon] = useState({
     enableRemoveText: false,
@@ -66,7 +66,6 @@ function LoginForm(props) {
   };
 
   return (
-    
     <div className="login-section">
       <div className="login-form">
         <div className="login-form-wrapper">
@@ -77,10 +76,16 @@ function LoginForm(props) {
           <div
             className="login-input-wrapper"
             onMouseOver={() =>
-              setFunctionalIcon({ ...functionalIcon, enableRemoveText: true })
+              setFunctionalIcon({
+                ...functionalIcon,
+                enableRemoveText: true,
+              })
             }
             onMouseLeave={() =>
-              setFunctionalIcon({ ...functionalIcon, enableRemoveText: false })
+              setFunctionalIcon({
+                ...functionalIcon,
+                enableRemoveText: false,
+              })
             }
           >
             <div className="form-label-login">Email</div>

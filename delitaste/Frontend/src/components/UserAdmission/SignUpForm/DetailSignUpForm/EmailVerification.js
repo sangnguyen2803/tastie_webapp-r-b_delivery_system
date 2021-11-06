@@ -12,8 +12,8 @@ import PropTypes from "prop-types";
 import {
   setRegisterStep,
   setRegisterFormData,
-} from "actions/UserAdmission/registerActions";
-import { loadRegisterForm } from "actions/UserAdmission/formActions";
+} from "store/actions/UserAdmission/registerActions";
+import { loadRegisterForm } from "store/actions/UserAdmission/formActions";
 function EmailVerification({
   submitedFormData,
   setRegisterStep,

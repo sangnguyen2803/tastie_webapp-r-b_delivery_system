@@ -11,7 +11,7 @@ import {
 import { Link } from "react-router-dom";
 import CategoryDetail from "./CategoryDetail";
 import "./SubNavBar.css";
-import Breadcrumbs from "components/Common/Breadcrumbs/Breadcrumbs";
+import Breadcrumbs from "components/Commons/Breadcrumbs/Breadcrumbs";
 
 function SubNavBar(variant = true) {
   const [categoryContent, setCategoryContent] = useState({
@@ -52,9 +52,6 @@ function SubNavBar(variant = true) {
               categoryContent={categoryContent}
               setCategoryContent={setCategoryContent}
             />
-          </div>
-          <div className="nav-bread-crumbs">
-            <Breadcrumbs />
           </div>
           <div className="nav-feature-1">
             <div className="nav-category">
@@ -98,6 +95,9 @@ function SubNavBar(variant = true) {
             </div>
           </div>
         </div>
+      </div>
+      <div className="nav-bread-crumbs">
+        <Breadcrumbs />
       </div>
     </>
   );

@@ -21,8 +21,8 @@ import { connect } from "react-redux";
 import {
   setRegisterStep,
   setRegisterFormData,
-} from "actions/UserAdmission/registerActions";
-import { loadRegisterForm } from "actions/UserAdmission/formActions";
+} from "store/actions/UserAdmission/registerActions";
+import { loadRegisterForm } from "store/actions/UserAdmission/formActions";
 import PropTypes from "prop-types";
 import { validateSignUpForm1 } from "utils/FormUtils/form-validate";
 import { Formik, ErrorMessage, Form, Field } from "formik";
@@ -41,7 +41,6 @@ function DetailSignUpForm1({
     password1: "",
     password2: "",
   });
-
   const doSubmit = () => {
     let user_captcha_value =
       document.getElementById("user_captcha_input").value;
@@ -54,7 +53,6 @@ function DetailSignUpForm1({
       document.getElementById("user_captcha_input").value = "";
     }
   };
-
   useEffect(() => {
     loadCaptchaEnginge(6);
   }, []);
@@ -78,14 +76,8 @@ function DetailSignUpForm1({
       password,
     };
     setRegisterFormData(formData);
-    //validate
-
-    //const err = validate(formData) //err - YUP
-
     const msg = "Check your email to get code.";
     loadRegisterForm("email_verification", msg);
-
-    //validate registration form
   };
 
   const initalValues = {
@@ -129,10 +121,6 @@ function DetailSignUpForm1({
       password: values.password1,
     };
     setRegisterFormData(formData);
-    //validate
-
-    //const err = validate(formData) //err - YUP
-
     const msg = "Check your email to get code.";
     loadRegisterForm("email_verification", msg);
   };
@@ -329,7 +317,7 @@ function DetailSignUpForm1({
                 name="user_captcha_input"
                 type="text"
                 autoComplete="off"
-              ></input>
+              />
             </div>
             <br />
             <div className="policy-check">
@@ -345,7 +333,6 @@ function DetailSignUpForm1({
 
             <button
               className="btn-login-form btn-sign-up-position"
-              // onClick={(e) => onSubmitRegistrationForm(e)}
               type="submit"
             >
               <div className="none-icon"></div>

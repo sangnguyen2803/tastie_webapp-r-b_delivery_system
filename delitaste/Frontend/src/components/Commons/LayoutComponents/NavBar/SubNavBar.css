@@ -170,6 +170,7 @@
 }
 
 .nav-bread-crumbs {
+  position: absolute;
   color: #d9d9d9;
   display: flex;
   flex-direction: row;

@@ -3,7 +3,7 @@ import {
   SET_USER_FORM_DATA,
   REGISTER_SUCCESS,
   REGISTER_FAIL,
-} from "actions/types";
+} from "store/actions/types";
 
 export const setRegisterStep = (stepStyle) => (dispatch) => {
   const stepStyling = {

@@ -1,4 +1,4 @@
-import { SET_REGISTER_STEP, SET_USER_FORM_DATA } from "actions/types";
+import { SET_REGISTER_STEP, SET_USER_FORM_DATA } from "store/actions/types";
 
 const initialState = {
   styling: [

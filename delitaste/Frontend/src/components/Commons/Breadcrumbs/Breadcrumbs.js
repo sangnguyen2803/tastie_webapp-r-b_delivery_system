@@ -3,9 +3,10 @@ import useBreadcrumbs from "use-react-router-breadcrumbs";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight } from "@fortawesome/fontawesome-free-solid";
 import "./Breadcrumbs.css";
+import { routeConfig } from "screens/routeConfig";
 import { noAuto } from "@fortawesome/fontawesome-svg-core";
 const Breadcrumbs = () => {
-  const breadcrumbs = useBreadcrumbs();
+  const breadcrumbs = useBreadcrumbs(routeConfig);
   const isLast = (ci) => {
     return ci === breadcrumbs.length - 1;
   };

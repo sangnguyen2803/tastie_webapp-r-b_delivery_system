@@ -1,22 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom";
+
+import RootScreen from "screens/RootScreen";
 import "./index.css";
-import UserAdmission from "screens/UserAdmissionScreen/UserAdmission";
-import MerchantRegistration from "./screens/MerchantRegistrationScreen/MerchantRegistration";
-import Homepage from "./components/HomePage/Homepage";
 import reportWebVitals from "./reportWebVitals";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./i18n";
 
 ReactDOM.render(
   <React.StrictMode>
-    <Router>
-      <Switch>
-        <Route exact path="/" component={Homepage} />
-        <Route path="/auth" component={UserAdmission} />
-        <Route path="/mms" component={MerchantRegistration} />
-      </Switch>
-    </Router>
+    <RootScreen />
   </React.StrictMode>,
   document.getElementById("root")
 );

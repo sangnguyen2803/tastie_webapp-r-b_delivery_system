@@ -1,4 +1,4 @@
-import { LOAD_REGISTER_FORM } from "actions/types";
+import { LOAD_REGISTER_FORM } from "store/actions/types";
 
 const initialState = {
   currentForm: "account_registration",

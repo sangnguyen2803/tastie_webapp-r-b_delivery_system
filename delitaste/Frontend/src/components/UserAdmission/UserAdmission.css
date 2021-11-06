@@ -2,7 +2,7 @@ body {
   margin: 0px;
   padding: 0px;
   height: 100%;
-  font-family: "Noto Sans JP", sans-serif;
+  font-family: "Noto Sans JP", sans-serif !important;
 }
 /*Login Section*/
 .login-container {
@@ -136,9 +136,9 @@ body {
   font-size: 15px;
 }
 
-/* .form-text-field:hover {
+.form-text-field:hover {
   border: 2px #d30069 solid;
-} */
+}
 .form-header {
   display: flex;
   flex-direction: row;

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import "screens/UserAdmissionScreen/UserAdmission.css";
 import RegisterStep from "./RegisterStep";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+
 import DetailSignUpForm1 from "./DetailSignUpForm/DetailSignUpForm1";
 import DetailSignUpForm2 from "./DetailSignUpForm/DetailSignUpForm2";
 import EmailVerification from "./DetailSignUpForm/EmailVerification";
