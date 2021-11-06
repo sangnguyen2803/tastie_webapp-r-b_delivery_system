@@ -8,11 +8,11 @@ html {
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
-  background-size: cover;
 }
 
 .main {
-  background: url(assets/home_banner.jpg) no-repeat center center fixed;
+  background: url(assets/home_banner.png) no-repeat center center fixed;
+  background-size: cover;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;

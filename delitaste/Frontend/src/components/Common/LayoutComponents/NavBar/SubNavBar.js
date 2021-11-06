@@ -11,6 +11,7 @@ import {
 import { Link } from "react-router-dom";
 import CategoryDetail from "./CategoryDetail";
 import "./SubNavBar.css";
+import Breadcrumbs from "components/Common/Breadcrumbs/Breadcrumbs";
 
 function SubNavBar(variant = true) {
   const [categoryContent, setCategoryContent] = useState({
@@ -20,7 +21,7 @@ function SubNavBar(variant = true) {
   const [dropdownStatus, setDropdownStatus] = useState(
     variant ? faChevronUp : faChevronDown
   );
-  
+
   const useEffect = () => {
     setCategoryContent({ ...CategoryDetail, content: { clothes: {} } });
   };
@@ -39,7 +40,7 @@ function SubNavBar(variant = true) {
               setCategoryContent({ ...categoryContent, enable: false });
             }}
           >
-            <div className="nav-category-item">
+            <div className="head-sub-nav-item">
               <FontAwesomeIcon className="nav-icon-prefix" icon={faBars} />
               <div className="nav-text"> Category </div>
               <FontAwesomeIcon
@@ -52,29 +53,21 @@ function SubNavBar(variant = true) {
               setCategoryContent={setCategoryContent}
             />
           </div>
+          <div className="nav-bread-crumbs">
+            <Breadcrumbs />
+          </div>
           <div className="nav-feature-1">
             <div className="nav-category">
               <div className="nav-text"> Today's Deals </div>
             </div>
-
-            <div className="nav-category">
-              <div className="nav-text"> Restaurants </div>
-            </div>
-
-            <div className="nav-category">
-              <div className="nav-text"> Homemade Food </div>
-            </div>
-
             <div className="nav-category">
               <div className="nav-text"> Trendings </div>
             </div>
-
             <div className="nav-category">
-              <div className="nav-text"> Premium </div>
+              <div className="nav-text"> W-Cuisine </div>
             </div>
-
             <div className="nav-category">
-              <div className="nav-text"> Vouchers </div>
+              <div className="nav-text"> Pre-order </div>
             </div>
           </div>
         </div>
@@ -89,7 +82,31 @@ function SubNavBar(variant = true) {
               <div className="nav-text"> Help</div>
             </div>
           </div>
-          <div
+          <div className="nav-category">
+            <div className="nav-category-item">
+              <FontAwesomeIcon
+                className="nav-icon-prefix"
+                icon={faDollarSign}
+              />
+              <div className="nav-text"> Currency</div>
+            </div>
+          </div>
+          <div className="nav-category">
+            <div className="nav-category-item">
+              <FontAwesomeIcon className="nav-icon-prefix" icon={faGlobe} />
+              <div className="nav-text"> Region</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
+
+export default SubNavBar;
+
+/*
+<div
             className="nav-category-main"
             onMouseOver={() => {
               setDropdownStatus(faChevronUp);
@@ -112,16 +129,4 @@ function SubNavBar(variant = true) {
               />
             </div>
           </div>
-          <div className="nav-category">
-            <div className="nav-category-item">
-              <FontAwesomeIcon className="nav-icon-prefix" icon={faGlobe} />
-              <div className="nav-text"> Region</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </>
-  );
-}
-
-export default SubNavBar;
+*/

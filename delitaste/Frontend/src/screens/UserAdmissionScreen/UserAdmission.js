@@ -28,7 +28,6 @@ function LoginPage(props) {
 
             <div className="login-wrapper">
               <div className="brand-banner">
-                <Breadcrumbs />
                 <div className="slide-show-wrapper">
                   <SlideShow
                     interval={8000}

@@ -21,8 +21,15 @@
   flex-direction: row;
   flex-wrap: nowrap;
   justify-content: center;
-  gap: 3%;
-  width: 100%;
+  gap: 2%;
+  width: 100px;
+}
+
+.head-sub-nav-item {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
 }
 
 .nav-menu-prefix {
@@ -30,13 +37,12 @@
   color: #fff;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
   align-items: center;
   text-decoration: none;
   padding: 0% 0%;
   height: 100%;
   cursor: pointer;
-  width: 70%;
+  width: 90%;
   gap: 2px;
 }
 
@@ -48,10 +54,8 @@
   justify-content: flex-end;
   align-items: center;
   text-decoration: none;
-  padding: 0% 2%;
   height: 100%;
   cursor: pointer;
-  width: 40%;
   gap: 2px;
 }
 .nav-element {
@@ -144,53 +148,54 @@
 .nav-category-surfix {
   color: #d9d9d9;
   width: 20%;
-  padding: 1% 1% 1% 1%;
+  padding: 8px 5% 8px 5%;
   background: inherit;
 }
 .nav-category-surfix:hover {
   color: #c59700;
   width: 25%;
-  padding: 1% 1% 1% 1%;
+  padding: 8px 5% 8px 5%;
   background: inherit;
 }
 
 .nav-category-main {
   color: #d9d9d9;
-  padding: 1% 1% 1% 1%;
-
-  width: 25%;
+  padding: 8px 3% 8px 2%;
+  width: 10%;
   background: inherit;
 }
 
 .nav-category-main:hover {
-  color: #d9d9d9;
-  width: 25%;
-  padding: 1% 1% 1% 1%;
   background-color: #270000e7;
 }
 
+.nav-bread-crumbs {
+  color: #d9d9d9;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
 .nav-category {
   color: #d9d9d9;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  width: 20%;
   background: inherit;
+  width: 100px;
 }
 
 .nav-category:hover {
   color: #c59700;
-  width: 20%;
   background: inherit;
 }
 .nav-feature-1 {
-  width: 100%;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
   justify-content: flex-start;
   align-content: center;
+  margin-left: 2%;
 }
 .nav-feature-2 {
   display: flex;
@@ -228,6 +233,9 @@
   .nav-feature-1 {
     display: none !important;
   }
+  .breadcrumb {
+    display: none !important;
+  }
 }
 /* 781 -> 1366 */
 @media only screen and (max-width: 1366px) and (min-width: 781px) {
@@ -241,7 +249,7 @@
     color: #fff;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
     text-decoration: none;
     padding: 0 2%;
@@ -252,6 +260,12 @@
   }
   .nav-menu-surfix {
     width: 100%;
+  }
+  .breadcrumb {
+    display: none !important;
+  }
+  .nav-category-main {
+    width: 25% !important;
   }
 }
 /* 781 -> Fullscreen */

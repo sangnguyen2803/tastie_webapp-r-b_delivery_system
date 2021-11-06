@@ -2,9 +2,6 @@ import "./Tutorial.css";
 import TutorialCard from "components/MerchantRegistration/GuidePage/Tutorials/TutorialCard";
 import { useState } from "react";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowDown } from "@fortawesome/fontawesome-free-solid";
-
 import RegistrationProcedureIcon1 from "assets/Banner/merchant-registration-step1.png";
 import RegistrationProcedureIcon2 from "assets/Banner/merchant-registration-step2.png";
 import RegistrationProcedureIcon3 from "assets/Banner/merchant-registration-step3.png";

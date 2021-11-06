@@ -13,7 +13,6 @@ function GuidePage() {
       <div className="guide-page">
         <NavBar />
         <div className="guide-page-containter">
-          <BreadCrumbs />
           <GuideBanner />
           <Tutorial />
         </div>
