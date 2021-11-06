@@ -40,6 +40,21 @@
   width: 50%;
 }
 
+/* error styling */
+
+.error {
+  border: 2px #d30069 solid;
+}
+
+.sign-up-firstname.error::placeholder,
+.sign-up-lastname.error::placeholder,
+.sign-up-email.error::placeholder,
+.sign-up-phonenumber.error::placeholder,
+.sign-up-password.error::placeholder,
+.sign-up-password-recheck.error::placeholder {
+  color: #d30069;
+}
+
 .captcha-wrapper {
   display: inline-block;
   margin-top: 6%;

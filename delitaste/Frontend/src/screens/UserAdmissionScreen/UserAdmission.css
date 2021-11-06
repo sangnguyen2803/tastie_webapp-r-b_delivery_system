@@ -144,9 +144,9 @@ html {
   font-size: 15px;
 }
 
-.form-text-field:hover {
+/* .form-text-field:hover {
   border: 2px #d30069 solid;
-}
+} */
 .form-header {
   display: flex;
   flex-direction: row;
