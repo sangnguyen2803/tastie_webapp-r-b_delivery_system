@@ -1,5 +1,6 @@
 import "./GuideBanner.css";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 function GuideBanner(props) {
   const [bannerContent, setBannerContent] = useState({
@@ -19,7 +20,10 @@ function GuideBanner(props) {
           </h1>
           <p className="guide-description">{bannerContent.description}</p>
           <div className="btn-guide-wrapper">
-            <button className="btn-guide-get-started">Get started</button>
+            <Link to="/merchant-registration/sign-contract">
+              <button className="btn-guide-get-started">Get started</button>
+            </Link>
+
             <button
               className="btn-guide-more-details"
               onClick={() => {

@@ -1,0 +1,149 @@
+.sign-contract-form {
+  background: url("assets/banner.png") no-repeat center center fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.sign-contract-form-containter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+.contract-form-wrapper {
+  font-family: "Nunito", sans-serif;
+  border-radius: 5px;
+  background-color: rgb(247, 247, 247);
+  margin-top: 4%;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  height: 1000px;
+}
+.contract-header-text {
+  font-size: 20px;
+  align-self: flex-start;
+  margin: 1.5% 0% 0.1% 8%;
+  letter-spacing: 0.05rem;
+  font-weight: bold;
+}
+.contract-header-sub-text {
+  font-size: 16px;
+  align-self: flex-start;
+  margin: 0.5% 8% 1.5% 8%;
+  font-weight: bold;
+}
+.contract-pdf-viewer {
+  width: 85%;
+  height: 720px;
+  border-radius: 5px;
+  border: 1px rgb(102, 102, 102) solid;
+}
+.contract-agree-check {
+  -webkit-appearance: none; /*hides the default checkbox*/
+  height: 40px;
+  width: 40px;
+  position: relative;
+  top: 20px;
+  left: 20px;
+  transition: 0.1s;
+  background-color: #ffffff;
+  text-align: center;
+  font-weight: 600;
+  color: white;
+  border-radius: 3px;
+  outline: none;
+  border: 2px #747474 solid;
+}
+
+.contract-agree-check:checked {
+  background-color: #ff4400;
+}
+
+.contract-agree-check:before {
+  content: " ";
+}
+.contract-agree-check:checked:before {
+  font-size: 26px;
+  content: "✔";
+}
+
+.contract-agree-check:hover {
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+.contract-agree-section {
+  margin-top: 2%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-content: center;
+  width: 85%;
+  height: 100px;
+}
+.contract-agree-check-wrapper {
+  width: 10%;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+.contract-agree-description {
+  font-size: 16px;
+  width: 95%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+}
+.btn-sign-contract-wrapper {
+  margin: 6% 0 8% 0;
+  display: flex;
+  width: 50%;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn-sign-contract-wrapper a {
+  text-decoration: none;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.btn-sign-contract-back {
+  padding: 0% 15% 0% 15%;
+  height: 40px;
+  font-size: 16px;
+  background: rgb(102, 102, 102);
+  color: white;
+  border: none;
+  cursor: pointer;
+
+  border-radius: 5px;
+}
+
+.btn-sign-contract-back:hover {
+  background: rgb(122, 122, 122);
+}
+
+.btn-sign-contract-next {
+  padding: 0% 15% 0% 15%;
+  height: 40px;
+  font-size: 16px;
+  background: rgb(148, 0, 0);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 3%;
+}
+
+.btn-sign-contract-next:hover {
+  background: rgb(175, 0, 0);
+}

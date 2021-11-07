@@ -149,7 +149,7 @@ function LoginForm(props) {
           </div>
           <div className="label-redirect-sign-up">
             Not a member of Delitaste yet?
-            <Link className="redirect-sign-up" to="/auth/sign-up">
+            <Link className="redirect-sign-up" to="/sign-up">
               {" "}
               Sign up
             </Link>

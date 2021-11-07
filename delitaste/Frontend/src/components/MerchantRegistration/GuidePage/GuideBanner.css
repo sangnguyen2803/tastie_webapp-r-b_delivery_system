@@ -35,14 +35,6 @@
   word-spacing: 0.1rem;
 }
 
-.btn-guide-wrapper {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: flex-start;
-  gap: 2%;
-  width: 100%;
-}
 .btn-guide-get-started {
   width: 18%;
   height: 40px;
@@ -52,6 +44,7 @@
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  margin-right: 3%;
 }
 .btn-guide-get-started:hover {
   background: rgb(175, 0, 0);

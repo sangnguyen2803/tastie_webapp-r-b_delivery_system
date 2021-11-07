@@ -1,86 +1,33 @@
-import React, { useState, useEffect, useRef } from "react";
-import Fragment from "react";
-import "./DetailSignUpForm.css";
-import {
-  loadCaptchaEnginge,
-  LoadCanvasTemplate,
-  LoadCanvasTemplateNoReload,
-  validateCaptcha,
-} from "react-simple-captcha";
-
+import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import * as yup from "yup";
+import { Formik, ErrorMessage, Form, Field } from "formik";
+//utils
+import { validateSignUpForm1 } from "utils/FormUtils/form-validate";
+//assets
+import "./DetailSignUpForm.css";
 import {
   faUser,
   faChevronRight,
-  faCheckCircle,
-  faCheckSquare,
   faExclamationCircle,
-  faExclamation,
 } from "@fortawesome/fontawesome-free-solid";
-import { connect } from "react-redux";
+//store
 import {
   setRegisterStep,
   setRegisterFormData,
 } from "store/actions/UserAdmission/registerActions";
 import { loadRegisterForm } from "store/actions/UserAdmission/formActions";
-import PropTypes from "prop-types";
-import { validateSignUpForm1 } from "utils/FormUtils/form-validate";
-import { Formik, ErrorMessage, Form, Field } from "formik";
-import * as yup from "yup";
+
+//components
 
 function DetailSignUpForm1({
   setRegisterStep,
   setRegisterFormData,
   loadRegisterForm,
 }) {
-  const [userFormData, setUserFormData] = useState({
-    firstname: "",
-    lastname: "",
-    email: "",
-    phone: "",
-    password1: "",
-    password2: "",
-  });
-  const doSubmit = () => {
-    let user_captcha_value =
-      document.getElementById("user_captcha_input").value;
-    if (validateCaptcha(user_captcha_value) == true) {
-      alert("Captcha Matched");
-      loadCaptchaEnginge(6);
-      document.getElementById("user_captcha_input").value = "";
-    } else {
-      alert("Captcha Does Not Match");
-      document.getElementById("user_captcha_input").value = "";
-    }
-  };
-  useEffect(() => {
-    loadCaptchaEnginge(6);
-  }, []);
-  const { firstname, lastname, email, phone, password1, password2 } =
-    userFormData;
-  const onChangeRegistrationForm = (e) =>
-    setUserFormData({
-      ...userFormData,
-      [e.target.name]: e.target.value,
-    });
-
-  const onSubmitRegistrationForm = async (e) => {
-    e.preventDefault();
-    setRegisterStep(["finished", "active", "default", "default"]);
-    const password = password1;
-    const formData = {
-      firstname,
-      lastname,
-      email,
-      phone,
-      password,
-    };
-    setRegisterFormData(formData);
-    const msg = "Check your email to get code.";
-    loadRegisterForm("email_verification", msg);
-  };
-
-  const initalValues = {
+  const initialValues = {
     firstname: "",
     lastname: "",
     email: "",
@@ -89,30 +36,9 @@ function DetailSignUpForm1({
     password2: "",
   };
 
-  const validationSchema = yup.object({
-    firstname: yup.string().required("This field is required"),
-    lastname: yup.string().required("This field is required"),
-    email: yup
-      .string()
-      .email("Invalid email address")
-      .required("This field is required"),
-    phone: yup.string().required("This field is required"),
-    password1: yup.string().required("This field is required"),
-    password2: yup.string().required("This field is required"),
-  });
-
-  const renderError = (message) => <p className="text-danger">{message}</p>;
-
-  // const handleSubmitForm1 = async (event) => {
-  //   event.preventDefault();
-  //   let isValid = await validateSignUpForm1.isValid(userFormData);
-  //   console.log(isValid);
-  // };
-
-  const handleSubmitForm1 = (values) => {
-    console.log("Values", values);
+  const handleSubmitForm = (values) => {
+    console.log(values);
     setRegisterStep(["finished", "active", "default", "default"]);
-    const password = password1;
     const formData = {
       firstname: values.firstname,
       lastname: values.lastname,
@@ -128,14 +54,12 @@ function DetailSignUpForm1({
   //jsx
   return (
     <Formik
-      initialValues={initalValues}
+      initialValues={initialValues}
       validationSchema={validateSignUpForm1}
-      onSubmit={(values) => handleSubmitForm1(values)}
+      onSubmit={(values) => handleSubmitForm(values)}
     >
       {(formikProps) => {
         const { values, errors, touched } = formikProps;
-        // console.log({ values, errors, touched });
-
         return (
           <Form className="sign-up-form-input-wrapper">
             <div className="form-title-wrapper">
@@ -153,8 +77,6 @@ function DetailSignUpForm1({
                   }
                   type="text"
                   name="firstname"
-                  // value={firstname}
-                  // onChange={(e) => onChangeRegistrationForm(e)}
                   placeholder={
                     errors.firstname && touched.firstname
                       ? errors.firstname
@@ -308,17 +230,6 @@ function DetailSignUpForm1({
                 />
               )}
             </div>
-
-            <div className="captcha-wrapper">
-              <LoadCanvasTemplateNoReload />
-              <input
-                placeholder="Enter Captcha"
-                className="captcha-field"
-                name="user_captcha_input"
-                type="text"
-                autoComplete="off"
-              />
-            </div>
             <br />
             <div className="policy-check">
               Delitaste may use your phone number to call or send text messages
@@ -330,7 +241,6 @@ function DetailSignUpForm1({
               and <a className="policy-link">Privacy Notice</a>.
             </div>
             <br />
-
             <button
               className="btn-login-form btn-sign-up-position"
               type="submit"
