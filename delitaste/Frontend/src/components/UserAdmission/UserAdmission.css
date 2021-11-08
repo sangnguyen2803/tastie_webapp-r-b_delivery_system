@@ -413,7 +413,7 @@ a.sign-up-redirect:link {
 
 .slide-show-wrapper {
   z-index: 0;
-  margin-top: 8%;
+  margin-top: 5%;
   position: relative;
   left: 5%;
   display: flex;
@@ -438,6 +438,10 @@ a.sign-up-redirect:link {
 }
 .s-label:hover {
   background-color: rgb(117, 0, 0);
+}
+.register-step-container {
+  background-color: rgb(26, 26, 26);
+  width: 100%;
 }
 
 @media all and (max-width: 780px) {

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import MainNavBar from "./MainNavBar";
 import SubNavBar from "./SubNavBar";
-import { faBars } from "@fortawesome/fontawesome-free-solid";
+import Breadcrumbs from "components/Commons/Breadcrumbs/Breadcrumbs";
 import "./NavBar.css";
 
 function NavBar() {
@@ -10,6 +10,10 @@ function NavBar() {
       <div className="navbars-wrapper">
         <MainNavBar />
         <SubNavBar variant={true} />
+        <div className="nav-bread-crumbs">
+          <Breadcrumbs />
+        </div>
+        <div className="darken-mask"></div>
       </div>
     </>
   );

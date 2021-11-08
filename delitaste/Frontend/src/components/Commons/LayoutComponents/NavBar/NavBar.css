@@ -4,3 +4,29 @@
   top: 50%; /* Position the navbar at the top of the page */
   width: 100%; /* Full width */
 }
+a {
+  text-decoration: none;
+}
+.darken-mask {
+  z-index: 100;
+  width: 100wv;
+  height: 1766px;
+  display: block;
+  opacity: 0.6;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-width: 1000 px;
+  height: 100%;
+  display: none;
+  background-color: #000;
+  -ms-filter: opacity(0.6);
+  filter: alpha(opacity=60);
+  -webkit-opacity: 0.6;
+  -moz-opacity: 0.6;
+  -o-opacity: 0.6;
+  opacity: 0.6;
+  transform: translate3d(0, 0, 0);
+  z-index: 4;
+}

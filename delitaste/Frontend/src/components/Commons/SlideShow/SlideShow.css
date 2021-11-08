@@ -4,6 +4,12 @@
   color: rgb(255, 255, 255);
   font-family: "Patua One", cursive;
 }
+
+.slide-name-icon {
+  font-size: 18px;
+  color: #ebebeb;
+  margin-right: 0.5%;
+}
 span.slideshow-header {
   display: block;
   position: relative;
@@ -11,16 +17,38 @@ span.slideshow-header {
   font-weight: 300;
   font-size: 40px;
   color: #eab200;
-  margin-top: 8%;
+  margin-top: 6%;
   margin-left: 20%;
   padding-bottom: 1%;
 }
-
+.slide-name {
+  position: absolute;
+  margin-top: -2%;
+  margin-left: 3%;
+  font-size: 17px;
+  width: 100%;
+  color: #dddddd;
+  letter-spacing: 0.05rem;
+  text-transform: uppercase;
+}
 section.slideshow {
-  border-radius: 10px;
   width: 90%;
   height: 510px;
-  background-color: rgb(99, 0, 0);
+  padding-top: 5.5%;
+  background: linear-gradient(
+    to bottom,
+    rgba(19, 0, 0, 0.5),
+    rgb(105, 0, 0, 1)
+  );
+  clip-path: polygon(
+    28% 4%,
+    30% 10%,
+    100% 10%,
+    100% 100%,
+    0 100%,
+    0% 60%,
+    0 4%
+  );
 }
 section.slideshow div.slide-holder {
   display: flex;
@@ -45,7 +73,6 @@ section.slideshow section.slide div.slide-thumbnail {
   background-size: cover;
   background-position: center;
   border-radius: 6px;
-  box-shadow: 5px 5px 6px #0000009c;
 }
 section.slideshow section.slide div.slide-thumbnail-preview {
   width: 100%;
@@ -54,7 +81,6 @@ section.slideshow section.slide div.slide-thumbnail-preview {
   background-size: cover;
   background-position: center;
   border-radius: 6px;
-  box-shadow: 5px 5px 6px #0000009c;
 }
 section.slideshow section.slide div.slide-thumbnail-preview:hover {
   width: 100%;

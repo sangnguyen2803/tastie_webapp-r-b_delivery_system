@@ -10,20 +10,40 @@
   align-items: center;
   justify-content: flex-start;
 }
+.contract-form-header {
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  background-color: rgb(37, 37, 37);
+
+  font-family: "Noto Sans JP", sans-serif;
+  color: rgb(235, 235, 235);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  height: 40px;
+  width: 100%;
+  gap: 5px;
+}
+.contract-form-header span {
+  margin-left: 2%;
+  font-size: 16px;
+  font-weight: bold;
+}
 .contract-form-wrapper {
   font-family: "Nunito", sans-serif;
-  border-radius: 5px;
+  border-radius: 10px;
   background-color: rgb(247, 247, 247);
-  margin-top: 4%;
+  margin: 4% 0%;
   width: 80%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  height: 1000px;
+  height: 820px;
 }
 .contract-header-text {
-  font-size: 20px;
+  font-size: 18px;
   align-self: flex-start;
   margin: 1.5% 0% 0.1% 8%;
   letter-spacing: 0.05rem;
@@ -36,16 +56,15 @@
   font-weight: bold;
 }
 .contract-pdf-viewer {
-  width: 85%;
-  height: 720px;
+  width: 70%;
+  height: 420px;
   border-radius: 5px;
   border: 1px rgb(102, 102, 102) solid;
 }
 .contract-agree-check {
   -webkit-appearance: none; /*hides the default checkbox*/
-  height: 40px;
-  width: 40px;
-  position: relative;
+  height: 30px;
+  width: 30px;
   top: 20px;
   left: 20px;
   transition: 0.1s;
@@ -66,7 +85,7 @@
   content: " ";
 }
 .contract-agree-check:checked:before {
-  font-size: 26px;
+  font-size: 18px;
   content: "✔";
 }
 
@@ -88,11 +107,12 @@
   width: 10%;
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
+  align-items: center;
+  justify-content: center;
 }
 .contract-agree-description {
   font-size: 16px;
-  width: 95%;
+  width: 90%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -100,7 +120,7 @@
   font-weight: bold;
 }
 .btn-sign-contract-wrapper {
-  margin: 6% 0 8% 0;
+  margin: 2% 0 2% 0;
   display: flex;
   width: 50%;
   flex-direction: row;

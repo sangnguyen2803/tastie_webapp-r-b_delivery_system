@@ -1,5 +1,4 @@
 import "./TutorialCard.css";
-import { useState } from "react";
 
 function TutorialCard({ card }) {
   return (

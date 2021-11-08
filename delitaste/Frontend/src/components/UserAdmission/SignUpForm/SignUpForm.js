@@ -48,7 +48,10 @@ function SignUpForm({ form }) {
   return (
     <div className="sign-up-section">
       <div className="sign-up-form">
-        <RegisterStep />
+        <div className="register-step-container">
+          <RegisterStep />
+        </div>
+
         <div className="sign-up-form-wrapper">{loadSignUpForm()}</div>
       </div>
     </div>

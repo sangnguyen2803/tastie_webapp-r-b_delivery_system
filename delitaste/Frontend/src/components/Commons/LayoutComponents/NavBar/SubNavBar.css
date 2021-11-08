@@ -1,18 +1,16 @@
 .nav-wrapper {
   font-family: "Noto Sans JP", sans-serif;
   background: rgb(61, 0, 0);
-  height: 19px;
+  height: 35px;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-  justify-content: space-between;
-  padding: 0.5rem 0%;
   z-index: 10;
   width: 100%;
 }
 
 .nav-bars {
-  left: 10%;
+  left: 15%;
   width: 40%;
   height: auto;
 }
@@ -25,13 +23,6 @@
   width: 100px;
 }
 
-.head-sub-nav-item {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: center;
-}
-
 .nav-menu-prefix {
   font-size: 15px;
   color: #fff;
@@ -40,7 +31,7 @@
   align-items: center;
   text-decoration: none;
   padding: 0% 0%;
-  height: 100%;
+  height: inherit;
   cursor: pointer;
   width: 90%;
   gap: 2px;
@@ -158,15 +149,31 @@
   background: inherit;
 }
 
-.nav-category-main {
-  color: #d9d9d9;
-  padding: 8px 3% 8px 2%;
-  width: 10%;
-  background: inherit;
+.head-sub-nav-item {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: inherit;
+  width: 100%;
+}
+.head-sub-nav-item:hover {
+  color: #c59700;
+  background-color: #270000e7;
 }
 
-.nav-category-main:hover {
-  background-color: #270000e7;
+.nav-category-main {
+  color: #d9d9d9;
+  width: 12%;
+  background: inherit;
+  height: inherit;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
 
 .nav-bread-crumbs {

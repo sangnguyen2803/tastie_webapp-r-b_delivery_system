@@ -40,6 +40,10 @@ function SubNavBar(variant = true) {
               setCategoryContent({ ...categoryContent, enable: false });
             }}
           >
+            <CategoryDetail
+              categoryContent={categoryContent}
+              setCategoryContent={setCategoryContent}
+            />
             <div className="head-sub-nav-item">
               <FontAwesomeIcon className="nav-icon-prefix" icon={faBars} />
               <div className="nav-text"> Category </div>
@@ -48,10 +52,6 @@ function SubNavBar(variant = true) {
                 icon={dropdownStatus}
               />
             </div>
-            <CategoryDetail
-              categoryContent={categoryContent}
-              setCategoryContent={setCategoryContent}
-            />
           </div>
           <div className="nav-feature-1">
             <div className="nav-category">
@@ -95,9 +95,6 @@ function SubNavBar(variant = true) {
             </div>
           </div>
         </div>
-      </div>
-      <div className="nav-bread-crumbs">
-        <Breadcrumbs />
       </div>
     </>
   );
