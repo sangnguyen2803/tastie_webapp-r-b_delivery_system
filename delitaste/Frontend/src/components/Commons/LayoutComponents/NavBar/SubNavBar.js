@@ -31,7 +31,7 @@ function SubNavBar(variant = true) {
         <div className="nav-menu-prefix">
           <div
             className="nav-category-main"
-            onMouseOver={() => {
+            onMouseEnter={() => {
               setDropdownStatus(faChevronUp);
               setCategoryContent({ ...categoryContent, enable: true });
             }}

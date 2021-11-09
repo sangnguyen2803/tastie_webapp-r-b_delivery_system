@@ -4,7 +4,7 @@
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
-  width: 65%;
+  width: 100%;
   height: 65%;
 }
 .search-bar-type {
@@ -16,7 +16,7 @@
   justify-content: center;
   border-top-left-radius: 30px;
   border-bottom-left-radius: 30px;
-  width: 12%;
+  width: 16%;
   line-height: 100%;
   border-left: 2px rgb(189, 138, 0) solid;
   border-top: 2px rgb(189, 138, 0) solid;
@@ -42,7 +42,7 @@
 
 .search-term {
   font-family: "Noto Sans JP", sans-serif;
-  font-size: 14px;
+  font-size: inherit;
   padding-left: 1%;
   display: flex;
   flex-direction: row;
@@ -104,14 +104,19 @@
 }
 
 @media all and (max-width: 780px) {
+  .main-nav-menu-prefix {
+    font-size: 12px !important;
+    width: 98%;
+  }
   .search-bar-type {
     display: none !important;
   }
   .search-bar-wrapper {
-    width: 80% !important;
+    width: 65% !important;
+    margin-left: 2%;
   }
   .search-term {
-    width: 50% !important;
+    width: 100% !important;
     padding-left: 5%;
     border-radius: 2px;
     border: none;
@@ -120,10 +125,20 @@
     display: none;
   }
   .btn-search-wrapper {
+    width: 20%;
     border-radius: 5% !important;
     border: none;
     padding: 0% 1%;
     margin-left: 1%;
+  }
+}
+
+@media all and (max-width: 980px) and (min-width: 781px) {
+  .btn-search-text {
+    display: none !important;
+  }
+  .btn-search-wrapper {
+    width: 10% !important;
   }
 }
 
@@ -132,10 +147,10 @@
     display: none !important;
   }
   .search-bar-wrapper {
-    width: 80% !important;
+    width: 100% !important;
   }
   .search-term {
-    width: 50% !important;
+    width: 60% !important;
     padding-left: 5%;
     border-radius: 2px;
     border: none;
@@ -145,5 +160,6 @@
     border: none;
     padding: 0% 1%;
     margin-left: 1%;
+    width: 15%;
   }
 }

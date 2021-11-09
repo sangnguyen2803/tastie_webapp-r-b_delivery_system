@@ -6,6 +6,7 @@ import NavBar from "components/Commons/LayoutComponents/NavBar/NavBar";
 import Contract from "assets/pdf/contract.pdf";
 import ToolBar from "components/Commons/LayoutComponents/Toolbar/Toolbar";
 import RegisterStep from "components/UserAdmission/SignUpForm/RegisterStep";
+import SideBar from "components/Commons/LayoutComponents/SideBar/SideBar";
 function SignContractForm() {
   return (
     <>
