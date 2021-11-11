@@ -9,11 +9,15 @@ import {
 } from "@fortawesome/fontawesome-free-solid";
 import UKFlag from "assets/Flags/us_flag.jpg";
 import { Link } from "react-router-dom";
+
+//components
+
+import "./MainNavBar.css";
 import SearchBar from "./SearchBar";
 import NavFlyout from "components/Commons/NavFlyout/NavFlyout";
 import Logo from "assets/sub-logo.png";
 import Modal from "components/Commons/Modal/Modal";
-import "./MainNavBar.css";
+import LanguageSettingPanel from "components/Commons/Panel/LanguageSettingPanel";
 
 function MainNavBar() {
   const [accountPanel, setAccountPanel] = useState(false);
@@ -57,7 +61,11 @@ function MainNavBar() {
                 <FontAwesomeIcon className="nav-sub-icon" icon={faCaretDown} />
               </div>
               {languagePanel ? (
-                <NavFlyout width={"300px"} height={"180px"} />
+                <NavFlyout
+                  width={"300px"}
+                  height={"160px"}
+                  components={<LanguageSettingPanel />}
+                />
               ) : (
                 <></>
               )}

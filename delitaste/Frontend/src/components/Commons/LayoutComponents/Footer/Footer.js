@@ -3,10 +3,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 import Logo from "assets/logo.png";
 import { faMapMarkerAlt } from "@fortawesome/fontawesome-free-solid";
-import { withTranslation } from "react-i18next";
+import { useTranslation } from "react-i18next";
 import "./Footer.css";
 
-function Footer({ t }) {
+function Footer(props) {
+  const { t, i18n } = useTranslation();
   return (
     <>
       <div className="footer-wrapper">
@@ -59,10 +60,10 @@ function Footer({ t }) {
         <div className="tail-footer"></div>
       </div>
       <div className="sub-footer-wrapper">
-        <div className="head-footer">{t("Welcome to React")}</div>
+        <div className="head-footer">Footer</div>
       </div>
     </>
   );
 }
 
-export default withTranslation()(Footer);
+export default Footer;

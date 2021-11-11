@@ -1,0 +1,184 @@
+body {
+  margin: 0px;
+  padding: 0px;
+  height: 100%;
+  font-family: "Noto Sans JP", sans-serif !important;
+}
+/*Login Section*/
+.login-container {
+  display: flex;
+  flex-direction: column;
+}
+.login-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-items: flex-start;
+  width: 100%;
+  height: auto;
+}
+
+.brand-banner {
+  width: 65%;
+}
+
+.brand-banner .brand-banner-image {
+  display: block;
+  background-position: center center;
+  background-repeat: repeat;
+  background-size: contain;
+}
+
+.sign-up-section {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: center;
+  width: 35%;
+}
+.sign-up-form {
+  box-shadow: -10px 0px 10px 1px #4141412a;
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  height: 670px;
+  min-height: 625px;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  background: #f4f4f4;
+  background-size: cover;
+  background-position: top center;
+  background-blend-mode: darken;
+  border-radius: 5px;
+}
+.login-form::before,
+.sign-up-form::before {
+  content: "";
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+}
+.login-footer {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.6);
+  background-size: cover;
+  background-position: top center;
+  background-blend-mode: darken;
+}
+.login-footer::before {
+  content: "";
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+}
+
+.login-footer-wrapper {
+  width: 100%;
+}
+
+.brand-logo-image-sign-up {
+  margin-top: 5%;
+  width: 40%;
+  margin-bottom: 2%;
+}
+
+.sign-up-form-wrapper {
+  margin-top: 5%;
+  position: relative;
+  width: 80%;
+  height: inherit;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
+}
+/*slide show*/
+.slide-show-wrapper {
+  z-index: 0;
+  margin-top: 5%;
+  position: relative;
+  left: 5%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.hotline {
+  width: 20%;
+  margin-top: 2%;
+  font-size: 14px;
+}
+.s-label {
+  background-color: rgb(117, 0, 0);
+  text-align: center;
+  border-radius: 10px;
+  height: 20px;
+  font-family: "Noto Sans JP", sans-serif;
+  color: white;
+  cursor: pointer;
+}
+.s-label:hover {
+  background-color: rgb(117, 0, 0);
+}
+.register-step-container {
+  background-color: rgb(26, 26, 26);
+  width: 100%;
+}
+
+@media all and (max-width: 780px) {
+  .sign-up-section,
+  .login-section {
+    width: 100% !important;
+  }
+  .brand-banner {
+    display: none !important;
+  }
+  .sign-up-form,
+  .login-form {
+    height: 800px !important;
+  }
+  .sign-up-form-wrapper {
+    width: 90% !important;
+  }
+  .login-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    width: 100%;
+  }
+
+  .form-label {
+    font-size: 14px !important;
+  }
+  .form-text-field {
+    font-size: 14px;
+  }
+}
+
+@media only screen and (max-width: 1366px) and (min-width: 781px) {
+  .sign-up-section,
+  .login-section {
+    width: 50% !important;
+  }
+
+  .brand-banner {
+    width: 50%;
+  }
+  .sign-up-label-gooogle,
+  .sign-up-label-facebook {
+    width: 70%;
+  }
+}

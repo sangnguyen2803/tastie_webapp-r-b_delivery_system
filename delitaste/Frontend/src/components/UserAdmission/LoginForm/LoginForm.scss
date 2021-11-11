@@ -1,0 +1,175 @@
+$formColor: #f4f4f4;
+$logoColor: #aa0033;
+$formTextColor: #2e2e2e;
+$boxBorderRadius: 5px;
+
+@mixin FlexCol($width, $flexWrap) {
+  width: $width;
+  display: flex;
+  flex-wrap: $flexWrap;
+  flex-direction: column;
+}
+@mixin FlexRow($width, $flexWrap) {
+  width: $width;
+  display: flex;
+  flex-wrap: $flexWrap;
+  flex-direction: row;
+}
+
+.login-section {
+  @include FlexCol(35%, wrap);
+  justify-content: center;
+  .login-form {
+    @include FlexRow(100%, wrap);
+    position: relative;
+    height: 670px;
+    align-items: flex-start;
+    justify-content: center;
+    box-shadow: -10px 0px 10px 1px #4141412a;
+    background: $formColor;
+    border-radius: $boxBorderRadius;
+  }
+}
+
+.login-form-wrapper {
+  @include FlexCol(85%, wrap);
+  position: relative;
+  align-items: center;
+
+  .form-header {
+    @include FlexRow(100%, nowrap);
+    align-items: flex-start;
+    justify-content: center;
+    margin-top: 2%;
+    margin-bottom: 3%;
+
+    .brand-logo-image-login {
+      margin: 5% 0%;
+      height: 75px;
+    }
+    .login-form-title {
+      font-family: "Patua One", cursive;
+      font-size: 45px;
+      margin: 10% 0% 0%-2%;
+      color: $logoColor;
+    }
+  }
+
+  .remember-me-wrapper {
+    @include FlexRow(80%, nowrap);
+    justify-content: flex-start;
+    margin-left: 1%;
+    font-size: 15px;
+    text-align: center;
+    .remember-me {
+    }
+  }
+
+  .login-input-wrapper {
+    @include FlexCol(85%, wrap);
+    justify-content: flex-end;
+    align-items: flex-start;
+
+    .form-label-login {
+      font-weight: 700;
+      font-size: 16px;
+      margin-left: 1%;
+      display: block;
+      color: $formTextColor;
+    }
+    .login-input-username {
+      width: 95%;
+      height: 35px;
+      max-width: 100%;
+      margin-top: 1%;
+      margin-bottom: 1%;
+    }
+    .login-input-password {
+      width: 95%;
+      height: 35px;
+      max-width: 100%;
+      margin-top: 1%;
+      margin-bottom: 1%;
+    }
+    .eye-show-icon,
+    .eye-slash-icon {
+      position: absolute;
+      color: $formTextColor;
+      font-size: 20px;
+      margin-bottom: 14px;
+      margin-left: 78%;
+      cursor: pointer;
+    }
+    .remove-text-icon {
+      position: absolute;
+      color: $formTextColor;
+      font-size: 22px;
+      margin-bottom: 14px;
+      margin-left: 79%;
+      cursor: pointer;
+    }
+  }
+
+  .btn-login-position {
+    margin: 3% 0%;
+    width: 30%;
+  }
+
+  .link-forget-password {
+    cursor: pointer;
+    margin-bottom: 1%;
+    font-weight: 600;
+    a {
+      color: #997500;
+      font-size: 16px;
+      text-align: center;
+      &:hover {
+        color: #ad8500;
+      }
+    }
+  }
+}
+
+.policy,
+.label-redirect-sign-up {
+  font-family: Noto Sans JP, sans-serif;
+  font-size: 15px;
+  text-align: center;
+  margin-top: 4%;
+  color: #252525;
+  width: 80%;
+}
+.redirect-sign-up {
+  font-family: Noto Sans JP, sans-serif;
+  letter-spacing: 0.1rem;
+  font-size: 15px;
+  text-align: center;
+  margin-top: 2%;
+  color: #c79800;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.redirect-sign-up:hover {
+  font-family: Noto Sans JP, sans-serif;
+  letter-spacing: 0.1rem;
+  font-size: 15px;
+  text-align: center;
+  margin-top: 2%;
+  cursor: pointer;
+  color: #dfab00;
+  text-decoration: none;
+  font-weight: bold;
+}
+hr.bottom-seperator {
+  width: 60%;
+  border-top: none;
+  color: #969696;
+}
+a.sign-up-redirect:link {
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  font-size: 14px;
+  text-align: center;
+  margin-top: 4%;
+  color: #969696;
+}

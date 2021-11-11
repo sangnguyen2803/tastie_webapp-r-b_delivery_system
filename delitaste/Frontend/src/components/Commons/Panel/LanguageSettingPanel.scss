@@ -1,0 +1,45 @@
+$formButtonColor: #eab200;
+$formButtonColorOnHover: #ebbd29;
+$formColor: #f4f4f4;
+$logoColor: #aa0033;
+$formTextColor: #2e2e2e;
+$boxBorderRadius: 5px;
+
+@mixin FlexCol($width, $flexWrap) {
+  width: $width;
+  display: flex;
+  flex-wrap: $flexWrap;
+  flex-direction: column;
+}
+@mixin FlexRow($width, $flexWrap) {
+  width: $width;
+  display: flex;
+  flex-wrap: $flexWrap;
+  flex-direction: row;
+}
+
+.language-panel {
+  @include FlexCol(100%, wrap);
+
+  .language-select-container {
+    @include FlexRow(inherit, nowrap);
+    margin: 3% 0%;
+    justify-content: flex-start;
+    align-items: center;
+
+    .language-select {
+      font-size: 14px;
+      width: 25%;
+      color: $formTextColor;
+    }
+    .language-select-wrapper {
+      width: 75%;
+    }
+  }
+}
+
+.btn-language-panel-position {
+  width: 30%;
+  margin-left: 35%;
+  margin-top: 2%;
+}

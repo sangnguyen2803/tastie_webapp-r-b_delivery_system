@@ -3,7 +3,7 @@ import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight } from "@fortawesome/fontawesome-free-solid";
 import NavFlyoutAnchor from "./NavFlyoutAnchor";
-import "./NavFlyout.css";
+import "./NavFlyout.scss";
 
 const NavFlyout = (props) => {
   return (
@@ -13,7 +13,7 @@ const NavFlyout = (props) => {
         className="nav-fly-out-container"
         style={{ width: props.width, height: props.height }}
       >
-        {props.component}
+        {props.components}
       </div>
     </>
   );

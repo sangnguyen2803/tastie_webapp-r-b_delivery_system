@@ -1,26 +1,25 @@
-import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
+import { Formik, ErrorMessage, Form, Field } from "formik";
+import styled from "styled-components";
 import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import * as yup from "yup";
-import { Formik, ErrorMessage, Form, Field } from "formik";
-//utils
-import { validateSignUpForm1 } from "utils/FormUtils/form-validate";
-//assets
-import "./DetailSignUpForm.css";
 import {
   faUser,
   faChevronRight,
   faExclamationCircle,
 } from "@fortawesome/fontawesome-free-solid";
+import { validateSignUpForm1 } from "utils/FormUtils/form-validate";
+//scss
+import "./DetailSignUpForm.css";
+import "style/Common.scss";
 //store
 import {
   setRegisterStep,
   setRegisterFormData,
 } from "store/actions/UserAdmission/registerActions";
 import { loadRegisterForm } from "store/actions/UserAdmission/formActions";
-
 //components
+import FormError from "components/Commons/ErrorHandlers/FormError/FormError";
 
 function DetailSignUpForm1({
   setRegisterStep,
@@ -51,7 +50,6 @@ function DetailSignUpForm1({
     loadRegisterForm("email_verification", msg);
   };
 
-  //jsx
   return (
     <Formik
       initialValues={initialValues}
@@ -99,8 +97,6 @@ function DetailSignUpForm1({
                   }
                   type="text"
                   name="lastname"
-                  // value={lastname}
-                  // onChange={(e) => onChangeRegistrationForm(e)}
                   placeholder={
                     errors.lastname && touched.lastname
                       ? errors.lastname
@@ -118,6 +114,7 @@ function DetailSignUpForm1({
                 )}
               </div>
             </div>
+            <FormError />
             <div className="sign-up-email-wrapper">
               <div className="label-sign-up form-label">Email</div>
               <Field
@@ -241,10 +238,7 @@ function DetailSignUpForm1({
               and <a className="policy-link">Privacy Notice</a>.
             </div>
             <br />
-            <button
-              className="btn-login-form btn-sign-up-position"
-              type="submit"
-            >
+            <button className="btn-form btn-sign-up-position" type="submit">
               <div className="none-icon"></div>
               Sign Up
               <FontAwesomeIcon className="chevron-icon" icon={faChevronRight} />
@@ -267,3 +261,5 @@ export default connect(null, {
   setRegisterFormData,
   loadRegisterForm,
 })(DetailSignUpForm1);
+
+//Styling

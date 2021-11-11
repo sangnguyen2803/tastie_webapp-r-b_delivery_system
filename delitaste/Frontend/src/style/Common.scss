@@ -1,0 +1,172 @@
+$formButtonColor: #eab200;
+$formButtonColorOnHover: #ebbd29;
+$formColor: #f4f4f4;
+$logoColor: #aa0033;
+$formTextColor: #2e2e2e;
+$panelButtonColor: black;
+$boxBorderRadius: 5px;
+
+@mixin FlexCol($width, $flexWrap) {
+  width: $width;
+  display: flex;
+  flex-wrap: $flexWrap;
+  flex-direction: column;
+}
+@mixin FlexRow($width, $flexWrap) {
+  width: $width;
+  display: flex;
+  flex-wrap: $flexWrap;
+  flex-direction: row;
+}
+
+.form-text-field {
+  height: 35px;
+  display: block;
+  border: 2px #6e6e6e solid;
+  font-weight: 400;
+  padding-left: 5%;
+  font-size: 15px;
+  border-radius: 3px;
+  &:hover {
+    border: 2px #d30069 solid;
+  }
+  background: #ffffff;
+}
+
+.panel-text-field {
+  height: 30px;
+  display: block;
+  border: 2px #6e6e6e solid;
+  font-weight: 400;
+  padding-left: 5%;
+  font-size: 14px;
+  border-radius: 3px;
+  &:hover {
+    border: 2px #d30069 solid;
+  }
+  background: #ffffff;
+}
+
+.btn-form {
+  height: 35px;
+  @include FlexRow("", nowrap);
+  align-items: center;
+  justify-content: space-between;
+
+  font-size: 16px;
+  box-sizing: border-box;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+
+  background-color: $formButtonColor;
+  border-radius: 15px;
+  color: $formTextColor;
+  border: none;
+  font-weight: 700;
+  cursor: pointer;
+  &:hover {
+    background-color: $formButtonColorOnHover;
+  }
+  .none-icon {
+    margin-left: 10%;
+  }
+  .chevron-icon {
+    margin-right: 5%;
+  }
+}
+
+.form-seperator {
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+  font-size: 14px;
+  text-align: center;
+  margin: 2% 0%;
+  font-weight: bold;
+}
+
+.btn-external-sign-up {
+  position: relative;
+  color: rgb(255, 255, 255);
+  border: none;
+  font-size: 15px;
+  margin: 1% 0%;
+  cursor: pointer;
+}
+
+.btn-sign-up-google {
+  height: 40px;
+  @include FlexRow(84%, nowrap);
+  @extend .btn-external-sign-up;
+  align-items: center;
+  justify-content: center;
+  background-color: #b62d2d;
+  border-radius: $boxBorderRadius;
+  &:hover {
+    background-color: #c44e4e;
+  }
+  .google-icon {
+    width: 8%;
+    margin: 0% 2%;
+  }
+  .sign-up-label-google {
+    width: 70%;
+  }
+}
+
+.btn-sign-up-facebook {
+  height: 40px;
+  @include FlexRow(84%, nowrap);
+  @extend .btn-external-sign-up;
+  align-items: center;
+  justify-content: center;
+  background-color: #1173cf;
+  border-radius: $boxBorderRadius;
+  &:hover {
+    background-color: #2780d4;
+  }
+  .facebook-icon {
+    width: 8%;
+    margin: 0% 2%;
+  }
+}
+.sign-up-label-gooogle,
+.sign-up-label-facebook {
+  width: 50%;
+  margin-left: 2%;
+  text-align: left;
+  font-size: 16px;
+}
+
+//Panel
+.panel-title {
+  font-size: 16px;
+  font-weight: bold;
+  margin: 0.5% 0%;
+}
+.panel-description {
+  font-size: 14px;
+  text-indent: 15px;
+}
+.btn-panel {
+  height: 35px;
+  @include FlexRow("", nowrap);
+  align-items: center;
+  justify-content: center;
+
+  font-size: 16px;
+  box-sizing: border-box;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+
+  background-color: $formButtonColor;
+  border-radius: 5px;
+  color: $panelButtonColor;
+  border: none;
+  font-weight: 700;
+  cursor: pointer;
+  &:hover {
+    background-color: $formButtonColorOnHover;
+  }
+}

@@ -1,4 +1,4 @@
-import "./NavFlyout.css";
+import "./NavFlyout.scss";
 const NavFlyoutAnchor = (props) => {
   return (
     <>

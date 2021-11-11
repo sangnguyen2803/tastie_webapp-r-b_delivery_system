@@ -1,7 +1,11 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
+//assets
 import Logo from "assets/logo.png";
 import FacebookLogo from "assets/Icon/facebook.png";
 import GoogleLogo from "assets/Icon/google.png";
+import { useTranslation } from "react-i18next";
+//icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChevronRight,
@@ -9,9 +13,14 @@ import {
   faEyeSlash,
   faEye,
 } from "@fortawesome/fontawesome-free-solid";
-import { Link } from "react-router-dom";
+//scss
+import "style/Common.scss";
+import "./LoginForm.scss";
 
 function LoginForm(props) {
+  const { t, i18n } = useTranslation("translation", {
+    keyPrefix: "userAdmission.signIn",
+  });
   const [functionalIcon, setFunctionalIcon] = useState({
     enableRemoveText: false,
     enablePasswordVisibility: false,
@@ -88,7 +97,7 @@ function LoginForm(props) {
               })
             }
           >
-            <div className="form-label-login">Email</div>
+            <div className="form-label-login">{t("sign-in-username")}</div>
             <input
               className="login-input-username form-text-field"
               value={userLoginInfo.email}
@@ -102,7 +111,7 @@ function LoginForm(props) {
           </div>
 
           <div className="login-input-wrapper">
-            <div className="form-label-login">Password</div>
+            <div className="form-label-login">{t("sign-in-password")}</div>
             <input
               className="login-input-password form-text-field"
               type={
@@ -115,25 +124,27 @@ function LoginForm(props) {
           </div>
           <label className="remember-me-wrapper">
             <input type="checkbox" />
-            <span className="remember-me">Remember me</span>
+            <span className="remember-me">{t("sign-in-remember-me")}</span>
           </label>
 
-          <button className="btn-login-form btn-login-position">
+          <button className="btn-form btn-login-position">
             <div className="none-icon"></div>
-            Sign In
+            {t("sign-in-button")}
             <FontAwesomeIcon className="chevron-icon" icon={faChevronRight} />
           </button>
           <div className="link-forget-password">
-            <a>Forget password?</a>
+            <a>{t("sign-in-forget-password")}</a>
           </div>
-          <div className="text-1">-OR-</div>
+          <div className="form-seperator">-OR-</div>
           <button className="btn-sign-up-google">
             <img
               className="google-icon"
               alt="Google sign-in"
               src={GoogleLogo}
             />
-            <div className="sign-up-label-gooogle">Continue with Google</div>
+            <div className="sign-up-label-gooogle">
+              {t("sign-in-with-google")}
+            </div>
           </button>
           <button className="btn-sign-up-facebook">
             <img
@@ -141,7 +152,9 @@ function LoginForm(props) {
               alt="Facebook sign-in"
               src={FacebookLogo}
             />
-            <div className="sign-up-label-facebook">Continue with Facebook</div>
+            <div className="sign-up-label-facebook">
+              {t("sign-in-with-facebook")}
+            </div>
           </button>
           <div className="policy">
             By continuing, you agree to DeliTaste's{" "}

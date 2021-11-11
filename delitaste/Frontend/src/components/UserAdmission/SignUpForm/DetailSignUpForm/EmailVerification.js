@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
+//scss
 import "./EmailVerification.css";
+import "style/Common.scss";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faUserCheck,
@@ -7,6 +10,7 @@ import {
   faChevronRight,
   faPencilAlt,
 } from "@fortawesome/fontawesome-free-solid";
+
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import {
@@ -152,7 +156,7 @@ function EmailVerification({
         </div>
       </div>
       <button
-        className="btn-login-form btn-sign-up-position"
+        className="btn-form btn-sign-up-position"
         onClick={(e) => onSubmitEmailVerification(e)}
       >
         <div className="none-icon"></div>

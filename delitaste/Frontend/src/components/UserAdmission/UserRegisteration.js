@@ -1,7 +1,8 @@
 import React from "react";
 import { Fragment } from "react";
-//css
-import "./UserAdmission.css";
+//scss
+import "./UserAdmission.scss";
+import "style/Common.scss";
 //components
 import SignUpForm from "components/UserAdmission/SignUpForm/SignUpForm";
 import NavBar from "components/Commons/LayoutComponents/NavBar/NavBar";

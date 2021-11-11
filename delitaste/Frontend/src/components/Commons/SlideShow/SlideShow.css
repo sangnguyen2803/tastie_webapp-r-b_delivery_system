@@ -274,3 +274,17 @@ section.slideshow div.slideshow-controller span:active {
 .icon-order {
   margin-right: 5%;
 }
+
+@media only screen and (max-width: 1366px) and (min-width: 781px) {
+  section.slideshow {
+    width: 90%;
+    height: 510px;
+    padding-top: 5.5%;
+    background: linear-gradient(
+      to bottom,
+      rgba(19, 0, 0, 0.5),
+      rgb(105, 0, 0, 1)
+    );
+    clip-path: none !important;
+  }
+}

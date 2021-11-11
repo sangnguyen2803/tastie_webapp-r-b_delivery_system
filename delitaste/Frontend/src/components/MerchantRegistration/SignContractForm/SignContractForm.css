@@ -1,41 +1,30 @@
 .sign-contract-form {
-  background: url("assets/banner.png") no-repeat center center fixed;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
 }
 .sign-contract-form-containter {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-}
-.contract-form-header {
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-  background-color: rgb(37, 37, 37);
-
-  font-family: "Noto Sans JP", sans-serif;
-  color: rgb(235, 235, 235);
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
-  height: 40px;
-  width: 100%;
-  gap: 5px;
-}
-.contract-form-header span {
-  margin-left: 2%;
-  font-size: 16px;
-  font-weight: bold;
+  background: url("assets/Banner/merchant-ads.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 990px;
 }
 .contract-form-wrapper {
+  padding-top: 4%;
   font-family: "Nunito", sans-serif;
-  border-radius: 10px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+.contract-form {
+  border-radius: 5px;
+  padding-top: 2%;
   background-color: rgb(247, 247, 247);
-  margin: 4% 0%;
-  width: 80%;
+  width: 70%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -56,8 +45,8 @@
   font-weight: bold;
 }
 .contract-pdf-viewer {
-  width: 70%;
-  height: 420px;
+  width: 85%;
+  height: 550px;
   border-radius: 5px;
   border: 1px rgb(102, 102, 102) solid;
 }

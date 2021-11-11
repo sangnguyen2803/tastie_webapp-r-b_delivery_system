@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import Fragment from "react";
+//scss
 import "./DetailSignUpForm.css";
+import "style/Common.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPencilAlt,
@@ -251,7 +253,7 @@ function DetailSignUpForm2(props) {
           Skip
           <FontAwesomeIcon className="chevron-icon" icon={faChevronRight} />
         </button>
-        <button className="btn-login-form btn-size">
+        <button className="btn-form btn-size">
           <div className="none-icon"></div>
           Update
           <FontAwesomeIcon className="chevron-icon" icon={faChevronRight} />
