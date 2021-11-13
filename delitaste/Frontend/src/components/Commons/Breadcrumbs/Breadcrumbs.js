@@ -5,7 +5,7 @@ import { faChevronRight } from "@fortawesome/fontawesome-free-solid";
 import "./Breadcrumbs.scss";
 import { routes } from "config/routes";
 import { noAuto } from "@fortawesome/fontawesome-svg-core";
-const Breadcrumbs = () => {
+const Breadcrumbs = (props) => {
   const breadcrumbs = useBreadcrumbs(routes);
   const isLast = (ci) => {
     return ci === breadcrumbs.length - 1;

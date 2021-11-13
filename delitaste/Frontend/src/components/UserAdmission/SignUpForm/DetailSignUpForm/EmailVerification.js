@@ -155,10 +155,18 @@ function EmailVerification({
           <a>Resend verify code</a>
         </div>
       </div>
-      <button
-        className="btn-form btn-sign-up-position"
-        onClick={(e) => onSubmitEmailVerification(e)}
-      >
+
+      <div className="btn-form-wrapper">
+        <button
+          className="btn-form btn-verification-position"
+          onClick={(e) => onSubmitEmailVerification(e)}
+        >
+          <div className="none-icon"></div>
+          Verify Email
+          <FontAwesomeIcon className="chevron-icon" icon={faChevronRight} />
+        </button>
+      </div>
+      <button className="btn-form btn-verify-position">
         <div className="none-icon"></div>
         Verify
         <FontAwesomeIcon className="chevron-icon" icon={faChevronRight} />

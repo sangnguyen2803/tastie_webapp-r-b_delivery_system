@@ -15,6 +15,5 @@ export const common_en = {
         "sign-up-password": "Password",
       },
     },
-    
   },
 };

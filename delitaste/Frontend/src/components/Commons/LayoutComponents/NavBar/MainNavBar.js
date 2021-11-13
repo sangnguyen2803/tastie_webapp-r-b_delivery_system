@@ -7,7 +7,9 @@ import {
   faCartArrowDown,
   faUser,
 } from "@fortawesome/fontawesome-free-solid";
-import UKFlag from "assets/Flags/us_flag.jpg";
+import ENFlag from "assets/Flags/en_flag.png";
+import FRFlag from "assets/Flags/fr_flag.png";
+import VIFlag from "assets/Flags/vi_flag.png";
 import { Link } from "react-router-dom";
 
 //components
@@ -19,13 +21,18 @@ import Logo from "assets/sub-logo.png";
 import Modal from "components/Commons/Modal/Modal";
 import LanguageSettingPanel from "components/Commons/Panel/LanguageSettingPanel";
 import AccountSettingPanel from "components/Commons/Panel/AccountSettingPanel";
+import i18n from "i18n";
 
 function MainNavBar(props) {
   const [accountPanel, setAccountPanel] = useState(false);
   const [languagePanel, setLanguagePanel] = useState(false);
   const [cartModal, setCartModal] = useState(false);
   const [categoryList, setCategoryList] = useState(false);
-
+  const flag = {
+    en: [ENFlag, "EN"],
+    fr: [FRFlag, "FR"],
+    vi: [VIFlag, "VI"],
+  };
   return (
     <>
       <div className="main-nav-menu-prefix">
@@ -54,10 +61,15 @@ function MainNavBar(props) {
             onMouseLeave={() => setLanguagePanel(false)}
           >
             <div className="nav-language-icon-wrapper">
-              <img className="nav-icon-img" src={UKFlag} />
+              <img
+                className="nav-icon-img"
+                src={flag[i18n.language] ? flag[i18n.language][0] : ENFlag}
+              />
             </div>
             <div className="nav-language-text-wrapper" style={{ width: "70%" }}>
-              <div className="nav-language-sub-text">US</div>
+              <div className="nav-language-sub-text">
+                {flag[i18n.language] ? flag[i18n.language][1] : "EN"}
+              </div>
               <div className="nav-language-main-text">
                 <FontAwesomeIcon className="nav-sub-icon" icon={faCaretDown} />
               </div>

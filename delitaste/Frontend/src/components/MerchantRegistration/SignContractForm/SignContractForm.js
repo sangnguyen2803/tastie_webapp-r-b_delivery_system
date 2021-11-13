@@ -4,7 +4,9 @@ import Footer from "components/Commons/LayoutComponents/Footer/Footer";
 import NavBar from "components/Commons/LayoutComponents/NavBar/NavBar";
 import Contract from "assets/pdf/contract.pdf";
 import ToolBar from "components/Commons/LayoutComponents/Toolbar/Toolbar";
-import MerchantBanner from "assets/Banner/merchant-ads.jpg";
+import MerchantBanner from "assets/banner.png";
+import FormBanner from "assets/Banner/merchant-form-banner.png";
+import RegisterStep from "components/UserAdmission/SignUpForm/RegisterStep";
 
 const backgroundStyling = {
   background: `url(${MerchantBanner})`,
@@ -17,22 +19,29 @@ function SignContractForm() {
   return (
     <>
       <div className="sign-contract-form">
-        <NavBar />
+        <NavBar hideBreadcrumb={false} />
         <div
           className="sign-contract-form-containter"
           style={backgroundStyling}
         >
           <div className="contract-form-wrapper">
             <div className="contract-form">
+              <div className="form-banner-wrapper">
+                <img src={FormBanner} classname="form-banner-img" />
+                <span className="contract-header-title">
+                  Contract terms and agreements
+                </span>
+              </div>
               <span className="contract-header-text">
                 Please read our terms and conditions:
               </span>
+
               <span className="contract-header-sub-text">
                 To start online business, making sure that you or the Parties
                 hereby have read carefully and agreed to the our terms and
-                conditions set forth in PDF file below. For more details,
-                contact us at <strong>+84 33 790 7047</strong>.
+                conditions set forth in PDF file below.
               </span>
+              <h2></h2>
               <embed className="contract-pdf-viewer" src={Contract} />
               <div className="contract-agree-section">
                 <div className="contract-agree-check-wrapper">
@@ -57,7 +66,6 @@ function SignContractForm() {
                 <Link to="/merchant-registration">
                   <button className="btn-sign-contract-back">Back</button>
                 </Link>
-
                 <Link to="/merchant-registration/create-shop">
                   <button className="btn-sign-contract-next">Agree</button>
                 </Link>

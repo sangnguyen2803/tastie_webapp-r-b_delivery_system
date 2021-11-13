@@ -22,7 +22,6 @@ i18n
     whitelist: ["fr", "en", "vi"],
     fallbackLng: "en",
     defaultNS: "common",
-
     detection: {
       order: ["path", "cookie", "htmlTag", "localStorage", "subdomain"],
       caches: ["cookie"],

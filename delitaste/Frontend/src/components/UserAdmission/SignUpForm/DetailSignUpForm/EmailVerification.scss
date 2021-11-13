@@ -1,14 +1,53 @@
-.form-title-wrapper {
+$errorColor: #aa0033;
+$errorCheckIconColor: #c74b4b;
+$errorResolvedIconColor: #00683d;
+$formColor: #f4f4f4;
+$logoColor: #aa0033;
+$formTextColor: #2e2e2e;
+$boxBorderRadius: 5px;
+
+@mixin FlexCol($width, $flexWrap) {
+  width: $width;
   display: flex;
+  flex-wrap: $flexWrap;
+  flex-direction: column;
+}
+@mixin FlexRow($width, $flexWrap) {
+  width: $width;
+  display: flex;
+  flex-wrap: $flexWrap;
   flex-direction: row;
-  flex-wrap: nowrap;
+}
+
+.verify-email-section {
+  width: 100%;
+
+  .form-title-wrapper {
+    @include FlexRow("", nowrap);
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 4%;
+  }
+  .verify-code-description {
+    display: block;
+    margin-bottom: 2%;
+    font-size: 16px;
+    font-weight: 500;
+    color: #2c2c2c;
+  }
+}
+
+.form-title-wrapper {
+  @include FlexRow("", nowrap);
   justify-content: flex-start;
   align-items: center;
   margin-bottom: 4%;
 }
+
 .form-icon {
   font-size: 20px;
 }
+
 .form-title {
   font-size: 20px;
   font-weight: 600;
@@ -16,18 +55,6 @@
   padding-top: 1%;
   margin-left: 2%;
   margin-bottom: 2%;
-}
-
-.verify-code-description {
-  display: block;
-  margin-bottom: 2%;
-  font-size: 16px;
-  font-weight: 500;
-  color: #2c2c2c;
-}
-
-.verify-email-section {
-  width: 100%;
 }
 
 .resend-section {
@@ -137,4 +164,15 @@
 }
 .sub-square-button:hover {
   background-color: rgb(223, 223, 223);
+}
+
+.btn-form-wrapper {
+  @include FlexRow(100%, nowrap);
+  width: inherit;
+  justify-content: center;
+  .btn-verification-position {
+    margin-left: 35%;
+    margin: 0% 0%;
+    width: 30%;
+  }
 }

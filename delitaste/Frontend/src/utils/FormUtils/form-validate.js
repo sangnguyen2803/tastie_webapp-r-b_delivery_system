@@ -1,5 +1,5 @@
 import * as yup from "yup";
-
+//schema
 export const validateSignUpForm1 = yup.object().shape({
   firstname: yup.string().required("This field is required"),
   lastname: yup.string().required("This field is required"),
@@ -15,3 +15,4 @@ export const validateSignUpForm1 = yup.object().shape({
     .oneOf([yup.ref("password1")], "Password is diferent")
     .required("This field is required"),
 });
+

@@ -1,6 +1,5 @@
 import PropTypes from "prop-types";
 import { Formik, ErrorMessage, Form, Field } from "formik";
-import styled from "styled-components";
 import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -68,6 +67,7 @@ function DetailSignUpForm1({
               <div className="label-sign-up form-label">Full name</div>
               <div className="fullname-wrapper">
                 <Field
+                  name="fullname"
                   className={
                     errors.firstname && touched.firstname
                       ? "sign-up-firstname form-text-field error"
@@ -93,9 +93,7 @@ function DetailSignUpForm1({
                     className="alert-icon alert-icon-position-type0"
                     icon={faCheckCircle}
                   />
-                ) : (
-                  <></>
-                )}
+                ) : null}
                 <Field
                   className={
                     errors.lastname && touched.lastname
@@ -163,7 +161,7 @@ function DetailSignUpForm1({
               {!errors.email && touched.email ? (
                 <FontAwesomeIcon
                   style={{ color: "#00683d" }}
-                  className="alert-icon alert-icon-position-type1"
+                  className="alert-icon alert-icon-position-type2"
                   icon={faCheckCircle}
                 />
               ) : (
