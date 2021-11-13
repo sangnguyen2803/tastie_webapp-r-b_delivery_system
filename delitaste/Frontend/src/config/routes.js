@@ -6,6 +6,12 @@ import SignContractScreen from "screens/MerchantRegistrationScreen/SignContractS
 
 export const routes = [
   {
+    path: "/:lang(en|fr|vi)/",
+    component: Homepage,
+    exact: true,
+    breadcrumb: "Home",
+  },
+  {
     path: "/",
     component: Homepage,
     exact: true,
@@ -16,6 +22,12 @@ export const routes = [
     exact: true,
     component: UserRegistrationScreen,
     breadcrumb: "Sign Up",
+  },
+  {
+    path: "/:lang(en|fr|vi)/sign-in",
+    exact: true,
+    component: UserSignInScreen,
+    breadcrumb: "Sign In",
   },
   {
     path: "/sign-in",

@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import "./RegisterStep.css";
+import "./RegisterStep.scss";
 import Arrow from "../../../assets/arrow.png";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";

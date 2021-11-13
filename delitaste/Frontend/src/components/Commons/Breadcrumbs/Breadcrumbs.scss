@@ -33,6 +33,7 @@
   list-style: none;
   overflow: hidden;
   font-size: 14px;
+  box-shadow: -10px 0px 30px 1px #4141415e;
 }
 .breadcrumb li {
   float: left;
@@ -40,10 +41,9 @@
 .breadcrumb li a {
   color: white;
   text-decoration: none;
-
   padding: 8px 0 8px 55px;
   background: brown; /* fallback color */
-  background: rgb(156, 0, 0);
+  background: rgb(192, 20, 20);
   position: relative;
   display: block;
   float: left;
@@ -55,7 +55,7 @@
   height: 0;
   border-top: 50px solid transparent; /* Go big on the size, and let overflow hide */
   border-bottom: 50px solid transparent;
-  border-left: 30px solid rgb(156, 0, 0);
+  border-left: 30px solid rgb(192, 20, 20);
   position: absolute;
   top: 50%;
   margin-top: -50px;

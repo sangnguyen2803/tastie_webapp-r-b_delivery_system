@@ -1,0 +1,8 @@
+$errorColor: #aa0033;
+.form-error-wrapper {
+  font-size: 14px;
+  font-weight: bold;
+  .form-error-content {
+    color: $errorColor;
+  }
+}

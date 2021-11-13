@@ -1,6 +1,15 @@
-import "./GuideBanner.css";
+import "./GuideBanner.scss";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+
+import MerchantBanner from "assets/Banner/merchant-ads.jpg";
+
+const backgroundStyling = {
+  background: `url(${MerchantBanner})`,
+  backgroundPosition: "center",
+  backgroundRepeat: "no-repeat",
+  backgroundSize: "cover",
+};
 
 function GuideBanner(props) {
   const [bannerContent, setBannerContent] = useState({
@@ -10,7 +19,7 @@ function GuideBanner(props) {
       "Tasite is an order and delivery management platform that instantly connects customers with your storefront. Built on the power of Tastie's network, we help merchants grow sales, reach more customers, and build their online brand.",
   });
   return (
-    <div className="guide-banner">
+    <div className="guide-banner" style={backgroundStyling}>
       <div className="guide-banner-container">
         <div className="guide-banner-content">
           <span className="guide-sub-title">{bannerContent.subTitle}</span>
@@ -23,7 +32,6 @@ function GuideBanner(props) {
             <Link to="/merchant-registration/sign-contract">
               <button className="btn-guide-get-started">Get started</button>
             </Link>
-
             <button
               className="btn-guide-more-details"
               onClick={() => {

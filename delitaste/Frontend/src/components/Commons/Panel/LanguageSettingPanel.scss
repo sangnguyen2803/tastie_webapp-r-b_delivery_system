@@ -36,10 +36,8 @@ $boxBorderRadius: 5px;
       width: 75%;
     }
   }
-}
-
-.btn-language-panel-position {
-  width: 30%;
-  margin-left: 35%;
-  margin-top: 2%;
+  .btn-language-panel-position {
+    width: 30%;
+    align-self: flex-end;
+  }
 }

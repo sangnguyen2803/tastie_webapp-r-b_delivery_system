@@ -1,8 +1,8 @@
 import * as yup from "yup";
 
 export const validateSignUpForm1 = yup.object().shape({
-  firstname: yup.string().required("Required"),
-  lastname: yup.string().required("Required"),
+  firstname: yup.string().required("This field is required"),
+  lastname: yup.string().required("This field is required"),
   email: yup.string().email("invalid email").required("This field is required"),
   phone: yup
     .string()
@@ -12,6 +12,6 @@ export const validateSignUpForm1 = yup.object().shape({
   password1: yup.string().required("This field is required"),
   password2: yup
     .string()
-    .oneOf([yup.ref("password1"), null])
+    .oneOf([yup.ref("password1")], "Password is diferent")
     .required("This field is required"),
 });

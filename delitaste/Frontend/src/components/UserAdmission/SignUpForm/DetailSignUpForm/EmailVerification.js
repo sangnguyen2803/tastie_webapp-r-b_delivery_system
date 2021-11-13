@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 //scss
-import "./EmailVerification.css";
+import "./EmailVerification.scss";
 import "style/Common.scss";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

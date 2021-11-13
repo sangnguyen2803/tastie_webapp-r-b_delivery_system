@@ -1,0 +1,88 @@
+$formButtonColor: #eab200;
+$formButtonColorOnHover: #ebbd29;
+$formColor: #f4f4f4;
+$logoColor: #aa0033;
+$emphasizeColor: #750023;
+$emphasizeColorHover: #a7264c;
+$formTextColor: #2e2e2e;
+$boxBorderRadius: 5px;
+
+@mixin FlexCol($width, $flexWrap) {
+  width: $width;
+  display: flex;
+  flex-wrap: $flexWrap;
+  flex-direction: column;
+}
+@mixin FlexRow($width, $flexWrap) {
+  width: $width;
+  display: flex;
+  flex-wrap: $flexWrap;
+  flex-direction: row;
+}
+
+.account-panel {
+  @include FlexCol(100%, wrap);
+  justify-content: center;
+  align-items: flex-start;
+  .btn-account-panel-position {
+    width: 30%;
+    align-self: center;
+    margin-bottom: 1%;
+  }
+  .sub-panel-title {
+    width: 50%;
+    align-self: center;
+    font-size: 13px;
+    .sub-panel-link {
+      padding: 1%;
+      color: $emphasizeColor;
+      font-weight: bold;
+      text-transform: 0.1rem;
+      margin-bottom: 3%;
+      &:hover {
+        color: $emphasizeColorHover;
+        text-decoration: underline;
+      }
+    }
+  }
+  .panel-account-service-wrapper {
+    margin-top: 5%;
+    @include FlexRow(100%, nowrap);
+    justify-content: center;
+    align-items: flex-start;
+    .e-wallet-services {
+      padding-left: 5%;
+      @include FlexCol(50%, nowrap);
+      justify-content: flex-start;
+      align-items: flex-start;
+      font-size: 14px;
+      height: 160px;
+      border-right: 2px rgb(158, 158, 158) solid;
+    }
+    .account-services {
+      padding-left: 5%;
+      height: 160px;
+      @include FlexCol(50%, nowrap);
+      justify-content: flex-start;
+      align-items: flex-start;
+      font-size: 14px;
+    }
+  }
+}
+.account-service-title {
+  font-size: 16px;
+  color: black;
+  font-weight: bold;
+  padding: 2% 0%;
+}
+.service-name {
+  padding-top: 4%;
+  font-size: 13px;
+  color: $emphasizeColor;
+  &:hover {
+    transform: scale(1.05);
+    text-decoration: underline;
+    color: $emphasizeColorHover;
+    font-weight: bold;
+  }
+}

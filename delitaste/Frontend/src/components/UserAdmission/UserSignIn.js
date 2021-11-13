@@ -1,5 +1,6 @@
 import React from "react";
 import { Fragment } from "react";
+import { withRouter } from "react-router-dom";
 //css
 import "components/UserAdmission/UserAdmission.scss";
 //components
@@ -47,4 +48,4 @@ function UserSignIn(props) {
   );
 }
 
-export default UserSignIn;
+export default withRouter(UserSignIn);

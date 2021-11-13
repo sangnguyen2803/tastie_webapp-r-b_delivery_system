@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Fragment from "react";
 //scss
-import "./DetailSignUpForm.css";
+import "./DetailSignUpForm.scss";
 import "style/Common.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {

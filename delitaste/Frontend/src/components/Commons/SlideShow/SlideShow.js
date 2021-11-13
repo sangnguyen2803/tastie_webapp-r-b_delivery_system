@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Fragment from "react";
-import "./SlideShow.css";
+import "./SlideShow.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChevronRight,

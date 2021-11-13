@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Fragment from "react";
 import VoucherNotification from "assets/Voucher.png";
-import "./Toolbar.css";
+import "./Toolbar.scss";
 function VoucherToolBar(props) {
   return (
     <>

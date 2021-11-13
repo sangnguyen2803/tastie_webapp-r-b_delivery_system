@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faChevronDown } from "@fortawesome/fontawesome-free-solid";
 import { Link } from "react-router-dom";
-import "./SearchBar.css";
+import "./SearchBar.scss";
 
 function NavBar() {
   return (

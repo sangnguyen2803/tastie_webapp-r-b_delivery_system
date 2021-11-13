@@ -10,19 +10,6 @@ import EmailVerification from "./DetailSignUpForm/EmailVerification";
 
 function SignUpForm({ form }) {
   /*
-  const [stepSignUpForm, setStepSignUpForm] = useState({
-    step: {
-      step1: "active",
-      step2: "default",
-      step3: "default",
-      step4: "default",
-    },
-    btnText: "Sign Up",
-    buttonStatus: "disable",
-    currentStep: 1,
-  });
-  */
-  /*
   const updateStepStatus = () => {
     for (const [key, value] of Object.entries(stepSignUpForm.step)) {
       if (value === "active" && key != "step4") {
@@ -51,7 +38,6 @@ function SignUpForm({ form }) {
         <div className="register-step-container">
           <RegisterStep />
         </div>
-
         <div className="sign-up-form-wrapper">{loadSignUpForm()}</div>
       </div>
     </div>

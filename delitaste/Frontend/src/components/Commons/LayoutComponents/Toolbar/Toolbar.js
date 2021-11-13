@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Fragment from "react";
-import "./Toolbar.css";
+import "./Toolbar.scss";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronUp, faFileAlt } from "@fortawesome/fontawesome-free-solid";

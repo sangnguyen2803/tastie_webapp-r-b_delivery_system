@@ -1,4 +1,4 @@
-import "./Tutorial.css";
+import "./Tutorial.scss";
 import TutorialCard from "components/MerchantRegistration/GuidePage/Tutorials/TutorialCard";
 import { useState } from "react";
 

@@ -1,3 +1,24 @@
+$errorColor: #aa0033;
+$errorCheckIconColor: #c74b4b;
+$errorResolvedIconColor: #00683d;
+$formColor: #f4f4f4;
+$logoColor: #aa0033;
+$formTextColor: #2e2e2e;
+$boxBorderRadius: 5px;
+
+@mixin FlexCol($width, $flexWrap) {
+  width: $width;
+  display: flex;
+  flex-wrap: $flexWrap;
+  flex-direction: column;
+}
+@mixin FlexRow($width, $flexWrap) {
+  width: $width;
+  display: flex;
+  flex-wrap: $flexWrap;
+  flex-direction: row;
+}
+
 .sign-up-form-input-wrapper {
   width: 100%;
 }
@@ -8,8 +29,8 @@
 .password-wrapper,
 .password-recheck-wrapper,
 .avatar-uploader-wrapper {
-  margin-bottom: 2%;
-  margin-top: 2%;
+  margin-top: 1%;
+  margin-bottom: 1%;
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -407,29 +428,33 @@ label > input[type="checkbox"] + * {
   display: absolute;
   z-index: 10;
 }
-
-.btn-sign-up-position {
-  margin-left: 35%;
+.btn-form-wrapper {
+  @include FlexRow(100%, nowrap);
+  width: inherit;
+  justify-content: center;
+  .btn-sign-up-position {
+    margin-left: 35%;
+    margin: 3% 0%;
+    width: 30%;
+  }
 }
 
-.check-icon-position-type0 {
+.alert-icon-position-type0 {
   /*color: rgb(85, 131, 0) !important;*/
-  color: rgb(199, 75, 75) !important;
   position: absolute;
   margin-right: 43%;
   margin-top: 2.5%;
   font-size: 16px !important;
 }
-.check-icon-position-type1 {
+.alert-icon-position-type1 {
   /*color: rgb(85, 131, 0) !important;*/
-  color: rgb(199, 75, 75) !important;
   position: absolute;
   margin-right: 2%;
   margin-top: 2.5%;
   font-size: 16px !important;
 }
 
-.check-icon-position-type2 {
+.alert-icon-position-type2 {
   /*color: rgb(85, 131, 0) !important;*/
   position: absolute;
   margin-right: 2%;

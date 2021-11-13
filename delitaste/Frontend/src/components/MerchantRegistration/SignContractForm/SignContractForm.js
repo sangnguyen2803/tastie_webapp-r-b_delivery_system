@@ -1,18 +1,27 @@
-import "./SignContractForm.css";
+import "./SignContractForm.scss";
 import { Link } from "react-router-dom";
-import { useState } from "react";
 import Footer from "components/Commons/LayoutComponents/Footer/Footer";
 import NavBar from "components/Commons/LayoutComponents/NavBar/NavBar";
 import Contract from "assets/pdf/contract.pdf";
 import ToolBar from "components/Commons/LayoutComponents/Toolbar/Toolbar";
-import RegisterStep from "components/UserAdmission/SignUpForm/RegisterStep";
-import SideBar from "components/Commons/LayoutComponents/SideBar/SideBar";
+import MerchantBanner from "assets/Banner/merchant-ads.jpg";
+
+const backgroundStyling = {
+  background: `url(${MerchantBanner})`,
+  backgroundPosition: "center",
+  backgroundRepeat: "no-repeat",
+  backgroundSize: "cover",
+};
+
 function SignContractForm() {
   return (
     <>
       <div className="sign-contract-form">
         <NavBar />
-        <div className="sign-contract-form-containter">
+        <div
+          className="sign-contract-form-containter"
+          style={backgroundStyling}
+        >
           <div className="contract-form-wrapper">
             <div className="contract-form">
               <span className="contract-header-text">

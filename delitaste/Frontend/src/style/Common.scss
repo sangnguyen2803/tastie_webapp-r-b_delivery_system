@@ -28,7 +28,7 @@ $boxBorderRadius: 5px;
   font-size: 15px;
   border-radius: 3px;
   &:hover {
-    border: 2px #d30069 solid;
+    border: 2px #cf273d solid;
   }
   background: #ffffff;
 }
@@ -159,11 +159,13 @@ $boxBorderRadius: 5px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-
-  background-color: $formButtonColor;
   border-radius: 5px;
+  border-left: 2px rgb(136, 136, 136) solid;
+  border-top: 2px rgb(136, 136, 136) solid;
+  border-right: 2px black solid;
+  border-bottom: 2px black solid;
+  background-color: $formButtonColor;
   color: $panelButtonColor;
-  border: none;
   font-weight: 700;
   cursor: pointer;
   &:hover {

@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faChevronRight } from "@fortawesome/fontawesome-free-solid";
 import { Link } from "react-router-dom";
 import CategoryLevelOne from "./CategoryLevelOne";
-import "./CategoryDetail.css";
+import "./CategoryDetail.scss";
 
 function CategoryDetail({ categoryContent, setCategoryContent }) {
   const [categoryLevelOneContent, setCategoryLevelOneContent] = useState({

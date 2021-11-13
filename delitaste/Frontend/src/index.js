@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 
 import RootScreen from "screens/RootScreen";
-import "./index.css";
+import "./index.scss";
 import reportWebVitals from "./reportWebVitals";
 import "./i18n";
 

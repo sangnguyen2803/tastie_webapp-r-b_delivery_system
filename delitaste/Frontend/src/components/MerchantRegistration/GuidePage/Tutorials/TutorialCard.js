@@ -1,4 +1,4 @@
-import "./TutorialCard.css";
+import "./TutorialCard.scss";
 
 function TutorialCard({ card }) {
   return (

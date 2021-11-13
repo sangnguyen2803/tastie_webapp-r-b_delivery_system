@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import useBreadcrumbs from "use-react-router-breadcrumbs";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight } from "@fortawesome/fontawesome-free-solid";
-import "./Breadcrumbs.css";
+import "./Breadcrumbs.scss";
 import { routes } from "config/routes";
 import { noAuto } from "@fortawesome/fontawesome-svg-core";
 const Breadcrumbs = () => {

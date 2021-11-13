@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import Logo from "assets/logo.png";
 import { faMapMarkerAlt } from "@fortawesome/fontawesome-free-solid";
 import { useTranslation } from "react-i18next";
-import "./Footer.css";
+import "./Footer.scss";
 
 function Footer(props) {
   const { t, i18n } = useTranslation();

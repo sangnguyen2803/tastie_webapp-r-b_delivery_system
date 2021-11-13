@@ -1,4 +1,4 @@
-import "./GuidePage.css";
+import "./GuidePage.scss";
 import GuideBanner from "components/MerchantRegistration/GuidePage/GuideBanner";
 import Tutorial from "components/MerchantRegistration/GuidePage/Tutorials/Tutorial";
 import Footer from "components/Commons/LayoutComponents/Footer/Footer";

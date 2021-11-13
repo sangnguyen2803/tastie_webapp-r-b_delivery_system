@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 //assets
 import Logo from "assets/logo.png";
 import FacebookLogo from "assets/Icon/facebook.png";
@@ -173,4 +174,4 @@ function LoginForm(props) {
   );
 }
 
-export default LoginForm;
+export default withRouter(LoginForm);

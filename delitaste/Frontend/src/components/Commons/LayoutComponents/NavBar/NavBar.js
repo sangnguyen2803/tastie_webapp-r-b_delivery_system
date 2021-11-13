@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { withRouter } from "react-router-dom";
 import MainNavBar from "./MainNavBar";
 import SubNavBar from "./SubNavBar";
 import Breadcrumbs from "components/Commons/Breadcrumbs/Breadcrumbs";
-import "./NavBar.css";
+import "./NavBar.scss";
 
-function NavBar() {
+function NavBar(props) {
   return (
     <>
       <div className="navbars-wrapper">
@@ -19,4 +20,4 @@ function NavBar() {
   );
 }
 
-export default NavBar;
+export default withRouter(NavBar);

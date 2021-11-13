@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Breadcrumbs from "components/Commons/Breadcrumbs/Breadcrumbs";
-import "./SideBar.css";
+import "./SideBar.scss";
 
 function SideBar() {
   return (

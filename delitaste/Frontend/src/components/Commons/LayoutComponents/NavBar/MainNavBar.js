@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { withRouter } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faCommentDots,
   faBars,
   faCaretDown,
   faCartArrowDown,
@@ -12,14 +12,15 @@ import { Link } from "react-router-dom";
 
 //components
 
-import "./MainNavBar.css";
+import "./MainNavBar.scss";
 import SearchBar from "./SearchBar";
 import NavFlyout from "components/Commons/NavFlyout/NavFlyout";
 import Logo from "assets/sub-logo.png";
 import Modal from "components/Commons/Modal/Modal";
 import LanguageSettingPanel from "components/Commons/Panel/LanguageSettingPanel";
+import AccountSettingPanel from "components/Commons/Panel/AccountSettingPanel";
 
-function MainNavBar() {
+function MainNavBar(props) {
   const [accountPanel, setAccountPanel] = useState(false);
   const [languagePanel, setLanguagePanel] = useState(false);
   const [cartModal, setCartModal] = useState(false);
@@ -97,8 +98,10 @@ function MainNavBar() {
               </div>
               {accountPanel ? (
                 <NavFlyout
-                  width={"400px"}
-                  height={"280px"}
+                  width={"350px"}
+                  height={"250px"}
+                  margin={"0 0 0 -320px"}
+                  components={<AccountSettingPanel />}
                   onMouseLeave={() => setLanguagePanel((prev) => !prev)}
                 />
               ) : (
@@ -106,7 +109,6 @@ function MainNavBar() {
               )}
             </div>
           </Link>
-
           <a
             className="nav-cart-container"
             onClick={() => setCartModal((prev) => !prev)}
@@ -145,4 +147,4 @@ function MainNavBar() {
   );
 }
 
-export default MainNavBar;
+export default withRouter(MainNavBar);

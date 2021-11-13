@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { withRouter } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBars,
@@ -8,10 +9,8 @@ import {
   faDollarSign,
   faQuestionCircle,
 } from "@fortawesome/fontawesome-free-solid";
-import { Link } from "react-router-dom";
 import CategoryDetail from "./CategoryDetail";
-import "./SubNavBar.css";
-import Breadcrumbs from "components/Commons/Breadcrumbs/Breadcrumbs";
+import "./SubNavBar.scss";
 
 function SubNavBar(variant = true) {
   const [categoryContent, setCategoryContent] = useState({
@@ -100,7 +99,7 @@ function SubNavBar(variant = true) {
   );
 }
 
-export default SubNavBar;
+export default withRouter(SubNavBar);
 
 /*
 <div

@@ -7,10 +7,11 @@ import {
   faUser,
   faChevronRight,
   faExclamationCircle,
+  faCheckCircle,
 } from "@fortawesome/fontawesome-free-solid";
 import { validateSignUpForm1 } from "utils/FormUtils/form-validate";
 //scss
-import "./DetailSignUpForm.css";
+import "./DetailSignUpForm.scss";
 import "style/Common.scss";
 //store
 import {
@@ -36,7 +37,6 @@ function DetailSignUpForm1({
   };
 
   const handleSubmitForm = (values) => {
-    console.log(values);
     setRegisterStep(["finished", "active", "default", "default"]);
     const formData = {
       firstname: values.firstname,
@@ -75,19 +75,26 @@ function DetailSignUpForm1({
                   }
                   type="text"
                   name="firstname"
-                  placeholder={
-                    errors.firstname && touched.firstname
-                      ? errors.firstname
-                      : "First Name"
-                  }
+                  placeholder="First Name"
                   maxLength={50}
                   autoComplete="on"
                 />
                 {errors.firstname && touched.firstname && (
                   <FontAwesomeIcon
-                    className="alert-icon check-icon-position-type0"
+                    style={{ color: "#c74b4b" }}
+                    className="alert-icon alert-icon-position-type0"
                     icon={faExclamationCircle}
                   />
+                )}
+
+                {!errors.firstname && touched.firstname ? (
+                  <FontAwesomeIcon
+                    style={{ color: "#00683d" }}
+                    className="alert-icon alert-icon-position-type0"
+                    icon={faCheckCircle}
+                  />
+                ) : (
+                  <></>
                 )}
                 <Field
                   className={
@@ -97,24 +104,40 @@ function DetailSignUpForm1({
                   }
                   type="text"
                   name="lastname"
-                  placeholder={
-                    errors.lastname && touched.lastname
-                      ? errors.lastname
-                      : "Last Name"
-                  }
+                  placeholder={"Last Name"}
                   maxLength={50}
                   autoComplete="on"
                 />
 
                 {errors.lastname && touched.lastname && (
                   <FontAwesomeIcon
-                    className="alert-icon check-icon-position-type1"
+                    style={{ color: "#c74b4b" }}
+                    className="alert-icon alert-icon-position-type1"
                     icon={faExclamationCircle}
                   />
                 )}
+                {!errors.lastname && touched.lastname ? (
+                  <FontAwesomeIcon
+                    style={{ color: "#00683d" }}
+                    className="alert-icon alert-icon-position-type1"
+                    icon={faCheckCircle}
+                  />
+                ) : (
+                  <></>
+                )}
               </div>
             </div>
-            <FormError />
+            <FormError
+              err={
+                (errors.firstname || errors.lastname) &&
+                (touched.firstname || touched.lastname)
+                  ? errors.firstname
+                  : ""
+              }
+              align="left"
+              margin="0% 0% 0% 22%"
+            />
+            {touched.firstname}
             <div className="sign-up-email-wrapper">
               <div className="label-sign-up form-label">Email</div>
               <Field
@@ -125,22 +148,33 @@ function DetailSignUpForm1({
                 }
                 type="text"
                 name="email"
-                // value={email}
-                // onChange={(e) => onChangeRegistrationForm(e)}
-                placeholder={
-                  errors.email && touched.email ? errors.email : "Email"
-                }
+                placeholder="Email"
                 maxLength={50}
                 autoComplete="on"
               />
 
               {errors.email && touched.email && (
                 <FontAwesomeIcon
-                  className="alert-icon check-icon-position-type2"
+                  style={{ color: "#c74b4b" }}
+                  className="alert-icon alert-icon-position-type2"
                   icon={faExclamationCircle}
                 />
               )}
+              {!errors.email && touched.email ? (
+                <FontAwesomeIcon
+                  style={{ color: "#00683d" }}
+                  className="alert-icon alert-icon-position-type1"
+                  icon={faCheckCircle}
+                />
+              ) : (
+                <></>
+              )}
             </div>
+            <FormError
+              err={errors.email && touched.email ? errors.email : ""}
+              align="left"
+              margin="0% 0% 0% 22%"
+            />
             <div className="sign-up-phonenumber-wrapper">
               <div className="label-sign-up form-label">Phone number</div>
               <Field
@@ -162,12 +196,26 @@ function DetailSignUpForm1({
 
               {errors.phone && touched.phone && (
                 <FontAwesomeIcon
-                  className="alert-icon check-icon-position-type2"
+                  style={{ color: "#c74b4b" }}
+                  className="alert-icon alert-icon-position-type2"
                   icon={faExclamationCircle}
                 />
               )}
+              {!errors.phone && touched.phone ? (
+                <FontAwesomeIcon
+                  style={{ color: "#00683d" }}
+                  className="alert-icon alert-icon-position-type2"
+                  icon={faCheckCircle}
+                />
+              ) : (
+                <></>
+              )}
             </div>
-
+            <FormError
+              err={errors.phone && touched.phone ? errors.phone : ""}
+              align="left"
+              margin="0% 0% 0% 22%"
+            />
             <div className="password-wrapper">
               <div className="label-sign-up form-label">Password</div>
               <Field
@@ -180,23 +228,35 @@ function DetailSignUpForm1({
                 name="password1"
                 // value={password1}
                 // onChange={(e) => onChangeRegistrationForm(e)}
-                placeholder={
-                  errors.password1 && touched.password1
-                    ? errors.password1
-                    : "Password"
-                }
+                placeholder="Password"
                 maxLength={50}
                 autoComplete="on"
               />
 
               {errors.password1 && touched.password1 && (
                 <FontAwesomeIcon
-                  className="alert-icon check-icon-position-type2"
+                  style={{ color: "#c74b4b" }}
+                  className="alert-icon alert-icon-position-type2"
                   icon={faExclamationCircle}
                 />
               )}
+              {!errors.password1 && touched.password1 ? (
+                <FontAwesomeIcon
+                  style={{ color: "#00683d" }}
+                  className="alert-icon alert-icon-position-type2"
+                  icon={faCheckCircle}
+                />
+              ) : (
+                <></>
+              )}
             </div>
-
+            <FormError
+              err={
+                errors.password1 && touched.password1 ? errors.password1 : ""
+              }
+              align="left"
+              margin="0% 0% 0% 22%"
+            />
             <div className="password-recheck-wrapper">
               <div className="label-sign-up form-label">Re-enter Password</div>
               <Field
@@ -209,24 +269,35 @@ function DetailSignUpForm1({
                 name="password2"
                 // value={password2}
                 // onChange={(e) => onChangeRegistrationForm(e)}
-                placeholder={
-                  errors.password2 && touched.password2
-                    ? errors.password2
-                    : "Re-enter password"
-                }
+                placeholder="Re-enter password"
                 maxLength={50}
                 autoComplete="on"
               />
 
               {errors.password2 && touched.password2 && (
                 <FontAwesomeIcon
-                  className="form-icon check-icon-position-type2"
-                  // icon={faCheckCircle}
-                  // style={{ color: "green" }}
+                  style={{ color: "#c74b4b" }}
+                  className="alert-icon alert-icon-position-type2"
                   icon={faExclamationCircle}
                 />
               )}
+              {!errors.password2 && touched.password2 ? (
+                <FontAwesomeIcon
+                  style={{ color: "#00683d" }}
+                  className="alert-icon alert-icon-position-type2"
+                  icon={faCheckCircle}
+                />
+              ) : (
+                <></>
+              )}
             </div>
+            <FormError
+              err={
+                errors.password2 && touched.password2 ? errors.password2 : ""
+              }
+              align="left"
+              margin="0% 0% 0% 22%"
+            />
             <br />
             <div className="policy-check">
               Delitaste may use your phone number to call or send text messages
@@ -238,11 +309,16 @@ function DetailSignUpForm1({
               and <a className="policy-link">Privacy Notice</a>.
             </div>
             <br />
-            <button className="btn-form btn-sign-up-position" type="submit">
-              <div className="none-icon"></div>
-              Sign Up
-              <FontAwesomeIcon className="chevron-icon" icon={faChevronRight} />
-            </button>
+            <div className="btn-form-wrapper">
+              <button className="btn-form btn-sign-up-position" type="submit">
+                <div className="none-icon"></div>
+                Sign Up
+                <FontAwesomeIcon
+                  className="chevron-icon"
+                  icon={faChevronRight}
+                />
+              </button>
+            </div>
           </Form>
         );
       }}

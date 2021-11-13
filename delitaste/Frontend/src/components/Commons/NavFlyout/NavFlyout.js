@@ -1,7 +1,4 @@
-import { Link } from "react-router-dom";
-import { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronRight } from "@fortawesome/fontawesome-free-solid";
+import { withRouter } from "react-router-dom";
 import NavFlyoutAnchor from "./NavFlyoutAnchor";
 import "./NavFlyout.scss";
 
@@ -11,7 +8,11 @@ const NavFlyout = (props) => {
       <NavFlyoutAnchor />
       <div
         className="nav-fly-out-container"
-        style={{ width: props.width, height: props.height }}
+        style={{
+          width: props.width,
+          height: props.height,
+          margin: props.margin,
+        }}
       >
         {props.components}
       </div>
@@ -19,4 +20,4 @@ const NavFlyout = (props) => {
   );
 };
 
-export default NavFlyout;
+export default withRouter(NavFlyout);

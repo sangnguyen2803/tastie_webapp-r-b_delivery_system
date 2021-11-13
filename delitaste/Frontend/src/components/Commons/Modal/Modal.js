@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight } from "@fortawesome/fontawesome-free-solid";
-import "./Modal.css";
+import "./Modal.scss";
 
 const Modal = (props) => {
   return (

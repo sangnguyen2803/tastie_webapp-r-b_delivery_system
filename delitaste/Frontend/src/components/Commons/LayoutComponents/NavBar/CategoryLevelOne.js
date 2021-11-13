@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faChevronRight } from '@fortawesome/fontawesome-free-solid';
 import { Link } from 'react-router-dom';
-import './CategoryLevelOne.css'
+import './CategoryLevelOne.scss'
 
 function CategoryLevelOne({categoryContent, setCategoryContent}) {
     if (categoryContent.enable) {
