@@ -67,10 +67,11 @@ function DetailSignUpForm1({
               <div className="label-sign-up form-label">Full name</div>
               <div className="fullname-wrapper">
                 <Field
-                  name="fullname"
                   className={
-                    errors.firstname && touched.firstname
-                      ? "sign-up-firstname form-text-field error"
+                    touched.firstname
+                      ? `sign-up-firstname form-text-field ${
+                          errors.firstname ? "error" : "resolved"
+                        }`
                       : "sign-up-firstname form-text-field"
                   }
                   type="text"
@@ -96,8 +97,10 @@ function DetailSignUpForm1({
                 ) : null}
                 <Field
                   className={
-                    errors.lastname && touched.lastname
-                      ? "sign-up-lastname form-text-field error"
+                    touched.lastname
+                      ? `sign-up-lastname form-text-field ${
+                          errors.lastname ? "error" : "resolved"
+                        }`
                       : "sign-up-lastname form-text-field"
                   }
                   type="text"
@@ -140,8 +143,10 @@ function DetailSignUpForm1({
               <div className="label-sign-up form-label">Email</div>
               <Field
                 className={
-                  errors.email && touched.email
-                    ? "sign-up-email form-text-field error"
+                  touched.email
+                    ? `sign-up-email form-text-field ${
+                        errors.email ? "error" : "resolved"
+                      }`
                     : "sign-up-email form-text-field"
                 }
                 type="text"
@@ -177,8 +182,10 @@ function DetailSignUpForm1({
               <div className="label-sign-up form-label">Phone number</div>
               <Field
                 className={
-                  errors.phone && touched.phone
-                    ? "sign-up-phonenumber form-text-field error"
+                  touched.phone
+                    ? `sign-up-phonenumber form-text-field ${
+                        errors.phone ? "error" : "resolved"
+                      }`
                     : "sign-up-phonenumber form-text-field"
                 }
                 type="tel"
@@ -218,8 +225,10 @@ function DetailSignUpForm1({
               <div className="label-sign-up form-label">Password</div>
               <Field
                 className={
-                  errors.password1 && touched.password1
-                    ? "sign-up-password form-text-field error"
+                  touched.password1
+                    ? `sign-up-password form-text-field ${
+                        errors.password1 ? "error" : "resolved"
+                      }`
                     : "sign-up-password form-text-field"
                 }
                 type="password"
@@ -259,8 +268,10 @@ function DetailSignUpForm1({
               <div className="label-sign-up form-label">Re-enter Password</div>
               <Field
                 className={
-                  errors.password2 && touched.password2
-                    ? "sign-up-password-recheck form-text-field error"
+                  touched.password2
+                    ? `sign-up-password-recheck form-text-field ${
+                        errors.password2 ? "error" : "resolved"
+                      }`
                     : "sign-up-password-recheck form-text-field"
                 }
                 type="password"

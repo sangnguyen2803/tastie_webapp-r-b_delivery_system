@@ -63,7 +63,13 @@ $boxBorderRadius: 5px;
 }
 
 .error {
-  border: 2px #d30069 solid;
+  background-color: rgb(255, 239, 239);
+  border: 2px $errorCheckIconColor solid;
+}
+
+.resolved {
+  background-color: rgb(238, 255, 238);
+  border: 2px $errorResolvedIconColor solid;
 }
 
 .sign-up-firstname.error::placeholder,
@@ -72,7 +78,7 @@ $boxBorderRadius: 5px;
 .sign-up-phonenumber.error::placeholder,
 .sign-up-password.error::placeholder,
 .sign-up-password-recheck.error::placeholder {
-  color: #d30069;
+  color: #000000;
 }
 
 .captcha-wrapper {

@@ -6,8 +6,8 @@ export const validateSignUpForm1 = yup.object().shape({
   email: yup.string().email("invalid email").required("This field is required"),
   phone: yup
     .string()
-    .min(10, "Must be length of 10")
-    .max(10, "Must be length of 10")
+    .min(10, "Phone number must be exactly 10 characters long")
+    .max(10, "Phone number must be exactly 10 characters long")
     .required("This field is required"),
   password1: yup.string().required("This field is required"),
   password2: yup
@@ -15,4 +15,3 @@ export const validateSignUpForm1 = yup.object().shape({
     .oneOf([yup.ref("password1")], "Password is diferent")
     .required("This field is required"),
 });
-

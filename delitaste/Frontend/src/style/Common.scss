@@ -22,14 +22,11 @@ $boxBorderRadius: 5px;
 .form-text-field {
   height: 35px;
   display: block;
-  border: 2px #6e6e6e solid;
+  border: 2px #949494 solid;
   font-weight: 400;
   padding-left: 5%;
-  font-size: 15px;
+  font-size: 14px;
   border-radius: 3px;
-  &:hover {
-    border: 2px #cf273d solid;
-  }
   background: #ffffff;
 }
 
