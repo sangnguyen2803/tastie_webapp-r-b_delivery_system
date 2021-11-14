@@ -3,7 +3,7 @@ import UserRegistrationScreen from "screens/UserAdmissionScreen/UserRegistration
 import UserSignInScreen from "screens/UserAdmissionScreen/UserSignInScreen";
 import MerchantRegistrationScreen from "screens/MerchantRegistrationScreen/MerchantRegistrationScreen";
 import SignContractScreen from "screens/MerchantRegistrationScreen/SignContractScreen/SignContractScreen";
-
+import MerchantFormScreen from "screens/MerchantRegistrationScreen/MerchantFormScreen";
 export const routes = [
   {
     path: "/:lang(en|fr|vi)/",
@@ -24,6 +24,12 @@ export const routes = [
     breadcrumb: "Sign Up",
   },
   {
+    path: "/:lang(en|fr|vi)/sign-up",
+    exact: true,
+    component: UserSignInScreen,
+    breadcrumb: "Sign Up",
+  },
+  {
     path: "/:lang(en|fr|vi)/sign-in",
     exact: true,
     component: UserSignInScreen,
@@ -39,18 +45,18 @@ export const routes = [
     path: "/merchant-registration",
     exact: true,
     component: MerchantRegistrationScreen,
-    breadcrumb: "Merchant Registration",
+    breadcrumb: "Start Business",
   },
   {
     path: "/merchant-registration/sign-contract",
     exact: true,
     component: SignContractScreen,
-    breadcrumb: "Sign Contract",
+    breadcrumb: "Contract",
   },
   {
-    path: "/merchant-registration/shop-basic-info",
+    path: "/merchant-registration/service-info",
     exact: true,
-    component: SignContractScreen,
-    breadcrumb: "Step 1: Basic Info",
+    component: MerchantFormScreen,
+    breadcrumb: "Service Info",
   },
 ];

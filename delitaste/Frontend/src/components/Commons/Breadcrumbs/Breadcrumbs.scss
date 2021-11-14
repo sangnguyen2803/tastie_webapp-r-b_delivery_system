@@ -1,3 +1,19 @@
+.breadcrumb-icon {
+  margin-top: 5px;
+  margin-left: 5px;
+  height: 33px;
+  font-size: 20px;
+  border-radius: 3px;
+  padding: 0 10px;
+  background: #8d0000;
+  color: rgb(255, 255, 255);
+  position: absolute;
+  border: 1px rgb(228, 228, 228) solid;
+  &:hover {
+    cursor: pointer;
+  }
+  z-index: 2;
+}
 /*.breadcrumb {
   width: 100%;
   color: rgb(255, 255, 255);
@@ -30,9 +46,11 @@
 */
 
 .breadcrumb {
+  margin-top: 7px;
   list-style: none;
   overflow: hidden;
   font-size: 14px;
+  margin-left: 42px;
 }
 .breadcrumb li {
   float: left;
@@ -104,11 +122,14 @@
   border-left-color: rgb(187, 65, 65);
 }
 .breadcrumb li:last-child a {
-  background: linear-gradient(to left, rgba(255, 95, 95, 0), rgb(255, 90, 90));
+  background: rgb(192, 68, 68);
   color: rgb(255, 255, 255);
   pointer-events: none;
   cursor: default;
-  width: 200px;
+  border-top-right-radius: 50px;
+  border-bottom-right-radius: 50px;
+  width: auto;
+  padding-right: 20px;
 }
 .breadcrumb li:last-child a:after {
   border: 0;
@@ -123,4 +144,16 @@
 }
 .breadcrumb li a:hover:after {
   border-left-color: rgb(207, 64, 64);
+}
+
+@media all and (max-width: 780px) {
+  .breadcrumb-icon {
+    display: none !important;
+  }
+}
+
+@media only screen and (max-width: 1366px) and (min-width: 781px) {
+  .breadcrumb-icon {
+    display: none !important;
+  }
 }

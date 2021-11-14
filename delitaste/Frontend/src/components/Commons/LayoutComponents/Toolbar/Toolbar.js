@@ -19,7 +19,6 @@ function ToolBar(props) {
           >
             <FontAwesomeIcon icon={faChevronUp} />
           </div>
-
           <div
             className="go-top-icon-button"
             onClick={() => {

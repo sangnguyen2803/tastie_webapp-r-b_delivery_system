@@ -1,0 +1,67 @@
+$formColor: #f4f4f4;
+$logoColor: #aa0033;
+$formTextColor: #2e2e2e;
+$boxBorderRadius: 5px;
+$labelWidth: 20%;
+@mixin FlexCol($width, $flexWrap) {
+  width: $width;
+  display: flex;
+  flex-wrap: $flexWrap;
+  flex-direction: column;
+}
+@mixin FlexRow($width, $flexWrap) {
+  width: $width;
+  display: flex;
+  flex-wrap: $flexWrap;
+  flex-direction: row;
+}
+
+.service-form-wrapper {
+  @include FlexCol(70%, wrap);
+  height: 1200px;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 4%;
+
+  .service-form-field-wrapper {
+    @include FlexRow(100%, nowrap);
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 4%;
+
+    .service-form-label-wrapper {
+      box-sizing: border-box;
+      font-weight: 700;
+      width: $labelWidth;
+    }
+    .service-form-input-wrapper {
+      @include FlexRow(80%, nowrap);
+      justify-content: space-evenly;
+      align-items: center;
+      box-sizing: border-box;
+      gap: 5%;
+      input {
+        width: 100%;
+      }
+    }
+  }
+}
+.service-form-button-wrapper {
+  width: 80%;
+  margin-left: $labelWidth;
+  margin-bottom: 3%;
+}
+.btn-check-on-map {
+  width: 30%;
+  height: 40px;
+  font-size: 16px;
+  background: rgb(143, 143, 143);
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  margin-right: 3%;
+  &:hover {
+    background: rgb(68, 68, 68);
+  }
+}

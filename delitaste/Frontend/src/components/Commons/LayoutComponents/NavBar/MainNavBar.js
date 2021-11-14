@@ -6,7 +6,11 @@ import {
   faCaretDown,
   faCartArrowDown,
   faUser,
+  faTimes,
+  faFileAlt,
 } from "@fortawesome/fontawesome-free-solid";
+
+import faShopify from "@fortawesome/react-fontawesome";
 import ENFlag from "assets/Flags/en_flag.png";
 import FRFlag from "assets/Flags/fr_flag.png";
 import VIFlag from "assets/Flags/vi_flag.png";
@@ -22,6 +26,7 @@ import Modal from "components/Commons/Modal/Modal";
 import LanguageSettingPanel from "components/Commons/Panel/LanguageSettingPanel";
 import AccountSettingPanel from "components/Commons/Panel/AccountSettingPanel";
 import i18n from "i18n";
+import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 
 function MainNavBar(props) {
   const [accountPanel, setAccountPanel] = useState(false);
@@ -137,20 +142,40 @@ function MainNavBar(props) {
       </div>
 
       {categoryList ? (
-        <div className="nav-feature-2">
-          <div className="category-feature-wrapper">
-            <a class="nav-text">Today's Deals</a>
+        <>
+          <div className="darken-mask-mobile"></div>
+          <div className="sidebar-container">
+            <FontAwesomeIcon
+              className="side-bar-close-icon"
+              onClick={() => setCategoryList(false)}
+              icon={faTimes}
+            />
+            <div className="side-bar-feature-container">
+              <div className="category-feature-wrapper">
+                <div class="nav-text">Profile</div>
+              </div>
+              <div className="category-feature-wrapper">
+                <div class="nav-text">Give feedbacks</div>
+              </div>
+              <div className="category-feature-wrapper">
+                <div class="nav-text">Merchant Dashboard</div>
+              </div>
+              <div className="category-feature-wrapper">
+                <div class="nav-text">Change Password</div>
+              </div>
+
+              <div className="category-feature-wrapper">
+                <div class="nav-text">Order History</div>
+              </div>
+              <div className="category-feature-wrapper">
+                <div class="nav-text">Settings & Privacy</div>
+              </div>
+              <div className="category-feature-wrapper">
+                <div class="nav-text">Log Out</div>
+              </div>
+            </div>
           </div>
-          <div className="category-feature-wrapper">
-            <a class="nav-text">Trendings</a>
-          </div>
-          <div className="category-feature-wrapper">
-            <a class="nav-text">Restaurants</a>
-          </div>
-          <div className="category-feature-wrapper">
-            <a class="nav-text">Homemade Food</a>
-          </div>
-        </div>
+        </>
       ) : (
         <></>
       )}

@@ -1,5 +1,6 @@
 import React from "react";
 import { Fragment } from "react";
+import { withRouter } from "react-router-dom";
 import GuidePage from "components/MerchantRegistration/GuidePage/GuidePage";
 function MerchantRegistrationScreen(props) {
   return (
@@ -9,4 +10,4 @@ function MerchantRegistrationScreen(props) {
   );
 }
 
-export default MerchantRegistrationScreen;
+export default withRouter(MerchantRegistrationScreen);

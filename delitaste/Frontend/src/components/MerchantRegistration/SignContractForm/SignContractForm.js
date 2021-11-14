@@ -4,8 +4,9 @@ import Footer from "components/Commons/LayoutComponents/Footer/Footer";
 import NavBar from "components/Commons/LayoutComponents/NavBar/NavBar";
 import Contract from "assets/pdf/contract.pdf";
 import ToolBar from "components/Commons/LayoutComponents/Toolbar/Toolbar";
-import MerchantBanner from "assets/banner.png";
+import MerchantBanner from "assets/merchant-form-banner.png";
 import FormBanner from "assets/Banner/merchant-form-banner.png";
+import { withRouter } from "react-router-dom";
 import RegisterStep from "components/UserAdmission/SignUpForm/RegisterStep";
 
 const backgroundStyling = {
@@ -15,15 +16,15 @@ const backgroundStyling = {
   backgroundSize: "cover",
 };
 
-function SignContractForm() {
+function SignContractForm(props) {
+  const contractFormHandler = () => {
+    props.history.push("service-info");
+  };
   return (
     <>
       <div className="sign-contract-form">
         <NavBar hideBreadcrumb={false} />
-        <div
-          className="sign-contract-form-containter"
-          style={backgroundStyling}
-        >
+        <div className="sign-contract-form-containter">
           <div className="contract-form-wrapper">
             <div className="contract-form">
               <div className="form-banner-wrapper">
@@ -63,12 +64,14 @@ function SignContractForm() {
                 </div>
               </div>
               <div className="btn-sign-contract-wrapper">
-                <Link to="/merchant-registration">
-                  <button className="btn-sign-contract-back">Back</button>
-                </Link>
-                <Link to="/merchant-registration/create-shop">
+                <div>
+                  <Link to="/merchant-registration">
+                    <button className="btn-sign-contract-back">Back</button>
+                  </Link>
+                </div>
+                <div onClick={contractFormHandler}>
                   <button className="btn-sign-contract-next">Agree</button>
-                </Link>
+                </div>
               </div>
             </div>
           </div>
@@ -80,4 +83,4 @@ function SignContractForm() {
   );
 }
 
-export default SignContractForm;
+export default withRouter(SignContractForm);

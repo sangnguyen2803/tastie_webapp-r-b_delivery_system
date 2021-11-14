@@ -43,8 +43,8 @@
 }
 .nav-icon-prefix-2 {
   font-size: 20px;
-  margin-left: 3%;
-  margin-right: 5%;
+  margin-left: 8px;
+  margin-right: 5px;
 }
 .nav-menu-prefix-2 {
   cursor: pointer;
@@ -251,4 +251,96 @@
   .nav-cart-container {
     width: 80px !important;
   }
+}
+
+//sidebar
+
+.sidebar-container {
+  z-index: 11;
+  position: absolute;
+  width: 80%;
+  height: 2000px;
+  left: 0%;
+  top: 0%;
+  background-color: #ffffff;
+  color: rgb(10, 10, 10);
+
+  .side-bar-close-icon {
+    color: rgb(41, 41, 41);
+    font-size: 30px;
+    background-color: rgb(175, 175, 175);
+    border-radius: 50px;
+    padding: 1.5% 3%;
+    float: right;
+    margin: 2% 2% 0% 0%;
+  }
+
+  .side-bar-feature-container {
+    width: 100%;
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    border-top: 2px grey solid;
+    align-items: center;
+    justify-content: center;
+
+    .category-feature-wrapper {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      align-items: center;
+      height: 22px;
+      width: 86%;
+      font-size: 17px;
+      text-align: left;
+      padding-top: 10px;
+      margin-top: 5px;
+      border-radius: 50px;
+
+      .nav-text {
+        height: 30px;
+        align-self: center;
+        font-size: 17px;
+        padding-top: 10px;
+        margin-left: 10px;
+      }
+      .sidebar-icon {
+        color: rgb(255, 255, 255);
+        font-size: 18px;
+        width: 10%;
+        background-color: rgb(121, 0, 20);
+        border-radius: 50px;
+        text-align: center;
+        padding: 2% 1%;
+      }
+    }
+  }
+}
+.darken-mask-mobile {
+  z-index: 10;
+  width: 100wv;
+  height: 2000px;
+  display: block;
+  opacity: 0.8;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #000;
+  -ms-filter: opacity(0.8);
+  filter: alpha(opacity=80);
+  -webkit-opacity: 0.8;
+  -moz-opacity: 0.8;
+  -o-opacity: 0.8;
+  opacity: 0.8;
+  transform: translate3d(0, 0, 0);
+}
+
+.nav-category-item-mobile {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  width: 100%;
 }
