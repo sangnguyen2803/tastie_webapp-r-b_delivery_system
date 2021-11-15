@@ -7,7 +7,7 @@ import ToolBar from "components/Commons/LayoutComponents/Toolbar/Toolbar";
 import ServiceInfoForm from "components/MerchantRegistration/Forms/DetailMerchantForm/ServiceInfoForm";
 import MerchantBanner from "assets/merchant-form-banner.png";
 import FormBanner from "assets/Banner/merchant-form-banner.png";
-
+import Stepper from "components/Commons/Stepper/Stepper";
 const backgroundStyling = {
   background: `url(${MerchantBanner})`,
   backgroundPosition: "center",
@@ -19,15 +19,16 @@ function ServiceInformationForm() {
   return (
     <div className="merchant-registration-page">
       <NavBar hideBreadcrumb={false} />
-      <div className="merchant-registration-form-container">
+      <div
+        className="merchant-registration-form-container"
+        style={backgroundStyling}
+      >
         <div className="merchant-registration-form-wrapper">
           <div className="merchant-registration-form">
-            <div className="form-banner-wrapper">
-              <span className="merchant-registration-header-title">
-                Service Basic Info
-              </span>
-            </div>
+            <Stepper />
+
             <ServiceInfoForm />
+
             <div className="btn-merchant-registration-wrapper">
               <Link to="/merchant-registration">
                 <button className="btn-merchant-registration-back">Back</button>

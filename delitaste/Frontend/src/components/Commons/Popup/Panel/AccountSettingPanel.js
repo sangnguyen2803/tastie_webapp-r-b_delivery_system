@@ -39,7 +39,7 @@ const AccountSettingPanel = (props) => {
           <Link className="service-name">Order & Bills</Link>
           <Link className="service-name">E-Coupons & Vouchers</Link>
           <Link to="/merchant-registration" className="service-name">
-            Merchant Dashboard
+            Merchant Registration
           </Link>
           <Link className="service-name">Browsing History</Link>
           <Link className="service-name">Watchlist</Link>

@@ -14,18 +14,14 @@ import "./DetailSignUpForm.scss";
 import "style/Common.scss";
 //store
 import {
-  setRegisterStep,
-  setRegisterFormData,
-} from "store/actions/UserAdmission/registerActions";
-import { loadRegisterForm } from "store/actions/UserAdmission/formActions";
+  updateStepStyling,
+  updateRegistrationFormData,
+  mapRegistrationForm,
+} from "store/actions/UserAdmission/RegistrationActions";
 //components
 import FormError from "components/Commons/ErrorHandlers/FormError/FormError";
 
-function DetailSignUpForm1({
-  setRegisterStep,
-  setRegisterFormData,
-  loadRegisterForm,
-}) {
+function DetailSignUpForm1(props) {
   const initialValues = {
     firstname: "",
     lastname: "",
@@ -36,7 +32,6 @@ function DetailSignUpForm1({
   };
 
   const handleSubmitForm = (values) => {
-    setRegisterStep(["finished", "active", "default", "default"]);
     const formData = {
       firstname: values.firstname,
       lastname: values.lastname,
@@ -44,9 +39,9 @@ function DetailSignUpForm1({
       phone: values.phone,
       password: values.password1,
     };
-    setRegisterFormData(formData);
-    const msg = "Check your email to get code.";
-    loadRegisterForm("email_verification", msg);
+    props.updateStepStyling(["finished", "active", "default", "default"]);
+    props.updateRegistrationFormData(formData);
+    props.mapRegistrationForm(1);
   };
 
   return (
@@ -336,15 +331,15 @@ function DetailSignUpForm1({
 }
 
 DetailSignUpForm1.propTypes = {
-  setRegisterStep: PropTypes.func.isRequired,
-  setRegisterFormData: PropTypes.func.isRequired,
-  loadRegisterForm: PropTypes.func.isRequired,
+  updateStepStyling: PropTypes.func.isRequired,
+  updateRegistrationFormData: PropTypes.func.isRequired,
+  mapRegistrationForm: PropTypes.func.isRequired,
 };
 
 export default connect(null, {
-  setRegisterStep,
-  setRegisterFormData,
-  loadRegisterForm,
+  updateStepStyling,
+  updateRegistrationFormData,
+  mapRegistrationForm,
 })(DetailSignUpForm1);
 
 //Styling

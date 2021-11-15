@@ -1,15 +1,43 @@
-import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
-import RegisterStep from "./RegisterStep";
-import { connect } from "react-redux";
+import React from "react";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
+import RegisterStep from "./RegisterStep";
 import DetailSignUpForm1 from "./DetailSignUpForm/DetailSignUpForm1";
 import DetailSignUpForm2 from "./DetailSignUpForm/DetailSignUpForm2";
 import EmailVerification from "./DetailSignUpForm/EmailVerification";
 
-function SignUpForm({ form }) {
-  /*
+function SignUpForm(props) {
+  const RegistrationForm = [
+    <DetailSignUpForm1 />,
+    <EmailVerification />,
+    <DetailSignUpForm2 />,
+  ];
+  return (
+    <div className="sign-up-section">
+      <div className="sign-up-form">
+        <div className="register-step-container">
+          <RegisterStep />
+        </div>
+        <div className="sign-up-form-wrapper">
+          {RegistrationForm[props.form.currentForm]}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+SignUpForm.propTypes = {
+  form: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  form: state.RegistrationReducers,
+});
+
+export default connect(mapStateToProps)(SignUpForm);
+
+/*
   const updateStepStatus = () => {
     for (const [key, value] of Object.entries(stepSignUpForm.step)) {
       if (value === "active" && key != "step4") {
@@ -26,30 +54,3 @@ function SignUpForm({ form }) {
     }
   };
   */
-  const loadSignUpForm = () => {
-    const { currentForm } = form;
-    if (currentForm === "account_registration") return <DetailSignUpForm1 />;
-    if (currentForm === "email_verification") return <EmailVerification />;
-    if (currentForm === "profile_completion") return <DetailSignUpForm2 />;
-  };
-  return (
-    <div className="sign-up-section">
-      <div className="sign-up-form">
-        <div className="register-step-container">
-          <RegisterStep />
-        </div>
-        <div className="sign-up-form-wrapper">{loadSignUpForm()}</div>
-      </div>
-    </div>
-  );
-}
-
-SignUpForm.propTypes = {
-  form: PropTypes.object.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  form: state.loadFormReducer,
-});
-
-export default connect(mapStateToProps)(SignUpForm);

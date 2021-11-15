@@ -14,17 +14,13 @@ import {
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import {
-  setRegisterStep,
-  setRegisterFormData,
-} from "store/actions/UserAdmission/registerActions";
-import { loadRegisterForm } from "store/actions/UserAdmission/formActions";
-function EmailVerification({
-  submitedFormData,
-  setRegisterStep,
-  loadRegisterForm,
-}) {
+  updateStepStyling,
+  mapRegistrationForm,
+} from "store/actions/UserAdmission/RegistrationActions";
+function EmailVerification(props) {
   const [verifyCode, setVerifycode] = useState({ digits: "xxxxxx" });
   const [changeEmailDialog, setChangeEmailDialog] = useState(false);
+
   const collectVerifyDigits = (e) => {
     e.target.value = !isNaN(e.target.value) ? e.target.value : "";
     verifyCode.digits =
@@ -32,14 +28,14 @@ function EmailVerification({
       e.target.value +
       verifyCode.digits.substr(parseInt(e.target.name) + 1);
   };
+
   const onSubmitEmailVerification = async (e) => {
     e.preventDefault();
-    setRegisterStep(["finished", "finished", "active", "default"]);
-    //call api
-
-    loadRegisterForm("profile_completion");
+    props.updateStepStyling(["finished", "finished", "active", "default"]);
+    props.mapRegistrationForm(2);
     //validate registration form
   };
+
   const displayChangeEmailDialog = () => {
     setChangeEmailDialog((prev) => !prev);
   };
@@ -55,13 +51,14 @@ function EmailVerification({
       <span className="verify-code-description">
         {" "}
         Please enter the 6-digit code already sent to your email{" "}
-        <strong>{submitedFormData.email}</strong>{" "}
+        <strong>{props.submitedFormData.email}</strong>{" "}
         <FontAwesomeIcon
           className="change-email-icon"
           icon={faPencilAlt}
-          onClick={displayChangeEmailDialog}
+          onClick={() => setChangeEmailDialog((prev) => !prev)}
         />
       </span>
+
       {changeEmailDialog ? (
         <>
           <div className="sign-up-email-wrapper">
@@ -73,7 +70,7 @@ function EmailVerification({
               className="sign-up-email form-text-field"
               type="text"
               name="email"
-              value={submitedFormData.email}
+              value={props.submitedFormData.email}
               placeholder="Email"
               maxLength={50}
               autoComplete="on"
@@ -87,6 +84,7 @@ function EmailVerification({
       ) : (
         <span></span>
       )}
+
       <div className="verify-code-wrapper">
         <div className="verify-code-digit-wrapper">
           <input
@@ -149,6 +147,7 @@ function EmailVerification({
           />
         </div>
       </div>
+
       <div className="resend-section">
         <FontAwesomeIcon className="resend-code-icon" icon={faEnvelope} />
         <div className="resend-verify-code">
@@ -166,24 +165,19 @@ function EmailVerification({
           <FontAwesomeIcon className="chevron-icon" icon={faChevronRight} />
         </button>
       </div>
-      <button className="btn-form btn-verify-position">
-        <div className="none-icon"></div>
-        Verify
-        <FontAwesomeIcon className="chevron-icon" icon={faChevronRight} />
-      </button>
     </div>
   );
 }
 EmailVerification.propTypes = {
-  setRegisterStep: PropTypes.func.isRequired,
-  loadRegisterForm: PropTypes.func.isRequired,
+  updateStepStyling: PropTypes.func.isRequired,
+  mapRegistrationForm: PropTypes.func.isRequired,
   submitedFormData: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  submitedFormData: state.registerReducer,
+  submitedFormData: state.RegistrationReducers,
 });
 export default connect(mapStateToProps, {
-  loadRegisterForm,
-  setRegisterStep,
+  mapRegistrationForm,
+  updateStepStyling,
 })(EmailVerification);

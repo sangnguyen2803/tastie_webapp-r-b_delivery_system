@@ -1,20 +1,4 @@
-.register-step-wrapper {
-  display: flex;
-  flex-wrap: nowrap;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  height: 80px;
-  padding-left: 5%;
-  padding-right: 5%;
-  font-weight: bold;
-}
-.register-step-wrapper img {
-  width: 35%;
-  height: 10px;
-}
-
-.register-step {
+.step-styling {
   border-radius: 5px;
   width: 13px;
   height: 13px;
@@ -27,27 +11,43 @@
   text-align: center;
   cursor: pointer;
 }
-.step-icon-active {
-  background: rgb(185, 0, 9);
-  border: 1px solid rgb(185, 0, 9);
-  color: rgb(240, 240, 240);
-}
-.step-icon-active:hover {
-  background: rgb(185, 0, 9);
-  border: 1px solid rgb(185, 0, 9);
-  cursor: pointer;
-}
 
-.step-icon-finished {
-  background: rgb(0, 145, 72);
-  border: 1px solid rgb(0, 145, 72);
-  color: rgb(245, 245, 245);
-}
+.register-step-wrapper {
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: 80px;
+  padding-left: 5%;
+  padding-right: 5%;
+  font-weight: bold;
 
-.step-icon-default {
-  background: #ffffff;
-  border: 1px solid #727272;
-  color: #b4b4b4;
+  .active {
+    background: rgb(185, 0, 9);
+    border: 1px solid rgb(185, 0, 9);
+    color: rgb(240, 240, 240);
+    cursor: pointer;
+    @extend .step-styling;
+  }
+  .default {
+    background: #ffffff;
+    border: 1px solid #727272;
+    color: #b4b4b4;
+    cursor: pointer;
+    @extend .step-styling;
+  }
+  .finished {
+    background: rgb(0, 145, 72);
+    border: 1px solid rgb(0, 145, 72);
+    color: rgb(245, 245, 245);
+    cursor: pointer;
+    @extend .step-styling;
+  }
+}
+.register-step-wrapper img {
+  width: 35%;
+  height: 10px;
 }
 
 .step-direction {

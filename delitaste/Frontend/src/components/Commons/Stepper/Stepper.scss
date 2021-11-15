@@ -1,0 +1,79 @@
+.step-styling {
+  border-radius: 5px;
+  width: 13px;
+  height: 13px;
+  padding: 5px;
+  font-size: 15px;
+  font-weight: bold;
+  background: rgb(255, 196, 0);
+  border: 1px solid rgb(255, 196, 0);
+  color: rgb(7, 7, 0);
+  text-align: center;
+  cursor: pointer;
+}
+
+@mixin FlexCol($width, $flexWrap) {
+  width: $width;
+  display: flex;
+  flex-wrap: $flexWrap;
+  flex-direction: column;
+}
+@mixin FlexRow($width, $flexWrap) {
+  width: $width;
+  display: flex;
+  flex-wrap: $flexWrap;
+  flex-direction: row;
+}
+
+.stepper-container {
+  @include FlexRow(89%, nowrap);
+  margin-top: 0.5%;
+  color: #e4e4e4;
+  background: rgb(19, 19, 19);
+  font-family: "Noto Sans JP", sans-serif;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  justify-content: space-between;
+  padding-left: 5%;
+  padding-right: 5%;
+  .stepper-wrapper {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    height: 80px;
+    padding-left: 1%;
+    padding-right: 1%;
+
+    .active {
+      background: rgb(185, 0, 9);
+      border: 1px solid rgb(185, 0, 9);
+      color: rgb(240, 240, 240);
+      cursor: pointer;
+      @extend .step-styling;
+    }
+    .default {
+      background: #ffffff;
+      border: 1px solid #727272;
+      color: #b4b4b4;
+      cursor: pointer;
+      @extend .step-styling;
+    }
+    .finished {
+      background: rgb(0, 145, 72);
+      border: 1px solid rgb(0, 145, 72);
+      color: rgb(245, 245, 245);
+      cursor: pointer;
+      @extend .step-styling;
+    }
+  }
+}
+
+.stepper-description {
+  width: 80px;
+  text-align: left;
+  font-size: 14px;
+  color: #ffffff;
+}

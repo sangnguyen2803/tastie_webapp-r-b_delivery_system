@@ -25,15 +25,17 @@ h2 {
   justify-content: flex-start;
 }
 .merchant-registration-form {
-  border-radius: 3px;
+  margin-top: 2%;
   background-color: rgb(247, 247, 247);
-  width: 75%;
+  width: 65%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
   height: 1000px;
+  border-radius: 5px;
   .form-banner-wrapper {
+    background: #f4f4f4;
     display: flex;
     flex-direction: column-reverse;
     align-items: center;
@@ -44,11 +46,17 @@ h2 {
     .merchant-registration-header-title {
       font-family: "Noto Sans", sans-serif;
       background: rgba(146, 0, 0, 0.9);
-      width: 100%;
-      font-size: 19px;
+      align-self: flex-start;
+      width: 35%;
+      font-size: 17px;
       color: white;
-      height: 30px;
-      text-align: center;
+      height: 22px;
+      text-align: left;
+      margin-left: 0.5%;
+      padding-top: 0.5%;
+      padding-bottom: 0.5%;
+      text-indent: 20px;
+      clip-path: polygon(0 0, 92% 0, 100% 100%, 0% 100%);
     }
   }
 }

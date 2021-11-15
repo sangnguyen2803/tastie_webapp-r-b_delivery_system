@@ -38,6 +38,6 @@ RegisterStep.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  registerState: state.registerReducer,
+  registerState: state.RegistrationReducers,
 });
 export default connect(mapStateToProps)(RegisterStep);

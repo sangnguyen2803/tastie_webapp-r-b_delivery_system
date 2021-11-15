@@ -1,7 +1,5 @@
 import { combineReducers } from "redux";
-import registerReducer from "./UserAdmission/registerReducer";
-import loadFormReducer from "./UserAdmission/loadFormReducer";
+import RegistrationReducers from "store/reducers/UserAdmission/RegistrationReducers";
 export default combineReducers({
-  registerReducer,
-  loadFormReducer,
+  RegistrationReducers,
 });

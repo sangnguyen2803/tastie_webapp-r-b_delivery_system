@@ -24,15 +24,18 @@ function SignContractForm(props) {
     <>
       <div className="sign-contract-form">
         <NavBar hideBreadcrumb={false} />
-        <div className="sign-contract-form-containter">
+        <div
+          className="sign-contract-form-containter"
+          style={backgroundStyling}
+        >
           <div className="contract-form-wrapper">
             <div className="contract-form">
               <div className="form-banner-wrapper">
                 <img src={FormBanner} classname="form-banner-img" />
-                <span className="contract-header-title">
-                  Contract terms and agreements
-                </span>
               </div>
+              <span className="contract-header-title">
+                Contract terms and agreements
+              </span>
               <span className="contract-header-text">
                 Please read our terms and conditions:
               </span>

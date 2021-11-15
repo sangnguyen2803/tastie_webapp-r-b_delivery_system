@@ -1,30 +1,35 @@
 import {
-  SET_REGISTER_STEP,
-  SET_USER_FORM_DATA,
+  UPDATE_REGISTER_STEP_STYLING,
+  UPDATE_REGISTRATION_FORM_DATA,
+  MAP_REGISTRATION_FORM,
+  LOAD_REGISTER_FORM,
   REGISTER_SUCCESS,
   REGISTER_FAIL,
 } from "store/actions/types";
 
-export const setRegisterStep = (stepStyle) => (dispatch) => {
-  const stepStyling = {
-    styling: [
-      "register-step step-icon-" + stepStyle[0],
-      "register-step step-icon-" + stepStyle[1],
-      "register-step step-icon-" + stepStyle[2],
-      "register-step step-icon-" + stepStyle[3],
-    ],
-  };
+export const updateStepStyling = (stepStyle) => (dispatch) => {
   dispatch({
-    type: SET_REGISTER_STEP,
-    payload: stepStyling,
+    type: UPDATE_REGISTER_STEP_STYLING,
+    payload: {
+      styling: stepStyle,
+    },
   });
 };
-export const setRegisterFormData = (formData) => (dispatch) => {
+
+export const updateRegistrationFormData = (formData) => (dispatch) => {
   dispatch({
-    type: SET_USER_FORM_DATA,
+    type: UPDATE_REGISTRATION_FORM_DATA,
     payload: formData,
   });
 };
+
+export const mapRegistrationForm = (form, msg) => (dispatch) => {
+  dispatch({
+    type: MAP_REGISTRATION_FORM,
+    payload: { currentForm: form },
+  });
+};
+
 /*
 export const submitDataForm = (formData) => {
   const { firstname, lastname, phone, email, password } = formData;

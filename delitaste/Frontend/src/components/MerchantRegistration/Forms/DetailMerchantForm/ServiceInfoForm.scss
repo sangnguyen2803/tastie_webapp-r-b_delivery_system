@@ -17,11 +17,10 @@ $labelWidth: 20%;
 }
 
 .service-form-wrapper {
-  @include FlexCol(70%, wrap);
+  @include FlexCol(75%, wrap);
   height: 1200px;
   justify-content: flex-start;
   align-items: center;
-  margin-top: 4%;
 
   .service-form-field-wrapper {
     @include FlexRow(100%, nowrap);

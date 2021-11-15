@@ -20,11 +20,11 @@ import { Link } from "react-router-dom";
 
 import "./MainNavBar.scss";
 import SearchBar from "./SearchBar";
-import NavFlyout from "components/Commons/NavFlyout/NavFlyout";
+import NavFlyout from "components/Commons/Popup/NavFlyout/NavFlyout";
 import Logo from "assets/sub-logo.png";
-import Modal from "components/Commons/Modal/Modal";
-import LanguageSettingPanel from "components/Commons/Panel/LanguageSettingPanel";
-import AccountSettingPanel from "components/Commons/Panel/AccountSettingPanel";
+import Modal from "components/Commons/Popup/Modal/Modal";
+import LanguageSettingPanel from "components/Commons/Popup/Panel/LanguageSettingPanel";
+import AccountSettingPanel from "components/Commons/Popup/Panel/AccountSettingPanel";
 import i18n from "i18n";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 
@@ -152,26 +152,25 @@ function MainNavBar(props) {
             />
             <div className="side-bar-feature-container">
               <div className="category-feature-wrapper">
-                <div class="nav-text">Profile</div>
+                <div className="nav-text">Profile</div>
               </div>
               <div className="category-feature-wrapper">
-                <div class="nav-text">Give feedbacks</div>
+                <div className="nav-text">Give feedbacks</div>
               </div>
               <div className="category-feature-wrapper">
-                <div class="nav-text">Merchant Dashboard</div>
+                <div className="nav-text">Merchant Dashboard</div>
               </div>
               <div className="category-feature-wrapper">
-                <div class="nav-text">Change Password</div>
-              </div>
-
-              <div className="category-feature-wrapper">
-                <div class="nav-text">Order History</div>
+                <div className="nav-text">Change Password</div>
               </div>
               <div className="category-feature-wrapper">
-                <div class="nav-text">Settings & Privacy</div>
+                <div className="nav-text">Order History</div>
               </div>
               <div className="category-feature-wrapper">
-                <div class="nav-text">Log Out</div>
+                <div className="nav-text">Settings & Privacy</div>
+              </div>
+              <div className="category-feature-wrapper">
+                <div className="nav-text">Log Out</div>
               </div>
             </div>
           </div>

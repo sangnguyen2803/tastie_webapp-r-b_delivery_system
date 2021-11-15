@@ -80,9 +80,7 @@ $boxBorderRadius: 5px;
   font-size: 13px;
   color: $emphasizeColor;
   &:hover {
-    transform: scale(1.05);
     text-decoration: underline;
     color: $emphasizeColorHover;
-    font-weight: bold;
   }
 }
