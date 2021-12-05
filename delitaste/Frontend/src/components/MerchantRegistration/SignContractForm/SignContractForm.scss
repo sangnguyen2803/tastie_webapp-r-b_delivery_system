@@ -41,7 +41,6 @@ h2 {
   justify-content: flex-start;
 }
 .contract-form {
-  margin-top: 2%;
   background-color: rgb(247, 247, 247);
   width: 65%;
   display: flex;
@@ -49,6 +48,8 @@ h2 {
   align-items: center;
   justify-content: flex-start;
   height: 1000px;
+  box-shadow: rgba(0, 0, 0, 0.16) -15px 3px 15px,
+    rgba(0, 0, 0, 0.23) -10px 10px 15px;
   border-radius: 5px;
   .form-banner-wrapper {
     background: #f4f4f4;
@@ -210,7 +211,7 @@ h2 {
 }
 
 //responsive design
-@media all and (max-width: 780px) {
+@media all and (max-width: 767px) {
   .contract-form,
   .contract-header-title {
     width: 95% !important;
@@ -247,7 +248,7 @@ h2 {
   }
 }
 
-@media only screen and (max-width: 1366px) and (min-width: 781px) {
+@media only screen and (max-width: 1200px) and (min-width: 767px) {
   .contract-form,
   .contract-header-title {
     width: 90% !important;

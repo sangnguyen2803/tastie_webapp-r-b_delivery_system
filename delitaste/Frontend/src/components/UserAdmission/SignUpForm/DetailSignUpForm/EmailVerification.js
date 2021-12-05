@@ -16,7 +16,9 @@ import PropTypes from "prop-types";
 import {
   updateStepStyling,
   mapRegistrationForm,
+  accountRegistrationAPI,
 } from "store/actions/UserAdmission/RegistrationActions";
+
 function EmailVerification(props) {
   const [verifyCode, setVerifycode] = useState({ digits: "xxxxxx" });
   const [changeEmailDialog, setChangeEmailDialog] = useState(false);
@@ -28,17 +30,11 @@ function EmailVerification(props) {
       e.target.value +
       verifyCode.digits.substr(parseInt(e.target.name) + 1);
   };
-
   const onSubmitEmailVerification = async (e) => {
     e.preventDefault();
-    props.updateStepStyling(["finished", "finished", "active", "default"]);
-    props.mapRegistrationForm(2);
-    //validate registration form
+    props.accountRegistrationAPI(props.submittedFormData.formData);
   };
 
-  const displayChangeEmailDialog = () => {
-    setChangeEmailDialog((prev) => !prev);
-  };
   return (
     <div className="verify-email-section">
       <div className="form-title-wrapper">
@@ -51,7 +47,7 @@ function EmailVerification(props) {
       <span className="verify-code-description">
         {" "}
         Please enter the 6-digit code already sent to your email{" "}
-        <strong>{props.submitedFormData.email}</strong>{" "}
+        <strong>{props.submittedFormData.email}</strong>{" "}
         <FontAwesomeIcon
           className="change-email-icon"
           icon={faPencilAlt}
@@ -70,7 +66,7 @@ function EmailVerification(props) {
               className="sign-up-email form-text-field"
               type="text"
               name="email"
-              value={props.submitedFormData.email}
+              value={props.submittedFormData.email}
               placeholder="Email"
               maxLength={50}
               autoComplete="on"
@@ -171,13 +167,15 @@ function EmailVerification(props) {
 EmailVerification.propTypes = {
   updateStepStyling: PropTypes.func.isRequired,
   mapRegistrationForm: PropTypes.func.isRequired,
-  submitedFormData: PropTypes.object.isRequired,
+  accountRegistrationAPI: PropTypes.func.isRequired,
+  submittedFormData: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  submitedFormData: state.RegistrationReducers,
+  submittedFormData: state.RegistrationReducers,
 });
 export default connect(mapStateToProps, {
   mapRegistrationForm,
   updateStepStyling,
+  accountRegistrationAPI,
 })(EmailVerification);

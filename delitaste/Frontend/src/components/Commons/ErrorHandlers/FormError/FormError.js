@@ -11,10 +11,12 @@ function FormError(props) {
   const ErrorAlertStyling = {
     textAlign: props.align || "center",
     margin: props.margin || "0%",
+    fontSize: `${props.fontSize}px` || "14px",
+    fontWeight: `${props.fontWeight}` || "normal",
   };
 
   const NonErrorAlertStyling = {
-    marginTop: "4%",
+    marginTop: `${props.spaceBetween}%` || "4%",
   };
   return (
     <Fragment>

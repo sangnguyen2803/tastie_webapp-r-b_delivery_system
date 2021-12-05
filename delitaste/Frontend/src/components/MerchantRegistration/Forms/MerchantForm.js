@@ -2,11 +2,8 @@ import "./MerchantForm.scss";
 import { Link } from "react-router-dom";
 import Footer from "components/Commons/LayoutComponents/Footer/Footer";
 import NavBar from "components/Commons/LayoutComponents/NavBar/NavBar";
-import Contract from "assets/pdf/contract.pdf";
 import ToolBar from "components/Commons/LayoutComponents/Toolbar/Toolbar";
-import ServiceInfoForm from "components/MerchantRegistration/Forms/DetailMerchantForm/ServiceInfoForm";
 import MerchantBanner from "assets/merchant-form-banner.png";
-import FormBanner from "assets/Banner/merchant-form-banner.png";
 import Stepper from "components/Commons/Stepper/Stepper";
 const backgroundStyling = {
   background: `url(${MerchantBanner})`,
@@ -15,7 +12,7 @@ const backgroundStyling = {
   backgroundSize: "cover",
 };
 
-function ServiceInformationForm() {
+function MerchantForm(props) {
   return (
     <div className="merchant-registration-page">
       <NavBar hideBreadcrumb={false} />
@@ -26,19 +23,7 @@ function ServiceInformationForm() {
         <div className="merchant-registration-form-wrapper">
           <div className="merchant-registration-form">
             <Stepper />
-
-            <ServiceInfoForm />
-
-            <div className="btn-merchant-registration-wrapper">
-              <Link to="/merchant-registration">
-                <button className="btn-merchant-registration-back">Back</button>
-              </Link>
-              <Link to="/merchant-registration/create-shop">
-                <button className="btn-merchant-registration-next">
-                  Agree
-                </button>
-              </Link>
-            </div>
+            {props.form}
           </div>
         </div>
       </div>
@@ -48,4 +33,4 @@ function ServiceInformationForm() {
   );
 }
 
-export default ServiceInformationForm;
+export default MerchantForm;

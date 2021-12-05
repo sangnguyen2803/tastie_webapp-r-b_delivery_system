@@ -59,7 +59,7 @@
   background: rgb(197, 5, 5);
 }
 
-@media all and (max-width: 780px) {
+@media all and (max-width: 767px) {
   .tutorial-title {
     font-size: 16px;
     margin-bottom: 0% !important;
@@ -80,7 +80,7 @@
   }
 }
 
-@media only screen and (max-width: 1366px) and (min-width: 781px) {
+@media only screen and (max-width: 1200px) and (min-width: 767px) {
   .btn-guide-register-now {
     width: 30% !important;
     height: 40px !important;

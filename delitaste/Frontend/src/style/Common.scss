@@ -20,7 +20,7 @@ $boxBorderRadius: 5px;
 }
 
 .form-text-field {
-  height: 35px;
+  height: 30px;
   display: block;
   border: 2px #949494 solid;
   font-weight: 400;
@@ -28,6 +28,49 @@ $boxBorderRadius: 5px;
   font-size: 14px;
   border-radius: 3px;
   background: #ffffff;
+}
+.form-text-field-textarea {
+  height: 100px;
+  display: block;
+  border: 2px #949494 solid;
+  padding-left: 5%;
+  padding-top: 3%;
+  font-size: 15px;
+  border-radius: 3px;
+  background: #ffffff;
+  width: 100%;
+  resize: none;
+  font-family: "Noto Sans JP", sans-serif;
+}
+
+.form-text-field-select {
+  height: 35px;
+  display: block;
+  border: 2px #949494 solid;
+  font-weight: 400;
+  padding-left: 4%;
+  font-size: 14px;
+  border-radius: 3px;
+  background: #ffffff;
+  color: rgb(24, 24, 24);
+  width: 100%;
+}
+.form-file-field-1 {
+  width: 100%;
+  text-align: center;
+  height: 80px;
+  background-color: #ffffff;
+  border: 2px #949494 solid;
+  display: inline-block;
+}
+
+.form-file-field-2 {
+  width: 100%;
+  text-align: center;
+  height: 80px;
+  background-color: #ffffff;
+  border: 2px #949494 solid;
+  display: inline-block;
 }
 
 .panel-text-field {

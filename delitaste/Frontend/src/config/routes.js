@@ -4,6 +4,9 @@ import UserSignInScreen from "screens/UserAdmissionScreen/UserSignInScreen";
 import MerchantRegistrationScreen from "screens/MerchantRegistrationScreen/MerchantRegistrationScreen";
 import SignContractScreen from "screens/MerchantRegistrationScreen/SignContractScreen/SignContractScreen";
 import MerchantFormScreen from "screens/MerchantRegistrationScreen/MerchantFormScreen";
+import ServiceInfoForm from "components/MerchantRegistration/Forms/DetailMerchantForm/ServiceInfoForm";
+import SignUpForm from "components/UserAdmission/SignUpForm/SignUpForm";
+
 export const routes = [
   {
     path: "/:lang(en|fr|vi)/",
@@ -54,7 +57,7 @@ export const routes = [
     breadcrumb: "Contract",
   },
   {
-    path: "/merchant-registration/service-info",
+    path: "/merchant-registration/:form",
     exact: true,
     component: MerchantFormScreen,
     breadcrumb: "Service Info",

@@ -1,11 +1,11 @@
 import React, { Fragment } from "react";
 import "./RegisterStep.scss";
 import Arrow from "../../../assets/arrow.png";
-import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
+
 
 function RegisterStep({ registerState }) {
-  //jsx
   return (
     <Fragment>
       <div className="register-step-wrapper">

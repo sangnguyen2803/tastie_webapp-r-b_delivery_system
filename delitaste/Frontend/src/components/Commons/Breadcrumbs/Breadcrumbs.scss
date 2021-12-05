@@ -146,13 +146,13 @@
   border-left-color: rgb(207, 64, 64);
 }
 
-@media all and (max-width: 780px) {
+@media all and (max-width: 767px) {
   .breadcrumb-icon {
     display: none !important;
   }
 }
 
-@media only screen and (max-width: 1366px) and (min-width: 781px) {
+@media only screen and (max-width: 1200px) and (min-width: 767px) {
   .breadcrumb-icon {
     display: none !important;
   }

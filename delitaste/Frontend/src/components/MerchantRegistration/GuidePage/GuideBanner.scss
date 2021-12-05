@@ -61,7 +61,7 @@
 }
 
 /*mobile screen*/
-@media all and (max-width: 780px) {
+@media all and (max-width: 767px) {
   .guide-banner {
     height: 300px;
   }
@@ -93,7 +93,7 @@
   }
 }
 
-@media only screen and (max-width: 1366px) and (min-width: 781px) {
+@media only screen and (max-width: 1200px) and (min-width: 767px) {
   .guide-banner-content {
     width: 80%;
   }

@@ -77,3 +77,33 @@
   font-size: 14px;
   color: #ffffff;
 }
+@media all and (max-width: 767px) {
+  .stepper-wrapper {
+    padding-top: 2%;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    align-items: flex-start;
+    height: 80px;
+    width: 50px;
+  }
+  .stepper-description {
+    text-align: center;
+    font-size: 11px;
+  }
+}
+
+@media only screen and (max-width: 1200px) and (min-width: 767px) {
+  .stepper-wrapper {
+    padding-top: 2%;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    align-items: flex-start;
+    height: 80px;
+    width: 50px;
+    padding-bottom: 2%;
+  }
+  .stepper-description {
+    text-align: center;
+    font-size: 13px;
+  }
+}

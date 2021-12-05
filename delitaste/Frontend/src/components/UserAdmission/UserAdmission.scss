@@ -136,22 +136,33 @@ body {
 .register-step-container {
   background-color: rgb(26, 26, 26);
   width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 
-@media all and (max-width: 780px) {
+@media all and (max-width: 767px) {
+  .register-step-container {
+    background-color: rgb(26, 26, 26);
+    width: 100%;
+  }
   .sign-up-section,
   .login-section {
     width: 100% !important;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
   }
   .brand-banner {
     display: none !important;
   }
   .sign-up-form,
   .login-form {
-    height: 800px !important;
+    width: 450px;
+    height: 760px !important;
   }
   .sign-up-form-wrapper {
-    width: 90% !important;
+    width: 80% !important;
   }
   .login-wrapper {
     display: flex;
@@ -168,7 +179,7 @@ body {
   }
 }
 
-@media only screen and (max-width: 1366px) and (min-width: 781px) {
+@media only screen and (max-width: 1200px) and (min-width: 767px) {
   .sign-up-section,
   .login-section {
     width: 50% !important;

@@ -13,7 +13,7 @@ h2 {
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  height: 1100px;
+  height: auto;
   background-color: rgb(190, 190, 190);
 }
 .merchant-registration-form-wrapper {
@@ -25,15 +25,16 @@ h2 {
   justify-content: flex-start;
 }
 .merchant-registration-form {
-  margin-top: 2%;
   background-color: rgb(247, 247, 247);
   width: 65%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  height: 1000px;
+  height: auto;
   border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.16) -15px 3px 15px,
+    rgba(0, 0, 0, 0.23) -10px 10px 15px;
   .form-banner-wrapper {
     background: #f4f4f4;
     display: flex;
@@ -76,30 +77,21 @@ h2 {
 .btn-merchant-registration-wrapper {
   margin: 2% 0 2% 0;
   display: flex;
-  width: 50%;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-}
-
-.btn-merchant-registration-wrapper a {
-  text-decoration: none;
   width: 100%;
-  display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  gap: 200px;
 }
 .btn-merchant-registration-back {
-  padding: 0% 15% 0% 15%;
-  height: 40px;
+  height: 35px;
   font-size: 16px;
   background: rgb(102, 102, 102);
   color: white;
   border: none;
   cursor: pointer;
-
   border-radius: 5px;
+  width: 100px;
 }
 
 .btn-merchant-registration-back:hover {
@@ -107,17 +99,82 @@ h2 {
 }
 
 .btn-merchant-registration-next {
-  padding: 0% 15% 0% 15%;
-  height: 40px;
+  height: 35px;
   font-size: 16px;
   background: rgb(148, 0, 0);
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  margin-right: 3%;
+  width: 120px;
 }
 
 .btn-merchant-registration-next:hover {
-  background: rgb(175, 0, 0);
+  background: rgb(155, 0, 0);
+}
+
+//responsive design
+@media all and (max-width: 767px) {
+  .merchant-registration-form {
+    width: 95% !important;
+  }
+  .merchant-registration-header-title {
+    width: 65% !important;
+  }
+  .merchant-form-label-wrapper {
+    font-size: 14px;
+  }
+  .merchant-form-wrapper {
+    margin-top: 2%;
+    width: 85% !important;
+  }
+}
+
+@media only screen and (max-width: 1200px) and (min-width: 767px) {
+  .merchant-registration-form {
+    width: 800px !important;
+  }
+  .merchant-registration-header-title {
+    width: 65% !important;
+  }
+  .merchant-form-label-wrapper {
+    font-size: 16px;
+  }
+  .merchant-form-wrapper {
+    margin-top: 2%;
+    width: 85% !important;
+  }
+}
+
+.form-header-title {
+  font-family: "Noto Sans", sans-serif;
+  background: rgba(146, 0, 0, 0.9);
+  width: 35%;
+  font-size: 17px;
+  color: white;
+  height: 22px;
+  text-align: left;
+  margin-left: 0.5%;
+  padding-top: 0.5%;
+  padding-bottom: 0.5%;
+  text-indent: 20px;
+  clip-path: polygon(0 0, 92% 0, 100% 100%, 0% 100%);
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+.form-header-text {
+  width: 80%;
+  font-size: 17px;
+  align-self: flex-start;
+  margin: 3% 0% 0% 0%;
+  font-weight: bold;
+}
+.form-header-sub-text {
+  width: 80%;
+  font-size: 15px;
+  align-self: flex-start;
+  margin: 0% 8% 0.5% 8%;
+  font-weight: bold;
 }

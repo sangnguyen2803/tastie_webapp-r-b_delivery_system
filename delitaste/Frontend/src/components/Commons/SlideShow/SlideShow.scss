@@ -174,18 +174,10 @@ section.slideshow div.slideshow-controller span:active {
 }
 
 .slide-controller-icon-left:hover {
-  color: #d9d9d9;
-  display: block;
-  font-size: 44px;
-  margin-top: -24%;
   cursor: pointer;
 }
 
 .slide-controller-icon-right:hover {
-  color: #d9d9d9;
-  display: block;
-  font-size: 44px;
-  margin-top: -24%;
   cursor: pointer;
 }
 
@@ -275,16 +267,31 @@ section.slideshow div.slideshow-controller span:active {
   margin-right: 5%;
 }
 
-@media only screen and (max-width: 1366px) and (min-width: 781px) {
+@media only screen and (max-width: 1200px) and (min-width: 767px) {
   section.slideshow {
     width: 90%;
-    height: 510px;
-    padding-top: 5.5%;
+    height: 600px;
     background: linear-gradient(
       to bottom,
       rgba(19, 0, 0, 0.5),
       rgb(105, 0, 0, 1)
     );
     clip-path: none !important;
+  }
+  .slide-description {
+    margin-top: -8%;
+    display: none !important;
+  }
+  .current-slide {
+    padding: 5% !important;
+  }
+  .btn-order {
+    margin-top: 30%;
+    width: 150px;
+  }
+  .slide-controller-icon-left,
+  .slide-controller-icon-right {
+    color: white;
+    margin-top: -200px;
   }
 }

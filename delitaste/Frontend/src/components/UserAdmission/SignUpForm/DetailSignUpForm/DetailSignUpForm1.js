@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
-import { Formik, ErrorMessage, Form, Field } from "formik";
 import { connect } from "react-redux";
+import { Formik, ErrorMessage, Form, Field } from "formik";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faUser,
@@ -8,7 +8,7 @@ import {
   faExclamationCircle,
   faCheckCircle,
 } from "@fortawesome/fontawesome-free-solid";
-import { validateSignUpForm1 } from "utils/FormUtils/form-validate";
+import { validateSignUpForm1 } from "utils/FormUtils/FormValidate";
 //scss
 import "./DetailSignUpForm.scss";
 import "style/Common.scss";
@@ -17,6 +17,7 @@ import {
   updateStepStyling,
   updateRegistrationFormData,
   mapRegistrationForm,
+  checkDuplicationAPI,
 } from "store/actions/UserAdmission/RegistrationActions";
 //components
 import FormError from "components/Commons/ErrorHandlers/FormError/FormError";
@@ -33,15 +34,15 @@ function DetailSignUpForm1(props) {
 
   const handleSubmitForm = (values) => {
     const formData = {
-      firstname: values.firstname,
-      lastname: values.lastname,
+      first_name: values.firstname,
+      last_name: values.lastname,
       email: values.email,
       phone: values.phone,
       password: values.password1,
     };
-    props.updateStepStyling(["finished", "active", "default", "default"]);
     props.updateRegistrationFormData(formData);
-    props.mapRegistrationForm(1);
+    const { email, phone } = formData;
+    props.checkDuplicationAPI(email, phone);
   };
 
   return (
@@ -132,6 +133,7 @@ function DetailSignUpForm1(props) {
               }
               align="left"
               margin="0% 0% 0% 22%"
+              spaceBetween={4}
             />
             {touched.firstname}
             <div className="sign-up-email-wrapper">
@@ -172,6 +174,7 @@ function DetailSignUpForm1(props) {
               err={errors.email && touched.email ? errors.email : ""}
               align="left"
               margin="0% 0% 0% 22%"
+              spaceBetween={4}
             />
             <div className="sign-up-phonenumber-wrapper">
               <div className="label-sign-up form-label">Phone number</div>
@@ -215,6 +218,7 @@ function DetailSignUpForm1(props) {
               err={errors.phone && touched.phone ? errors.phone : ""}
               align="left"
               margin="0% 0% 0% 22%"
+              spaceBetween={4}
             />
             <div className="password-wrapper">
               <div className="label-sign-up form-label">Password</div>
@@ -228,8 +232,6 @@ function DetailSignUpForm1(props) {
                 }
                 type="password"
                 name="password1"
-                // value={password1}
-                // onChange={(e) => onChangeRegistrationForm(e)}
                 placeholder="Password"
                 maxLength={50}
                 autoComplete="on"
@@ -258,6 +260,7 @@ function DetailSignUpForm1(props) {
               }
               align="left"
               margin="0% 0% 0% 22%"
+              spaceBetween={4}
             />
             <div className="password-recheck-wrapper">
               <div className="label-sign-up form-label">Re-enter Password</div>
@@ -301,6 +304,7 @@ function DetailSignUpForm1(props) {
               }
               align="left"
               margin="0% 0% 0% 22%"
+              spaceBetween={4}
             />
             <br />
             <div className="policy-check">
@@ -334,12 +338,14 @@ DetailSignUpForm1.propTypes = {
   updateStepStyling: PropTypes.func.isRequired,
   updateRegistrationFormData: PropTypes.func.isRequired,
   mapRegistrationForm: PropTypes.func.isRequired,
+  checkDuplicationAPI: PropTypes.func.isRequired,
 };
 
 export default connect(null, {
   updateStepStyling,
   updateRegistrationFormData,
   mapRegistrationForm,
+  checkDuplicationAPI,
 })(DetailSignUpForm1);
 
 //Styling

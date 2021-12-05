@@ -171,3 +171,16 @@ a.sign-up-redirect:link {
   margin-top: 4%;
   color: #969696;
 }
+
+@media all and (max-width: 767px) {
+  .login-section {
+    width: 100% !important;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    .login-form {
+      width: 450px !important;
+      height: 760px !important;
+    }
+  }
+}

@@ -1,4 +1,6 @@
 import "./SignContractForm.scss";
+import { useState, useEffect } from "react";
+
 import { Link } from "react-router-dom";
 import Footer from "components/Commons/LayoutComponents/Footer/Footer";
 import NavBar from "components/Commons/LayoutComponents/NavBar/NavBar";
@@ -7,7 +9,6 @@ import ToolBar from "components/Commons/LayoutComponents/Toolbar/Toolbar";
 import MerchantBanner from "assets/merchant-form-banner.png";
 import FormBanner from "assets/Banner/merchant-form-banner.png";
 import { withRouter } from "react-router-dom";
-import RegisterStep from "components/UserAdmission/SignUpForm/RegisterStep";
 
 const backgroundStyling = {
   background: `url(${MerchantBanner})`,
@@ -17,6 +18,13 @@ const backgroundStyling = {
 };
 
 function SignContractForm(props) {
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
+  }, []);
   const contractFormHandler = () => {
     props.history.push("service-info");
   };
@@ -31,7 +39,7 @@ function SignContractForm(props) {
           <div className="contract-form-wrapper">
             <div className="contract-form">
               <div className="form-banner-wrapper">
-                <img src={FormBanner} classname="form-banner-img" />
+                <img src={FormBanner} className="form-banner-img" />
               </div>
               <span className="contract-header-title">
                 Contract terms and agreements

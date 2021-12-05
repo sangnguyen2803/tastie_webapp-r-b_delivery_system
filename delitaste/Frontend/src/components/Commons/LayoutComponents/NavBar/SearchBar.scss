@@ -103,7 +103,7 @@
   color: #ffffff;
 }
 
-@media all and (max-width: 780px) {
+@media all and (max-width: 767px) {
   .main-nav-menu-prefix {
     font-size: 12px !important;
     width: 98%;
@@ -133,7 +133,7 @@
   }
 }
 
-@media all and (max-width: 980px) and (min-width: 781px) {
+@media all and (max-width: 980px) and (min-width: 767px) {
   .btn-search-text {
     display: none !important;
   }
@@ -142,7 +142,7 @@
   }
 }
 
-@media all and (max-width: 1366px) and (min-width: 781px) {
+@media all and (max-width: 1200px) and (min-width: 767px) {
   .search-bar-type {
     display: none !important;
   }

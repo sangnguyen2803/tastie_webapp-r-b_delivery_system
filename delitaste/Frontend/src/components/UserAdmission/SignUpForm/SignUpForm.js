@@ -6,6 +6,7 @@ import RegisterStep from "./RegisterStep";
 import DetailSignUpForm1 from "./DetailSignUpForm/DetailSignUpForm1";
 import DetailSignUpForm2 from "./DetailSignUpForm/DetailSignUpForm2";
 import EmailVerification from "./DetailSignUpForm/EmailVerification";
+import AlertNotificationBox from "components/Commons/ErrorHandlers/AlertNotificationBox/AlertNotificationBox";
 
 function SignUpForm(props) {
   const RegistrationForm = [
@@ -19,6 +20,11 @@ function SignUpForm(props) {
         <div className="register-step-container">
           <RegisterStep />
         </div>
+        <AlertNotificationBox
+          msg={props.alert.msg}
+          loadingAlert={props.alert.loadingAlert}
+          alertStyling={props.alert.alertStyling}
+        />
         <div className="sign-up-form-wrapper">
           {RegistrationForm[props.form.currentForm]}
         </div>
@@ -29,10 +35,12 @@ function SignUpForm(props) {
 
 SignUpForm.propTypes = {
   form: PropTypes.object.isRequired,
+  alert: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   form: state.RegistrationReducers,
+  alert: state.UIAlertReducers,
 });
 
 export default connect(mapStateToProps)(SignUpForm);

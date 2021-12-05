@@ -1,11 +1,17 @@
+import axios from "axios";
+
 import {
   UPDATE_REGISTER_STEP_STYLING,
-  UPDATE_REGISTRATION_FORM_DATA,
+  UPDATE_REGISTRATION_FORM,
   MAP_REGISTRATION_FORM,
-  LOAD_REGISTER_FORM,
   REGISTER_SUCCESS,
   REGISTER_FAIL,
+  SET_ALERT_NOTIFICATION,
+  REMOVE_ALERT_NOTIFICATION,
+  CHECK_DUPLICATION_SUCCESS,
 } from "store/actions/types";
+
+import { setAlertNotification } from "store/actions/UIComponents/UIAlertAction";
 
 export const updateStepStyling = (stepStyle) => (dispatch) => {
   dispatch({
@@ -18,8 +24,8 @@ export const updateStepStyling = (stepStyle) => (dispatch) => {
 
 export const updateRegistrationFormData = (formData) => (dispatch) => {
   dispatch({
-    type: UPDATE_REGISTRATION_FORM_DATA,
-    payload: formData,
+    type: UPDATE_REGISTRATION_FORM,
+    payload: { formData: formData },
   });
 };
 
@@ -30,36 +36,90 @@ export const mapRegistrationForm = (form, msg) => (dispatch) => {
   });
 };
 
-/*
-export const submitDataForm = (formData) => {
-  const { firstname, lastname, phone, email, password } = formData;
-  async (dispatch) => {
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
-    const body = JSON.stringify({
-      firstname,
-      lastname,
-      phone,
-      email,
-      password,
-    });
-    try {
-      const res = await axios.post("/api/users", body, config);
+//form 1: When user clicks on "Sign Up" button -> call this api to check email & phone duplication
+export const checkDuplicationAPI = (email, phone) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  const body = JSON.stringify({
+    email,
+    phone,
+  });
+  try {
+    const endpoint = "v1/api/auth/check-exist-email-and-phone";
+    const res = await axios.post(endpoint, body, config);
+    const { isPhoneDuplicated, isEmailDuplicated } = res.data;
+    if (isPhoneDuplicated || isEmailDuplicated) {
+      const alertMsg = "Your account has already in use.";
       dispatch({
-        type: REGISTER_SUCCESS,
-        payload: res.data,
+        type: SET_ALERT_NOTIFICATION,
+        payload: {
+          loadingAlert: true,
+          msg: alertMsg,
+        },
       });
-    } catch (err) {
-      const errors = err.response.data.errors;
-      //if any errors, dispatch another action here to show alerts.
+    } else {
       dispatch({
-        type: REGISTER_FAIL,
+        type: CHECK_DUPLICATION_SUCCESS,
+        payload: {},
+      });
+      dispatch({
+        type: REMOVE_ALERT_NOTIFICATION,
+        payload: {
+          loadingAlert: false,
+          msg: "",
+        },
       });
     }
-  };
+  } catch (err) {
+    const errs = err.response.data.errors;
+    console.log(errs);
+  }
 };
-*/
+
+//form 2: When user clicks on "Verify Email" button -> call this api to insert submittedFormData to database
+export const accountRegistrationAPI = (formData) => async (dispatch) => {
+  const { email, password, phone, first_name, last_name } = formData;
+  const registered_at = new Date().toISOString().slice(0, 10);
+  const role = "C";
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  const body = JSON.stringify({
+    first_name,
+    last_name,
+    phone,
+    email,
+    password,
+    role,
+    registered_at,
+  });
+
+  try {
+    const endpoint = "/v1/api/auth/sign-up";
+    const res = await axios.post(endpoint, body, config);
+    console.log(res);
+    if (res.data.registerState) {
+      dispatch({
+        type: REGISTER_SUCCESS,
+        payload: { formData: res.data },
+      });
+    } else {
+      dispatch({
+        type: REGISTER_FAIL,
+        payload: res.data.err,
+      });
+    }
+  } catch (err) {
+    const errs = err.response.data.errors;
+    dispatch({
+      type: REGISTER_FAIL,
+      payload: errs,
+    });
+  }
+};
 //YUP

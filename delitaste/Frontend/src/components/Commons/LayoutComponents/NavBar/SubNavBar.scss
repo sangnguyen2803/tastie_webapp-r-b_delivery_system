@@ -207,14 +207,14 @@
 }
 /* Media screen query*/
 /* 0 -> 780 */
-@media all and (max-width: 780px) {
+@media all and (max-width: 767px) {
   .nav-wrapper,
   .nav-feature-1 {
     display: none !important;
   }
 }
 /* 781 -> 1366 */
-@media only screen and (max-width: 1366px) and (min-width: 781px) {
+@media only screen and (max-width: 1200px) and (min-width: 767px) {
   .nav-wrapper-2,
   .nav-feature-2,
   .nav-feature-1 {
@@ -242,7 +242,7 @@
   }
 }
 /* 781 -> Fullscreen */
-@media screen and (min-width: 781px) {
+@media screen and (min-width: 767px) {
   .nav-category-item-mobile,
   .nav-feature-2,
   .nav-wrapper-2 {

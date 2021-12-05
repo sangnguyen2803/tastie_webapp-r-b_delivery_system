@@ -5,3 +5,10 @@ $errorColor: #aa0033;
     color: $errorColor;
   }
 }
+
+@media all and (max-width: 767px) {
+  .form-error-wrapper {
+    margin-left: 28% !important;
+    font-size: 13px;
+  }
+}
