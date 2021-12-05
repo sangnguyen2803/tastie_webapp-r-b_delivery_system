@@ -1,0 +1,25 @@
+.spinner-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: center;
+  position: fixed;
+  left: 0%;
+  top: 0%;
+  width: 100vw;
+  height: 100vh;
+  max-width: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  background-repeat: repeat;
+  z-index: 2;
+  min-height: 100%;
+}
+
+.spinner-text {
+  color: white;
+  display: block;
+  font-size: 20px;
+  text-align: center;
+  z-index: 12;
+}

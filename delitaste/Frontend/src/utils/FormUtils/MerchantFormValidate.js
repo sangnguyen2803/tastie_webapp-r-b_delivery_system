@@ -12,7 +12,7 @@ const validateMerchantForm1 = yup.object().shape({
   district: yup.string().required("Please select a district"),
   ward: yup.string().required("Please select a ward"),
   road: yup.string().required("This field cannot be left empty."),
-});
+}); 
 
 const validateMerchantForm2 = yup.object().shape({
   companyName: yup.string().required("This field cannot be left empty."),

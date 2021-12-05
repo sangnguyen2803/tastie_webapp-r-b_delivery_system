@@ -51,13 +51,17 @@ function ServiceInfoForm(props) {
   const handleSubmitForm = (values) => {
     const { name, phone, city, district, ward, road } = values;
     const formData = {
-      address: getFullAddress(road, city, district, ward),
-      name,
-      phone,
-      city,
-      district,
-      ward,
-      road,
+      basicInfo: {
+        address: getFullAddress(road, city, district, ward),
+        name,
+        phone,
+        city,
+        district,
+        ward,
+        road,
+        latitude: 0,
+        longitude: 0,
+      },
     };
     console.log(formData);
   };

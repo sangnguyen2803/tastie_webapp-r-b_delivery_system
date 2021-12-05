@@ -8,6 +8,8 @@ import Contract from "assets/pdf/contract.pdf";
 import ToolBar from "components/Commons/LayoutComponents/Toolbar/Toolbar";
 import MerchantBanner from "assets/merchant-form-banner.png";
 import FormBanner from "assets/Banner/merchant-form-banner.png";
+import Spinner from "components/Commons/Spinner/Spinner";
+
 import { withRouter } from "react-router-dom";
 
 const backgroundStyling = {
@@ -90,6 +92,7 @@ function SignContractForm(props) {
         <Footer />
         <ToolBar />
       </div>
+      <Spinner visibility={true} />
     </>
   );
 }

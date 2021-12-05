@@ -36,8 +36,8 @@ const initialValues = {
   phone1: "",
   phone2: "",
   idCardNumber: "",
-  idCardPhotoFront: "",
-  idCardPhotoBack: "",
+  idCardFront: "",
+  idCardBack: "",
   businessRegistration: "",
   taxCode: "",
 };
@@ -307,7 +307,7 @@ function RegisteredRepresentativeForm(props) {
                       <Field
                         className="form-file-field-1"
                         type="file"
-                        name="merchant-id-card-1"
+                        name="idCardFront"
                         maxLength={50}
                         autoComplete="on"
                       />
@@ -319,7 +319,7 @@ function RegisteredRepresentativeForm(props) {
                       <Field
                         className="form-file-field-1"
                         type="file"
-                        name="merchant-id-card-2"
+                        name="idCardBack"
                         maxLength={50}
                         autoComplete="on"
                       />
