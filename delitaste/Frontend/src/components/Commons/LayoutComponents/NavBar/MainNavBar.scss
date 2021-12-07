@@ -73,7 +73,7 @@
   margin-right: 1.5%;
 }
 .nav-wrapper-2 {
-  font-family: "Noto Sans JP", sans-serif;
+  font-family: "Poppins", sans-serif;
   height: 19px;
   display: flex;
   flex-direction: row;
@@ -172,6 +172,14 @@
 .nav-language-sub-text {
   margin-top: 11px;
   font-size: 12px;
+}
+
+.nav-cart-text {
+  font-size: 13px;
+}
+
+.nav-gadget-main-text {
+  font-size: 13px;
 }
 /*cart-panel*/
 .nav-cart-container {

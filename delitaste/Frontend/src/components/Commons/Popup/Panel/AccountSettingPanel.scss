@@ -46,10 +46,11 @@ $boxBorderRadius: 5px;
     }
   }
   .panel-account-service-wrapper {
-    margin-top: 5%;
+    margin-top: 2%;
     @include FlexRow(100%, nowrap);
     justify-content: center;
     align-items: flex-start;
+    gap: 10px;
     .e-wallet-services {
       padding-left: 5%;
       @include FlexCol(50%, nowrap);

@@ -22,7 +22,7 @@ const Stepper = (props) => {
       styling: "default",
     },
     {
-      description: "Payroll Bank Account Registration",
+      description: "Bank Account Info",
       styling: "default",
     },
   ];

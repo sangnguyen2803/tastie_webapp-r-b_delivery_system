@@ -1,0 +1,20 @@
+.tag-wrapper {
+  height: 20px;
+  background-color: rgb(156, 24, 24);
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  color: white;
+  margin: 2% 0.5% 0% 0.5%;
+  padding: 0% 1%;
+  .tag-icon {
+    font-size: 13px;
+  }
+  .tag-text {
+    margin-left: 5px;
+    font-size: 13px;
+  }
+}

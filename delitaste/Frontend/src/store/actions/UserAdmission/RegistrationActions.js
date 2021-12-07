@@ -11,8 +11,6 @@ import {
   CHECK_DUPLICATION_SUCCESS,
 } from "store/actions/types";
 
-import { setAlertNotification } from "store/actions/UIComponents/UIAlertAction";
-
 export const updateStepStyling = (stepStyle) => (dispatch) => {
   dispatch({
     type: UPDATE_REGISTER_STEP_STYLING,

@@ -9,14 +9,11 @@ import {
 import {} from "store/actions/types";
 
 const initialState = {
-  styling: ["active", "default", "default", "default"],
-  formData: {},
   currentForm: 0,
+  formData: {},
+  isAuthenticated: false,
+  styling: ["active", "default", "default", "default"],
   token: localStorage.getItem("refresh_token"),
-  checkDuplicateAccount: {
-    isPhoneDuplicated: false,
-    isEmailDuplicated: false,
-  },
 };
 
 export default function (state = initialState, action) {

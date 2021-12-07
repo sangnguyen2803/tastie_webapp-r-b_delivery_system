@@ -1,4 +1,5 @@
 import React from "react";
+import {useState, useEffect } from "react";
 
 import { withRouter } from "react-router-dom";
 import MerchantForm from "components/MerchantRegistration/Forms/MerchantForm";
@@ -9,6 +10,13 @@ import ProductDetailForm from "components/MerchantRegistration/Forms/DetailMerch
 import BankInfoForm from "components/MerchantRegistration/Forms/DetailMerchantForm/BankInfoForm";
 
 function MerchantFormScreen({ match }) {
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
+  }, []);
   switch (match.params.form) {
     case "service-info":
       return <MerchantForm form={<ServiceInfoForm />} />;

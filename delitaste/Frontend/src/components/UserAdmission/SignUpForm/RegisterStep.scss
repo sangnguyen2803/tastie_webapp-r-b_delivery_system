@@ -13,6 +13,7 @@
 }
 
 .register-step-wrapper {
+  margin: 1% 0%;
   display: flex;
   flex-wrap: nowrap;
   flex-direction: row;
@@ -27,6 +28,7 @@
     border: 1px solid rgb(185, 0, 9);
     color: rgb(240, 240, 240);
     cursor: pointer;
+    font-size: 13px !important;
     @extend .step-styling;
   }
   .default {
@@ -34,6 +36,7 @@
     border: 1px solid #727272;
     color: #b4b4b4;
     cursor: pointer;
+    font-size: 13px !important;
     @extend .step-styling;
   }
   .finished {
@@ -41,6 +44,7 @@
     border: 1px solid rgb(0, 145, 72);
     color: rgb(245, 245, 245);
     cursor: pointer;
+    font-size: 13px !important;
     @extend .step-styling;
   }
 }

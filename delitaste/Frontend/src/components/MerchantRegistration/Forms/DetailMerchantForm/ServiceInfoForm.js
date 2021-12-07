@@ -20,14 +20,6 @@ const initialValues = {
 };
 
 function ServiceInfoForm(props) {
-  useEffect(() => {
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: "smooth",
-    });
-  }, []);
-
   const getFullAddress = (road, city_id, district_id, ward_id) => {
     const address = [];
     locations

@@ -30,13 +30,17 @@
   margin-top: 0.5%;
   color: #e4e4e4;
   background: rgb(19, 19, 19);
-  font-family: "Noto Sans JP", sans-serif;
+  font-family: "Poppins", sans-serif;
+
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
   justify-content: space-between;
+  align-items: center;
   padding-left: 5%;
   padding-right: 5%;
+
   .stepper-wrapper {
+    font-size: 11px;
     display: flex;
     flex-wrap: nowrap;
     flex-direction: row;

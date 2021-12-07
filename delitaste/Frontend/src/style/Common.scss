@@ -40,7 +40,7 @@ $boxBorderRadius: 5px;
   background: #ffffff;
   width: 100%;
   resize: none;
-  font-family: "Noto Sans JP", sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 .form-text-field-select {
@@ -88,6 +88,7 @@ $boxBorderRadius: 5px;
 }
 
 .btn-form {
+  font-family: "Poppins", sans-serif !important;
   height: 35px;
   @include FlexRow("", nowrap);
   align-items: center;

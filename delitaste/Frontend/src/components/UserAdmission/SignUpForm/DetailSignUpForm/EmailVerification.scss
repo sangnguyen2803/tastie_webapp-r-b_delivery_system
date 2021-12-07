@@ -167,6 +167,7 @@ $boxBorderRadius: 5px;
 }
 
 .btn-form-wrapper {
+  font-family: "Poppins", sans-serif;
   @include FlexRow(100%, nowrap);
   width: inherit;
   justify-content: center;
