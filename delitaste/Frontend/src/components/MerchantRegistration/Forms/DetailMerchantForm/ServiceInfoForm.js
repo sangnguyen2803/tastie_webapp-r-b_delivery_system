@@ -20,6 +20,8 @@ const initialValues = {
 };
 
 function ServiceInfoForm(props) {
+  const [showMessageDialog, setShowMessageDialog] = useState(false);
+
   const getFullAddress = (road, city_id, district_id, ward_id) => {
     const address = [];
     locations
@@ -56,6 +58,7 @@ function ServiceInfoForm(props) {
       },
     };
     console.log(formData);
+    props.history.push("representative-info");
   };
 
   return (
@@ -63,7 +66,6 @@ function ServiceInfoForm(props) {
       initialValues={initialValues}
       validationSchema={validateMerchantForm1}
       validateOnChange={false}
-      validateOnBlur={false}
       onSubmit={(values) => handleSubmitForm(values)}
     >
       {(formikProps) => {
@@ -105,18 +107,17 @@ function ServiceInfoForm(props) {
                   <FormError
                     err={errors.name && touched.name ? errors.name : ""}
                     spaceBetween={0}
-                    fontSize={14}
+                    fontSize={12}
                     fontWeight={"bold"}
                   />
                   <span className="field-description">
-                    Merchant name displays in the following the format e.g :
-                    'Whirling Beef - Baker Street'
+                    Merchant name should be name by the name of your restaurant,
+                    following with street name. e.g:
+                    <br /> "The Alley - Ho Tung Mau"
                   </span>
                 </div>
                 <div className="merchant-form-field-wrapper">
-                  <div className="merchant-form-label-wrapper">
-                    Phone number
-                  </div>
+                  <div className="merchant-form-label-wrapper">Hotline</div>
                   <div className="merchant-form-input-wrapper">
                     <Field
                       className={
@@ -134,18 +135,20 @@ function ServiceInfoForm(props) {
                   <FormError
                     err={errors.phone && touched.phone ? errors.phone : ""}
                     spaceBetween={0}
-                    fontSize={14}
+                    fontSize={12}
                     fontWeight={"bold"}
                   />
                   <span className="field-description"></span>
                 </div>
                 <div className="merchant-form-field-wrapper">
-                  <div className="merchant-form-label-wrapper">
-                    City / province
-                  </div>
+                  <div className="merchant-form-label-wrapper">City</div>
                   <div className="merchant-form-input-wrapper">
                     <Field
-                      className="form-text-field-select"
+                      className={
+                        errors.city
+                          ? "form-text-field-select error"
+                          : "form-text-field-select"
+                      }
                       style={{ width: "100%", height: "35px" }}
                       as="select"
                       name="city"
@@ -162,6 +165,14 @@ function ServiceInfoForm(props) {
                       ))}
                     </Field>
                   </div>
+                </div>
+                <div className="field-bottom-side-wrapper">
+                  <FormError
+                    err={errors.city && touched.city ? errors.city : ""}
+                    spaceBetween={0}
+                    fontSize={12}
+                    fontWeight={"bold"}
+                  />
                 </div>
                 <div className="merchant-form-field-wrapper">
                   <div className="merchant-form-label-wrapper">District</div>
@@ -189,8 +200,18 @@ function ServiceInfoForm(props) {
                     </Field>
                   </div>
                 </div>
+                <div className="field-bottom-side-wrapper">
+                  <FormError
+                    err={
+                      errors.district && touched.district ? errors.district : ""
+                    }
+                    spaceBetween={0}
+                    fontSize={12}
+                    fontWeight={"bold"}
+                  />
+                </div>
                 <div className="merchant-form-field-wrapper">
-                  <div className="merchant-form-label-wrapper">Ward / town</div>
+                  <div className="merchant-form-label-wrapper">Ward</div>
                   <div className="merchant-form-input-wrapper">
                     <Field
                       className="form-text-field-select"
@@ -221,6 +242,14 @@ function ServiceInfoForm(props) {
                     </Field>
                   </div>
                 </div>
+                <div className="field-bottom-side-wrapper">
+                  <FormError
+                    err={errors.ward && touched.ward ? errors.ward : ""}
+                    spaceBetween={0}
+                    fontSize={12}
+                    fontWeight={"bold"}
+                  />
+                </div>
                 <div className="merchant-form-field-wrapper">
                   <div className="merchant-form-label-wrapper">
                     Address line
@@ -242,12 +271,12 @@ function ServiceInfoForm(props) {
                   <FormError
                     err={errors.road && touched.road ? errors.road : ""}
                     spaceBetween={0}
-                    fontSize={14}
+                    fontSize={12}
                     fontWeight={"bold"}
                   />
                   <span className="field-description">
-                    Address displays in the following the format e.g : '543B
-                    Ansterdam'
+                    Address must abide by the following format: 'House number -
+                    Street name' e.g: '138A/51 - Amsterdam'
                   </span>
                 </div>
                 <div className="merchant-form-button-wrapper">
@@ -259,7 +288,7 @@ function ServiceInfoForm(props) {
                   <FormError
                     err={errors.road && touched.road ? errors.road : ""}
                     spaceBetween={0}
-                    fontSize={14}
+                    fontSize={12}
                     fontWeight={"bold"}
                   />
                   <span className="field-description">
@@ -269,7 +298,7 @@ function ServiceInfoForm(props) {
                 </div>
                 <div className="merchant-form-button-wrapper">
                   <iframe
-                    width={580}
+                    width={100}
                     height={300}
                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15282225.79979123!2d73.7250245393691!3d20.750301298393563!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30635ff06b92b791%3A0xd78c4fa1854213a6!2sIndia!5e0!3m2!1sen!2sin!4v1587818542745!5m2!1sen!2sin"
                   ></iframe>{" "}

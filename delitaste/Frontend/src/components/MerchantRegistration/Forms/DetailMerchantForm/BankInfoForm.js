@@ -75,7 +75,7 @@ function BankInfoForm(props) {
                         : ""
                     }
                     spaceBetween={0}
-                    fontSize={14}
+                    fontSize={12}
                     fontWeight={"bold"}
                   />
                 </div>
@@ -106,7 +106,7 @@ function BankInfoForm(props) {
                         : ""
                     }
                     spaceBetween={0}
-                    fontSize={14}
+                    fontSize={12}
                     fontWeight={"bold"}
                   />
                   <span className="field-description">
@@ -141,7 +141,7 @@ function BankInfoForm(props) {
                         : ""
                     }
                     spaceBetween={0}
-                    fontSize={14}
+                    fontSize={12}
                     fontWeight={"bold"}
                   />
                 </div>
@@ -171,7 +171,7 @@ function BankInfoForm(props) {
                         : ""
                     }
                     spaceBetween={0}
-                    fontSize={14}
+                    fontSize={12}
                     fontWeight={"bold"}
                   />
                 </div>
@@ -197,7 +197,7 @@ function BankInfoForm(props) {
                       errors.bankName && touched.bankName ? errors.bankName : ""
                     }
                     spaceBetween={0}
-                    fontSize={14}
+                    fontSize={12}
                     fontWeight={"bold"}
                   />
                 </div>
@@ -227,7 +227,7 @@ function BankInfoForm(props) {
                         : ""
                     }
                     spaceBetween={0}
-                    fontSize={14}
+                    fontSize={12}
                     fontWeight={"bold"}
                   />
                 </div>
@@ -255,7 +255,7 @@ function BankInfoForm(props) {
                         : ""
                     }
                     spaceBetween={0}
-                    fontSize={14}
+                    fontSize={12}
                     fontWeight={"bold"}
                   />
                 </div>

@@ -5,10 +5,10 @@ import "./UserAdmission.scss";
 import "style/Common.scss";
 //components
 import SignUpForm from "components/UserAdmission/SignUpForm/SignUpForm";
-import NavBar from "components/Commons/LayoutComponents/NavBar/NavBar";
+import NavBar from "components/Commons/Layout/NavBar/NavBar";
 import SlideShow from "components/Commons/SlideShow/SlideShow";
-import Footer from "components/Commons/LayoutComponents/Footer/Footer";
-import ToolBar from "components/Commons/LayoutComponents/Toolbar/Toolbar";
+import Footer from "components/Commons/Layout/Footer/Footer";
+import ToolBar from "components/Commons/Layout/Toolbar/Toolbar";
 //assets
 import Picture1 from "assets/SlideShowImg/Picture1.jpg";
 import Picture2 from "assets/SlideShowImg/Picture2.jpg";

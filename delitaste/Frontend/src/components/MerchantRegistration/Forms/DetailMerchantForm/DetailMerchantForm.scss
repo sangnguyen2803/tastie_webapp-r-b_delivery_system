@@ -4,8 +4,7 @@ $formTextColor: #2e2e2e;
 $boxBorderRadius: 5px;
 $labelWidth: 20%;
 
-$errorColor: #aa0033;
-$errorCheckIconColor: #c74b4b;
+$errorCheckIconColor: #a72334;
 $errorResolvedIconColor: #00683d;
 
 @mixin FlexCol($width, $flexWrap) {
@@ -28,7 +27,7 @@ $errorResolvedIconColor: #00683d;
   align-items: center;
 
   .merchant-form-field-wrapper {
-    font-size: 14px;
+    font-size: 13px;
     @include FlexRow(100%, nowrap);
     justify-content: center;
     align-items: center;
@@ -103,8 +102,8 @@ $errorResolvedIconColor: #00683d;
   width: 100%;
 }
 .error {
-  background-color: rgb(255, 241, 241);
-  border: 2px $errorCheckIconColor solid;
+  background-color: rgb(255, 255, 255);
+  border: 2px $errorCheckIconColor double;
 }
 
 .merchant-form-button-wrapper {
@@ -114,6 +113,7 @@ $errorResolvedIconColor: #00683d;
   margin-bottom: 1%;
 }
 .btn-check-on-map {
+  font-family: "Poppins", sans-serif;
   width: 120px;
   height: 30px;
   font-size: 14px;
@@ -190,7 +190,7 @@ $errorResolvedIconColor: #00683d;
     overflow: hidden;
     text-overflow: ellipsis;
     width: 100%;
-    font-size: 13px;
+    font-size: 12px;
     font-style: italic;
   }
 }
@@ -224,4 +224,18 @@ $errorResolvedIconColor: #00683d;
   flex-wrap: wrap;
   width: 80%;
   margin-left: $labelWidth;
+}
+
+@media all and (max-width: 767px) {
+  .weekday-label {
+    margin-right: 20% !important;
+    font-size: 11px !important;
+  }
+  .weekday-status-label {
+    display: none !important;
+    font-size: 11px !important;
+  }
+  .merchant-form-switch-label-wrapper {
+    font-size: 11px !important;
+  }
 }

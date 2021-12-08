@@ -102,7 +102,7 @@ $boxBorderRadius: 5px;
 }
 .form-label {
   display: block;
-  font-size: 15px;
+  font-size: 13px;
 }
 
 .label-sign-up {
@@ -423,7 +423,7 @@ input {
 
 .policy-link {
   color: #eab200;
-  font-size: 15px;
+  font-size: 14px;
   text-align: center;
   font-weight: 700;
 }
@@ -523,5 +523,24 @@ input {
 @media all and (max-width: 767px) {
   .label-sign-up {
     width: 40% !important;
+  }
+  .form-header-sub-text {
+    font-size: 11px !important;
+  }
+  .form-header-text {
+    font-size: 13px !important;
+  }
+  .merchant-form-label-wrapper {
+    font-size: 12px !important;
+  }
+  .stepper-description {
+    font-size: 10px !important;
+    white-space: wrap;
+    width: 60px !important;
+  }
+  .stepper-container {
+    width: 99% !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
   }
 }

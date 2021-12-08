@@ -117,7 +117,7 @@ function RegisteredRepresentativeForm(props) {
                             : ""
                         }
                         spaceBetween={0}
-                        fontSize={14}
+                        fontSize={12}
                         fontWeight={"bold"}
                       />
                     </div>
@@ -148,7 +148,7 @@ function RegisteredRepresentativeForm(props) {
                             : ""
                         }
                         spaceBetween={0}
-                        fontSize={14}
+                        fontSize={12}
                         fontWeight={"bold"}
                       />
                     </div>
@@ -184,7 +184,7 @@ function RegisteredRepresentativeForm(props) {
                         : ""
                     }
                     spaceBetween={0}
-                    fontSize={14}
+                    fontSize={12}
                     fontWeight={"bold"}
                   />
                   <span className="field-description">
@@ -216,7 +216,7 @@ function RegisteredRepresentativeForm(props) {
                         : ""
                     }
                     spaceBetween={0}
-                    fontSize={14}
+                    fontSize={12}
                     fontWeight={"bold"}
                   />
                 </div>
@@ -243,7 +243,7 @@ function RegisteredRepresentativeForm(props) {
                   <FormError
                     err={errors.phone1 && touched.phone1 ? errors.phone1 : ""}
                     spaceBetween={0}
-                    fontSize={14}
+                    fontSize={12}
                     fontWeight={"bold"}
                   />
                 </div>
@@ -291,7 +291,7 @@ function RegisteredRepresentativeForm(props) {
                         : ""
                     }
                     spaceBetween={0}
-                    fontSize={14}
+                    fontSize={12}
                     fontWeight={"bold"}
                   />
                 </div>
@@ -367,7 +367,7 @@ function RegisteredRepresentativeForm(props) {
                       errors.taxCode && touched.taxCode ? errors.taxCode : ""
                     }
                     spaceBetween={0}
-                    fontSize={14}
+                    fontSize={12}
                     fontWeight={"bold"}
                   />
                 </div>

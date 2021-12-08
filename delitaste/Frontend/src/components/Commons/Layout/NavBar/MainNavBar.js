@@ -20,11 +20,11 @@ import { Link } from "react-router-dom";
 
 import "./MainNavBar.scss";
 import SearchBar from "./SearchBar";
-import NavFlyout from "components/Commons/Popup/NavFlyout/NavFlyout";
+import NavFlyout from "components/Commons/Overlay/Popup/NavFlyout/NavFlyout";
 import Logo from "assets/sub-logo.png";
-import Modal from "components/Commons/Popup/Modal/Modal";
-import LanguageSettingPanel from "components/Commons/Popup/Panel/LanguageSettingPanel";
-import AccountSettingPanel from "components/Commons/Popup/Panel/AccountSettingPanel";
+import Modal from "components/Commons/Overlay/Popup/Modal/Modal";
+import LanguageSettingPanel from "components/Commons/Overlay/Popup/Panel/LanguageSettingPanel";
+import AccountSettingPanel from "components/Commons/Overlay/Popup/Panel/AccountSettingPanel";
 import i18n from "i18n";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 

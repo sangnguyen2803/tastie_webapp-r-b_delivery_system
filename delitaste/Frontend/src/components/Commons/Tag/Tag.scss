@@ -10,6 +10,17 @@
   color: white;
   margin: 2% 0.5% 0% 0.5%;
   padding: 0% 1%;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+
+  /*
+    Introduced in Internet Explorer 10.
+    See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+  */
+  -ms-user-select: none;
+  user-select: none;
+  cursor: pointer;
   .tag-icon {
     font-size: 13px;
   }

@@ -5,10 +5,10 @@ import { withRouter } from "react-router-dom";
 import "components/UserAdmission/UserAdmission.scss";
 //components
 import LoginForm from "components/UserAdmission/LoginForm/LoginForm";
-import NavBar from "components/Commons/LayoutComponents/NavBar/NavBar";
+import NavBar from "components/Commons/Layout/NavBar/NavBar";
 import SlideShow from "components/Commons/SlideShow/SlideShow";
-import Footer from "components/Commons/LayoutComponents/Footer/Footer";
-import ToolBar from "components/Commons/LayoutComponents/Toolbar/Toolbar";
+import Footer from "components/Commons/Layout/Footer/Footer";
+import ToolBar from "components/Commons/Layout/Toolbar/Toolbar";
 
 //assets
 import Picture1 from "assets/SlideShowImg/Picture1.jpg";

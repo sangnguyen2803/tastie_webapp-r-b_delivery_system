@@ -1,6 +1,6 @@
 $errorColor: #aa0033;
 .form-error-wrapper {
-  font-size: 13px;
+  font-size: 12px;
   .form-error-content {
     color: $errorColor;
   }
@@ -9,6 +9,6 @@ $errorColor: #aa0033;
 @media all and (max-width: 767px) {
   .form-error-wrapper {
     margin-left: 28% !important;
-    font-size: 13px;
+    font-size: 12px;
   }
 }

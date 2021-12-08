@@ -1,8 +1,8 @@
 import "./MerchantForm.scss";
 import { Link } from "react-router-dom";
-import Footer from "components/Commons/LayoutComponents/Footer/Footer";
-import NavBar from "components/Commons/LayoutComponents/NavBar/NavBar";
-import ToolBar from "components/Commons/LayoutComponents/Toolbar/Toolbar";
+import Footer from "components/Commons/Layout/Footer/Footer";
+import NavBar from "components/Commons/Layout/NavBar/NavBar";
+import ToolBar from "components/Commons/Layout/Toolbar/Toolbar";
 import MerchantBanner from "assets/merchant-form-banner.png";
 import Stepper from "components/Commons/Stepper/Stepper";
 const backgroundStyling = {

@@ -1,17 +1,19 @@
 import "./DetailMerchantForm.scss";
 import "style/Common.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { Formik, ErrorMessage, Form, Field } from "formik";
 import Stepper from "components/Commons/Stepper/Stepper";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
+import Modal from "components/Commons/Overlay/Popup/Modal/Modal";
 import FormError from "components/Commons/ErrorHandlers/FormError/FormError";
 import Tag from "components/Commons/Tag/Tag";
 import FormHeader from "./FormHeader/FormHeader";
+import CategorySelector from "components/MerchantRegistration/Forms/DetailMerchantForm/CategorySelector/CategorySelector";
+
 import Switch from "react-switch";
-import { faToggleOff } from "@fortawesome/fontawesome-free-solid";
 
 const initialValues = {
   operating: {
@@ -50,15 +52,62 @@ const initialValues = {
 };
 
 function BusinessUnitForm(props) {
+  const [showRestaurantCategory, setShowRestaurantCategory] = useState(false);
+  const [showCuisineCategory, setShowCuisineCategory] = useState(false);
+
+  useEffect(() => {
+    if (showRestaurantCategory || showCuisineCategory) {
+      document.body.style.position = "fixed";
+      return;
+    }
+    document.body.style.position = "unset";
+    document.body.style.overflowY = "scroll";
+  }, [showRestaurantCategory, showCuisineCategory]);
+
   const selectedCuisineCategory = [
-    "Milk tea",
-    "Coffee",
-    "Fastfood & StreetFood",
-    "ThaiFood",
-    "Pizza",
-    "Fried",
-    "Dessert",
+    { id: 1, categoryName: "Milk tea" },
+    { id: 2, categoryName: "Coffee" },
+    { id: 3, categoryName: "Fastfood & StreetFood" },
+    { id: 4, categoryName: "ThaiFood" },
+    { id: 5, categoryName: "Dessert" },
   ];
+
+  const selectedRestaurantCategory = [
+    { id: 1, categoryName: "Milk tea" },
+    { id: 2, categoryName: "Coffee" },
+    { id: 3, categoryName: "Fastfood & StreetFood" },
+    { id: 4, categoryName: "ThaiFood" },
+    { id: 5, categoryName: "Dessert" },
+    { id: 6, categoryName: "Bubble Tea" },
+    { id: 7, categoryName: "Macaroni" },
+    { id: 8, categoryName: "Icecream" },
+    { id: 9, categoryName: "Candy" },
+    { id: 10, categoryName: "Cake" },
+    { id: 11, categoryName: "Chewy Chewy" },
+    { id: 12, categoryName: "Hotpot" },
+    { id: 13, categoryName: "Fried Chicken" },
+    { id: 14, categoryName: "Pizza" },
+    { id: 15, categoryName: "Dessert" },
+    { id: 16, categoryName: "Milk tea" },
+    { id: 17, categoryName: "Coffee" },
+    { id: 18, categoryName: "Takoyaki" },
+    { id: 19, categoryName: "Spicy Food" },
+    { id: 20, categoryName: "Beefsteak" },
+    { id: 28, categoryName: "Sushi & Sashimi" },
+    { id: 29, categoryName: "Noodle" },
+    { id: 30, categoryName: "Korean Food" },
+    { id: 31, categoryName: "Machiato" },
+    { id: 32, categoryName: "Coffee" },
+    { id: 33, categoryName: "Fastfood & StreetFood" },
+    { id: 34, categoryName: "ThaiFood" },
+    { id: 35, categoryName: "Dessert" },
+    { id: 36, categoryName: "Milk tea" },
+    { id: 37, categoryName: "Coffee" },
+    { id: 38, categoryName: "Fastfood & StreetFood" },
+    { id: 39, categoryName: "ThaiFood" },
+    { id: 40, categoryName: "Dessert" },
+  ];
+
   //weekday-switchers-state
   const [checkedSunday, setCheckedSunday] = useState(true);
   const [checkedMonday, setCheckedMonday] = useState(true);
@@ -70,7 +119,6 @@ function BusinessUnitForm(props) {
 
   const handleSubmitForm = (values) => {
     const { operating, rushHour, searchKeyword, description } = values;
-    console.log("abc");
     const formData = {
       businessInfo: {
         operating: {
@@ -115,7 +163,6 @@ function BusinessUnitForm(props) {
         description: description,
       },
     };
-    console.log(formData);
   };
 
   return (
@@ -425,13 +472,19 @@ function BusinessUnitForm(props) {
                   </div>
                   <div className="merchant-form-input-wrapper">
                     <div className="select-category-button-wrapper">
-                      <button className="btn-category">Select category</button>
+                      <button
+                        type="button"
+                        className="btn-category"
+                        onClick={() => setShowRestaurantCategory(true)}
+                      >
+                        Select category
+                      </button>
                     </div>
                   </div>
                 </div>
                 <div className="tag-container">
-                  {selectedCuisineCategory.map((tag, index) => (
-                    <Tag text={tag} />
+                  {selectedRestaurantCategory.map((tag, index) => (
+                    <Tag text={tag.categoryName} />
                   ))}
                 </div>
 
@@ -441,13 +494,19 @@ function BusinessUnitForm(props) {
                   </div>
                   <div className="merchant-form-input-wrapper">
                     <div className="select-category-button-wrapper">
-                      <button className="btn-category">Select category</button>
+                      <button
+                        type="button"
+                        className="btn-category"
+                        onClick={() => setShowCuisineCategory(true)}
+                      >
+                        Select category
+                      </button>
                     </div>
                   </div>
                 </div>
                 <div className="tag-container">
                   {selectedCuisineCategory.map((tag, index) => (
-                    <Tag text={tag} />
+                    <Tag text={tag.categoryName} />
                   ))}
                 </div>
 
@@ -508,6 +567,32 @@ function BusinessUnitForm(props) {
                 </button>
               </div>
             </Form>
+            <Modal
+              isOpen={showRestaurantCategory}
+              title={"Restaurant Category"}
+              width={60}
+              height={500}
+              close={() => setShowRestaurantCategory(false)}
+            >
+              <CategorySelector
+                list={selectedRestaurantCategory}
+                title={"Select categories for restaurant's dishes (maximum: 3)"}
+                required={3}
+              />
+            </Modal>
+            <Modal
+              isOpen={showCuisineCategory}
+              title={"Cuisine Category"}
+              width={60}
+              height={500}
+              close={() => setShowCuisineCategory(false)}
+            >
+              <CategorySelector
+                list={selectedCuisineCategory}
+                title={"Select categories for your restaurant (maximum: 2)"}
+                required={2}
+              />
+            </Modal>
           </>
         );
       }}

@@ -59,7 +59,7 @@ $boxBorderRadius: 5px;
     @include FlexRow(80%, nowrap);
     justify-content: flex-start;
     margin-left: 1%;
-    font-size: 15px;
+    font-size: 13px;
     text-align: center;
     .remember-me {
     }
@@ -72,7 +72,7 @@ $boxBorderRadius: 5px;
 
     .form-label-login {
       font-weight: 700;
-      font-size: 16px;
+      font-size: 14px;
       margin-left: 1%;
       display: block;
       color: $formTextColor;
@@ -121,7 +121,7 @@ $boxBorderRadius: 5px;
     font-weight: 600;
     a {
       color: #997500;
-      font-size: 16px;
+      font-size: 14px;
       text-align: center;
       &:hover {
         color: #ad8500;

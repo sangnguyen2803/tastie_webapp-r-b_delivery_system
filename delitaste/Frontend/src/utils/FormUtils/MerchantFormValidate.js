@@ -1,18 +1,21 @@
 import * as yup from "yup";
 
+const phoneRegExp =
+  /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
+
 //schema
 const validateMerchantForm1 = yup.object().shape({
-  name: yup.string().required("This field cannot be left empty."),
+  name: yup.string(),
   phone: yup
     .string()
+    .matches(phoneRegExp, "Phone number is not valid")
     .min(10, "Phone number must be exactly 10 characters long")
-    .max(10, "Phone number must be exactly 10 characters long")
-    .required("This field cannot be left empty."),
+    .max(10, "Phone number must be exactly 10 characters long"),
   city: yup.string().required("Please select a city"),
   district: yup.string().required("Please select a district"),
   ward: yup.string().required("Please select a ward"),
-  road: yup.string().required("This field cannot be left empty."),
-}); 
+  road: yup.string(),
+});
 
 const validateMerchantForm2 = yup.object().shape({
   companyName: yup.string().required("This field cannot be left empty."),

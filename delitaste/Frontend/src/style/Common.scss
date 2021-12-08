@@ -25,7 +25,7 @@ $boxBorderRadius: 5px;
   border: 2px #949494 solid;
   font-weight: 400;
   padding-left: 5%;
-  font-size: 14px;
+  font-size: 13px;
   border-radius: 3px;
   background: #ffffff;
 }
@@ -44,12 +44,13 @@ $boxBorderRadius: 5px;
 }
 
 .form-text-field-select {
+  font-family: "Poppins", sans-serif;
   height: 35px;
   display: block;
   border: 2px #949494 solid;
   font-weight: 400;
   padding-left: 4%;
-  font-size: 14px;
+  font-size: 13px;
   border-radius: 3px;
   background: #ffffff;
   color: rgb(24, 24, 24);
@@ -176,12 +177,12 @@ $boxBorderRadius: 5px;
   width: 50%;
   margin-left: 2%;
   text-align: left;
-  font-size: 16px;
+  font-size: 14px;
 }
 
 //Panel
 .panel-title {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: bold;
   margin: 0.5% 0%;
 }

@@ -1,0 +1,83 @@
+$formButtonColor: #eab200;
+$formButtonColorOnHover: #ebbd29;
+$formColor: #f4f4f4;
+$logoColor: #aa0033;
+$emphasizeColor: #750023;
+$emphasizeColorHover: #a7264c;
+$formTextColor: #2e2e2e;
+$boxBorderRadius: 5px;
+
+@mixin FlexCol($width, $flexWrap) {
+  width: $width;
+  display: flex;
+  flex-wrap: $flexWrap;
+  flex-direction: column;
+}
+@mixin FlexRow($width, $flexWrap) {
+  width: $width;
+  display: flex;
+  flex-wrap: $flexWrap;
+  flex-direction: row;
+}
+
+.category-search-container {
+  @include FlexRow(100%, nowrap);
+  justify-content: center;
+  align-content: center;
+  height: 30px;
+  .category-search-term {
+    width: 100%;
+    font-size: 14px;
+    height: inherit;
+    border: 2px rgb(145, 145, 145) solid;
+    text-indent: 50px;
+  }
+  .category-search-icon {
+    height: inherit;
+    display: block;
+    position: absolute;
+    font-size: 18px;
+    left: 40px;
+    margin-top: 3px;
+    color: rgb(145, 145, 145);
+  }
+}
+.category-selection-title {
+  padding: 1% 2%;
+  font-size: 15px;
+  font-weight: 700;
+}
+.category-selection-wrapper {
+  margin-top: 3%;
+  padding-left: 2%;
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(223, 223, 223);
+  height: 300px;
+
+  .option-container {
+    display: flex;
+    @include FlexCol("100%", wrap);
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 0px 2%;
+    height: 350px;
+    overflow-y: scroll;
+
+    .option-row {
+      width: 150px;
+      font-size: 16px;
+      margin: 3px 0%;
+    }
+  }
+}
+
+@media all and (max-width: 767px) {
+  .option-container {
+    flex-wrap: nowrap !important;
+  }
+  .option-row {
+    width: 300px !important;
+    font-size: 16px;
+  }
+}

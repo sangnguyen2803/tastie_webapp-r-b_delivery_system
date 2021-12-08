@@ -3,7 +3,6 @@
   width: 13px;
   height: 13px;
   padding: 5px;
-  font-size: 15px;
   font-weight: bold;
   background: rgb(255, 196, 0);
   border: 1px solid rgb(255, 196, 0);
@@ -29,7 +28,7 @@
   @include FlexRow(89%, nowrap);
   margin-top: 0.5%;
   color: #e4e4e4;
-  background: rgb(19, 19, 19);
+  background: rgb(0, 0, 0);
   font-family: "Poppins", sans-serif;
 
   border-top-left-radius: 5px;
@@ -52,6 +51,7 @@
     padding-right: 1%;
 
     .active {
+      font-size: 13px !important;
       background: rgb(185, 0, 9);
       border: 1px solid rgb(185, 0, 9);
       color: rgb(240, 240, 240);
@@ -59,6 +59,7 @@
       @extend .step-styling;
     }
     .default {
+      font-size: 13px !important;
       background: #ffffff;
       border: 1px solid #727272;
       color: #b4b4b4;
@@ -66,6 +67,7 @@
       @extend .step-styling;
     }
     .finished {
+      font-size: 13px !important;
       background: rgb(0, 145, 72);
       border: 1px solid rgb(0, 145, 72);
       color: rgb(245, 245, 245);

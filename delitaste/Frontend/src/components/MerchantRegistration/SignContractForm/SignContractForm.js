@@ -2,13 +2,13 @@ import "./SignContractForm.scss";
 import { useState, useEffect } from "react";
 
 import { Link } from "react-router-dom";
-import Footer from "components/Commons/LayoutComponents/Footer/Footer";
-import NavBar from "components/Commons/LayoutComponents/NavBar/NavBar";
+import Footer from "components/Commons/Layout/Footer/Footer";
+import NavBar from "components/Commons/Layout/NavBar/NavBar";
 import Contract from "assets/pdf/contract.pdf";
-import ToolBar from "components/Commons/LayoutComponents/Toolbar/Toolbar";
+import ToolBar from "components/Commons/Layout/Toolbar/Toolbar";
 import MerchantBanner from "assets/merchant-form-banner.png";
 import FormBanner from "assets/Banner/merchant-form-banner.png";
-import Spinner from "components/Commons/Spinner/Spinner";
+import Spinner from "components/Commons/Overlay/Spinner/Spinner";
 
 import { withRouter } from "react-router-dom";
 
@@ -92,7 +92,7 @@ function SignContractForm(props) {
         <Footer />
         <ToolBar />
       </div>
-      <Spinner visibility={true} />
+      <Spinner visibility={false} />
     </>
   );
 }
