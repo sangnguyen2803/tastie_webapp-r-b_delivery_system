@@ -42,7 +42,7 @@
 
 .search-term {
   font-family: "Poppins", sans-serif;
-  font-size: inherit;
+  font-size: 13px;
   padding-left: 1%;
   display: flex;
   flex-direction: row;
@@ -90,13 +90,13 @@
   color: black;
   text-transform: uppercase;
   font-weight: 500;
-  font-size: 14px;
+  font-size: 13px;
 }
 .btn-search-text {
+  cursor: pointer;
   color: #ffffff;
-  text-transform: uppercase;
   font-weight: 500;
-  font-size: 14px;
+  font-size: 13px;
 }
 .search-icon {
   margin-right: 5%;

@@ -9,6 +9,8 @@ import {
   SET_ALERT_NOTIFICATION,
   REMOVE_ALERT_NOTIFICATION,
   CHECK_DUPLICATION_SUCCESS,
+  SET_EMAIL_VERIFICATION_CODE,
+  SET_EMAIL_VERIFICATION_STATUS,
 } from "store/actions/types";
 
 export const updateStepStyling = (stepStyle) => (dispatch) => {
@@ -120,4 +122,58 @@ export const accountRegistrationAPI = (formData) => async (dispatch) => {
     });
   }
 };
-//YUP
+
+export const sendEmailVerificationCodeAPI = (email) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  const body = JSON.stringify({
+    email,
+  });
+  try {
+    console.log("hello bạn");
+    const endpoint = "/v1/api/auth/send-code-with-email";
+    const res = await axios.post(endpoint, body, config);
+    dispatch({
+      type: SET_EMAIL_VERIFICATION_CODE,
+      payload: res.data,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const checkEmailVerificationCodeAPI = (data) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  const body = JSON.stringify(data);
+  console.log(body);
+  try {
+    const endpoint = "/v1/api/auth/verify-code-with-email";
+    const res = await axios.post(endpoint, body, config);
+    if (res.data.status) {
+      dispatch({
+        type: SET_EMAIL_VERIFICATION_STATUS,
+        payload: { isEmailVerified: res.data.status },
+      });
+    } else {
+      const alertMsg =
+        "Your email verified code is incorrect. Please try again.";
+      dispatch({
+        type: SET_ALERT_NOTIFICATION,
+        payload: {
+          loadingAlert: true,
+          msg: alertMsg,
+        },
+      });
+    }
+    return res.data.status;
+  } catch (err) {
+    console.log(err);
+  }
+};

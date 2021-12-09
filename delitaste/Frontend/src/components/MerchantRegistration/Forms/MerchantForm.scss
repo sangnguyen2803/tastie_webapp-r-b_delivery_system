@@ -113,40 +113,6 @@ h2 {
   background: rgb(155, 0, 0);
 }
 
-//responsive design
-@media all and (max-width: 767px) {
-  .merchant-registration-form {
-    width: 95% !important;
-  }
-  .merchant-registration-header-title {
-    font-size: 13px !important;
-    width: 65% !important;
-  }
-  .merchant-form-label-wrapper {
-    font-size: 13px;
-  }
-  .merchant-form-wrapper {
-    margin-top: 2%;
-    width: 85% !important;
-  }
-}
-
-@media only screen and (max-width: 1200px) and (min-width: 767px) {
-  .merchant-registration-form {
-    width: 800px !important;
-  }
-  .merchant-registration-header-title {
-    width: 65% !important;
-  }
-  .merchant-form-label-wrapper {
-    font-size: 13px;
-  }
-  .merchant-form-wrapper {
-    margin-top: 2%;
-    width: 85% !important;
-  }
-}
-
 .form-header-title {
   font-family: "Poppins", sans-serif;
   background: rgba(146, 0, 0, 0.9);
@@ -165,17 +131,70 @@ h2 {
   flex-wrap: wrap;
   justify-content: flex-start;
 }
-.form-header-text {
-  width: 80%;
-  font-size: 15px;
-  align-self: flex-start;
-  margin: 3% 0% 0% 0%;
-  font-weight: bold;
+.header-content {
+  width: 75%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+
+  .form-header-text {
+    width: 100%;
+    font-size: 14px;
+    align-self: flex-start;
+    margin: 3% 0% 0% 0%;
+    font-weight: bold;
+  }
+  .form-header-sub-text {
+    width: 100%;
+    font-size: 13px;
+    align-self: flex-start;
+    font-weight: bold;
+  }
 }
-.form-header-sub-text {
-  width: 80%;
-  font-size: 14px;
-  align-self: flex-start;
-  margin: 0% 8% 0.5% 8%;
-  font-weight: bold;
+
+//responsive design
+@media all and (max-width: 767px) {
+  .merchant-registration-form {
+    width: 95% !important;
+  }
+  .merchant-registration-header-title {
+    font-size: 13px !important;
+    width: 65% !important;
+  }
+  .merchant-form-label-wrapper {
+    font-size: 13px;
+  }
+  .merchant-form-wrapper {
+    margin-top: 2%;
+    width: 85% !important;
+  }
+  .header-content {
+    width: 85% !important;
+  }
+  .form-name {
+    width: 85% !important;
+  }
+}
+
+@media only screen and (max-width: 1200px) and (min-width: 767px) {
+  .merchant-registration-form {
+    width: 800px !important;
+  }
+  .merchant-registration-header-title {
+    width: 65% !important;
+  }
+  .merchant-form-label-wrapper {
+    font-size: 13px;
+  }
+  .merchant-form-wrapper {
+    margin-top: 2%;
+    width: 85% !important;
+  }
+  .header-content {
+    width: 85% !important;
+  }
+  .form-name {
+    width: 85% !important;
+  }
 }

@@ -28,21 +28,39 @@ const AccountSettingPanel = (props) => {
       <div className="panel-account-service-wrapper">
         <div className="e-wallet-services">
           <span className="account-service-title">Your E-Wallet</span>
-          <Link className="service-name">E-Wallet</Link>
-          <Link className="service-name">Add a payment method</Link>
-          <Link className="service-name">Spending History</Link>
-          <Link className="service-name">Change Budget Limit</Link>
+          <Link to="/merchant-registration" className="service-name">
+            E-Wallet
+          </Link>
+          <Link to="/merchant-registration" className="service-name">
+            Add a payment method
+          </Link>
+          <Link to="/merchant-registration" className="service-name">
+            Spending History
+          </Link>
+          <Link to="/merchant-registration" className="service-name">
+            Change Budget Limit
+          </Link>
         </div>
         <div className="account-services">
           <span className="account-service-title">Your Account</span>
-          <Link className="service-name">Profile</Link>
-          <Link className="service-name">Order & Bills</Link>
-          <Link className="service-name">E-Coupons & Vouchers</Link>
+          <Link to="/merchant-registration" className="service-name">
+            Profile
+          </Link>
+          <Link to="/merchant-registration" className="service-name">
+            Order & Bills
+          </Link>
+          <Link to="/merchant-registration" className="service-name">
+            E-Coupons & Vouchers
+          </Link>
           <Link to="/merchant-registration" className="service-name">
             Merchant Registration
           </Link>
-          <Link className="service-name">Browsing History</Link>
-          <Link className="service-name">Watchlist</Link>
+          <Link to="/merchant-registration" className="service-name">
+            Browsing History
+          </Link>
+          <Link to="/merchant-registration" className="service-name">
+            Watchlist
+          </Link>
         </div>
       </div>
     </div>

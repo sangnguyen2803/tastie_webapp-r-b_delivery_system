@@ -1,10 +1,14 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { withRouter } from "react-router-dom";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+
 //assets
 import Logo from "assets/logo.png";
 import FacebookLogo from "assets/Icon/facebook.png";
 import GoogleLogo from "assets/Icon/google.png";
+
 import { useTranslation } from "react-i18next";
 //icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -17,6 +21,8 @@ import {
 //scss
 import "style/Common.scss";
 import "./LoginForm.scss";
+import { accountSignInAPI } from "store/actions/UserAdmission/AuthActions";
+import { setDialogBox } from "store/actions/UIComponents/DialogBoxAction";
 
 function LoginForm(props) {
   const { t, i18n } = useTranslation("translation", {
@@ -30,8 +36,32 @@ function LoginForm(props) {
     email: "",
     password: "",
   });
+
+  const handleSubmitForm = async () => {
+    const { email, password } = userLoginInfo;
+    if (!(email || password)) return;
+    const formData = {};
+    formData["password"] = password;
+    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email))
+      formData["email"] = email;
+    if (
+      /^[(]{0,1}[0-9]{3}[)]{0,1}[-\s\.]{0,1}[0-9]{3}[-\s\.]{0,1}[0-9]{4}$/.test(
+        email
+      )
+    )
+      formData["phone"] = userLoginInfo.email;
+    console.log(formData);
+    const result = await props.accountSignInAPI(formData);
+    if (result.state) {
+      props.history.push("/");
+      return;
+    }
+    if (result.msg) props.setDialogBox(result.msg, "Login Fail", 800);
+  };
+
   const updateUserLoginInfo = (e) =>
     setUserLoginInfo({ ...userLoginInfo, [e.target.name]: e.target.value });
+
   const loadClearTextInput = (inputType = "email") => {
     if (functionalIcon.enableRemoveText)
       return (
@@ -115,6 +145,9 @@ function LoginForm(props) {
             <div className="form-label-login">{t("sign-in-password")}</div>
             <input
               className="login-input-password form-text-field"
+              value={userLoginInfo.password}
+              name="password"
+              onChange={(e) => updateUserLoginInfo(e)}
               type={
                 functionalIcon.enablePasswordVisibility ? "text" : "password"
               }
@@ -128,7 +161,10 @@ function LoginForm(props) {
             <span className="remember-me">{t("sign-in-remember-me")}</span>
           </label>
 
-          <button className="btn-form btn-login-position">
+          <button
+            className="btn-form btn-login-position"
+            onClick={handleSubmitForm}
+          >
             <div className="none-icon"></div>
             {t("sign-in-button")}
             <FontAwesomeIcon className="chevron-icon" icon={faChevronRight} />
@@ -174,4 +210,14 @@ function LoginForm(props) {
   );
 }
 
-export default withRouter(LoginForm);
+LoginForm.propTypes = {
+  accountSignInAPI: PropTypes.func.isRequired,
+  setDialogBox: PropTypes.func.isRequired,
+};
+
+export default withRouter(
+  connect(null, {
+    accountSignInAPI,
+    setDialogBox,
+  })(LoginForm)
+);

@@ -31,7 +31,7 @@ $boxBorderRadius: 5px;
   .verify-code-description {
     display: block;
     margin-bottom: 2%;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 500;
     color: #2c2c2c;
   }
@@ -72,7 +72,7 @@ $boxBorderRadius: 5px;
 .resend-verify-code a {
   width: 50%;
   color: #2c2c2c;
-  font-size: 15px;
+  font-size: 14px;
   text-align: center;
 }
 .resend-verify-code a:hover {
@@ -156,6 +156,7 @@ $boxBorderRadius: 5px;
 .sub-square-button {
   margin-left: 2%;
   background-color: rgb(231, 231, 231);
+  font-family: "Poppins", sans-serif !important;
   font-size: 15px;
   height: 36px;
   border-radius: 5px;

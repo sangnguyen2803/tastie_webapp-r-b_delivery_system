@@ -75,6 +75,7 @@ function ServiceInfoForm(props) {
           <>
             <Form className="merchant-form-container">
               <FormHeader name="Service Provider's Info" />
+              <div className="form-name">MERCHANT BASIC INFORMATION:</div>
               <div className="merchant-form-wrapper">
                 <div className="merchant-form-field-wrapper">
                   <div className="merchant-form-label-wrapper">

@@ -12,7 +12,7 @@ const backgroundStyling = {
   backgroundSize: "cover",
 };
 
-function MerchantForm(props) {
+function MerchantForm({ children }) {
   return (
     <div className="merchant-registration-page">
       <NavBar hideBreadcrumb={false} />
@@ -23,7 +23,7 @@ function MerchantForm(props) {
         <div className="merchant-registration-form-wrapper">
           <div className="merchant-registration-form">
             <Stepper />
-            {props.form}
+            {children}
           </div>
         </div>
       </div>

@@ -1,12 +1,17 @@
 import {
   SET_ALERT_NOTIFICATION,
   REMOVE_ALERT_NOTIFICATION,
+  SET_DIALOG_BOX,
+  REMOVE_DIALOG_BOX,
 } from "store/actions/types";
 import {} from "store/actions/types";
 
 const initialState = {
   msg: "",
   loadingAlert: false,
+  loadingDialogBox: false,
+  dialogBoxTitle: "",
+  dialogBoxMessage: "",
   alertStyling: "danger",
 };
 
@@ -16,6 +21,10 @@ export default function (state = initialState, action) {
     case SET_ALERT_NOTIFICATION:
       return { ...state, ...payload };
     case REMOVE_ALERT_NOTIFICATION:
+      return { ...state, ...payload };
+    case SET_DIALOG_BOX:
+      return { ...state, ...payload };
+    case REMOVE_DIALOG_BOX:
       return { ...state, ...payload };
     default:
       return state;

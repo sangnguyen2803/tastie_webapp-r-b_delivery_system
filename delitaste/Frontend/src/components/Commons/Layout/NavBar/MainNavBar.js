@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from "react";
+
+import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
+import PropTypes from "prop-types";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBars,
@@ -28,7 +32,7 @@ import AccountSettingPanel from "components/Commons/Overlay/Popup/Panel/AccountS
 import i18n from "i18n";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 
-function MainNavBar(props) {
+function MainNavBar({ user }) {
   const [accountPanel, setAccountPanel] = useState(false);
   const [languagePanel, setLanguagePanel] = useState(false);
   const [cartModal, setCartModal] = useState(false);
@@ -100,7 +104,12 @@ function MainNavBar(props) {
               <FontAwesomeIcon className="nav-icon" icon={faUser} />
             </div>
             <div className="nav-gadget-text-wrapper">
-              <div className="nav-gadget-sub-text">Welcome, Sign In</div>
+              <div className="nav-gadget-sub-text">
+                Welcome,{" "}
+                {user.isUserAuthenticated && user.profile
+                  ? user.profile.last_name
+                  : "Sign In"}
+              </div>
               <div className="nav-gadget-main-text">Account & E-Wallet</div>
             </div>
             <div className="nav-end-gadget-text-wrapper">
@@ -183,4 +192,12 @@ function MainNavBar(props) {
   );
 }
 
-export default withRouter(MainNavBar);
+MainNavBar.propTypes = {
+  user: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  user: state.RegistrationReducers,
+});
+
+export default withRouter(connect(mapStateToProps, null)(MainNavBar));

@@ -176,6 +176,7 @@ function BusinessUnitForm(props) {
           <>
             <Form className="merchant-form-container">
               <FormHeader name="Business Unit's Detail Info" />
+              <div className="form-name">MERCHANT DETAIL INFORMATION:</div>
               <div className="merchant-form-wrapper">
                 <div className="merchant-form-field-wrapper">
                   <div className="merchant-form-switch-label-wrapper">
@@ -575,6 +576,7 @@ function BusinessUnitForm(props) {
               close={() => setShowRestaurantCategory(false)}
             >
               <CategorySelector
+                close={() => setShowRestaurantCategory(false)}
                 list={selectedRestaurantCategory}
                 title={"Select categories for restaurant's dishes (maximum: 3)"}
                 required={3}
@@ -588,6 +590,7 @@ function BusinessUnitForm(props) {
               close={() => setShowCuisineCategory(false)}
             >
               <CategorySelector
+                close={() => setShowCuisineCategory(false)}
                 list={selectedCuisineCategory}
                 title={"Select categories for your restaurant (maximum: 2)"}
                 required={2}

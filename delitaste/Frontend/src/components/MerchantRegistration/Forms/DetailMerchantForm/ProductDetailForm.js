@@ -30,6 +30,7 @@ function ProductDetailForm(props) {
           <>
             <Form className="merchant-form-container">
               <FormHeader name="Product & Merchandise Info" />
+              <div className="form-name">PRODUCT DETAIL INFORMATION:</div>
               <div className="merchant-form-wrapper">
                 <div className="merchant-form-field-wrapper-file">
                   <div className="merchant-form-label-wrapper-file">

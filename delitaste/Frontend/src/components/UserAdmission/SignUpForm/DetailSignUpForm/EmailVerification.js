@@ -17,22 +17,52 @@ import {
   updateStepStyling,
   mapRegistrationForm,
   accountRegistrationAPI,
+  sendEmailVerificationCodeAPI,
+  checkEmailVerificationCodeAPI,
 } from "store/actions/UserAdmission/RegistrationActions";
+import { setDialogBox } from "store/actions/UIComponents/DialogBoxAction";
 
 function EmailVerification(props) {
-  const [verifyCode, setVerifycode] = useState({ digits: "xxxxxx" });
+  useEffect(() => {
+    async function sendVerifiedEmailCode() {
+      return await props.sendEmailVerificationCodeAPI(
+        props.submittedFormData.formData.email
+      );
+    }
+    sendVerifiedEmailCode();
+  }, []);
+  const [enableVerifyButton, setEnableVerifyButton] = useState(false);
+  const [email, setEmail] = useState(props.submittedFormData.email);
+  const [verifiedCode, setVerifiedcode] = useState({ digits: "xxxxxx" });
+  enableVerifyButton;
   const [changeEmailDialog, setChangeEmailDialog] = useState(false);
 
   const collectVerifyDigits = (e) => {
     e.target.value = !isNaN(e.target.value) ? e.target.value : "";
-    verifyCode.digits =
-      verifyCode.digits.substr(0, parseInt(e.target.name)) +
+    verifiedCode.digits =
+      verifiedCode.digits.substr(0, parseInt(e.target.name)) +
       e.target.value +
-      verifyCode.digits.substr(parseInt(e.target.name) + 1);
+      verifiedCode.digits.substr(parseInt(e.target.name) + 1);
   };
+
   const onSubmitEmailVerification = async (e) => {
     e.preventDefault();
-    props.accountRegistrationAPI(props.submittedFormData.formData);
+    const email = props.submittedFormData.formData.email;
+    const verifyEmailToken =
+      props.submittedFormData.verifiedEmailToken ||
+      localStorage.getItem("verified_email_token") ||
+      "";
+    const code = verifiedCode.digits;
+    const formData = {
+      email,
+      verifyEmailToken,
+      code,
+    };
+    const result = await props.checkEmailVerificationCodeAPI(formData);
+    console.log(result);
+    if (result) {
+      await props.accountRegistrationAPI(props.submittedFormData.formData);
+    }
   };
 
   return (
@@ -68,8 +98,6 @@ function EmailVerification(props) {
               name="email"
               value={props.submittedFormData.email}
               placeholder="Email"
-              maxLength={50}
-              autoComplete="on"
               required
             />
             <button style={{ width: "25%" }} className="sub-square-button">
@@ -168,7 +196,9 @@ EmailVerification.propTypes = {
   updateStepStyling: PropTypes.func.isRequired,
   mapRegistrationForm: PropTypes.func.isRequired,
   accountRegistrationAPI: PropTypes.func.isRequired,
+  sendEmailVerificationCodeAPI: PropTypes.func.isRequired,
   submittedFormData: PropTypes.object.isRequired,
+  setDialogBox: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -178,4 +208,7 @@ export default connect(mapStateToProps, {
   mapRegistrationForm,
   updateStepStyling,
   accountRegistrationAPI,
+  sendEmailVerificationCodeAPI,
+  checkEmailVerificationCodeAPI,
+  setDialogBox,
 })(EmailVerification);

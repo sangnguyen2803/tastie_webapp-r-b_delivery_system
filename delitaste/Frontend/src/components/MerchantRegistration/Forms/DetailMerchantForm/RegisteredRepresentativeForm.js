@@ -71,6 +71,7 @@ function RegisteredRepresentativeForm(props) {
           <>
             <Form className="merchant-form-container">
               <FormHeader name="Registered Representative Info" />
+              <div className="form-name">REPRESENTATIVE INFORMATION:</div>
               <div className="merchant-form-wrapper">
                 <div className="merchant-form-field-wrapper">
                   <div className="merchant-form-label-wrapper">Register As</div>
@@ -83,7 +84,7 @@ function RegisteredRepresentativeForm(props) {
                         backgroundColor={"#E6E6E6"}
                         fontColor={"#2C2C2C"}
                         selectedFontColor={"#E6E6E6"}
-                        fontSize={15}
+                        fontSize={13}
                         wrapperBorderRadius={5}
                         optionBorderRadius={5}
                       />

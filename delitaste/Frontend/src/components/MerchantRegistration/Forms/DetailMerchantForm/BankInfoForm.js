@@ -47,6 +47,7 @@ function BankInfoForm(props) {
           <>
             <Form className="merchant-form-container">
               <FormHeader name="Bank Info" />
+              <div className="form-name">BANK INFORMATION:</div>
               <div className="merchant-form-wrapper">
                 <div className="merchant-form-field-wrapper">
                   <div className="merchant-form-label-wrapper">

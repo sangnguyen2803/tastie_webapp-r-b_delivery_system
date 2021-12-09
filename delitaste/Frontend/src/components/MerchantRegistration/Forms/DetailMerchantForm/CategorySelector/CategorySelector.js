@@ -6,6 +6,9 @@ import Tag from "components/Commons/Tag/Tag";
 import Checkbox from "react-custom-checkbox";
 
 import "./CategorySelector.scss";
+import Button from "components/Commons/Button/Button";
+import ButtonGroup from "components/Commons/Button/ButtonGroup/ButtonGroup";
+
 import { faCommentsDollar } from "@fortawesome/free-solid-svg-icons";
 
 function CategorySelector(props) {
@@ -41,7 +44,6 @@ function CategorySelector(props) {
         />
         <FontAwesomeIcon className="category-search-icon" icon={faSearch} />
       </div>
-      {selectedCategory}
       <div className="category-selection-wrapper">
         <span className="category-selection-title">{props.title}</span>
         <div className="option-container">
@@ -91,8 +93,8 @@ function CategorySelector(props) {
                   border: "none",
                 }}
                 labelStyle={{
-                  fontSize: "14px",
-                  fontWeight: "700",
+                  fontSize: "13px",
+                  fontWeight: "500",
                   color: "#2e2e2e",
                   marginLeft: 15,
                   userSelect: "none",
@@ -103,6 +105,15 @@ function CategorySelector(props) {
           ))}
         </div>
       </div>
+      <ButtonGroup float={"flex-end"} direction={"row"} gap={20} mgTop={25}>
+        <Button
+          label="Cancel"
+          type="secondary"
+          onClick={props.close}
+          width={100}
+        />
+        <Button label="Save" type="primary" width={100} />
+      </ButtonGroup>
     </Fragment>
   );
 }

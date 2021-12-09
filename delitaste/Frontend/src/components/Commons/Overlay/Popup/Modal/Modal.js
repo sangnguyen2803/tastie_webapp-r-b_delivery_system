@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/fontawesome-free-solid";
+
 import "./Modal.scss";
 
 const Modal = ({ isOpen, close, width, height, title, children }) => {
@@ -30,7 +31,6 @@ const Modal = ({ isOpen, close, width, height, title, children }) => {
   */
 
   if (!isOpen) return null;
-
   return ReactDOM.createPortal(
     <div className="darken-transparent-background">
       <div
