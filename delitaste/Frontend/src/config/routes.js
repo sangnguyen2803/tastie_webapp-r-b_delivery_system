@@ -1,22 +1,25 @@
-import Homepage from "components/HomePage/Homepage";
+import Homepage from "components/HomePage/Home";
 import UserRegistrationScreen from "screens/UserAdmissionScreen/UserRegistrationScreen";
 import UserSignInScreen from "screens/UserAdmissionScreen/UserSignInScreen";
 import MerchantRegistrationScreen from "screens/MerchantRegistrationScreen/MerchantRegistrationScreen";
 import SignContractScreen from "screens/MerchantRegistrationScreen/SignContractScreen/SignContractScreen";
 import MerchantFormScreen from "screens/MerchantRegistrationScreen/MerchantFormScreen";
-import ServiceInfoForm from "components/MerchantRegistration/Forms/DetailMerchantForm/ServiceInfoForm";
-import SignUpForm from "components/UserAdmission/SignUpForm/SignUpForm";
+import MerchantDashboardScreen from "screens/MerchantDashboardScreen/MerchantDashboardScreen";
+import HomeScreen from "screens/HomeScreen/HomeScreen";
+
+import NavBar from "components/Commons/Layout/NavBar/NavBar";
+import LoginForm from "components/UserAdmission/LoginForm/LoginForm";
 
 export const routes = [
   {
     path: "/:lang(en|fr|vi)/",
-    component: Homepage,
+    component: HomeScreen,
     exact: true,
     breadcrumb: "Home",
   },
   {
     path: "/",
-    component: Homepage,
+    component: HomeScreen,
     exact: true,
     breadcrumb: "Home",
   },
@@ -61,5 +64,11 @@ export const routes = [
     exact: true,
     component: MerchantFormScreen,
     breadcrumb: "Service Info",
+  },
+  {
+    path: "/merchant-dashboard",
+    exact: true,
+    component: MerchantDashboardScreen,
+    breadcrumb: "Dashboard",
   },
 ];

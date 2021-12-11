@@ -1,37 +1,27 @@
 import axios from "axios";
 
-import {
-  AUTH_SUCCESS,
-  AUTH_ERROR,
-  LOGIN_SUCCESS,
-  LOGIN_FAIL,
-} from "store/actions/types";
+import { RETRIEVE_TOKEN } from "store/actions/types";
 
-export const accountSignInAPI = (data) => async (dispatch) => {
+export const getAccessTokenAPI = (refreshToken) => async (dispatch) => {
   const config = {
     headers: {
       "Content-Type": "application/json",
     },
   };
-  const body = JSON.stringify(data);
+  const body = JSON.stringify({ token: refreshToken });
   try {
-    const endpoint = "/v1/api/auth/sign-in";
+    const endpoint = "/v1/api/auth/get-access-token";
     const res = await axios.post(endpoint, body, config);
-    dispatch({
-      type: LOGIN_SUCCESS,
-      payload: res.data,
-    });
-    return {
-      state: res.data.loginState || "",
-      msg: res.data.loginState ? "" : res.data.err.message,
-    };
+    if (res.data) {
+      dispatch({
+        type: RETRIEVE_TOKEN,
+        payload: { isUserAuthenticated: res.data.isAuth },
+      });
+    }
+    if (res.data.isAuth) return res.data;
+    return null;
   } catch (err) {
     const errs = err.response.data.errors;
-    console.log(err);
-    dispatch({
-      type: LOGIN_FAIL,
-      payload: errs,
-    });
-    return false;
+    console.log(errs);
   }
 };

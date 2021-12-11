@@ -1,28 +1,58 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronRight } from "@fortawesome/fontawesome-free-solid";
+import ProfilePhoto from "assets/avatar.jpg";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
+
+import { Fragment, useState } from "react";
 import "./AccountSettingPanel.scss";
 import "style/Common.scss";
 import { useTranslation } from "react-i18next";
+import { userSignOut } from "store/actions/UserAdmission/UserActions";
 
-const AccountSettingPanel = (props) => {
+const AccountSettingPanel = ({ user, userSignOut, history }) => {
   const { i18n } = useTranslation();
-  const isLoginAuthenticated = true;
+  const handleSignOut = () => {
+    userSignOut();
+    history.push("/sign-in");
+  };
+  const handleSignIn = () => {
+    history.push("/sign-in");
+  };
+  const handleSignUp = () => {
+    history.push("/sign-up");
+  };
   return (
     <div className="account-panel">
-      {isLoginAuthenticated ? (
-        <>
-          <div className="btn-panel btn-account-panel-position">Sign in</div>
+      {user.isUserAuthenticated ? (
+        <Fragment>
           <div className="sub-panel-title">
-            New customer?
-            <Link to="/sign-up" className="sub-panel-link">
-              Start here.
+            <img src={ProfilePhoto} className="profile-photo-preview" />
+            <span className="profile-name">
+              {user.profile
+                ? `${user.profile.first_name} ${user.profile.last_name}`
+                : ""}
+            </span>
+            <Link to="/sign-up" className="sub-panel-text-link">
+              Edit profile
             </Link>
           </div>
-        </>
+        </Fragment>
       ) : (
-        <></>
+        <Fragment>
+          <div
+            onClick={handleSignIn}
+            className="btn-panel btn-account-panel-position"
+          >
+            Sign in
+          </div>
+          <div className="sub-panel-title">
+            New customer?
+            <span onClick={handleSignUp} className="sub-panel-link">
+              Start here.
+            </span>
+          </div>
+        </Fragment>
       )}
 
       <div className="panel-account-service-wrapper">
@@ -32,20 +62,17 @@ const AccountSettingPanel = (props) => {
             E-Wallet
           </Link>
           <Link to="/merchant-registration" className="service-name">
-            Add a payment method
+            Payment method
           </Link>
           <Link to="/merchant-registration" className="service-name">
             Spending History
           </Link>
           <Link to="/merchant-registration" className="service-name">
-            Change Budget Limit
+            Budget Limit
           </Link>
         </div>
         <div className="account-services">
           <span className="account-service-title">Your Account</span>
-          <Link to="/merchant-registration" className="service-name">
-            Profile
-          </Link>
           <Link to="/merchant-registration" className="service-name">
             Order & Bills
           </Link>
@@ -59,12 +86,33 @@ const AccountSettingPanel = (props) => {
             Browsing History
           </Link>
           <Link to="/merchant-registration" className="service-name">
-            Watchlist
+            Change Password
           </Link>
         </div>
       </div>
+      {user.isUserAuthenticated ? (
+        <div
+          onClick={handleSignOut}
+          className="btn-panel btn-account-panel-position"
+        >
+          Sign Out
+        </div>
+      ) : (
+        <Fragment />
+      )}
     </div>
   );
 };
 
-export default AccountSettingPanel;
+AccountSettingPanel.propTypes = {
+  user: PropTypes.object.isRequired,
+  userSignOut: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  user: state.UserReducers,
+});
+
+export default withRouter(
+  connect(mapStateToProps, { userSignOut })(AccountSettingPanel)
+);

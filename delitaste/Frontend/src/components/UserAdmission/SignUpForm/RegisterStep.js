@@ -4,7 +4,6 @@ import Arrow from "../../../assets/arrow.png";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-
 function RegisterStep({ registerState }) {
   return (
     <Fragment>
@@ -38,6 +37,6 @@ RegisterStep.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  registerState: state.RegistrationReducers,
+  registerState: state.UserReducers,
 });
 export default connect(mapStateToProps)(RegisterStep);

@@ -5,6 +5,7 @@ import NavBar from "components/Commons/Layout/NavBar/NavBar";
 import ToolBar from "components/Commons/Layout/Toolbar/Toolbar";
 import MerchantBanner from "assets/merchant-form-banner.png";
 import Stepper from "components/Commons/Stepper/Stepper";
+
 const backgroundStyling = {
   background: `url(${MerchantBanner})`,
   backgroundPosition: "center",

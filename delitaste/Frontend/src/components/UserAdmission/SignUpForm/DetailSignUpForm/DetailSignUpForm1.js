@@ -18,7 +18,7 @@ import {
   updateRegistrationFormData,
   mapRegistrationForm,
   checkDuplicationAPI,
-} from "store/actions/UserAdmission/RegistrationActions";
+} from "store/actions/UserAdmission/UserActions";
 //components
 import FormError from "components/Commons/ErrorHandlers/FormError/FormError";
 

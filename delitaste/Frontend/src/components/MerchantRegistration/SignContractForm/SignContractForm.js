@@ -92,7 +92,7 @@ function SignContractForm(props) {
         <Footer />
         <ToolBar />
       </div>
-      <Spinner visibility={false} />
+      <Spinner visibility={true} />
     </>
   );
 }

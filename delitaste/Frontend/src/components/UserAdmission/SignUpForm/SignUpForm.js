@@ -39,7 +39,7 @@ SignUpForm.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  form: state.RegistrationReducers,
+  form: state.UserReducers,
   alert: state.UIAlertReducers,
 });
 

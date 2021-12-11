@@ -6,9 +6,7 @@ import store from "store";
 //components
 import RouteWithSubRoutes from "components/Commons/RouteWithSubRoutes";
 import { routes } from "config/routes";
-
 import DialogBox from "components/Commons/Overlay/DialogBox/DialogBox";
-
 const history = createBrowserHistory({ forceRefresh: true });
 
 function RootScreen(props) {

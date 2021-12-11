@@ -19,7 +19,7 @@ import {
   accountRegistrationAPI,
   sendEmailVerificationCodeAPI,
   checkEmailVerificationCodeAPI,
-} from "store/actions/UserAdmission/RegistrationActions";
+} from "store/actions/UserAdmission/UserActions";
 import { setDialogBox } from "store/actions/UIComponents/DialogBoxAction";
 
 function EmailVerification(props) {
@@ -202,7 +202,7 @@ EmailVerification.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  submittedFormData: state.RegistrationReducers,
+  submittedFormData: state.UserReducers,
 });
 export default connect(mapStateToProps, {
   mapRegistrationForm,

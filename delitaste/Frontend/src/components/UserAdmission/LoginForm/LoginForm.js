@@ -8,8 +8,8 @@ import { connect } from "react-redux";
 import Logo from "assets/logo.png";
 import FacebookLogo from "assets/Icon/facebook.png";
 import GoogleLogo from "assets/Icon/google.png";
-
 import { useTranslation } from "react-i18next";
+
 //icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -18,10 +18,11 @@ import {
   faEyeSlash,
   faEye,
 } from "@fortawesome/fontawesome-free-solid";
+
 //scss
 import "style/Common.scss";
 import "./LoginForm.scss";
-import { accountSignInAPI } from "store/actions/UserAdmission/AuthActions";
+import { accountSignInAPI } from "store/actions/UserAdmission/UserActions";
 import { setDialogBox } from "store/actions/UIComponents/DialogBoxAction";
 
 function LoginForm(props) {
@@ -36,7 +37,6 @@ function LoginForm(props) {
     email: "",
     password: "",
   });
-
   const handleSubmitForm = async () => {
     const { email, password } = userLoginInfo;
     if (!(email || password)) return;
@@ -50,7 +50,7 @@ function LoginForm(props) {
       )
     )
       formData["phone"] = userLoginInfo.email;
-    console.log(formData);
+
     const result = await props.accountSignInAPI(formData);
     if (result.state) {
       props.history.push("/");

@@ -14,7 +14,10 @@ import BusinessUnitForm from "components/MerchantRegistration/Forms/DetailMercha
 import ProductDetailForm from "components/MerchantRegistration/Forms/DetailMerchantForm/ProductDetailForm";
 import BankInfoForm from "components/MerchantRegistration/Forms/DetailMerchantForm/BankInfoForm";
 
+import withAuth from "components/HOC/withAuth";
+
 function MerchantFormScreen(props) {
+  /*
   useEffect(() => {
     if (!props.user.isUserAuthenticated) {
       props.setDialogBox(
@@ -43,6 +46,7 @@ function MerchantFormScreen(props) {
       behavior: "smooth",
     });
   }, []);
+  */
   const mapMerchantForm = () => {
     switch (props.match.params.form) {
       case "service-info":
@@ -74,11 +78,11 @@ MerchantFormScreen.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  user: state.RegistrationReducers,
+  user: state.UserReducers,
   merchant: state.MerchantRegistrationReducers,
 });
 export default withRouter(
   connect(mapStateToProps, {
     setDialogBox,
-  })(MerchantFormScreen)
+  })(withAuth(MerchantFormScreen))
 );

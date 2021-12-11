@@ -14,7 +14,7 @@ const NavFlyout = (props) => {
           margin: props.margin,
         }}
       >
-        {props.components}
+        {props.children}
       </div>
     </>
   );

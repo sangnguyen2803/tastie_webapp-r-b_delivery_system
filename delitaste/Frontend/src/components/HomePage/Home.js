@@ -1,12 +1,15 @@
+import { withRouter } from "react-router-dom";
+import withAuth from "components/HOC/withAuth";
+
 import NavBar from "../Commons/Layout/NavBar/NavBar";
 import Footer from "../Commons/Layout/Footer/Footer";
 import MainContent from "./MainContent/MainContent";
 import React, { Fragment } from "react";
 import ToolBar from "../Commons/Layout/Toolbar/Toolbar";
 import VoucherToolBar from "../Commons/Layout/Toolbar/VoucherToolbar";
-import "./Homepage.css";
+import "./Home.css";
 
-function Homepage(props) {
+function Home(props) {
   return (
     <Fragment>
       <NavBar />
@@ -20,4 +23,4 @@ function Homepage(props) {
   );
 }
 
-export default Homepage;
+export default withRouter(Home);

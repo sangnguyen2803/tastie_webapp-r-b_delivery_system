@@ -6,13 +6,19 @@ import {
   MAP_REGISTRATION_FORM,
   REGISTER_SUCCESS,
   REGISTER_FAIL,
+  LOGIN_SUCCESS,
+  LOGIN_FAIL,
   SET_ALERT_NOTIFICATION,
   REMOVE_ALERT_NOTIFICATION,
   CHECK_DUPLICATION_SUCCESS,
   SET_EMAIL_VERIFICATION_CODE,
   SET_EMAIL_VERIFICATION_STATUS,
+  GET_PROFILE_SUCCESS,
+  SET_LOADING,
+  SIGN_OUT
 } from "store/actions/types";
 
+//UPDATE UI
 export const updateStepStyling = (stepStyle) => (dispatch) => {
   dispatch({
     type: UPDATE_REGISTER_STEP_STYLING,
@@ -36,6 +42,21 @@ export const mapRegistrationForm = (form, msg) => (dispatch) => {
   });
 };
 
+export const setLoading = (state) => (dispatch) => {
+  dispatch({
+    type: SET_LOADING,
+    payload: { isLoading: state },
+  });
+};
+
+export const userSignOut = () => (dispatch) => {
+  dispatch({
+    type: SIGN_OUT,
+    payload: { isUserAuthenticated: false, profile: null, loginState: false },
+  });
+};
+
+//REGISTRATION API
 //form 1: When user clicks on "Sign Up" button -> call this api to check email & phone duplication
 export const checkDuplicationAPI = (email, phone) => async (dispatch) => {
   const config = {
@@ -175,5 +196,55 @@ export const checkEmailVerificationCodeAPI = (data) => async (dispatch) => {
     return res.data.status;
   } catch (err) {
     console.log(err);
+  }
+};
+
+export const getUserProfileAPI = (accessToken) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  const body = JSON.stringify({ accessToken: accessToken });
+  try {
+    const endpoint = "/v1/api/auth/get_profile";
+    const res = await axios.post(endpoint, body, config);
+    if (res.data) {
+      dispatch({
+        type: GET_PROFILE_SUCCESS,
+        payload: { profile: res.data.profile },
+      });
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const accountSignInAPI = (data) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  const body = JSON.stringify(data);
+  try {
+    const endpoint = "/v1/api/auth/sign-in";
+    const res = await axios.post(endpoint, body, config);
+    dispatch({
+      type: LOGIN_SUCCESS,
+      payload: res.data,
+    });
+    return {
+      state: res.data.loginState || "",
+      msg: res.data.loginState ? "" : res.data.err.message,
+    };
+  } catch (err) {
+    const errs = err.response.data.errors;
+    console.log(err);
+    dispatch({
+      type: LOGIN_FAIL,
+      payload: errs,
+    });
+    return false;
   }
 };

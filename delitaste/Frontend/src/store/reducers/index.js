@@ -1,9 +1,9 @@
 import { combineReducers } from "redux";
-import RegistrationReducers from "store/reducers/UserAdmission/RegistrationReducers";
+import UserReducers from "store/reducers/UserAdmission/UserReducers";
 import UIAlertReducers from "store/reducers/UIComponents/UIAlertReducers";
 import MerchantRegistrationReducers from "store/reducers/MerchantRegistration/MerchantRegistrationReducers";
 export default combineReducers({
-  RegistrationReducers,
+  UserReducers,
   MerchantRegistrationReducers,
   UIAlertReducers,
 });

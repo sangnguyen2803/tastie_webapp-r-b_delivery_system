@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-
+import ProfilePhoto from "assets/avatar.jpg";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import PropTypes from "prop-types";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -11,10 +11,8 @@ import {
   faCartArrowDown,
   faUser,
   faTimes,
-  faFileAlt,
 } from "@fortawesome/fontawesome-free-solid";
 
-import faShopify from "@fortawesome/react-fontawesome";
 import ENFlag from "assets/Flags/en_flag.png";
 import FRFlag from "assets/Flags/fr_flag.png";
 import VIFlag from "assets/Flags/vi_flag.png";
@@ -30,18 +28,18 @@ import Modal from "components/Commons/Overlay/Popup/Modal/Modal";
 import LanguageSettingPanel from "components/Commons/Overlay/Popup/Panel/LanguageSettingPanel";
 import AccountSettingPanel from "components/Commons/Overlay/Popup/Panel/AccountSettingPanel";
 import i18n from "i18n";
-import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 
 function MainNavBar({ user }) {
   const [accountPanel, setAccountPanel] = useState(false);
   const [languagePanel, setLanguagePanel] = useState(false);
   const [cartModal, setCartModal] = useState(false);
-  const [categoryList, setCategoryList] = useState(false);
+  const [mobileSidebar, setMobileSidebar] = useState(false);
   const flag = {
     en: [ENFlag, "EN"],
     fr: [FRFlag, "FR"],
     vi: [VIFlag, "VI"],
   };
+
   return (
     <>
       <div className="main-nav-menu-prefix">
@@ -54,7 +52,7 @@ function MainNavBar({ user }) {
             <div className="nav-menu-prefix-2">
               <div className="nav-category-item-2">
                 <FontAwesomeIcon
-                  onClick={() => setCategoryList((prev) => !prev)}
+                  onClick={() => setMobileSidebar((prev) => !prev)}
                   className="nav-icon-prefix-2"
                   icon={faBars}
                 />
@@ -83,19 +81,16 @@ function MainNavBar({ user }) {
                 <FontAwesomeIcon className="nav-sub-icon" icon={faCaretDown} />
               </div>
               {languagePanel ? (
-                <NavFlyout
-                  width={"300px"}
-                  height={"160px"}
-                  components={<LanguageSettingPanel />}
-                />
+                <NavFlyout width={"300px"} height={"160px"}>
+                  <LanguageSettingPanel />
+                </NavFlyout>
               ) : (
                 <></>
               )}
             </div>
           </div>
 
-          <Link
-            to="/sign-in"
+          <div
             className="nav-gadget-container"
             onMouseEnter={() => setAccountPanel((prev) => !prev)}
             onMouseLeave={() => setAccountPanel((prev) => !prev)}
@@ -104,17 +99,17 @@ function MainNavBar({ user }) {
               <FontAwesomeIcon className="nav-icon" icon={faUser} />
             </div>
             <div className="nav-gadget-text-wrapper">
-              <div className="nav-gadget-sub-text">
+              <div className="nav-gadget-sub-text-1">
                 Welcome,{" "}
                 {user.isUserAuthenticated && user.profile
-                  ? user.profile.last_name
+                  ? user.profile.first_name
                   : "Sign In"}
               </div>
               <div className="nav-gadget-main-text">Account & E-Wallet</div>
             </div>
             <div className="nav-end-gadget-text-wrapper">
               <div
-                className="nav-gadget-sub-text"
+                className="nav-gadget-sub-text-2"
                 style={{ visibility: "hidden" }}
               >
                 US
@@ -124,17 +119,18 @@ function MainNavBar({ user }) {
               </div>
               {accountPanel ? (
                 <NavFlyout
-                  width={"350px"}
-                  height={"250px"}
+                  width={"360px"}
+                  height={"auto"}
                   margin={"0 0 0 -320px"}
-                  components={<AccountSettingPanel />}
                   onMouseLeave={() => setLanguagePanel((prev) => !prev)}
-                />
+                >
+                  <AccountSettingPanel />
+                </NavFlyout>
               ) : (
                 <></>
               )}
             </div>
-          </Link>
+          </div>
           <a
             className="nav-cart-container"
             onClick={() => setCartModal((prev) => !prev)}
@@ -150,25 +146,45 @@ function MainNavBar({ user }) {
         </div>
       </div>
 
-      {categoryList ? (
+      {mobileSidebar ? (
         <>
           <div className="darken-mask-mobile"></div>
           <div className="sidebar-container">
-            <FontAwesomeIcon
-              className="side-bar-close-icon"
-              onClick={() => setCategoryList(false)}
-              icon={faTimes}
-            />
+            <div className="sidebar-head-mobile">
+              <FontAwesomeIcon
+                className="side-bar-close-icon"
+                onClick={() => setMobileSidebar(false)}
+                icon={faTimes}
+              />
+              <div className="profile-container-mobile">
+                <img
+                  src={ProfilePhoto}
+                  className="profile-photo-preview-mobile"
+                />
+                <span className="profile-name-mobile">
+                  {user.profile
+                    ? `${user.profile.first_name} ${user.profile.last_name}`
+                    : ""}
+                </span>
+              </div>
+            </div>
             <div className="side-bar-feature-container">
               <div className="category-feature-wrapper">
-                <div className="nav-text">Profile</div>
-              </div>
-              <div className="category-feature-wrapper">
-                <div className="nav-text">Give feedbacks</div>
+                <div className="nav-text">Edit Profile</div>
               </div>
               <div className="category-feature-wrapper">
                 <div className="nav-text">Merchant Dashboard</div>
               </div>
+              <div className="category-feature-wrapper">
+                <div className="nav-text">Merchant Registration</div>
+              </div>
+              <div className="category-feature-wrapper">
+                <div className="nav-text">Cart Detail</div>
+              </div>
+              <div className="category-feature-wrapper">
+                <div className="nav-text">Give feedbacks</div>
+              </div>
+
               <div className="category-feature-wrapper">
                 <div className="nav-text">Change Password</div>
               </div>
@@ -197,7 +213,7 @@ MainNavBar.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  user: state.RegistrationReducers,
+  user: state.UserReducers,
 });
 
 export default withRouter(connect(mapStateToProps, null)(MainNavBar));

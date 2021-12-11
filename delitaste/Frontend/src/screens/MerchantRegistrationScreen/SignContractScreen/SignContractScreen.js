@@ -1,6 +1,7 @@
 import React from "react";
 import { Fragment } from "react";
 import { withRouter } from "react-router-dom";
+import withAuth from "components/HOC/withAuth";
 import SignContractForm from "components/MerchantRegistration/SignContractForm/SignContractForm";
 
 function SignContractScreen(props) {
@@ -11,4 +12,4 @@ function SignContractScreen(props) {
   );
 }
 
-export default withRouter(SignContractScreen);
+export default withRouter(withAuth(SignContractScreen));
