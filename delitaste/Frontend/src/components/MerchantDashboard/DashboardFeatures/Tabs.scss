@@ -1,5 +1,8 @@
 .tab-bar-container {
-  width: calc(100% - 254px);
+  width: calc(100% - 252px);
+  -webkit-box-shadow: 0 8px 6px -6px rgb(214, 214, 214);
+  -moz-box-shadow: 0 8px 6px -6px rgb(201, 201, 201);
+  box-shadow: 0 8px 6px -6px rgb(219, 219, 219);
   height: 45px;
   display: flex;
   flex-direction: row;
@@ -9,7 +12,7 @@
   border-left: 2px solid #eeeeee;
   border-right: 2px solid #eeeeee;
   border-bottom: 3px solid #eeeeee;
-  position: fixed;
+
   background-color: white;
   .tab-box {
     user-select: none;

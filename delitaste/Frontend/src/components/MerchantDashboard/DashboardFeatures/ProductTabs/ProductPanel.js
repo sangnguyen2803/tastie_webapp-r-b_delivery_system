@@ -1,6 +1,7 @@
 import { Fragment, useEffect, useState } from "react";
 import { Redirect, useSearchParams } from "react-router-dom";
-import ProductList from "components/MerchantDashboard/DashboardFeatures/ProductTabs/ProductList";
+import ProductOverview from "components/MerchantDashboard/DashboardFeatures/ProductTabs/ProductOverview";
+import ProductDetail from "components/MerchantDashboard/DashboardFeatures/ProductTabs/ProductDetail";
 import "../Panel.scss";
 import Tabs from "components/MerchantDashboard/DashboardFeatures/Tabs";
 import { faTags } from "@fortawesome/fontawesome-free-solid";
@@ -21,7 +22,9 @@ function ProductPanel(props) {
   const mappingTab = () => {
     switch (currentTab) {
       case 0:
-        return <ProductList />;
+        return <ProductOverview />;
+      case 1:
+        return <ProductDetail />;
       default:
         return <h1>No project match</h1>;
     }
@@ -35,6 +38,7 @@ function ProductPanel(props) {
               tabs={TabList.tab1}
               current={currentTab}
               selectItem={handleSelectTab}
+              fixed={true}
             />
             {mappingTab()}
           </div>

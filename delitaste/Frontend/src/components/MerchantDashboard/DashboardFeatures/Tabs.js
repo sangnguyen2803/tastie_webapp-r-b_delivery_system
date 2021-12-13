@@ -1,12 +1,25 @@
 import { Fragment, useEffect } from "react";
 import { Redirect, useSearchParams } from "react-router-dom";
-import ProductList from "components/MerchantDashboard/DashboardFeatures/ProductTabs/ProductList";
+import ProductList from "components/MerchantDashboard/DashboardFeatures/ProductTabs/ProductOverview";
 import "./Tabs.scss";
 
-function Tabs({ tabs, current, selectItem }) {
+function Tabs({
+  tabs,
+  current,
+  selectItem,
+  fixed,
+  borderTop,
+  secondaryTabGroup,
+  children,
+}) {
+  const tabStyling = {
+    position: fixed ? "fixed" : "unset",
+    border: borderTop ? "3px solid #eeeeee" : "none",
+    width: secondaryTabGroup ? "calc(100% - 6px)" : "calc(100% - 252px);",
+  };
   return (
     <Fragment>
-      <div className="tab-bar-container">
+      <div className="tab-bar-container" style={tabStyling}>
         {tabs?.map((tab) => (
           <div
             key={tab.id}
@@ -24,6 +37,7 @@ function Tabs({ tabs, current, selectItem }) {
             <span className="tab-item">{tab.name}</span>
           </div>
         ))}
+        {children}
       </div>
     </Fragment>
   );
