@@ -2,7 +2,7 @@ import "./MerchantDashboard.scss";
 import NavBar from "components/Commons/Layout/NavBar/NavBar";
 import Sidebar from "components/MerchantDashboard/Sidebar/Sidebar";
 import { useEffect } from "react";
-import { withRouter, Switch, Route } from "react-router-dom";
+import { withRouter, Switch, Route, Redirect } from "react-router-dom";
 import MerchantBanner from "assets/merchant-form-banner.png";
 import ProductPanel from "components/MerchantDashboard/DashboardFeatures/ProductTabs/ProductPanel";
 
@@ -24,6 +24,16 @@ function MerchantDashboard(props) {
         </div>
         <div className="dashboard-panel">
           <Switch>
+            <Route exact path={`${match.path}`}>
+              <Redirect to={`${match.path}/product/my-product`} />
+            </Route>
+            <Route
+              exact
+              path={`${match.path}/product`}
+              component={ProductPanel}
+            >
+              <Redirect to={`${match.path}/product/my-product`} />
+            </Route>
             <Route
               exact
               path={`${match.path}/product/:name`}

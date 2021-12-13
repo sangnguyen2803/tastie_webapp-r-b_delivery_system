@@ -18,6 +18,14 @@ function ProductPanel(props) {
   const handleSelectTab = (value) => {
     setCurrentTab(value);
   };
+  const mappingTab = () => {
+    switch (currentTab) {
+      case 0:
+        return <ProductList />;
+      default:
+        return <h1>No project match</h1>;
+    }
+  };
   switch (props.match.params.name) {
     case "my-product":
       return (
@@ -28,7 +36,7 @@ function ProductPanel(props) {
               current={currentTab}
               selectItem={handleSelectTab}
             />
-            <ProductList current={currentTab} />
+            {mappingTab()}
           </div>
         </Fragment>
       );

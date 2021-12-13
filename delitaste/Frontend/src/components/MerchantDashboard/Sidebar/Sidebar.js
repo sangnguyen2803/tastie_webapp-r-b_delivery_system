@@ -35,10 +35,7 @@ const sidebarFeatures = [
     id: 2,
     icon: faUtensils,
     title: "Products",
-    subFeatures: [
-      { id: 1, title: "My Products", link: "product/my-product" },
-      { id: 2, title: "Product Details", link: "product/product-detail" },
-    ],
+    subFeatures: [{ id: 1, title: "My Products", link: "product/my-product" }],
   },
   {
     id: 3,

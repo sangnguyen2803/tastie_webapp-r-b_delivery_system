@@ -110,7 +110,8 @@ $logoColor: #aa0033;
 
 @media all and (max-width: 767px) {
   .sb-feature-text,
-  .sb-dropdown-icon {
+  .sb-dropdown-icon,
+  .sb-sub-feature-row {
     display: none !important;
   }
 
@@ -118,6 +119,7 @@ $logoColor: #aa0033;
     width: 50px;
     background-color: #490000;
   }
+
   .sb-feature-row {
     line-height: 60px !important;
     width: inherit;

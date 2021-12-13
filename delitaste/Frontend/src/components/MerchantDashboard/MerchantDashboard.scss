@@ -20,3 +20,12 @@
     background-color: #f3f3f3;
   }
 }
+
+@media all and (max-width: 767px) {
+  .dashboard-side-bar {
+    width: 50px !important;
+  }
+  .dashboard-panel {
+    width: calc(100% - 50px) !important;
+  }
+}

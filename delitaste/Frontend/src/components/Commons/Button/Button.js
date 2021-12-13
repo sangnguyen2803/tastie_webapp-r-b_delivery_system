@@ -12,8 +12,12 @@ const Button = ({
   prefix,
   surfix,
   label,
+  left,
+  right,
 }) => {
   const buttonStyling = {
+    marginLeft: `${left}px` || "10px",
+    marginRight: `${right}px` || "10px",
     display: "flex",
     flexDirection: "row",
     flexWrap: "nowrap",

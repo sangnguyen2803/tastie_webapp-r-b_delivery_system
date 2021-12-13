@@ -1,5 +1,5 @@
 .tab-bar-container {
-  width: 100%;
+  width: calc(100% - 254px);
   height: 45px;
   display: flex;
   flex-direction: row;
@@ -9,7 +9,6 @@
   border-left: 2px solid #eeeeee;
   border-right: 2px solid #eeeeee;
   border-bottom: 3px solid #eeeeee;
-  padding-left: 2%;
   position: fixed;
   background-color: white;
   .tab-box {
@@ -29,5 +28,11 @@
     &:hover {
       cursor: pointer;
     }
+  }
+}
+
+@media all and (max-width: 767px) {
+  .tab-bar-container {
+    width: calc(100% - 54px);
   }
 }
