@@ -20,7 +20,7 @@ function UserRegistration(props) {
   return (
     <Fragment>
       <div
-        className="login-container"
+        className="login-container navbar-state"
         style={{
           background: `url(${Banner}) no-repeat center center fixed`,
           backgroundPosition: "center",
@@ -28,7 +28,7 @@ function UserRegistration(props) {
           backgroundSize: "cover",
         }}
       >
-        <NavBar />
+        <NavBar fixed={true} />
         <div className="login-wrapper">
           <div className="brand-banner">
             <div className="slide-show-wrapper">

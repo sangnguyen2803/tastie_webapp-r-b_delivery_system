@@ -15,7 +15,7 @@ import {
   SET_EMAIL_VERIFICATION_STATUS,
   GET_PROFILE_SUCCESS,
   SET_LOADING,
-  SIGN_OUT
+  SIGN_OUT,
 } from "store/actions/types";
 
 //UPDATE UI
@@ -154,9 +154,9 @@ export const sendEmailVerificationCodeAPI = (email) => async (dispatch) => {
     email,
   });
   try {
-    console.log("hello bạn");
     const endpoint = "/v1/api/auth/send-code-with-email";
     const res = await axios.post(endpoint, body, config);
+
     dispatch({
       type: SET_EMAIL_VERIFICATION_CODE,
       payload: res.data,

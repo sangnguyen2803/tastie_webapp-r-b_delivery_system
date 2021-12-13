@@ -5,7 +5,7 @@ import {
 import {} from "store/actions/types";
 
 const initialState = {
-  isMerchantAuthenticated: true,
+  isMerchantAuthenticated: false,
   isSubmitted: false,
   currentForm: 0,
 };

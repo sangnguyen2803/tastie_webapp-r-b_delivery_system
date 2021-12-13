@@ -32,8 +32,8 @@ function SignContractForm(props) {
   };
   return (
     <>
-      <div className="sign-contract-form">
-        <NavBar hideBreadcrumb={false} />
+      <div className="sign-contract-form navbar-state">
+        <NavBar hideBreadcrumb={false} fixed={true} />
         <div
           className="sign-contract-form-containter"
           style={backgroundStyling}

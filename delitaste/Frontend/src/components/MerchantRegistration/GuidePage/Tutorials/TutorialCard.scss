@@ -22,7 +22,6 @@
   width: 100%;
   background: rgb(241, 241, 241);
   transition: transform 0.2s;
-  cursor: pointer;
 }
 .card-content:hover {
   transform: scale(1.01);
@@ -31,14 +30,15 @@
   width: inherit;
   padding-top: 5%;
   padding-bottom: 5%;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 600;
   text-align: center;
   letter-spacing: 0.03rem;
   color: rgb(37, 37, 37);
 }
 .card-description {
-  font-size: 16px;
+  width: 80%;
+  font-size: 14px;
 }
 .card-image {
   height: 80px;
@@ -51,20 +51,26 @@
     font-size: 12px;
   }
   .card-image {
-    height: 30px;
+    padding-top: 5px;
+    height: 60px;
+    margin: 0% 0%;
   }
   .card-title {
+    padding-top: 1px;
+    padding-bottom: 1px;
     font-size: 12px;
   }
   .card-content {
-    margin-top: 25%;
-    height: 210px !important;
+    width: 100%;
+    margin-top: 5px;
+    height: 180px !important;
     transform: scale(1);
     padding-left: 5%;
     padding-right: 5%;
-    background: rgb(212, 212, 212);
+    background: rgb(255, 255, 255);
+    border: 3px solid rgb(255, 108, 82) !important;
   }
   .tutorial-card-container {
-    width: 30% !important;
+    width: 45% !important;
   }
 }

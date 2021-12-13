@@ -1,6 +1,8 @@
 import React from "react";
 import { Fragment } from "react";
 import { withRouter } from "react-router-dom";
+import "style/Common.scss";
+
 //css
 import "components/UserAdmission/UserAdmission.scss";
 //components
@@ -21,7 +23,7 @@ function UserSignIn(props) {
   return (
     <Fragment>
       <div
-        className="login-container"
+        className="login-container navbar-state"
         style={{
           background: `url(${Banner}) no-repeat center center fixed`,
           backgroundPosition: "center",
@@ -29,7 +31,7 @@ function UserSignIn(props) {
           backgroundSize: "cover",
         }}
       >
-        <NavBar />
+        <NavBar fixed={true} />
         <div className="login-wrapper">
           <div className="brand-banner">
             <div className="slide-show-wrapper">

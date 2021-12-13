@@ -1,29 +1,17 @@
 import React, { Fragment } from "react";
 import { useState, useEffect } from "react";
-
 import { connect } from "react-redux";
 import { Switch, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
-import RouteWithSubRoutes from "components/Commons/RouteWithSubRoutes";
 import { setDialogBox } from "store/actions/UIComponents/DialogBoxAction";
-import { Route } from "react-router-dom";
-import withAuth from "components/HOC/withAuth";
-import { routes } from "config/routes";
-import LoginForm from "components/UserAdmission/LoginForm/LoginForm";
-import NavBar from "components/Commons/Layout/NavBar/NavBar";
+import withAuth from "components/HigherOrderComponents(HOC)/withAuth";
+//components
+import MerchantDashboard from "components/MerchantDashboard/MerchantDashboard";
 
 function MerchantDashboardScreen(props) {
-  useEffect(() => console.log(props));
-  const { match, routes } = props;
-
   return (
     <Fragment>
-      hello
-      <Switch>
-        {routes.map((route, i) => (
-          <RouteWithSubRoutes key={i} {...route} />
-        ))}
-      </Switch>
+      <MerchantDashboard />
     </Fragment>
   );
 }

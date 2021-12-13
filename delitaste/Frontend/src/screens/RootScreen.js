@@ -6,7 +6,19 @@ import store from "store";
 //components
 import RouteWithSubRoutes from "components/Commons/RouteWithSubRoutes";
 import { routes } from "config/routes";
+
+import HomeScreen from "./HomeScreen/HomeScreen";
+import UserSignInScreen from "./UserAdmissionScreen/UserSignInScreen";
+import UserRegistrationScreen from "./UserAdmissionScreen/UserRegistrationScreen";
+import MerchantRegistrationScreen from "./MerchantRegistrationScreen/MerchantRegistrationScreen";
+import SignContractScreen from "./MerchantRegistrationScreen/SignContractScreen/SignContractScreen";
+import MerchantFormScreen from "./MerchantRegistrationScreen/MerchantFormScreen";
+
+import ServiceInfoForm from "components/MerchantRegistration/Forms/DetailMerchantForm/ServiceInfoForm";
+
 import DialogBox from "components/Commons/Overlay/DialogBox/DialogBox";
+import MerchantDashboardScreen from "./MerchantDashboardScreen/MerchantDashboardScreen";
+
 const history = createBrowserHistory({ forceRefresh: true });
 
 function RootScreen(props) {
@@ -14,11 +26,53 @@ function RootScreen(props) {
     <Fragment>
       <Provider store={store}>
         <Router history={history}>
-          <Switch>
-            {routes.map((route, i) => (
-              <RouteWithSubRoutes key={i} {...route} />
-            ))}
-          </Switch>
+          <Route exact path="/" component={HomeScreen} />
+          <Route exact path="/home" component={HomeScreen} />
+          <Route exact path="/sign-up" component={UserRegistrationScreen} />
+          <Route exact path="/sign-in" component={UserSignInScreen} />
+          <Route
+            exact
+            path="/merchant-registration"
+            component={MerchantRegistrationScreen}
+          />
+          <Route
+            exact
+            path="/merchant-registration/sign-contract"
+            component={SignContractScreen}
+          />
+          <Route path="/merchant-registration" component={MerchantFormScreen} />
+          <Route
+            path="/merchant-dashboard"
+            component={MerchantDashboardScreen}
+          />
+
+          <Route exact path="/:lang(en|vi)/" component={HomeScreen} />
+          <Route exact path="/:lang(en|vi)/home" component={HomeScreen} />
+          <Route
+            exact
+            path="/:lang(en|vi)/sign-in"
+            component={UserSignInScreen}
+          />
+          <Route
+            exact
+            path="/:lang(en|vi)/sign-up"
+            component={UserRegistrationScreen}
+          />
+          <Route
+            exact
+            path="/:lang(en|vi)/merchant-registration"
+            component={MerchantRegistrationScreen}
+          />
+          <Route
+            exact
+            path="/:lang(en|vi)/merchant-registration/:form"
+            component={MerchantFormScreen}
+          />
+          <Route
+            exact
+            path="/:lang(en|vi)/merchant-registration/sign-contract"
+            component={SignContractScreen}
+          />
         </Router>
         <DialogBox />
       </Provider>

@@ -15,8 +15,8 @@ const backgroundStyling = {
 
 function MerchantForm({ children }) {
   return (
-    <div className="merchant-registration-page">
-      <NavBar hideBreadcrumb={false} />
+    <div className="merchant-registration-page navbar-state">
+      <NavBar hideBreadcrumb={false} fixed={true} />
       <div
         className="merchant-registration-form-container"
         style={backgroundStyling}

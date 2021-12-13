@@ -1,0 +1,141 @@
+$logoColor: #aa0033;
+@mixin FlexCol($width, $flexWrap) {
+  width: $width;
+  display: flex;
+  flex-wrap: $flexWrap;
+  flex-direction: column;
+}
+@mixin FlexRow($width, $flexWrap) {
+  width: $width;
+  display: flex;
+  flex-wrap: $flexWrap;
+  flex-direction: row;
+}
+.sb-wrapper {
+  z-index: 1;
+  position: fixed;
+  background-color: #ffffff;
+  color: rgb(255, 255, 255);
+  left: 0;
+  width: inherit;
+  height: 100%;
+  .sb-head-wrapper {
+    @include FlexRow(100%, nowrap);
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 20px;
+    padding-bottom: 50px;
+    .brand-logo-image-login {
+      height: 55px;
+    }
+    .login-form-title {
+      font-family: "Patua One", cursive;
+      font-size: 25px;
+      margin: 25px 0 0 -10px;
+      color: $logoColor;
+    }
+  }
+  .sb-sub-feature-row {
+    user-select: none;
+    color: rgb(56, 56, 56);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    width: 100%;
+    line-height: 30px;
+    text-decoration: none;
+    padding-left: 64px;
+    box-sizing: border-box;
+    transition: 0.1s;
+    transition-property: background;
+    font-size: 13px;
+    cursor: pointer;
+    &:hover {
+      background-color: rgb(235, 235, 235);
+      color: rgb(136, 0, 0);
+      font-weight: bold;
+      .sb-icon {
+        color: rgb(153, 36, 0);
+      }
+      .sb-dropdown-icon {
+        color: rgb(153, 36, 0);
+      }
+    }
+  }
+  .sb-feature-row {
+    user-select: none;
+    color: rgb(56, 56, 56);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    width: 100%;
+    line-height: 40px;
+    text-decoration: none;
+    padding-left: 20px;
+    box-sizing: border-box;
+    transition: 0.1s;
+    transition-property: background;
+    font-size: 13px;
+    font-weight: bold;
+    &:hover {
+      background-color: rgb(230, 230, 230);
+      color: rgb(0, 0, 0);
+
+      .sb-icon {
+        color: rgb(153, 36, 0);
+      }
+      .sb-dropdown-icon {
+        color: rgb(153, 36, 0);
+      }
+    }
+    .sb-icon {
+      color: rgb(75, 17, 0);
+      width: 10%;
+      font-size: 20px;
+      padding-right: 15px;
+    }
+    .sb-feature-text {
+      width: 70%;
+    }
+    .sb-dropdown-icon {
+      width: 10%;
+      font-size: 16px;
+    }
+  }
+}
+
+//responsive-design
+
+@media all and (max-width: 767px) {
+  .sb-feature-text,
+  .sb-dropdown-icon {
+    display: none !important;
+  }
+
+  .sb-wrapper {
+    width: 50px;
+    background-color: #490000;
+  }
+  .sb-feature-row {
+    line-height: 60px !important;
+    width: inherit;
+    height: 50px;
+    font-size: 50px !important;
+    padding-left: 0 !important;
+    &:hover {
+      background-color: rgb(129, 35, 35) !important;
+      color: rgb(0, 0, 0);
+    }
+    cursor: pointer;
+  }
+  .sb-icon {
+    color: white !important;
+    width: 100% !important;
+    padding: 0 !important;
+  }
+}
+
+@media only screen and (max-width: 1200px) and (min-width: 767px) {
+}

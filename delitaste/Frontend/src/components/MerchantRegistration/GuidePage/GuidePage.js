@@ -8,8 +8,8 @@ import ToolBar from "components/Commons/Layout/Toolbar/Toolbar";
 function GuidePage() {
   return (
     <>
-      <div className="guide-page">
-        <NavBar />
+      <div className="guide-page navbar-state">
+        <NavBar fixed={true} />
         <div className="guide-page-containter">
           <GuideBanner />
           <Tutorial />

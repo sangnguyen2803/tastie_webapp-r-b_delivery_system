@@ -1,20 +1,16 @@
 .navbars-wrapper {
-  position: fixed; /* Set the navbar to fixed position */
-  top: 0; /* Position the navbar at the top of the page */
-  width: 100%;
   z-index: 1;
+  top: 0;
+  width: 100%; /* Full width */ /* Set the navbar to fixed position */
+  /* Position the navbar at the top of the page */
   background-color: #333; /* Set the navbar to fixed position */ /* Position the navbar at the top of the page */
-  width: 100%; /* Full width */
-  box-shadow: rgba(0, 0, 0, 0.2) 0px 12px 28px 0px,
-    rgba(0, 0, 0, 0.1) 0px 2px 4px 0px,
-    rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset;
 }
 a {
   text-decoration: none;
 }
 .darken-mask {
   z-index: 100;
-  width: 100wv;
+  width: 100vw;
   height: 1766px;
   display: block;
   opacity: 0.6;

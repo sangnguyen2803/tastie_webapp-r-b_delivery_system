@@ -5,6 +5,31 @@ $logoColor: #aa0033;
 $formTextColor: #2e2e2e;
 $panelButtonColor: black;
 $boxBorderRadius: 5px;
+$mobile-width: 767px;
+$tablet-width: 980px;
+$desktop-width: 1200px;
+
+@mixin mobile {
+  @media (max-width: #{$mobile-width - 1px}) {
+    @content;
+  }
+}
+@mixin tablet {
+  @media (min-width: #{$tablet-width}) and (max-width: #{$desktop-width - 1px}) {
+    @content;
+  }
+}
+@mixin desktop {
+  @media (min-width: #{$desktop-width}) {
+    @content;
+  }
+}
+.navbar-state {
+  margin-top: 90px;
+  @include mobile {
+    margin-top: 55px !important;
+  }
+}
 
 @mixin FlexCol($width, $flexWrap) {
   width: $width;

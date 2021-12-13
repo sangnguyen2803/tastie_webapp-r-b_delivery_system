@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 import { useState, useEffect } from "react";
 
 import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
+import { Route, withRouter, Switch } from "react-router-dom";
 import PropTypes from "prop-types";
 
 import { setDialogBox } from "store/actions/UIComponents/DialogBoxAction";
@@ -14,7 +14,7 @@ import BusinessUnitForm from "components/MerchantRegistration/Forms/DetailMercha
 import ProductDetailForm from "components/MerchantRegistration/Forms/DetailMerchantForm/ProductDetailForm";
 import BankInfoForm from "components/MerchantRegistration/Forms/DetailMerchantForm/BankInfoForm";
 
-import withAuth from "components/HOC/withAuth";
+import withAuth from "components/HigherOrderComponents(HOC)/withAuth";
 
 function MerchantFormScreen(props) {
   /*
@@ -47,27 +47,55 @@ function MerchantFormScreen(props) {
     });
   }, []);
   */
+ /*
   const mapMerchantForm = () => {
-    switch (props.match.params.form) {
+    switch (match.path) {
       case "service-info":
         return <ServiceInfoForm />;
-      case "representative-info":
+      case "/:id/representative-info":
         return <RegisteredRepresentativeForm />;
-      case "business-unit-info":
+      case "/:id/business-unit-info":
         return <BusinessUnitForm />;
-      case "product-info":
+      case "/:id/product-info":
         return <ProductDetailForm />;
-      case "bank-info":
+      case "/:id/bank-info":
         return <BankInfoForm />;
-      case "four":
-        return <ComponentD />;
       default:
         return <h1>No project match</h1>;
     }
-  };
+  };*/
+  const { match } = props;
   return (
     <Fragment>
-      <MerchantForm>{mapMerchantForm()}</MerchantForm>
+      <MerchantForm>
+        <Switch>
+          <Route
+            exact
+            path={`${match.path}/service`}
+            component={ServiceInfoForm}
+          />
+          <Route
+            exact
+            path={`${match.path}/:id/representative`}
+            component={RegisteredRepresentativeForm}
+          />
+          <Route
+            exact
+            path={`${match.path}/:id/business-unit`}
+            component={BusinessUnitForm}
+          />
+          <Route
+            exact
+            path={`${match.path}/:id/merchandise`}
+            component={ServiceInfoForm}
+          />
+          <Route
+            exact
+            path={`${match.path}/:id/bank`}
+            component={BankInfoForm}
+          />
+        </Switch>
+      </MerchantForm>
     </Fragment>
   );
 }
@@ -86,3 +114,23 @@ export default withRouter(
     setDialogBox,
   })(withAuth(MerchantFormScreen))
 );
+
+/*
+        <Switch>
+          <Route
+            exact
+            path={`${match.path}/service`}
+            component={ServiceInfoForm}
+          />
+          <Route
+            exact
+            path={`${match.path}/representative`}
+            component={RegisteredRepresentativeForm}
+          />
+          <Route
+            exact
+            path={`${match.path}/business-unit`}
+            component={RegisteredRepresentativeForm}
+          />
+        </Switch>
+        */

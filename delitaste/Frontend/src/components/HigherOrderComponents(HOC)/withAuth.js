@@ -16,7 +16,6 @@ export default function (WrappedComponent) {
         isLoader: true,
       };
     }
-
     async componentDidMount() {
       window.scrollTo({
         top: 0,
@@ -39,7 +38,6 @@ export default function (WrappedComponent) {
         return;
       }
     }
-
     render() {
       return (
         <WrappedComponent isLoader={this.state.isLoader} {...this.props} />

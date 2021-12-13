@@ -76,14 +76,14 @@ const AccountSettingPanel = ({ user, userSignOut, history }) => {
           <Link to="/merchant-registration" className="service-name">
             Order & Bills
           </Link>
-          <Link to="/merchant-registration" className="service-name">
-            E-Coupons & Vouchers
+          <Link to="/merchant-dashboard" className="service-name">
+            Merchant Dashboard
           </Link>
           <Link to="/merchant-registration" className="service-name">
             Merchant Registration
           </Link>
           <Link to="/merchant-registration" className="service-name">
-            Browsing History
+            E-Coupons & Vouchers
           </Link>
           <Link to="/merchant-registration" className="service-name">
             Change Password
