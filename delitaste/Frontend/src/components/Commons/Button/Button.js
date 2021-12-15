@@ -14,6 +14,8 @@ const Button = ({
   label,
   left,
   right,
+  bglight,
+  border,
 }) => {
   const buttonStyling = {
     marginLeft: `${left}px` || "10px",
@@ -26,8 +28,11 @@ const Button = ({
     width: width || "80px",
     height: height || "30px",
     borderRadius: radius || "2px",
-    backgroundColor: bgColor || (type === "primary" ? "#940000" : "#666666"),
+    backgroundColor:
+      bgColor ||
+      (type === "primary" ? "#940000" : bglight ? "#F5F5F5" : "#666666"),
     cursor: "pointer",
+    border: border || "none",
   };
   const buttonTextStyling = {
     color: color || "white",

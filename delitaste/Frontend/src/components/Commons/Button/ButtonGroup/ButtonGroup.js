@@ -18,12 +18,13 @@ const ButtonGroup = ({
     flexDirection: direction || "row",
     flexWrap: wrap || "nowrap",
     marginTop: `${mgTop}px` || "5px",
-    marginButton: `${mgBottom}px` || "5px",
+    marginBottom: `${mgBottom}px` || "5px",
     marginRight: `${mgRight}px` || "",
     marginLeft: `${mgLeft}px` || "",
     justifyContent: float || "flex-start",
     height: "auto",
     gap: `${gap}px` || "5px",
+    alignItems: "center",
   };
   return (
     <Fragment>

@@ -1,0 +1,103 @@
+.product-handler-container {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  flex: 1;
+  width: 100%;
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  &::-webkit-scrollbar-button:start:decrement {
+    display: block;
+    height: 10px;
+  }
+  &::-webkit-scrollbar-button:end:increment {
+    display: block;
+    height: 10px;
+  }
+
+  &::-webkit-scrollbar-button:vertical:increment {
+    background-color: #fff;
+  }
+
+  &::-webkit-scrollbar-track-piece {
+    background-color: #eee;
+    -webkit-border-radius: 3px;
+  }
+
+  &::-webkit-scrollbar-thumb:vertical {
+    height: 50px;
+    background-color: #ccc;
+    -webkit-border-radius: 3px;
+  }
+
+  &::-webkit-scrollbar-thumb:horizontal {
+    width: 50px;
+    background-color: #ccc;
+    -webkit-border-radius: 3px;
+  }
+}
+.panel-detail-title {
+  width: 100%;
+}
+
+.product-detail-form-label {
+  font-size: 13px;
+}
+.form-label-description {
+  font-size: 13px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 90%;
+  .letter-counter {
+    font-size: 12px;
+    color: rgb(124, 124, 124);
+  }
+}
+.product-detail-form-input-wrapper {
+  width: 90%;
+
+  input {
+    height: 25px;
+    width: 100%;
+    font-size: 13px;
+    text-indent: 20px;
+    margin-bottom: 10px;
+  }
+  .product-detail-textarea {
+    font-family: "Poppins", sans-serif;
+    text-indent: 20px;
+    width: 100%;
+    resize: none;
+    font-size: 13px;
+    height: 120px;
+  }
+}
+
+.product-detail-tag-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 90%;
+}
+.button-icon {
+  color: rgb(0, 0, 0);
+}
+
+.product-detail-form-with-select {
+  display: flex;
+  width: 90%;
+  flex-direction: row;
+  .select-currency {
+    width: 30%;
+    height: 35px;
+    border-left: none !important;
+    font-family: "Poppins", sans-serif !important;
+  }
+  .input-price {
+    width: 70%;
+    font-family: "Poppins", sans-serif !important;
+  }
+}

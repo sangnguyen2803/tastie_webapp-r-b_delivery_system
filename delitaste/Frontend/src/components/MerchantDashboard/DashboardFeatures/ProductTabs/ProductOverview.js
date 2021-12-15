@@ -213,14 +213,14 @@ function ProductOverview(props) {
               <table className="table table-wrapper">
                 <thead className="table-head">
                   <tr>
-                    <th colspan="3" style={{ width: "20%" }}>
+                    <th colSpan="3" style={{ width: "20%" }}>
                       Products (Dishes)
                       <FontAwesomeIcon
                         icon={faSort}
                         className="table-sort-icon"
                       />
                     </th>
-                    <th class="field-hidden" style={{ width: "10%" }}>
+                    <th className="field-hidden" style={{ width: "10%" }}>
                       Description
                     </th>
                     <th style={{ width: "7.5%" }}>
@@ -274,7 +274,7 @@ function ProductOverview(props) {
                               <td className="product-name">
                                 {product.name || "—"}
                               </td>
-                              <td class="field-hidden">
+                              <td className="field-hidden">
                                 {product.description || "—"}
                               </td>
                               <td>{product.category || "—"}</td>
