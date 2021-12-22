@@ -184,7 +184,7 @@ function DetailSignUpForm2(props) {
               defaultValue="Viet Nam"
               className="sign-up-detail-address form-text-field"
             >
-              <option value="" selected disabled hidden>
+              <option value="" disabled hidden>
                 Select a country...
               </option>
               <option>Việt Nam</option>
@@ -202,7 +202,7 @@ function DetailSignUpForm2(props) {
               }}
               className="sign-up-detail-address form-text-field"
             >
-              <option value="" selected disabled hidden>
+              <option value="" disabled hidden>
                 Select a city...
               </option>
               {cities.map((city) => (
@@ -224,7 +224,7 @@ function DetailSignUpForm2(props) {
               }
               className="sign-up-detail-address form-text-field"
             >
-              <option value="" selected disabled hidden>
+              <option value="" disabled hidden>
                 Select a district...
               </option>
               {districts

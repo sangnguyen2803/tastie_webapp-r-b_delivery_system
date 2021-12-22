@@ -30,7 +30,7 @@ const Stepper = (props) => {
     <>
       <div className="stepper-container">
         {steps.map((step, index) => (
-          <div className="stepper-wrapper">
+          <div className="stepper-wrapper" key={index}>
             <div className={step.styling}>{index + 1}</div>
             <span className="stepper-description">{step.description}</span>
           </div>

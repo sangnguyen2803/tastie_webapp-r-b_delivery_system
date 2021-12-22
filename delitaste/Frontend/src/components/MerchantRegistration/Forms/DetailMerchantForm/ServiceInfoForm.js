@@ -1,14 +1,16 @@
 import "./DetailMerchantForm.scss";
 import "style/Common.scss";
-import { useState, useEffect } from "react";
-import { Formik, ErrorMessage, Form, Field } from "formik";
-import { Link } from "react-router-dom";
 import { withRouter } from "react-router-dom";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+
+import { Formik, ErrorMessage, Form, Field } from "formik";
 import { validateMerchantForm1 } from "utils/FormUtils/MerchantFormValidate";
 import locations from "assets/json_location/locations";
-
 import FormError from "components/Commons/ErrorHandlers/FormError/FormError";
 import FormHeader from "./FormHeader/FormHeader";
+
+import { updateServiceInfoFormAPI } from "store/actions/MerchantRegistration/MerchantRegistrationActions";
 
 const initialValues = {
   name: "",
@@ -20,8 +22,6 @@ const initialValues = {
 };
 
 function ServiceInfoForm(props) {
-  const [showMessageDialog, setShowMessageDialog] = useState(false);
-
   const getFullAddress = (road, city_id, district_id, ward_id) => {
     const address = [];
     locations
@@ -42,23 +42,26 @@ function ServiceInfoForm(props) {
     address.unshift(road);
     return address.join(", ");
   };
-  const handleSubmitForm = (values) => {
+
+  const handleSubmitForm = async (values) => {
     const { name, phone, city, district, ward, road } = values;
     const formData = {
-      basicInfo: {
-        address: getFullAddress(road, city, district, ward),
-        name,
-        phone,
-        city,
-        district,
-        ward,
-        road,
-        latitude: 0,
-        longitude: 0,
-      },
+      address: getFullAddress(road, city, district, ward),
+      city_id: city,
+      district_id: district,
+      latitude: 0,
+      longitude: 0,
+      merchant_name: name,
+      hotline: phone,
+      road: road,
+      ward_id: ward,
     };
-    console.log(formData);
-    props.history.push("representative-info");
+    if (!props.match.params.id) return;
+    const updateStatus = await props.updateServiceInfoFormAPI(
+      props.match.params.id,
+      formData
+    );
+    if (updateStatus) props.history.push("representative");
   };
 
   return (
@@ -75,7 +78,7 @@ function ServiceInfoForm(props) {
           <>
             <Form className="merchant-form-container">
               <FormHeader name="Service Provider's Info" />
-              <div className="form-name">MERCHANT BASIC INFORMATION:</div>
+              <div className="form-name">Merchant Basic Information:</div>
               <div className="merchant-form-wrapper">
                 <div className="merchant-form-field-wrapper">
                   <div className="merchant-form-label-wrapper">
@@ -145,16 +148,12 @@ function ServiceInfoForm(props) {
                   <div className="merchant-form-label-wrapper">City</div>
                   <div className="merchant-form-input-wrapper">
                     <Field
-                      className={
-                        errors.city
-                          ? "form-text-field-select error"
-                          : "form-text-field-select"
-                      }
+                      className="form-text-field-select"
                       style={{ width: "100%", height: "35px" }}
                       as="select"
                       name="city"
                     >
-                      <option value="" selected disabled hidden>
+                      <option value="" disabled hidden>
                         Select a city...
                       </option>
                       {locations.map((city) => (
@@ -167,14 +166,6 @@ function ServiceInfoForm(props) {
                     </Field>
                   </div>
                 </div>
-                <div className="field-bottom-side-wrapper">
-                  <FormError
-                    err={errors.city && touched.city ? errors.city : ""}
-                    spaceBetween={0}
-                    fontSize={12}
-                    fontWeight={"bold"}
-                  />
-                </div>
                 <div className="merchant-form-field-wrapper">
                   <div className="merchant-form-label-wrapper">District</div>
                   <div className="merchant-form-input-wrapper">
@@ -184,7 +175,7 @@ function ServiceInfoForm(props) {
                       as="select"
                       name="district"
                     >
-                      <option value="" selected disabled hidden>
+                      <option value="" disabled hidden>
                         Select a district...
                       </option>
                       {locations
@@ -201,16 +192,6 @@ function ServiceInfoForm(props) {
                     </Field>
                   </div>
                 </div>
-                <div className="field-bottom-side-wrapper">
-                  <FormError
-                    err={
-                      errors.district && touched.district ? errors.district : ""
-                    }
-                    spaceBetween={0}
-                    fontSize={12}
-                    fontWeight={"bold"}
-                  />
-                </div>
                 <div className="merchant-form-field-wrapper">
                   <div className="merchant-form-label-wrapper">Ward</div>
                   <div className="merchant-form-input-wrapper">
@@ -220,7 +201,7 @@ function ServiceInfoForm(props) {
                       as="select"
                       name="ward"
                     >
-                      <option value="" selected disabled hidden>
+                      <option value="" disabled hidden>
                         Select a ward...
                       </option>
                       {locations
@@ -243,14 +224,6 @@ function ServiceInfoForm(props) {
                     </Field>
                   </div>
                 </div>
-                <div className="field-bottom-side-wrapper">
-                  <FormError
-                    err={errors.ward && touched.ward ? errors.ward : ""}
-                    spaceBetween={0}
-                    fontSize={12}
-                    fontWeight={"bold"}
-                  />
-                </div>
                 <div className="merchant-form-field-wrapper">
                   <div className="merchant-form-label-wrapper">
                     Address line
@@ -269,12 +242,6 @@ function ServiceInfoForm(props) {
                   </div>
                 </div>
                 <div className="field-bottom-side-wrapper">
-                  <FormError
-                    err={errors.road && touched.road ? errors.road : ""}
-                    spaceBetween={0}
-                    fontSize={12}
-                    fontWeight={"bold"}
-                  />
                   <span className="field-description">
                     Address must abide by the following format: 'House number -
                     Street name' e.g: '138A/51 - Amsterdam'
@@ -299,7 +266,7 @@ function ServiceInfoForm(props) {
                 </div>
                 <div className="merchant-form-button-wrapper">
                   <iframe
-                    width={100}
+                    width={"98%"}
                     height={300}
                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15282225.79979123!2d73.7250245393691!3d20.750301298393563!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30635ff06b92b791%3A0xd78c4fa1854213a6!2sIndia!5e0!3m2!1sen!2sin!4v1587818542745!5m2!1sen!2sin"
                   ></iframe>{" "}
@@ -322,4 +289,12 @@ function ServiceInfoForm(props) {
   );
 }
 
-export default withRouter(ServiceInfoForm);
+ServiceInfoForm.propTypes = {
+  updateServiceInfoFormAPI: PropTypes.func.isRequired,
+};
+
+export default withRouter(
+  connect(null, {
+    updateServiceInfoFormAPI,
+  })(ServiceInfoForm)
+);

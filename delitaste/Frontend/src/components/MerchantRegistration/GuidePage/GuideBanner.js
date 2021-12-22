@@ -29,7 +29,7 @@ function GuideBanner(props) {
           </h1>
           <p className="guide-description">{bannerContent.description}</p>
           <div className="btn-guide-wrapper">
-            <Link to="/merchant-registration/sign-contract">
+            <Link to="/merchant-sign-contract">
               <button className="btn-guide-get-started">Get started</button>
             </Link>
             <button

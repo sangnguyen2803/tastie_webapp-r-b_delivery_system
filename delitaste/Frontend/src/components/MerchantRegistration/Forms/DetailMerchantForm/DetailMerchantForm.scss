@@ -107,9 +107,8 @@ $errorResolvedIconColor: #00683d;
 }
 
 .form-name {
-  letter-spacing: 0.02rem;
-  font-size: 16px;
-  font-weight: bolder;
+  font-size: 15px;
+  font-weight: bold;
   width: 75%;
   margin-top: 3%;
   margin-bottom: 1%;
@@ -233,7 +232,6 @@ $errorResolvedIconColor: #00683d;
   width: 80%;
   margin-left: $labelWidth;
 }
-
 
 @media all and (max-width: 767px) {
   .weekday-label {

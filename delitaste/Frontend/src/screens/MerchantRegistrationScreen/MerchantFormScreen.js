@@ -47,7 +47,7 @@ function MerchantFormScreen(props) {
     });
   }, []);
   */
- /*
+  /*
   const mapMerchantForm = () => {
     switch (match.path) {
       case "service-info":
@@ -71,7 +71,7 @@ function MerchantFormScreen(props) {
         <Switch>
           <Route
             exact
-            path={`${match.path}/service`}
+            path={`${match.path}/:id/service`}
             component={ServiceInfoForm}
           />
           <Route

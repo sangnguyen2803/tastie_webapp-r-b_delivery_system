@@ -15,7 +15,7 @@ function Tabs({
   const tabStyling = {
     position: fixed ? "fixed" : "unset",
     border: borderTop ? "3px solid #eeeeee" : "none",
-    width: secondaryTabGroup ? "calc(100% - 6px)" : "calc(100% - 252px);",
+    width: secondaryTabGroup ? "calc(100% - 6px)" : "calc(100% - 252px)",
   };
   return (
     <Fragment>

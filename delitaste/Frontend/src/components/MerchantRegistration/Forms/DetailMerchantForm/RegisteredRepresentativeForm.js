@@ -9,7 +9,6 @@ import { validateMerchantForm2 } from "utils/FormUtils/MerchantFormValidate";
 import "./DetailMerchantForm.scss";
 import "style/Common.scss";
 
-import Stepper from "components/Commons/Stepper/Stepper";
 import FormError from "components/Commons/ErrorHandlers/FormError/FormError";
 import FormHeader from "./FormHeader/FormHeader";
 import SwitchSelector from "react-switch-selector";

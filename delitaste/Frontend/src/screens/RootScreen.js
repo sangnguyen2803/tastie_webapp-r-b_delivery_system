@@ -1,6 +1,6 @@
 import { Fragment } from "react";
 import { Provider } from "react-redux";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { Router, Route, Switch } from "react-router-dom";
 import { createBrowserHistory } from "history";
 import store from "store";
 //components
@@ -19,7 +19,7 @@ import ServiceInfoForm from "components/MerchantRegistration/Forms/DetailMerchan
 import DialogBox from "components/Commons/Overlay/DialogBox/DialogBox";
 import MerchantDashboardScreen from "./MerchantDashboardScreen/MerchantDashboardScreen";
 
-const history = createBrowserHistory({ forceRefresh: true });
+const history = createBrowserHistory();
 
 function RootScreen(props) {
   return (
@@ -37,7 +37,7 @@ function RootScreen(props) {
           />
           <Route
             exact
-            path="/merchant-registration/sign-contract"
+            path="/merchant-sign-contract"
             component={SignContractScreen}
           />
           <Route path="/merchant-registration" component={MerchantFormScreen} />
@@ -67,11 +67,6 @@ function RootScreen(props) {
             exact
             path="/:lang(en|vi)/merchant-registration/:form"
             component={MerchantFormScreen}
-          />
-          <Route
-            exact
-            path="/:lang(en|vi)/merchant-registration/sign-contract"
-            component={SignContractScreen}
           />
         </Router>
         <DialogBox />

@@ -24,7 +24,7 @@ const initialState = {
   loginState: false,
   profile: null,
   styling: ["active", "default", "default", "default"],
-  refreshToken: localStorage.getItem("refresh_token"),
+  refresh_token: localStorage.getItem("refresh_token"),
   verifiedEmailToken: localStorage.getItem("verified_email_token"),
   isLoading: true,
 };
@@ -47,7 +47,7 @@ export default function (state = initialState, action) {
       return {
         ...state,
         ...payload,
-        refreshToken: null,
+        refresh_token: null,
         isUserAuthenticated: false,
         profile: null,
       };
@@ -73,7 +73,7 @@ export default function (state = initialState, action) {
       return {
         ...state,
         ...payload,
-        refreshToken: null,
+        refresh_token: null,
       };
     case CHECK_DUPLICATION_SUCCESS:
       return {

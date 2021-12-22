@@ -33,8 +33,6 @@ h2 {
   justify-content: flex-start;
   height: auto;
   border-radius: 5px;
-  box-shadow: rgba(0, 0, 0, 0.16) -15px 3px 15px,
-    rgba(0, 0, 0, 0.23) -10px 10px 15px;
   .form-banner-wrapper {
     background: #f4f4f4;
     display: flex;
@@ -140,16 +138,14 @@ h2 {
 
   .form-header-text {
     width: 100%;
-    font-size: 14px;
+    font-size: 15px;
     align-self: flex-start;
     margin: 3% 0% 0% 0%;
-    font-weight: bold;
   }
   .form-header-sub-text {
     width: 100%;
-    font-size: 13px;
+    font-size: 14px;
     align-self: flex-start;
-    font-weight: bold;
   }
 }
 

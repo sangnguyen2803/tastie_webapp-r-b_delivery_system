@@ -5,7 +5,7 @@ const phoneRegExp =
 
 //schema
 const validateMerchantForm1 = yup.object().shape({
-  name: yup.string(),
+  name: yup.string().required("Merchant name is required"),
   phone: yup
     .string()
     .matches(phoneRegExp, "Phone number is not valid")

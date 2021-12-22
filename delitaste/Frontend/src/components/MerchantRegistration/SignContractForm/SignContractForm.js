@@ -1,5 +1,8 @@
 import "./SignContractForm.scss";
 import { useState, useEffect } from "react";
+import { withRouter } from "react-router-dom";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
 import { Link } from "react-router-dom";
 import Footer from "components/Commons/Layout/Footer/Footer";
@@ -8,9 +11,8 @@ import Contract from "assets/pdf/contract.pdf";
 import ToolBar from "components/Commons/Layout/Toolbar/Toolbar";
 import MerchantBanner from "assets/merchant-form-banner.png";
 import FormBanner from "assets/Banner/merchant-form-banner.png";
-import Spinner from "components/Commons/Overlay/Spinner/Spinner";
 
-import { withRouter } from "react-router-dom";
+import { createMerchantAPI } from "store/actions/MerchantRegistration/MerchantRegistrationActions";
 
 const backgroundStyling = {
   background: `url(${MerchantBanner})`,
@@ -27,8 +29,14 @@ function SignContractForm(props) {
       behavior: "smooth",
     });
   }, []);
-  const contractFormHandler = () => {
-    props.history.push("service-info");
+  const contractFormHandler = async () => {
+    const { user, createMerchantAPI } = props;
+    let result = -1;
+    if (user.profile.user_id)
+      result = await createMerchantAPI(user.profile.user_id);
+    console.log(result);
+    if (result !== -1)
+      props.history.push(`/merchant-registration/${result}/service`);
   };
   return (
     <>
@@ -55,7 +63,7 @@ function SignContractForm(props) {
                 hereby have read carefully and agreed to the our terms and
                 conditions set forth in PDF file below.
               </span>
-              <h2></h2>
+              <br></br>
               <embed className="contract-pdf-viewer" src={Contract} />
               <div className="contract-agree-section">
                 <div className="contract-agree-check-wrapper">
@@ -92,9 +100,21 @@ function SignContractForm(props) {
         <Footer />
         <ToolBar />
       </div>
-      <Spinner visibility={true} />
     </>
   );
 }
 
-export default withRouter(SignContractForm);
+SignContractForm.propTypes = {
+  createMerchantAPI: PropTypes.func.isRequired,
+  user: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  user: state.UserReducers,
+});
+
+export default withRouter(
+  connect(mapStateToProps, {
+    createMerchantAPI,
+  })(SignContractForm)
+);
