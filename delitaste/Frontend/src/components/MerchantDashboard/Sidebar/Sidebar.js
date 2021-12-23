@@ -12,6 +12,7 @@ import {
   faChevronUp,
   faDollarSign,
   faCog,
+  faHome,
 } from "@fortawesome/fontawesome-free-solid";
 import Logo from "assets/logo.png";
 import {
@@ -22,13 +23,18 @@ import { withRouter } from "react-router-dom";
 
 const sidebarFeatures = [
   {
+    id: 0,
+    icon: faHome,
+    title: "Home",
+    subFeatures: [{ id: 1, title: "My Restaurant", link: "restaurant" }],
+  },
+  {
     id: 1,
     icon: faShoppingBag,
     title: "Orders",
     subFeatures: [
-      { id: 1, title: "Orders List", link: "order?type=1" },
-      { id: 2, title: "Cancel", link: "order?type=2" },
-      { id: 3, title: "Return & Refund", link: "order?type=3" },
+      { id: 1, title: "My Order", link: "order/my-order" },
+      { id: 2, title: "Order History", link: "order/order-history" },
     ],
   },
   {
@@ -91,7 +97,9 @@ const sidebarFeatures = [
 ];
 
 function Sidebar(props) {
+  const [selectedFeature, setSelectedFeature] = useState([2, 1]);
   const [showFeatures, setShowFeatures] = useState({
+    0: true,
     1: true,
     2: true,
     3: true,
@@ -132,11 +140,23 @@ function Sidebar(props) {
               <div
                 className="sb-sub-feature-row"
                 onClick={() => {
+                  setSelectedFeature([feature.id, item.id]);
                   mappingDashboard(item.link);
                 }}
+                style={
+                  selectedFeature[0] === feature.id &&
+                  selectedFeature[1] === item.id
+                    ? {
+                        fontWeight: "bold",
+                        backgroundColor: "#e6e6e6",
+                      }
+                    : { fontWeight: "normal" }
+                }
                 key={item.id}
               >
-                <span key={item.id}>{item.title}</span>
+                <span className="sidebar-feature-text" key={item.id}>
+                  {item.title}
+                </span>
               </div>
             ))
           ) : (

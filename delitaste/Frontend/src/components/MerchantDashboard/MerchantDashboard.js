@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { withRouter, Switch, Route, Redirect } from "react-router-dom";
 import MerchantBanner from "assets/merchant-form-banner.png";
 import ProductPanel from "components/MerchantDashboard/DashboardFeatures/ProductTabs/ProductPanel";
-
+import OrderPanel from "components/MerchantDashboard/DashboardFeatures/OrderTabs/OrderPanel";
 const backgroundStyling = {
   background: `url(${MerchantBanner})`,
   backgroundPosition: "center",
@@ -34,6 +34,15 @@ function MerchantDashboard(props) {
             >
               <Redirect to={`${match.path}/product/my-product`} />
             </Route>
+
+            <Route exact path={`${match.path}/order`} component={OrderPanel}>
+              <Redirect to={`${match.path}/order/my-order`} />
+            </Route>
+            <Route
+              exact
+              path={`${match.path}/order/:name`}
+              component={OrderPanel}
+            />
             <Route
               exact
               path={`${match.path}/product/:name`}

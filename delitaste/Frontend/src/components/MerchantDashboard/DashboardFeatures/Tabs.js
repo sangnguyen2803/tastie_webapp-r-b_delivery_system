@@ -11,6 +11,7 @@ function Tabs({
   borderTop,
   secondaryTabGroup,
   children,
+  boxWidth,
 }) {
   const tabStyling = {
     position: fixed ? "fixed" : "unset",
@@ -30,8 +31,10 @@ function Tabs({
                 ? {
                     paddingTop: "3px",
                     borderBottom: "3px solid rgb(44, 44, 44)",
+                    width: boxWidth || "50px",
+                    fontSize: "18px",
                   }
-                : { borderBottom: "none" }
+                : { borderBottom: "none", width: boxWidth || "50px" }
             }
           >
             <span className="tab-item">{tab.name}</span>
