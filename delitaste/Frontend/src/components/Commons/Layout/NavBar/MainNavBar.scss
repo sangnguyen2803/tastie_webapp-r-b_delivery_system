@@ -87,6 +87,7 @@
 
 .nav-gadget-container:hover,
 .nav-cart-container:hover,
+.nav-notification-container:hover,
 .nav-language-container:hover {
   border: 2px rgb(192, 192, 192) solid;
 }
@@ -159,7 +160,20 @@
   height: inherit;
   width: 100%;
 }
+.nav-notification-icon-wrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  height: inherit;
+  width: 100%;
+}
 .nav-gadget-icon-wrapper .nav-icon {
+  font-size: 25px;
+}
+.nav-notification-icon-wrapper .nav-icon {
   font-size: 25px;
 }
 .nav-gadget-text-wrapper {
@@ -195,6 +209,21 @@
 .nav-gadget-main-text {
   font-size: 13px;
 }
+
+.nav-notification-container {
+  cursor: pointer;
+  width: 10%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  height: 47px;
+  color: #e6e6e6;
+  border-radius: 5px;
+  border: 2px rgba(192, 192, 192, 0) solid;
+  justify-self: flex-end;
+}
 /*cart-panel*/
 .nav-cart-container {
   cursor: pointer;
@@ -221,6 +250,20 @@
   background-color: rgb(189, 0, 0);
   letter-spacing: 1px;
 }
+
+.nav-notification-number {
+  position: absolute;
+  font-size: 10px;
+  font-weight: bold;
+  font-family: "Montserrat", sans-serif !important;
+  align-self: center;
+  border-radius: 50px;
+  padding: 3px 5px;
+  background-color: rgb(189, 0, 0);
+  letter-spacing: 1px;
+  margin-left: -40px;
+  margin-top: 7px;
+}
 .nav-cart-text {
   align-self: center;
 }
@@ -232,6 +275,13 @@
   align-items: flex-start;
   width: 120%;
 }
+.nav-notification-text-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  height: 46px;
+  align-items: flex-start;
+}
 
 @media all and (max-width: 767px) {
   .main-nav-menu-prefix {
@@ -240,7 +290,8 @@
   .main-nav-surfix-container {
     width: 40%;
   }
-  .nav-cart-container {
+  .nav-cart-container,
+  .nav-notification-container {
     width: 60px;
   }
   .nav-gadget-container {
@@ -278,7 +329,8 @@
     align-items: center !important;
     width: 60px !important;
   }
-  .nav-cart-container {
+  .nav-cart-container,
+  .nav-notification-container {
     width: 80px !important;
   }
 }

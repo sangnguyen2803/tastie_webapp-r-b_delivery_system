@@ -27,11 +27,14 @@ import Logo from "assets/sub-logo.png";
 import Modal from "components/Commons/Overlay/Popup/Modal/Modal";
 import LanguageSettingPanel from "components/Commons/Overlay/Popup/Panel/LanguageSettingPanel";
 import AccountSettingPanel from "components/Commons/Overlay/Popup/Panel/AccountSettingPanel";
+import NotificationPanel from "components/Commons/Overlay/Popup/Panel/NotificationPanel";
 import i18n from "i18n";
+import { faBell } from "@fortawesome/free-solid-svg-icons";
 
 function MainNavBar({ user }) {
   const [accountPanel, setAccountPanel] = useState(false);
   const [languagePanel, setLanguagePanel] = useState(false);
+  const [notificationPanel, setNotificationPanel] = useState(false);
   const [cartModal, setCartModal] = useState(false);
   const [mobileSidebar, setMobileSidebar] = useState(false);
   const flag = {
@@ -64,8 +67,14 @@ function MainNavBar({ user }) {
         <div className="main-nav-surfix-container">
           <div
             className="nav-language-container"
-            onMouseEnter={() => setLanguagePanel(true)}
-            onMouseLeave={() => setLanguagePanel(false)}
+            onMouseEnter={() => {
+              setLanguagePanel((prev) => !prev);
+              setNotificationPanel(false);
+            }}
+            onMouseLeave={() => {
+              setLanguagePanel((prev) => !prev);
+              setNotificationPanel(false);
+            }}
           >
             <div className="nav-language-icon-wrapper">
               <img
@@ -92,8 +101,14 @@ function MainNavBar({ user }) {
 
           <div
             className="nav-gadget-container"
-            onMouseEnter={() => setAccountPanel((prev) => !prev)}
-            onMouseLeave={() => setAccountPanel((prev) => !prev)}
+            onMouseEnter={() => {
+              setAccountPanel((prev) => !prev);
+              setNotificationPanel(false);
+            }}
+            onMouseLeave={() => {
+              setAccountPanel((prev) => !prev);
+              setNotificationPanel(false);
+            }}
           >
             <div className="nav-gadget-icon-wrapper">
               <FontAwesomeIcon className="nav-icon" icon={faUser} />
@@ -122,7 +137,9 @@ function MainNavBar({ user }) {
                   width={"360px"}
                   height={"auto"}
                   margin={"0 0 0 -320px"}
-                  onMouseLeave={() => setLanguagePanel((prev) => !prev)}
+                  onMouseLeave={() => {
+                    setLanguagePanel((prev) => !prev);
+                  }}
                 >
                   <AccountSettingPanel />
                 </NavFlyout>
@@ -131,6 +148,31 @@ function MainNavBar({ user }) {
               )}
             </div>
           </div>
+          <div
+            className="nav-notification-container"
+            onClick={() => setNotificationPanel((prev) => !prev)}
+          >
+            <div className="nav-notification-icon-wrapper">
+              <FontAwesomeIcon className="nav-icon" icon={faBell} />
+              {notificationPanel ? (
+                <NavFlyout
+                  width={"250px"}
+                  height={"500px"}
+                  margin={"0 0 0 -100px"}
+                  onClick={() => setNotificationPanel((prev) => !prev)}
+                >
+                  <NotificationPanel />
+                </NavFlyout>
+              ) : (
+                <></>
+              )}
+            </div>
+
+            <div className="nav-notification-text-wrapper">
+              <div className="nav-notification-number">10</div>
+            </div>
+          </div>
+
           <a
             className="nav-cart-container"
             onClick={() => setCartModal((prev) => !prev)}

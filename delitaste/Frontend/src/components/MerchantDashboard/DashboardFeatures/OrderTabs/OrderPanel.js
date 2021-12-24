@@ -3,7 +3,7 @@ import { Redirect, useSearchParams } from "react-router-dom";
 import OrderDetail from "components/MerchantDashboard/DashboardFeatures/OrderTabs/OrderDetail";
 import "../Panel.scss";
 import Tabs from "components/MerchantDashboard/DashboardFeatures/Tabs";
-
+import OrderHistory from "./OrderHistory";
 function OrderPanel(props) {
   const [currentTab, setCurrentTab] = useState(0);
   const [type, setType] = useState("All");
@@ -23,9 +23,6 @@ function OrderPanel(props) {
   const handleSelectTab = (value) => {
     setCurrentTab(value);
   };
-  const mappingTab = () => {
-    return <OrderDetail type={type} />;
-  };
   switch (props.match.params.name) {
     case "my-order":
       return (
@@ -38,7 +35,15 @@ function OrderPanel(props) {
               selectItem={handleSelectTab}
               fixed={true}
             />
-            {mappingTab()}
+            <OrderDetail type={type} />
+          </div>
+        </Fragment>
+      );
+    case "order-history":
+      return (
+        <Fragment>
+          <div className="panel-content-wrapper">
+            <OrderHistory />
           </div>
         </Fragment>
       );

@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment, useState, useRef, useEffect } from "react";
 import { Provider } from "react-redux";
 import { Router, Route, Switch } from "react-router-dom";
 import { createBrowserHistory } from "history";
@@ -18,10 +18,20 @@ import ServiceInfoForm from "components/MerchantRegistration/Forms/DetailMerchan
 
 import DialogBox from "components/Commons/Overlay/DialogBox/DialogBox";
 import MerchantDashboardScreen from "./MerchantDashboardScreen/MerchantDashboardScreen";
+import { io } from "socket.io-client";
 
 const history = createBrowserHistory();
 
 function RootScreen(props) {
+  const [state, setState] = useState({ message: "", name: "" });
+  const [chat, setChat] = useState([]);
+  const socketRef = useRef();
+
+  useEffect(() => {
+    socketRef.current = io.connect("http://localhost:4000");
+    console.log(socketRef.current.on("firstEvent", (msg) => console.log(msg)));
+  }, []);
+
   return (
     <Fragment>
       <Provider store={store}>
