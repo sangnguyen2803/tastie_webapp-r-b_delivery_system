@@ -58,14 +58,23 @@ function OrderHistory(props) {
         );
       case "Completed":
         return (
-          <FontAwesomeIcon className="o-order-icon done" icon={faCheckCircle} />
+          <>
+            <FontAwesomeIcon
+              className="o-order-icon-history done"
+              icon={faCheckCircle}
+            />
+            <span className="order-status-text-green">Completed</span>
+          </>
         );
       case "Canceled":
         return (
-          <FontAwesomeIcon
-            className="o-order-icon cancel"
-            icon={faTimesCircle}
-          />
+          <>
+            <FontAwesomeIcon
+              className="o-order-icon-history cancel"
+              icon={faTimesCircle}
+            />
+            <span className="order-status-text-red">Unable to delivery</span>
+          </>
         );
       default:
         return (
@@ -83,7 +92,7 @@ function OrderHistory(props) {
 
   return (
     <Fragment>
-      <div className="double-panel-container">
+      <div className="double-panel-container panel-no-mg-top">
         <div className="main-detail-panel-wrapper">
           <div className="panel-detail-title">Order History</div>
           <div className="ohis-order-filter-wrapper">
@@ -107,12 +116,12 @@ function OrderHistory(props) {
           </div>
           <div className="o-order-container">
             <div className="o-order-header-row">
-              <div className="o-order o-order-id">Order Id</div>
+              <div className="o-order o-order-icon-history">Order status</div>
+              <div className="o-order-id">Order Id</div>
               <div className="o-order o-order-name">Customer name</div>
-              <div className="o-order o-order-time">Submitted time</div>
-              <div className="o-order o-order-quantity">Quantity</div>
-              <div className="o-order o-order-price">Price</div>
-              <div className="o-order o-order-icon">Order status</div>
+              <div className="o-order o-order-time">Submitted Time</div>
+              <div className="o-order o-order-price">Paid</div>
+              <div className="o-order o-order-courier">Courier</div>
             </div>
           </div>
           <div className="o-order-container">
@@ -129,14 +138,14 @@ function OrderHistory(props) {
                     : { backgroundColor: "white" }
                 }
               >
-                <div className="o-order o-order-id">{order.order_id}</div>
+                {mapOrderStatusIcon(order.order_status)}
+                <div className="o-order">{order.order_id}</div>
                 <div className="o-order o-order-name">
                   {order.customer_name}
                 </div>
                 <div className="o-order-time">{order.time_submitted}</div>
-                <div className="o-order-quantity">{order.total_quantity}</div>
                 <div className="o-order-price">{order.total_price}</div>
-                {mapOrderStatusIcon(order.order_status)}
+                <div className="o-order-courier">{order.courier_name}</div>
               </div>
             ))}
           </div>

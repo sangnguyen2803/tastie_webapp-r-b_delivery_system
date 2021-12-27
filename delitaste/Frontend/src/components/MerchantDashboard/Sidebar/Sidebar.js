@@ -26,7 +26,10 @@ const sidebarFeatures = [
     id: 0,
     icon: faHome,
     title: "Home",
-    subFeatures: [{ id: 1, title: "My Restaurant", link: "restaurant" }],
+    subFeatures: [
+      { id: 1, title: "My Restaurant", link: "provider/my-restaurant" },
+      { id: 2, title: "Operation", link: "provider/operation-time" },
+    ],
   },
   {
     id: 1,
@@ -148,7 +151,7 @@ function Sidebar(props) {
                   selectedFeature[1] === item.id
                     ? {
                         fontWeight: "bold",
-                        backgroundColor: "#e6e6e6",
+                        color: "rgb(136, 0, 0)",
                       }
                     : { fontWeight: "normal" }
                 }

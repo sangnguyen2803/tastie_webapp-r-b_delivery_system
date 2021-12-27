@@ -202,6 +202,7 @@ function ProductOverview(props) {
         <div className="product-table-container">
           <Tabs
             tabs={ProductFilterTab.filterTabs}
+            boxWidth={"8%"}
             secondaryTabGroup={true}
             borderTop={true}
             fixed={false}

@@ -17,8 +17,8 @@ import BankInfoForm from "components/MerchantRegistration/Forms/DetailMerchantFo
 import withAuth from "components/HigherOrderComponents(HOC)/withAuth";
 
 function MerchantFormScreen(props) {
-  /*
   useEffect(() => {
+    console.log(props); /*
     if (!props.user.isUserAuthenticated) {
       props.setDialogBox(
         "You must sign up to access to this features.",
@@ -44,58 +44,11 @@ function MerchantFormScreen(props) {
       top: 0,
       left: 0,
       behavior: "smooth",
-    });
+    });*/
   }, []);
-  */
-  /*
-  const mapMerchantForm = () => {
-    switch (match.path) {
-      case "service-info":
-        return <ServiceInfoForm />;
-      case "/:id/representative-info":
-        return <RegisteredRepresentativeForm />;
-      case "/:id/business-unit-info":
-        return <BusinessUnitForm />;
-      case "/:id/product-info":
-        return <ProductDetailForm />;
-      case "/:id/bank-info":
-        return <BankInfoForm />;
-      default:
-        return <h1>No project match</h1>;
-    }
-  };*/
-  const { match } = props;
   return (
     <Fragment>
-      <MerchantForm>
-        <Switch>
-          <Route
-            exact
-            path={`${match.path}/:id/service`}
-            component={ServiceInfoForm}
-          />
-          <Route
-            exact
-            path={`${match.path}/:id/representative`}
-            component={RegisteredRepresentativeForm}
-          />
-          <Route
-            exact
-            path={`${match.path}/:id/business-unit`}
-            component={BusinessUnitForm}
-          />
-          <Route
-            exact
-            path={`${match.path}/:id/merchandise`}
-            component={ServiceInfoForm}
-          />
-          <Route
-            exact
-            path={`${match.path}/:id/bank`}
-            component={BankInfoForm}
-          />
-        </Switch>
-      </MerchantForm>
+      <MerchantForm>{props.children}</MerchantForm>
     </Fragment>
   );
 }

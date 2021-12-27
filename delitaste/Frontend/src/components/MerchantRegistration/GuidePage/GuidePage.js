@@ -4,8 +4,9 @@ import Tutorial from "components/MerchantRegistration/GuidePage/Tutorials/Tutori
 import Footer from "components/Commons/Layout/Footer/Footer";
 import NavBar from "components/Commons/Layout/NavBar/NavBar";
 import ToolBar from "components/Commons/Layout/Toolbar/Toolbar";
+import { withRouter } from "react-router-dom";
 
-function GuidePage() {
+function GuidePage(props) {
   return (
     <>
       <div className="guide-page navbar-state">
@@ -21,4 +22,4 @@ function GuidePage() {
   );
 }
 
-export default GuidePage;
+export default withRouter(GuidePage);

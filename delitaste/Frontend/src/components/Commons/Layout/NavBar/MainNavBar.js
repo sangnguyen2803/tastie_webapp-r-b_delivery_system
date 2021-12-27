@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Fragment } from "react";
 import ProfilePhoto from "assets/avatar.jpg";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -31,7 +31,7 @@ import NotificationPanel from "components/Commons/Overlay/Popup/Panel/Notificati
 import i18n from "i18n";
 import { faBell } from "@fortawesome/free-solid-svg-icons";
 
-function MainNavBar({ user }) {
+function MainNavBar({ user, history }) {
   const [accountPanel, setAccountPanel] = useState(false);
   const [languagePanel, setLanguagePanel] = useState(false);
   const [notificationPanel, setNotificationPanel] = useState(false);
@@ -47,10 +47,13 @@ function MainNavBar({ user }) {
     <>
       <div className="main-nav-menu-prefix">
         <div className="main-nav-prefix-container">
-          <Link className="nav-logo-wrapper" to="/">
+          <div
+            className="nav-logo-wrapper"
+            onClick={() => history.push("/home")}
+          >
             <img className="nav-logo" src={Logo} />
             <span className="nav-logo-title">Tastie!</span>
-          </Link>
+          </div>
           <div className="nav-wrapper-2">
             <div className="nav-menu-prefix-2">
               <div className="nav-category-item-2">
@@ -148,30 +151,34 @@ function MainNavBar({ user }) {
               )}
             </div>
           </div>
-          <div
-            className="nav-notification-container"
-            onClick={() => setNotificationPanel((prev) => !prev)}
-          >
-            <div className="nav-notification-icon-wrapper">
-              <FontAwesomeIcon className="nav-icon" icon={faBell} />
-              {notificationPanel ? (
-                <NavFlyout
-                  width={"250px"}
-                  height={"500px"}
-                  margin={"0 0 0 -100px"}
-                  onClick={() => setNotificationPanel((prev) => !prev)}
-                >
-                  <NotificationPanel />
-                </NavFlyout>
-              ) : (
-                <></>
-              )}
-            </div>
+          {user.isUserAuthenticated ? (
+            <div
+              className="nav-notification-container"
+              onClick={() => setNotificationPanel((prev) => !prev)}
+            >
+              <div className="nav-notification-icon-wrapper">
+                <FontAwesomeIcon className="nav-icon" icon={faBell} />
+                {notificationPanel ? (
+                  <NavFlyout
+                    width={"250px"}
+                    height={"500px"}
+                    margin={"0 0 0 -100px"}
+                    onClick={() => setNotificationPanel((prev) => !prev)}
+                  >
+                    <NotificationPanel />
+                  </NavFlyout>
+                ) : (
+                  <></>
+                )}
+              </div>
 
-            <div className="nav-notification-text-wrapper">
-              <div className="nav-notification-number">10</div>
+              <div className="nav-notification-text-wrapper">
+                <div className="nav-notification-number">10</div>
+              </div>
             </div>
-          </div>
+          ) : (
+            <Fragment></Fragment>
+          )}
 
           <a
             className="nav-cart-container"

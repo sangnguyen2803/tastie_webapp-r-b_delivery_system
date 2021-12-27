@@ -9,9 +9,9 @@ import {} from "store/actions/types";
 const initialState = {
   msg: "",
   loadingAlert: false,
-  loadingDialogBox: false,
-  dialogBoxTitle: "",
-  dialogBoxMessage: "",
+  loadDialogBox: false,
+  messageDialogHeader: "",
+  messageDialogContent: "",
   alertStyling: "danger",
 };
 

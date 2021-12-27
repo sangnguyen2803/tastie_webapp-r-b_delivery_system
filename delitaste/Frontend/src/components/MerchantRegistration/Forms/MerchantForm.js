@@ -21,11 +21,9 @@ function MerchantForm({ children }) {
         className="merchant-registration-form-container"
         style={backgroundStyling}
       >
+        <Stepper />
         <div className="merchant-registration-form-wrapper">
-          <div className="merchant-registration-form">
-            <Stepper />
-            {children}
-          </div>
+          <div className="merchant-registration-form">{children}</div>
         </div>
       </div>
       <Footer />

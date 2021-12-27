@@ -11,19 +11,19 @@ const DialogBox = ({ width, height, close, dialog }) => {
     height: height || "200px",
   };
 
-  return dialog.loadingDialogBox ? (
+  return dialog.loadDialogBox ? (
     <Fragment>
       <div className="darken-transparent-background">
         <div className="dialog-wrapper" style={dialogStyling}>
           <div className="header-row">
-            <div className="header-title">{dialog.dialogBoxTitle}</div>
+            <div className="header-title">{dialog.messageDialogHeader}</div>
             <FontAwesomeIcon
               className="header-close-icon"
               icon={faTimes}
               onClick={close}
             />
           </div>
-          <div className="content">{dialog.dialogBoxMessage}</div>
+          <div className="content">{dialog.messageDialogContent}</div>
         </div>
       </div>
     </Fragment>

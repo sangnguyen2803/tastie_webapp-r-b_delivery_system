@@ -6,32 +6,33 @@ import store from "store";
 //components
 import RouteWithSubRoutes from "components/Commons/RouteWithSubRoutes";
 import { routes } from "config/routes";
-
+//common screen
 import HomeScreen from "./HomeScreen/HomeScreen";
 import UserSignInScreen from "./UserAdmissionScreen/UserSignInScreen";
 import UserRegistrationScreen from "./UserAdmissionScreen/UserRegistrationScreen";
 import MerchantRegistrationScreen from "./MerchantRegistrationScreen/MerchantRegistrationScreen";
 import SignContractScreen from "./MerchantRegistrationScreen/SignContractScreen/SignContractScreen";
 import MerchantFormScreen from "./MerchantRegistrationScreen/MerchantFormScreen";
-
+//merchant registration form screen
 import ServiceInfoForm from "components/MerchantRegistration/Forms/DetailMerchantForm/ServiceInfoForm";
+import RegisteredRepresentativeForm from "components/MerchantRegistration/Forms/DetailMerchantForm/RegisteredRepresentativeForm";
+import BusinessUnitForm from "components/MerchantRegistration/Forms/DetailMerchantForm/BusinessUnitForm";
+import ProductDetailForm from "components/MerchantRegistration/Forms/DetailMerchantForm/ProductDetailForm";
+import BankInfoForm from "components/MerchantRegistration/Forms/DetailMerchantForm/BankInfoForm";
 
 import DialogBox from "components/Commons/Overlay/DialogBox/DialogBox";
 import MerchantDashboardScreen from "./MerchantDashboardScreen/MerchantDashboardScreen";
-import { io } from "socket.io-client";
 
 const history = createBrowserHistory();
 
-function RootScreen(props) {
-  const [state, setState] = useState({ message: "", name: "" });
-  const [chat, setChat] = useState([]);
-  const socketRef = useRef();
+/*const socketRef = useRef();
 
   useEffect(() => {
     socketRef.current = io.connect("http://localhost:4000");
     console.log(socketRef.current.on("firstEvent", (msg) => console.log(msg)));
-  }, []);
+  }, []); */
 
+function RootScreen(props) {
   return (
     <Fragment>
       <Provider store={store}>
@@ -50,7 +51,31 @@ function RootScreen(props) {
             path="/merchant-sign-contract"
             component={SignContractScreen}
           />
-          <Route path="/merchant-registration" component={MerchantFormScreen} />
+          <Route exact path="/merchant-registration/:id/service">
+            <MerchantFormScreen>
+              <ServiceInfoForm />
+            </MerchantFormScreen>
+          </Route>
+          <Route exact path="/merchant-registration/:id/representative">
+            <MerchantFormScreen>
+              <RegisteredRepresentativeForm />
+            </MerchantFormScreen>
+          </Route>
+          <Route exact path="/merchant-registration/:id/business-unit">
+            <MerchantFormScreen>
+              <BusinessUnitForm />
+            </MerchantFormScreen>
+          </Route>
+          <Route exact path="/merchant-registration/:id/product-detail">
+            <MerchantFormScreen>
+              <ProductDetailForm />
+            </MerchantFormScreen>
+          </Route>
+          <Route exact path="/merchant-registration/:id/bank">
+            <MerchantFormScreen>
+              <BankInfoForm />
+            </MerchantFormScreen>
+          </Route>
           <Route
             path="/merchant-dashboard"
             component={MerchantDashboardScreen}
@@ -72,11 +97,6 @@ function RootScreen(props) {
             exact
             path="/:lang(en|vi)/merchant-registration"
             component={MerchantRegistrationScreen}
-          />
-          <Route
-            exact
-            path="/:lang(en|vi)/merchant-registration/:form"
-            component={MerchantFormScreen}
           />
         </Router>
         <DialogBox />

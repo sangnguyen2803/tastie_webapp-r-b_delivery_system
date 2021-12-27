@@ -34,7 +34,6 @@ function SignContractForm(props) {
     let result = -1;
     if (user.profile.user_id)
       result = await createMerchantAPI(user.profile.user_id);
-    console.log(result);
     if (result !== -1)
       props.history.push(`/merchant-registration/${result}/service`);
   };

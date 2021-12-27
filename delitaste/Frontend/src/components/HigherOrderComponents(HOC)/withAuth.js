@@ -23,16 +23,17 @@ export default function (WrappedComponent) {
         behavior: "smooth",
       });
       const refreshToken =
-        localStorage.getItem("refresh_token") || this.props.user.refreshToken;
-      if (!refreshToken) return;
-      this.setState({ isLoader: false });
-      const result = await this.props.getAccessTokenAPI(refreshToken);
-      if (typeof result === undefined || !result) {
+        localStorage.getItem("refreshToken") || this.props.user.refreshToken;
+      if (refreshToken) {
+        this.setState({ isLoader: false });
+        const result = await this.props.getAccessTokenAPI(refreshToken);
+        if (typeof result === undefined || !result) {
+          this.setState({ isLoader: true });
+          return;
+        }
+        await this.props.getUserProfileAPI(result?.accessToken);
         this.setState({ isLoader: true });
-        return;
       }
-      await this.props.getUserProfileAPI(result?.accessToken);
-      this.setState({ isLoader: true });
       if (!this.props.user.isUserAuthenticated) {
         this.props.history.push("/");
         return;

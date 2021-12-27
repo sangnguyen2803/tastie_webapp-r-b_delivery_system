@@ -1,28 +1,28 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import "./Stepper.scss";
 import BreadcrumbIcon from "assets/Icon/BreadcrumbIcon.jpg";
-
+import StepperArrow from "assets/stepper-arrow.png";
 const Stepper = (props) => {
   const steps = [
     {
-      description: "Service Provider's Info",
+      description: "Service info",
       styling: "active",
     },
     {
-      description: "Registered Representative Info",
+      description: "Representative info",
       styling: "default",
     },
     {
-      description: "Business Units Detail Info",
+      description: "Business unit info",
       styling: "default",
     },
     {
-      description: "Product & Merchandise Info",
+      description: "Product detail info",
       styling: "default",
     },
     {
-      description: "Bank Account Info",
+      description: "Bank info",
       styling: "default",
     },
   ];
@@ -30,10 +30,22 @@ const Stepper = (props) => {
     <>
       <div className="stepper-container">
         {steps.map((step, index) => (
-          <div className="stepper-wrapper" key={index}>
-            <div className={step.styling}>{index + 1}</div>
-            <span className="stepper-description">{step.description}</span>
-          </div>
+          <Fragment>
+            <div className="stepper-wrapper" key={index}>
+              <div className={step.styling}>{index + 1}</div>
+              <span className="stepper-description">{step.description}</span>
+            </div>
+            {index !== steps.length - 1 ? (
+              <img
+                className="stepper-arrow"
+                src={StepperArrow}
+                height={2}
+                width={50}
+              />
+            ) : (
+              <Fragment></Fragment>
+            )}
+          </Fragment>
         ))}
       </div>
     </>

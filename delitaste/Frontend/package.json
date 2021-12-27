@@ -32,6 +32,8 @@
     "react-custom-checkbox": "^2.0.0",
     "react-dom": "^17.0.2",
     "react-i18next": "^11.12.0",
+    "react-map-gl": "^6.1.18",
+    "react-map-gl-geocoder": "^2.2.0",
     "react-moment": "^1.1.1",
     "react-redux": "^7.2.5",
     "react-router-dom": "^5.3.0",

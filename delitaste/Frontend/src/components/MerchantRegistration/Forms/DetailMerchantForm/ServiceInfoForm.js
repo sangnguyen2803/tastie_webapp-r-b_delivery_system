@@ -1,4 +1,5 @@
 import "./DetailMerchantForm.scss";
+import { useEffect, useState, useRef, useCallback } from "react";
 import "style/Common.scss";
 import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
@@ -9,8 +10,18 @@ import { validateMerchantForm1 } from "utils/FormUtils/MerchantFormValidate";
 import locations from "assets/json_location/locations";
 import FormError from "components/Commons/ErrorHandlers/FormError/FormError";
 import FormHeader from "./FormHeader/FormHeader";
+import "react-map-gl-geocoder/dist/mapbox-gl-geocoder.css";
 
 import { updateServiceInfoFormAPI } from "store/actions/MerchantRegistration/MerchantRegistrationActions";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAsterisk } from "@fortawesome/fontawesome-free-solid";
+import MapGL from "react-map-gl";
+import Geocoder from "react-map-gl-geocoder";
+
+import Button from "components/Commons/Button/Button";
+import ButtonGroup from "components/Commons/Button/ButtonGroup/ButtonGroup";
+import StepperArrow from "assets/stepper-arrow.png";
 
 const initialValues = {
   name: "",
@@ -19,9 +30,35 @@ const initialValues = {
   district: "",
   ward: "",
   road: "",
+  address: "",
+  type: "",
+  street: "",
 };
 
 function ServiceInfoForm(props) {
+  const [addressMapbox, setAddressMapbox] = useState("");
+  const [viewport, setViewport] = useState({
+    latitude: 37.7577,
+    longitude: -122.4376,
+    zoom: 8,
+  });
+
+  const mapRef = useRef();
+  const handleViewportChange = useCallback(
+    (newViewport) => setViewport(newViewport),
+    []
+  );
+
+  // if you are happy with Geocoder default settings, you can just use handleViewportChange directly
+  const handleGeocoderViewportChange = useCallback((newViewport) => {
+    const geocoderDefaultOverrides = { transitionDuration: 1000 };
+
+    return handleViewportChange({
+      ...newViewport,
+      ...geocoderDefaultOverrides,
+    });
+  }, []);
+
   const getFullAddress = (road, city_id, district_id, ward_id) => {
     const address = [];
     locations
@@ -39,10 +76,16 @@ function ServiceInfoForm(props) {
               });
           });
       });
-    address.unshift(road);
+    if (road) address.unshift(road);
     return address.join(", ");
   };
 
+  const searchOnMap = (values) => {
+    const { road, city, district, ward } = values;
+
+    const result = getFullAddress(road, city, district, ward);
+    setAddressMapbox(result);
+  };
   const handleSubmitForm = async (values) => {
     const { name, phone, city, district, ward, road } = values;
     const formData = {
@@ -63,7 +106,7 @@ function ServiceInfoForm(props) {
     );
     if (updateStatus) props.history.push("representative");
   };
-
+  const handleMapViewport = (e) => {};
   return (
     <Formik
       initialValues={initialValues}
@@ -77,32 +120,47 @@ function ServiceInfoForm(props) {
         return (
           <>
             <Form className="merchant-form-container">
-              <FormHeader name="Service Provider's Info" />
-              <div className="form-name">Merchant Basic Information:</div>
+              <FormHeader name="1. Provider Service Information" />
               <div className="merchant-form-wrapper">
                 <div className="merchant-form-field-wrapper">
                   <div className="merchant-form-label-wrapper">
-                    Merchant name
+                    Merchant name{" "}
+                    <FontAwesomeIcon className="asterisk" icon={faAsterisk} />
                   </div>
-                  <div className="merchant-form-input-wrapper">
+                  <div className="merchant-form-input-wrapper form-input-extra-large">
                     <Field
-                      className={
-                        errors.name
-                          ? "form-text-field error"
-                          : "form-text-field"
+                      className="form-text-field"
+                      style={
+                        values.name
+                          ? { backgroundColor: "#F2F2F2" }
+                          : { backgroundColor: "white" }
                       }
                       type="text"
                       name="name"
-                      placeholder="Name"
+                      placeholder="Merchant name"
                     />
+                    <img src={StepperArrow} width={20} height={2.5} />
                     <Field
-                      className={
-                        errors.name
-                          ? "form-text-field error"
-                          : "form-text-field"
+                      className="form-text-field"
+                      style={
+                        values.type
+                          ? { backgroundColor: "#F2F2F2" }
+                          : { backgroundColor: "white" }
                       }
                       type="text"
                       name="type"
+                      placeholder="Restaurant type"
+                    />
+                    <img src={StepperArrow} width={20} height={2.5} />
+                    <Field
+                      className="form-text-field"
+                      style={
+                        values.street
+                          ? { backgroundColor: "#F2F2F2" }
+                          : { backgroundColor: "white" }
+                      }
+                      type="text"
+                      name="street"
                       placeholder="Street"
                     />
                   </div>
@@ -115,23 +173,30 @@ function ServiceInfoForm(props) {
                     fontWeight={"bold"}
                   />
                   <span className="field-description">
-                    Merchant name should be name by the name of your restaurant,
-                    following with street name. e.g:
-                    <br /> "The Alley - Ho Tung Mau"
+                    Merchant name should be name by name of your restaurant,
+                    following with street name. e.g: "The Alley - Ho Tung Mau"
                   </span>
                 </div>
                 <div className="merchant-form-field-wrapper">
-                  <div className="merchant-form-label-wrapper">Hotline</div>
-                  <div className="merchant-form-input-wrapper">
+                  <div className="merchant-form-label-wrapper">
+                    Phone number{" "}
+                    <FontAwesomeIcon className="asterisk" icon={faAsterisk} />
+                  </div>
+                  <div className="merchant-form-input-wrapper form-input-medium">
                     <Field
                       className={
                         errors.phone
                           ? "form-text-field error"
                           : "form-text-field"
                       }
+                      style={
+                        values.phone
+                          ? { backgroundColor: "#F2F2F2" }
+                          : { backgroundColor: "white" }
+                      }
                       type="text"
                       name="phone"
-                      placeholder="Phone or Mobile number"
+                      placeholder="Enter your merchant phone number"
                     />
                   </div>
                 </div>
@@ -144,114 +209,163 @@ function ServiceInfoForm(props) {
                   />
                   <span className="field-description"></span>
                 </div>
-                <div className="merchant-form-field-wrapper">
-                  <div className="merchant-form-label-wrapper">City</div>
-                  <div className="merchant-form-input-wrapper">
-                    <Field
-                      className="form-text-field-select"
-                      style={{ width: "100%", height: "35px" }}
-                      as="select"
-                      name="city"
-                    >
-                      <option value="" disabled hidden>
-                        Select a city...
-                      </option>
-                      {locations.map((city) => (
-                        <option
-                          key={city.code}
-                          value={city.code}
-                          label={city.name}
-                        />
-                      ))}
-                    </Field>
-                  </div>
-                </div>
-                <div className="merchant-form-field-wrapper">
-                  <div className="merchant-form-label-wrapper">District</div>
-                  <div className="merchant-form-input-wrapper">
-                    <Field
-                      className="form-text-field-select"
-                      style={{ width: "100%", height: "35px" }}
-                      as="select"
-                      name="district"
-                    >
-                      <option value="" disabled hidden>
-                        Select a district...
-                      </option>
-                      {locations
-                        .filter((city) => city.code == values.city)
-                        .map((selectedCity) =>
-                          selectedCity.districts.map((district) => (
+
+                <div className="group-field-name">Business address:</div>
+                <div className="location-wrapper">
+                  <div
+                    className="group-field-medium"
+                    onClick={searchOnMap(values)}
+                  >
+                    <div className="merchant-form-field-wrapper">
+                      <div className="merchant-form-label-wrapper">City</div>
+                      <div className="merchant-form-input-wrapper form-input-extra-large">
+                        <Field
+                          className="form-text-field-select"
+                          style={{ width: "100%", height: "35px" }}
+                          as="select"
+                          name="city"
+                          style={
+                            values.city
+                              ? { backgroundColor: "#F2F2F2" }
+                              : { backgroundColor: "white" }
+                          }
+                        >
+                          <option value="" disabled hidden>
+                            Select a city...
+                          </option>
+                          {locations.map((city) => (
                             <option
-                              key={district.code}
-                              value={district.code}
-                              label={district.name}
+                              key={city.code}
+                              value={city.code}
+                              label={city.name}
                             />
-                          ))
-                        )}
-                    </Field>
-                  </div>
-                </div>
-                <div className="merchant-form-field-wrapper">
-                  <div className="merchant-form-label-wrapper">Ward</div>
-                  <div className="merchant-form-input-wrapper">
-                    <Field
-                      className="form-text-field-select"
-                      style={{ width: "100%", height: "35px" }}
-                      as="select"
-                      name="ward"
-                    >
-                      <option value="" disabled hidden>
-                        Select a ward...
-                      </option>
-                      {locations
-                        .filter((city) => city.code == values.city)
-                        .map((selectedCity) =>
-                          selectedCity.districts
-                            .filter(
-                              (district) => district.code == values.district
-                            )
-                            .map((selectedDistrict) =>
-                              selectedDistrict.wards.map((ward) => (
+                          ))}
+                        </Field>
+                      </div>
+                    </div>
+                    <div className="merchant-form-field-wrapper">
+                      <div className="merchant-form-label-wrapper">
+                        District
+                      </div>
+                      <div className="merchant-form-input-wrapper form-input-extra-large">
+                        <Field
+                          className="form-text-field-select"
+                          style={{ width: "100%", height: "35px" }}
+                          as="select"
+                          name="district"
+                          style={
+                            values.district
+                              ? { backgroundColor: "#F2F2F2" }
+                              : { backgroundColor: "white" }
+                          }
+                        >
+                          <option value="" disabled hidden>
+                            Select a district...
+                          </option>
+                          {locations
+                            .filter((city) => city.code == values.city)
+                            .map((selectedCity) =>
+                              selectedCity.districts.map((district) => (
                                 <option
-                                  key={ward.code}
-                                  value={ward.code}
-                                  label={ward.name}
+                                  key={district.code}
+                                  value={district.code}
+                                  label={district.name}
                                 />
                               ))
-                            )
-                        )}
-                    </Field>
+                            )}
+                        </Field>
+                      </div>
+                    </div>
+                    <div className="merchant-form-field-wrapper">
+                      <div className="merchant-form-label-wrapper">Ward</div>
+                      <div className="merchant-form-input-wrapper form-input-extra-large">
+                        <Field
+                          className="form-text-field-select"
+                          style={{ width: "100%", height: "35px" }}
+                          as="select"
+                          name="ward"
+                          style={
+                            values.ward
+                              ? { backgroundColor: "#F2F2F2" }
+                              : { backgroundColor: "white" }
+                          }
+                        >
+                          <option value="" disabled hidden>
+                            Select a ward...
+                          </option>
+                          {locations
+                            .filter((city) => city.code == values.city)
+                            .map((selectedCity) =>
+                              selectedCity.districts
+                                .filter(
+                                  (district) => district.code == values.district
+                                )
+                                .map((selectedDistrict) =>
+                                  selectedDistrict.wards.map((ward) => (
+                                    <option
+                                      key={ward.code}
+                                      value={ward.code}
+                                      label={ward.name}
+                                    />
+                                  ))
+                                )
+                            )}
+                        </Field>
+                      </div>
+                    </div>
+                    <div className="merchant-form-field-wrapper">
+                      <div className="merchant-form-label-wrapper">Road</div>
+                      <div className="merchant-form-input-wrapper form-input-extra-large">
+                        <Field
+                          className={
+                            errors.road
+                              ? "form-text-field error"
+                              : "form-text-field"
+                          }
+                          style={
+                            values.road
+                              ? { backgroundColor: "#F2F2F2" }
+                              : { backgroundColor: "white" }
+                          }
+                          type="text"
+                          name="road"
+                          placeholder="House number - Road"
+                        />
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div className="merchant-form-field-wrapper">
-                  <div className="merchant-form-label-wrapper">
-                    Address line
-                  </div>
-                  <div className="merchant-form-input-wrapper">
-                    <Field
-                      className={
-                        errors.road
-                          ? "form-text-field error"
-                          : "form-text-field"
+                  <div className="map-container">
+                    <MapGL
+                      ref={mapRef}
+                      {...viewport}
+                      width="100%"
+                      height="350px"
+                      onViewportChange={handleViewportChange}
+                      mapStyle="mapbox://styles/mapbox/streets-v9"
+                      containerStyle={{
+                        zIndex: 0,
+                      }}
+                      mapboxApiAccessToken={
+                        "pk.eyJ1Ijoic2FuZ25ndXllbjI4MDMiLCJhIjoiY2t4bmwwMHNvM3h4azJxcGdjNnhlOHdlYSJ9.QFPmkMHDE3wfAJYE1oqyOg"
                       }
-                      type="text"
-                      name="road"
-                      placeholder="House number - Road"
-                    />
+                    >
+                      <Geocoder
+                        limit={1}
+                        mapRef={mapRef}
+                        style={{ zIndex: 0 }}
+                        onViewportChange={handleGeocoderViewportChange}
+                        inputValue={addressMapbox}
+                        mapboxApiAccessToken={
+                          "pk.eyJ1Ijoic2FuZ25ndXllbjI4MDMiLCJhIjoiY2t4bmwwMHNvM3h4azJxcGdjNnhlOHdlYSJ9.QFPmkMHDE3wfAJYE1oqyOg"
+                        }
+                        countries={"vn"}
+                        position={"top-left"}
+                        trackProximity={true}
+                      />
+                    </MapGL>
                   </div>
                 </div>
-                <div className="field-bottom-side-wrapper">
-                  <span className="field-description">
-                    Address must abide by the following format: 'House number -
-                    Street name' e.g: '138A/51 - Amsterdam'
-                  </span>
-                </div>
-                <div className="merchant-form-button-wrapper">
-                  <div>
-                    <button className="btn-check-on-map">Check on map</button>
-                  </div>
-                </div>
+
                 <div className="field-bottom-side-wrapper">
                   <FormError
                     err={errors.road && touched.road ? errors.road : ""}
@@ -259,17 +373,6 @@ function ServiceInfoForm(props) {
                     fontSize={12}
                     fontWeight={"bold"}
                   />
-                  <span className="field-description">
-                    Click the above button to locate the exact address on Google
-                    Map.
-                  </span>
-                </div>
-                <div className="merchant-form-button-wrapper">
-                  <iframe
-                    width={"98%"}
-                    height={300}
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15282225.79979123!2d73.7250245393691!3d20.750301298393563!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30635ff06b92b791%3A0xd78c4fa1854213a6!2sIndia!5e0!3m2!1sen!2sin!4v1587818542745!5m2!1sen!2sin"
-                  ></iframe>{" "}
                 </div>
               </div>
               <div className="btn-merchant-registration-wrapper">

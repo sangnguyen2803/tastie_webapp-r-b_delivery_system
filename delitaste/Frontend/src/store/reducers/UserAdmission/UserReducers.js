@@ -24,7 +24,7 @@ const initialState = {
   loginState: false,
   profile: null,
   styling: ["active", "default", "default", "default"],
-  refresh_token: localStorage.getItem("refresh_token"),
+  refreshToken: localStorage.getItem("refreshToken"),
   verifiedEmailToken: localStorage.getItem("verified_email_token"),
   isLoading: true,
 };
@@ -33,7 +33,7 @@ export default function (state = initialState, action) {
   const { type, payload } = action;
   switch (type) {
     case REGISTER_SUCCESS:
-      localStorage.setItem("refresh_token", payload.refreshtoken);
+      localStorage.setItem("refreshToken", payload.refreshtoken);
       return {
         ...state,
         ...payload,
@@ -43,25 +43,25 @@ export default function (state = initialState, action) {
         isUserAuthenticated: true,
       };
     case REGISTER_FAIL:
-      localStorage.removeItem("refresh_token");
+      localStorage.removeItem("refreshToken");
       return {
         ...state,
         ...payload,
-        refresh_token: null,
+        refreshToken: null,
         isUserAuthenticated: false,
         profile: null,
       };
     case LOGIN_SUCCESS:
-      localStorage.setItem("refresh_token", payload.refreshToken);
+      localStorage.setItem("refreshToken", payload.refreshToken);
       return {
         ...state,
         ...payload,
-        refresh_token: payload.refreshToken,
+        refreshToken: payload.refreshToken,
         profile: payload.profile,
         isUserAuthenticated: true,
       };
     case LOGIN_FAIL:
-      localStorage.removeItem("refresh_token");
+      localStorage.removeItem("refreshToken");
       return {
         ...state,
         ...payload,
@@ -69,11 +69,11 @@ export default function (state = initialState, action) {
         isUserAuthenticated: true,
       };
     case SIGN_OUT:
-      localStorage.removeItem("refresh_token");
+      localStorage.removeItem("refreshToken");
       return {
         ...state,
         ...payload,
-        refresh_token: null,
+        refreshToken: null,
       };
     case CHECK_DUPLICATION_SUCCESS:
       return {
