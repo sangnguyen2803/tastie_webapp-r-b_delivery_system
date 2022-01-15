@@ -1,6 +1,7 @@
 import "./Sidebar.scss";
 import ProfilePhoto from "assets/avatar.jpg";
-import { useEffect, useState } from "react";
+import ProviderImage from "assets/provider_avatar.jpg";
+import { Fragment, useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faShoppingBag,
@@ -13,6 +14,7 @@ import {
   faDollarSign,
   faCog,
   faHome,
+  faCaretRight,
 } from "@fortawesome/fontawesome-free-solid";
 import Logo from "assets/logo.png";
 import {
@@ -20,6 +22,7 @@ import {
   faStarHalfAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import { withRouter } from "react-router-dom";
+import { faBlackberry } from "@fortawesome/free-brands-svg-icons";
 
 const sidebarFeatures = [
   {
@@ -28,7 +31,7 @@ const sidebarFeatures = [
     title: "Home",
     subFeatures: [
       { id: 1, title: "My Restaurant", link: "provider/my-restaurant" },
-      { id: 2, title: "Operation", link: "provider/operation-time" },
+      { id: 2, title: "Operation", link: "provider/operation-settings" },
     ],
   },
   {
@@ -51,8 +54,7 @@ const sidebarFeatures = [
     icon: faDollarSign,
     title: "Revenue",
     subFeatures: [
-      { id: 1, title: "To Release", link: "revenue?type=1" },
-      { id: 2, title: "Release", link: "revenue?type=2" },
+      { id: 1, title: "Revenue Management", link: "revenue?type=1" },
     ],
   },
   {
@@ -67,9 +69,9 @@ const sidebarFeatures = [
     title: "Business Insights",
     subFeatures: [
       { id: 1, title: "Key Metrics", link: "businessInsight?type=1" },
-      { id: 2, title: "Orders Trend", link: "businessInsight?type=2" },
+      { id: 2, title: "Business Analytics", link: "businessInsight?type=2" },
       // Orders trend is a line chart showing the performance of your show over time (real-time, yesterday, 7 days, 30 days)
-      { id: 3, title: "Product Rankings", link: "businessInsight?type=3" },
+      //{ id: 3, title: "Product Rankings", link: "businessInsight?type=3" },
       // Product rankings including Sales, Units Sold and Page Views
       // Sales: Top 10 products according to total sales value of confirmed orders
       // Units Sold: Top 10 products according to total number of units sold in confirmed orders
@@ -78,29 +80,16 @@ const sidebarFeatures = [
   },
   {
     id: 6,
-    icon: faStarHalfAlt,
-    title: "Ratings",
-    subFeatures: [],
-  },
-  {
-    id: 7,
     icon: faBullhorn,
     title: "Marketing",
     subFeatures: [
-      { id: 1, title: "Vouchers", link: "/marketing?type=1" },
-      { id: 2, title: "Discount Promotions", link: "/marketing?type=2" },
+      { id: 1, title: "Discount Promotions", link: "/marketing?type=1" },
     ],
-  },
-  {
-    id: 8,
-    icon: faCog,
-    title: "User Setting",
-    subFeatures: [],
   },
 ];
 
 function Sidebar(props) {
-  const [selectedFeature, setSelectedFeature] = useState([2, 1]);
+  const [selectedFeature, setSelectedFeature] = useState([0, 1]);
   const [showFeatures, setShowFeatures] = useState({
     0: true,
     1: true,
@@ -109,8 +98,6 @@ function Sidebar(props) {
     4: true,
     5: true,
     6: true,
-    7: true,
-    8: true,
   });
 
   const handleSelectFeature = (id) => (e) => {
@@ -127,6 +114,10 @@ function Sidebar(props) {
   };
   return (
     <div className="sb-wrapper">
+      <div className="sb-header-wrapper">
+        <img src={ProviderImage} className="sb-header-avatar" />
+        <span className="sb-header-text">Phuc Long - Coffee & Tea</span>
+      </div>
       {sidebarFeatures.map((feature) => (
         <div className="sb-detail-wrapper" key={feature.id}>
           <div className="sb-feature-row">

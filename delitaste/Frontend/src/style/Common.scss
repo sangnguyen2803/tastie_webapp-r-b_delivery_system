@@ -43,7 +43,13 @@ $desktop-width: 1200px;
   flex-wrap: $flexWrap;
   flex-direction: row;
 }
-
+.file-image-preview {
+  border: 2px solid grey;
+  border-left: none;
+  max-width: 15%;
+  height: 100px;
+  align-self: center;
+}
 .form-input-medium {
   width: 50% !important;
 }
@@ -70,8 +76,8 @@ $desktop-width: 1200px;
   height: 100px;
   display: block;
   border: 2px #949494 solid;
-  padding-left: 5%;
-  padding-top: 3%;
+  padding-left: 20px;
+  padding-top: 5px;
   font-size: 13px;
   border-radius: 3px;
   background: #ffffff;
@@ -105,10 +111,13 @@ $desktop-width: 1200px;
 .form-file-field-2 {
   width: 100%;
   text-align: center;
-  height: 80px;
+  height: 100px;
   background-color: #ffffff;
   border: 2px #949494 solid;
-  display: inline-block;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .panel-text-field {

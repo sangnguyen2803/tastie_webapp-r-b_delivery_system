@@ -13,7 +13,6 @@ import { faCommentsDollar } from "@fortawesome/free-solid-svg-icons";
 
 function CategorySelector(props) {
   const [categoryList, setCategoryList] = useState(props.list);
-  const [selectedCategory, setSelectedCategory] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
 
   const updateSearchTerms = (e) => setSearchTerm(e.target.value);
@@ -22,7 +21,7 @@ function CategorySelector(props) {
     if (searchTerm) {
       const results =
         searchTerm.length > 1
-          ? props.list.filter((item) => item.categoryName.includes(searchTerm))
+          ? props.list.filter((item) => item.categoryNsame.includes(searchTerm))
           : props.list.filter((item) =>
               item.categoryName.startsWith(searchTerm)
             );
@@ -48,14 +47,16 @@ function CategorySelector(props) {
         <span className="category-selection-title">{props.title}</span>
         <div className="option-container">
           {categoryList.map((category) => (
-            <div className="option-row" key={category.id}>
+            <div className="option-row" key={category.category_id}>
               <Checkbox
                 checked={
-                  selectedCategory.indexOf(category.id) !== -1 ? true : false
+                  props.selectedCategory.indexOf(category.category_id) !== -1
+                    ? true
+                    : false
                 }
                 disabled={
-                  selectedCategory.length < props.required ||
-                  selectedCategory.indexOf(category.id) !== -1
+                  props.selectedCategory.length < props.required ||
+                  props.selectedCategory.indexOf(category.category_id) !== -1
                     ? false
                     : true
                 }
@@ -76,14 +77,19 @@ function CategorySelector(props) {
                 name="category"
                 onChange={(value) => {
                   if (value) {
-                    setSelectedCategory([...selectedCategory, category.id]);
+                    props.setSelectedCategory([
+                      ...props.selectedCategory,
+                      category.category_id,
+                    ]);
                     return;
                   } else {
-                    let index = selectedCategory.indexOf(category.id);
+                    let index = props.selectedCategory.indexOf(
+                      category.category_id
+                    );
                     if (index != -1) {
-                      var array = [...selectedCategory];
+                      var array = [...props.selectedCategory];
                       array.splice(index, 1);
-                      setSelectedCategory(array);
+                      props.setSelectedCategory(array);
                     }
                   }
                 }}
@@ -99,7 +105,7 @@ function CategorySelector(props) {
                   marginLeft: 15,
                   userSelect: "none",
                 }}
-                label={category.categoryName}
+                label={category.category_name}
               />
             </div>
           ))}
@@ -112,7 +118,7 @@ function CategorySelector(props) {
           onClick={props.close}
           width={100}
         />
-        <Button label="Save" type="primary" width={100} />
+        <Button onClick={props.save} label="Save" type="primary" width={100} />
       </ButtonGroup>
     </Fragment>
   );

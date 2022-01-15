@@ -104,7 +104,7 @@ export const checkDuplicationAPI = (email, phone) => async (dispatch) => {
 export const accountRegistrationAPI = (formData) => async (dispatch) => {
   const { email, password, phone, first_name, last_name } = formData;
   const registered_at = new Date().toISOString().slice(0, 10);
-  const role = "C";
+  const role = 1;
   const config = {
     headers: {
       "Content-Type": "application/json",

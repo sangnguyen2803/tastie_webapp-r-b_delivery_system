@@ -1,6 +1,6 @@
 import { Fragment, useEffect } from "react";
 import { Redirect, useSearchParams } from "react-router-dom";
-import ProductList from "components/MerchantDashboard/DashboardFeatures/ProductTabs/ProductOverview";
+import ProductList from "components/MerchantDashboard/DashboardFeatures/MDProduct/ProductOverview";
 import "./Tabs.scss";
 
 function Tabs({

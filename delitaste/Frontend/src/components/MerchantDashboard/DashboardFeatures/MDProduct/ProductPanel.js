@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useState } from "react";
 import { Redirect, useSearchParams } from "react-router-dom";
-import ProductOverview from "components/MerchantDashboard/DashboardFeatures/ProductTabs/ProductOverview";
-import ProductDetail from "components/MerchantDashboard/DashboardFeatures/ProductTabs/ProductDetail";
+import ProductOverview from "components/MerchantDashboard/DashboardFeatures/MDProduct/ProductOverview";
+import ProductDetail from "components/MerchantDashboard/DashboardFeatures/MDProduct/ProductDetail";
 import "../Panel.scss";
 import Tabs from "components/MerchantDashboard/DashboardFeatures/Tabs";
 import { faTags } from "@fortawesome/fontawesome-free-solid";

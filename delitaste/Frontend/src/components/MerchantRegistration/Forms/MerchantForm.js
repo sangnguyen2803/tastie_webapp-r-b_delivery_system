@@ -14,6 +14,28 @@ const backgroundStyling = {
 };
 
 function MerchantForm({ children }) {
+  const steps = [
+    {
+      description: "Service info",
+      styling: "active",
+    },
+    {
+      description: "Representative info",
+      styling: "default",
+    },
+    {
+      description: "Business unit info",
+      styling: "default",
+    },
+    {
+      description: "Product detail info",
+      styling: "default",
+    },
+    {
+      description: "Bank info",
+      styling: "default",
+    },
+  ];
   return (
     <div className="merchant-registration-page navbar-state">
       <NavBar hideBreadcrumb={false} fixed={true} />
@@ -21,7 +43,7 @@ function MerchantForm({ children }) {
         className="merchant-registration-form-container"
         style={backgroundStyling}
       >
-        <Stepper />
+        <Stepper steps={steps} />
         <div className="merchant-registration-form-wrapper">
           <div className="merchant-registration-form">{children}</div>
         </div>

@@ -7,7 +7,7 @@ import {
   faShippingFast,
   faTimesCircle,
 } from "@fortawesome/fontawesome-free-solid";
-import orderListData from "components/MerchantDashboard/DashboardFeatures/OrderTabs/data/orderListData";
+import orderListData from "components/MerchantDashboard/DashboardFeatures/MDOrder/data/orderListData";
 import "../Panel.scss";
 import ViewOrderDetail from "./OrderHandler/ViewOrderDetail";
 import ProgressBar from "components/Commons/ProgressBar/ProgressBar";
@@ -15,7 +15,7 @@ function OrderDetail(props) {
   const [orderList, setOrderList] = useState(orderListData);
   const [selectedOrder, setSelectedOrder] = useState(orderList[0]);
   const filterOrderList = (type) => {
-    console.log(type);
+    
     if (type === "All") {
       setOrderList(orderListData);
       return;

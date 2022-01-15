@@ -17,17 +17,13 @@ function FormHeader(props) {
           <span className="show-more-text">Scroll to Submit</span>
         </div>
 
-        <span className="merchant-registration-header-title">{props.name}</span>
+        <span className="merchant-registration-header-title">
+          {props.title}
+        </span>
       </div>
       <div className="header-content">
-        <span className="form-header-text">
-          Please provide your service information:
-        </span>
-        <span className="form-header-sub-text">
-          Your restaurant's information will be displayed on our website, please
-          making sure the information filled in this form is trustworthy and
-          correct.
-        </span>
+        <span className="form-header-text">{props.headerText}</span>
+        <span className="form-header-sub-text">{props.bodyText}</span>
       </div>
     </Fragment>
   );

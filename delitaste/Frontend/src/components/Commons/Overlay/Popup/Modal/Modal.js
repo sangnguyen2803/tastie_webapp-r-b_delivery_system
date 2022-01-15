@@ -11,11 +11,8 @@ import { faTimes } from "@fortawesome/fontawesome-free-solid";
 import "./Modal.scss";
 
 const Modal = ({ isOpen, close, width, height, title, children }) => {
-  const contentRef = useRef(null);
   /*
   useEffect(() => {
-   
-    
     if (!isOpen) return;
     function listener(event) {
       if (contentRef.current?.contains(event.target)) return;
@@ -31,8 +28,8 @@ const Modal = ({ isOpen, close, width, height, title, children }) => {
   */
 
   if (!isOpen) return null;
-  return ReactDOM.createPortal(
-    <div className="darken-transparent-background">
+  return (
+    <div className="modal-darken-transparent-background">
       <div
         className="modal-container"
         style={{
@@ -42,18 +39,17 @@ const Modal = ({ isOpen, close, width, height, title, children }) => {
           marginTop: `-${height / 2}px`,
         }}
       >
-        <div className="header-row">
-          <div className="header-title">{title}</div>
+        <div className="modal-header-row">
+          <div className="modal-header-title">{title}</div>
           <FontAwesomeIcon
-            className="header-close-icon"
+            className="modal-header-close-icon"
             onClick={close}
             icon={faTimes}
           />
         </div>
-        <div className="content">{children}</div>
+        <div className="modal-content">{children}</div>
       </div>
-    </div>,
-    portalRoot
+    </div>
   );
 };
 

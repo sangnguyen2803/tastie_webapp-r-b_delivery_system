@@ -1,6 +1,6 @@
 import { Fragment, useEffect, useState } from "react";
 import { Redirect, useSearchParams } from "react-router-dom";
-import OrderDetail from "components/MerchantDashboard/DashboardFeatures/OrderTabs/OrderDetail";
+import OrderDetail from "components/MerchantDashboard/DashboardFeatures/MDOrder/OrderDetail";
 import "../Panel.scss";
 import Tabs from "components/MerchantDashboard/DashboardFeatures/Tabs";
 import OrderHistory from "./OrderHistory";

@@ -17,8 +17,7 @@ import BankInfoForm from "components/MerchantRegistration/Forms/DetailMerchantFo
 import withAuth from "components/HigherOrderComponents(HOC)/withAuth";
 
 function MerchantFormScreen(props) {
-  useEffect(() => {
-    console.log(props); /*
+  useEffect(() => { /*
     if (!props.user.isUserAuthenticated) {
       props.setDialogBox(
         "You must sign up to access to this features.",

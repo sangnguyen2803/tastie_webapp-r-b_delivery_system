@@ -3,7 +3,7 @@ const { createProxyMiddleware } = require("http-proxy-middleware");
 module.exports = function (app) {
   app.use(
     createProxyMiddleware("/v1/api/auth", {
-      target: "http://localhost:3009/",
+      target: "http://localhost:3007/",
     })
   );
   app.use(

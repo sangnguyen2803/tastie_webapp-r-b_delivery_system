@@ -24,7 +24,7 @@ import ProgressBar from "components/Commons/ProgressBar/ProgressBar";
 import Tabs from "../Tabs";
 import AddProduct from "./ProductHandler/AddProduct";
 import ButtonGroup from "components/Commons/Button/ButtonGroup/ButtonGroup";
-import ProductForMenu from "components/MerchantDashboard/DashboardFeatures/ProductTabs/ProductForMenu";
+import ProductForMenu from "components/MerchantDashboard/DashboardFeatures/MDProduct/ProductForMenu";
 
 import "../Panel.scss";
 const data = [
@@ -153,10 +153,11 @@ const reorder = (list, startIndex, endIndex) => {
 
 function ProductDetail(props) {
   const [items, setItems] = useState(data);
+  useEffect(() => {
+    console.log(items);
+  }, [items]);
   const onDragEnd = (result) => {
     // dropped outside the list
-    console.log(result);
-    console.log("innner drag");
     if (!result.destination) {
       return;
     }
@@ -183,13 +184,10 @@ function ProductDetail(props) {
       let newItems = [...items];
       newItems = newItems.map((item) => {
         if (item.id === parentId) {
-          console.log("hello");
           item.products = reorderedSubItems;
         }
         return item;
       });
-      console.log(newItems);
-
       setItems(newItems);
     }
   };

@@ -2,7 +2,7 @@ import { Fragment, useState, useEffect } from "react";
 
 import "components/MerchantDashboard/DashboardFeatures/Panel.scss";
 import "style/Common.scss";
-import "components/MerchantDashboard/DashboardFeatures/OrderTabs/OrderHandler/OrderHandler.scss";
+import "components/MerchantDashboard/DashboardFeatures/MDOrder/OrderHandler/OrderHandler.scss";
 import { Formik, ErrorMessage, Form, Field } from "formik";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {

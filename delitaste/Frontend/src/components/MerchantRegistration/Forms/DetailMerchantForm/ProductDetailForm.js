@@ -1,64 +1,94 @@
-import { useState } from "react";
+import { Fragment, useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Formik, ErrorMessage, Form, Field } from "formik";
-import { Link } from "react-router-dom";
 import { withRouter } from "react-router-dom";
 import Menu from "assets/menu.jpg";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAsterisk, faImage } from "@fortawesome/fontawesome-free-solid";
 import "./DetailMerchantForm.scss";
 import "style/Common.scss";
-
 import FormHeader from "./FormHeader/FormHeader";
+import ImagePreview from "components/Commons/ImageHandlers/ImagePreview/ImagePreview";
 
 const initialValues = {
-  menuPhoto: "",
-  priceRange: "",
+  menu: null,
+  priceRange: null,
 };
-
+const formHeaderText = {
+  title: "4. Product Detail Information",
+  headerText: "Let Tastie help you bring your specialty to everyone.",
+  bodyText:
+    "To make your business more consumer-friendly, provide a detailed list of products that your business will provide including price for each product. After registration, our staff will compare the products that you will sell with this list.",
+};
 function ProductDetailForm(props) {
+  const [menu, setMenu] = useState(null);
   const handleSubmitForm = (values) => {
-    console.log(values);
+    console.log(values.menu);
+    console.log(values.priceRange);
   };
   return (
     <Formik
-      initialValues={initialValues}
+      initialValues={{ menu: null, priceRange: "" }}
       onSubmit={(values) => handleSubmitForm(values)}
     >
       {(formikProps) => {
-        const { values, errors, touched } = formikProps;
+        const { values, errors, touched, setFieldValue } = formikProps;
         return (
-          <>
+          <Fragment>
             <Form className="merchant-form-container">
-              <FormHeader name="Product & Merchandise Info" />
-              <div className="form-name">PRODUCT DETAIL INFORMATION:</div>
+              <FormHeader
+                title={formHeaderText.title}
+                headerText={formHeaderText.headerText}
+                bodyText={formHeaderText.bodyText}
+              />
+
               <div className="merchant-form-wrapper">
-                <div className="merchant-form-field-wrapper-file">
-                  <div className="merchant-form-label-wrapper-file">
-                    Menu Photo
-                  </div>
-                  <div className="merchant-form-input-wrapper-file">
-                    <div className="business-registration-browse">
-                      <Field
-                        className="form-file-field-2"
-                        type="file"
-                        name="menuPhoto"
-                      />
+                <div className="field-group-wrapper">
+                  <div className="merchant-form-field-wrapper-file">
+                    <div className="merchant-form-label-wrapper-file">
+                      Menu photo
+                    </div>
+                    <div className="merchant-form-input-wrapper-file">
+                      <div
+                        className="business-registration-browse"
+                        style={{
+                          width: "100%",
+                          display: "flex",
+                          flexDirection: "row",
+                        }}
+                      >
+                        <label className="form-file-field-2" for="file">
+                          <FontAwesomeIcon
+                            className="upload-icon"
+                            icon={faImage}
+                          />
+                          <span>Choose a file to upload</span>
+                          <Field
+                            type="file"
+                            name="menu"
+                            onChange={(event) => {
+                              setMenu(event.target.files[0]);
+                            }}
+                          />
+                        </label>
+                        <ImagePreview file={menu} />
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                <div className="description-box-wrapper">
-                  <img src={Menu} className="description-box-image" />
-                  <span className="description-box-content">
-                    Please upload a clear photo of the menu so we can help to
-                    create menu for your shop faster. <br />
-                    *Note: If pictures provided don't satisfy our requirements,
-                    Tastie will replace them with Tastie logo so that your shop
-                    can start to sell as soon as possible. You can still change
-                    those photos later.
-                  </span>
+                  <div className="description-box-wrapper">
+                    <img src={Menu} className="description-box-image" />
+                    <span className="description-box-content">
+                      Please upload a clear photo of the menu so we can help to
+                      create menu for your shop faster. <br />
+                      *Note: If pictures provided don't satisfy our
+                      requirements, Tastie will replace them with Tastie logo so
+                      that your shop can start to sell as soon as possible. You
+                      can still change those photos later.
+                    </span>
+                  </div>
                 </div>
-
                 <div className="merchant-form-field-wrapper">
                   <div className="merchant-form-label-wrapper">Price Range</div>
                   <div className="merchant-form-input-wrapper">
@@ -82,10 +112,7 @@ function ProductDetailForm(props) {
                     </Field>
                   </div>
                 </div>
-                <div
-                  className="field-bottom-side-wrapper"
-                  style={{ marginBottom: "20%" }}
-                >
+                <div className="field-bottom-side-wrapper">
                   <span className="field-description">
                     Price should be estimated based on the average price for
                     each product (dish) in your business units.
@@ -102,7 +129,7 @@ function ProductDetailForm(props) {
                 </button>
               </div>
             </Form>
-          </>
+          </Fragment>
         );
       }}
     </Formik>

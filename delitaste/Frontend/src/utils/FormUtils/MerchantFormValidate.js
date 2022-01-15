@@ -2,7 +2,7 @@ import * as yup from "yup";
 
 const phoneRegExp =
   /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
-
+const timeRegExp = /^([0-1]?[0-9]|2[0-4]):([0-5][0-9])(:[0-5][0-9])?$/;
 //schema
 const validateMerchantForm1 = yup.object().shape({
   name: yup.string().required("Merchant name is required"),
@@ -35,6 +35,12 @@ const validateMerchantForm2 = yup.object().shape({
 });
 
 const validateMerchantForm3 = yup.object().shape({
+  rushHour: yup
+    .string()
+    .matches(timeRegExp, "Incorrect time format, must be hh:mm:ss or hh:mm "),
+});
+
+const validateMerchantForm5 = yup.object().shape({
   idCardNumberBank: yup.string().required("This field cannot be left empty."),
   dateOfIssue: yup.date().required("This field cannot be left empty."),
   bankBeneficiaryName: yup
@@ -46,4 +52,9 @@ const validateMerchantForm3 = yup.object().shape({
   bankBranch: yup.string().required("This field cannot be left empty."),
 });
 
-export { validateMerchantForm1, validateMerchantForm2, validateMerchantForm3 };
+export {
+  validateMerchantForm1,
+  validateMerchantForm2,
+  validateMerchantForm3,
+  validateMerchantForm5,
+};

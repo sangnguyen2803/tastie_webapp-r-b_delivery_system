@@ -59,7 +59,6 @@ function EmailVerification(props) {
       code,
     };
     const result = await props.checkEmailVerificationCodeAPI(formData);
-    console.log(result);
     if (result) {
       await props.accountRegistrationAPI(props.submittedFormData.formData);
     }

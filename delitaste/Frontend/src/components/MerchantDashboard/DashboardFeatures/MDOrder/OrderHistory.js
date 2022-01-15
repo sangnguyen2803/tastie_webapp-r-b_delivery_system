@@ -7,7 +7,7 @@ import {
   faShippingFast,
   faTimesCircle,
 } from "@fortawesome/fontawesome-free-solid";
-import orderListData from "components/MerchantDashboard/DashboardFeatures/OrderTabs/data/orderListData";
+import orderListData from "components/MerchantDashboard/DashboardFeatures/MDOrder/data/orderListData";
 import "../Panel.scss";
 import ViewOrderDetail from "./OrderHandler/ViewOrderDetail";
 import SwitchSelector from "react-switch-selector";

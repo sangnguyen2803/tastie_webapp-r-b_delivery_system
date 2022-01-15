@@ -11,8 +11,26 @@ $logoColor: #aa0033;
   flex-wrap: $flexWrap;
   flex-direction: row;
 }
+
+.sb-header-wrapper {
+  @include FlexCol(100%, wrap);
+  height: 120px;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 2px solid rgb(235, 235, 235);
+  .sb-header-avatar {
+    width: 80px;
+    height: 80px;
+  }
+  .sb-header-text {
+    color: black;
+    font-size: 13px;
+    font-weight: bold;
+  }
+}
 .sb-wrapper {
   z-index: 1;
+  border-right: 2px solid rgb(241, 241, 241);
   position: fixed;
   background-color: #ffffff;
   color: rgb(255, 255, 255);

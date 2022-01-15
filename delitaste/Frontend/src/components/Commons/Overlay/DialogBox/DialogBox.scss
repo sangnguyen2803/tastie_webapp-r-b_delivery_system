@@ -1,15 +1,30 @@
+.darken-transparent-background {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba($color: #000000, $alpha: 0.35);
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .dialog-wrapper {
+  backdrop-filter: blur(5px);
   display: block;
-  position: absolute;
-  left: 35%;
-  top: 40%;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
   box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px,
     rgba(6, 24, 44, 0.65) 0px 4px 6px -1px,
     rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
   font-size: 14px;
   background-color: white;
   color: rgb(37, 37, 37);
-  z-index: 3;
+  z-index: 10;
   border-radius: 5px;
 }
 
@@ -28,7 +43,7 @@
     width: 95%;
     justify-self: flex-start;
     margin-left: 3%;
-    font-size: 18px;
+    font-size: 15px;
   }
   .header-close-icon {
     width: 5%;
@@ -45,5 +60,5 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: auto;
+  height: 150px;
 }

@@ -1,20 +1,35 @@
 import "./DetailMerchantForm.scss";
 import "style/Common.scss";
 import { useEffect, useState } from "react";
-import PropTypes from "prop-types";
 import { Formik, ErrorMessage, Form, Field } from "formik";
 import Stepper from "components/Commons/Stepper/Stepper";
+import { withRouter } from "react-router-dom";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-
 import Modal from "components/Commons/Overlay/Popup/Modal/Modal";
+import { validateMerchantForm3 } from "utils/FormUtils/MerchantFormValidate";
 import FormError from "components/Commons/ErrorHandlers/FormError/FormError";
 import Tag from "components/Commons/Tag/Tag";
 import FormHeader from "./FormHeader/FormHeader";
 import CategorySelector from "components/MerchantRegistration/Forms/DetailMerchantForm/CategorySelector/CategorySelector";
+import {
+  getCategoryAPI,
+  updateBusinessUnitInfoFormAPI,
+} from "store/actions/MerchantRegistration/MerchantRegistrationActions";
+import { setDialogBox } from "store/actions/UIComponents/DialogBoxAction";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAsterisk, faImage } from "@fortawesome/fontawesome-free-solid";
 import Switch from "react-switch";
 
+const formHeaderText = {
+  title: "3. Business unit information",
+  headerText:
+    "Set up your restaurant's information to attract and get more customers.",
+  bodyText:
+    "Make your business unit more accessible to the customers by providing as detailed information regarding your product as possible in the following format.",
+};
 const initialValues = {
   operating: {
     sunday: {
@@ -54,6 +69,20 @@ const initialValues = {
 function BusinessUnitForm(props) {
   const [showRestaurantCategory, setShowRestaurantCategory] = useState(false);
   const [showCuisineCategory, setShowCuisineCategory] = useState(false);
+  const [restaurantCategory, setRestaurantCategory] = useState([]);
+  const [cuisineCategory, setCuisineCategory] = useState([]);
+  const [selectedRestaurant, setSelectedRestaurant] = useState([]);
+  const [selectedCuisine, setSelectedCuisine] = useState([]);
+  useEffect(async () => {
+    try {
+      let restaurantCategory = await props.getCategoryAPI("provider");
+      let cuisineCategory = await props.getCategoryAPI("cuisine");
+      setRestaurantCategory(restaurantCategory);
+      setCuisineCategory(cuisineCategory);
+    } catch (err) {
+      console.log(err);
+    }
+  }, []);
 
   useEffect(() => {
     if (showRestaurantCategory || showCuisineCategory) {
@@ -63,7 +92,7 @@ function BusinessUnitForm(props) {
     document.body.style.position = "unset";
     document.body.style.overflowY = "scroll";
   }, [showRestaurantCategory, showCuisineCategory]);
-
+  /*
   const selectedCuisineCategory = [
     { id: 1, categoryName: "Milk tea" },
     { id: 2, categoryName: "Coffee" },
@@ -107,7 +136,7 @@ function BusinessUnitForm(props) {
     { id: 39, categoryName: "ThaiFood" },
     { id: 40, categoryName: "Dessert" },
   ];
-
+*/
   //weekday-switchers-state
   const [checkedSunday, setCheckedSunday] = useState(true);
   const [checkedMonday, setCheckedMonday] = useState(true);
@@ -117,57 +146,77 @@ function BusinessUnitForm(props) {
   const [checkedFriday, setCheckedFriday] = useState(true);
   const [checkedSaturday, setCheckedSaturday] = useState(true);
 
-  const handleSubmitForm = (values) => {
+  const handleSubmitForm = async (values) => {
     const { operating, rushHour, searchKeyword, description } = values;
+    if (!rushHour || !searchKeyword || !description) {
+      await props.setDialogBox(
+        "Please fill in required fields.",
+        "Fail to submit this form",
+        3000
+      );
+      return;
+    }
+
     const formData = {
-      businessInfo: {
-        operating: {
-          sunday: {
-            is_day_off: checkedSunday,
-            open_time: operating.sunday.openTime,
-            close_time: operating.sunday.closeTime,
-          },
-          monday: {
-            is_day_off: checkedMonday,
-            open_time: operating.monday.openTime,
-            close_time: operating.monday.closeTime,
-          },
-          tuesday: {
-            is_day_off: checkedTuesday,
-            open_time: operating.tuesday.openTime,
-            close_time: operating.tuesday.closeTime,
-          },
-          wednesday: {
-            is_day_off: checkedWednesday,
-            open_time: operating.wednesday.openTime,
-            close_time: operating.wednesday.closeTime,
-          },
-          thursday: {
-            is_day_off: checkedThursday,
-            open_time: operating.thursday.openTime,
-            close_time: operating.thursday.closeTime,
-          },
-          friday: {
-            is_day_off: checkedFriday,
-            open_time: operating.friday.openTime,
-            close_time: operating.friday.closeTime,
-          },
-          saturday: {
-            is_day_off: checkedSaturday,
-            open_time: operating.saturday.openTime,
-            close_time: operating.saturday.closeTime,
-          },
+      keyword: searchKeyword,
+      description: description,
+      avatar: "",
+      cover_picture: "",
+      facade_photo: "",
+      provider_category_id: selectedRestaurant,
+      cuisine_category_id: selectedCuisine,
+      rush_hour: rushHour,
+      operating: {
+        sunday: {
+          is_day_off: checkedSunday,
+          open_time: operating.sunday.openTime,
+          close_time: operating.sunday.closeTime,
         },
-        rush_hour: rushHour,
-        search_key: searchKeyword,
-        description: description,
+        monday: {
+          is_day_off: checkedMonday,
+          open_time: operating.monday.openTime,
+          close_time: operating.monday.closeTime,
+        },
+        tuesday: {
+          is_day_off: checkedTuesday,
+          open_time: operating.tuesday.openTime,
+          close_time: operating.tuesday.closeTime,
+        },
+        wednesday: {
+          is_day_off: checkedWednesday,
+          open_time: operating.wednesday.openTime,
+          close_time: operating.wednesday.closeTime,
+        },
+        thursday: {
+          is_day_off: checkedThursday,
+          open_time: operating.thursday.openTime,
+          close_time: operating.thursday.closeTime,
+        },
+        friday: {
+          is_day_off: checkedFriday,
+          open_time: operating.friday.openTime,
+          close_time: operating.friday.closeTime,
+        },
+        saturday: {
+          is_day_off: checkedSaturday,
+          open_time: operating.saturday.openTime,
+          close_time: operating.saturday.closeTime,
+        },
       },
     };
+    if (!props.match.params.id) return;
+    const updateStatus = await props.updateBusinessUnitInfoFormAPI(
+      props.match.params.id,
+      formData
+    );
+    if (updateStatus) props.history.push("product-detail");
   };
 
   return (
     <Formik
       initialValues={initialValues}
+      validationSchema={validateMerchantForm3}
+      validateOnChange={false}
       onSubmit={(values) => handleSubmitForm(values)}
     >
       {(formikProps) => {
@@ -175,14 +224,25 @@ function BusinessUnitForm(props) {
         return (
           <>
             <Form className="merchant-form-container">
-              <FormHeader name="Business Unit's Detail Info" />
-              <div className="form-name">MERCHANT DETAIL INFORMATION:</div>
+              <FormHeader
+                title={formHeaderText.title}
+                headerText={formHeaderText.headerText}
+                bodyText={formHeaderText.bodyText}
+              />{" "}
               <div className="merchant-form-wrapper">
                 <div className="merchant-form-field-wrapper">
                   <div className="merchant-form-switch-label-wrapper">
-                    Operation time
+                    Operation time{" "}
+                    <FontAwesomeIcon className="asterisk" icon={faAsterisk} />
                   </div>
-
+                  <div className="field-bottom-side-wrapper">
+                    <span className="field-description">
+                      Once set operation time, your restaurant must be open at
+                      these times. <br />
+                      Operation time can be changed right after merchant
+                      registration is completed.
+                    </span>
+                  </div>
                   <div className="merchant-form-switch-wrapper">
                     <div className="operation-time-wrapper">
                       <Switch
@@ -426,21 +486,35 @@ function BusinessUnitForm(props) {
 
                 <div className="merchant-form-field-wrapper">
                   <div className="merchant-form-label-wrapper">Rush hour</div>
-                  <div className="merchant-form-input-wrapper">
+                  <div className="merchant-form-input-wrapper form-input-small">
                     <Field
                       className="form-text-field"
                       type="text"
                       name="rushHour"
-                      placeholder="Rush Hour"
+                      placeholder="Rush hour"
                       maxLength={50}
                       autoComplete="on"
                     />
                   </div>
                 </div>
-
+                <div className="field-bottom-side-wrapper">
+                  <FormError
+                    err={
+                      errors.rushHour && touched.rushHour ? errors.rushHour : ""
+                    }
+                    spaceBetween={0}
+                    fontSize={12}
+                    fontWeight={"bold"}
+                  />
+                </div>
                 <div className="merchant-form-field-wrapper">
                   <div className="merchant-form-label-wrapper">
-                    Search Keyword
+                    Search keywords
+                  </div>
+                  <div className="field-bottom-side-wrapper">
+                    <span className="field-description">
+                      Keywords separated by commas. Max. 25 characters.
+                    </span>
                   </div>
                   <div className="merchant-form-input-wrapper">
                     <Field
@@ -448,7 +522,7 @@ function BusinessUnitForm(props) {
                       type="text"
                       name="searchKeyword"
                       placeholder="Search Keyword"
-                      maxLength={50}
+                      maxLength={25}
                       autoComplete="on"
                     />
                   </div>
@@ -456,11 +530,16 @@ function BusinessUnitForm(props) {
 
                 <div className="merchant-form-field-wrapper">
                   <div className="merchant-form-label-wrapper">Description</div>
+                  <div className="field-bottom-side-wrapper">
+                    <span className="field-description">
+                      Max. 150 characters.
+                    </span>
+                  </div>
                   <div className="merchant-form-input-wrapper">
                     <Field
                       className="form-text-field-textarea"
                       component="textarea"
-                      name="Description"
+                      name="description"
                       placeholder="Restaurant Description"
                       maxLength={200}
                     />
@@ -469,7 +548,12 @@ function BusinessUnitForm(props) {
 
                 <div className="merchant-form-field-wrapper">
                   <div className="merchant-form-label-wrapper">
-                    Restaurant <br /> Category
+                    Restaurant category
+                  </div>
+                  <div className="field-bottom-side-wrapper">
+                    <span className="field-description">
+                      Select at least 1 category and maximum 3 categories.
+                    </span>
                   </div>
                   <div className="merchant-form-input-wrapper">
                     <div className="select-category-button-wrapper">
@@ -484,14 +568,23 @@ function BusinessUnitForm(props) {
                   </div>
                 </div>
                 <div className="tag-container">
-                  {selectedRestaurantCategory.map((tag, index) => (
-                    <Tag text={tag.categoryName} />
-                  ))}
+                  {restaurantCategory.map((tag, index) =>
+                    selectedRestaurant.includes(tag.category_id) ? (
+                      <Tag key={tag.category_id} text={tag.category_name} />
+                    ) : (
+                      <></>
+                    )
+                  )}
                 </div>
 
                 <div className="merchant-form-field-wrapper">
                   <div className="merchant-form-label-wrapper">
-                    Cuisine <br /> Category
+                    Cuisine category
+                  </div>
+                  <div className="field-bottom-side-wrapper">
+                    <span className="field-description">
+                      Select at least 1 category and maximum 2 categories.
+                    </span>
                   </div>
                   <div className="merchant-form-input-wrapper">
                     <div className="select-category-button-wrapper">
@@ -506,54 +599,87 @@ function BusinessUnitForm(props) {
                   </div>
                 </div>
                 <div className="tag-container">
-                  {selectedCuisineCategory.map((tag, index) => (
-                    <Tag text={tag.categoryName} />
-                  ))}
+                  {cuisineCategory.map((tag, index) =>
+                    selectedCuisine.includes(tag.category_id) ? (
+                      <Tag key={tag.category_id} text={tag.category_name} />
+                    ) : (
+                      <></>
+                    )
+                  )}
                 </div>
-
-                <div className="merchant-form-field-wrapper-file">
-                  <div className="merchant-form-label-wrapper-file">
-                    Cover Picture
+                <div className="field-group-title">
+                  Required rstaurant photo:
+                </div>
+                <div className="field-group-wrapper">
+                  <div className="field-bottom-side-wrapper">
+                    <span className="field-description">
+                      Please use popular dish or logo of your shop to attract
+                      more customers <br />
+                      <FontAwesomeIcon className="asterisk" icon={faAsterisk} />
+                      Note: If pictures provided don't satisfy our requirements,
+                      Tastie will replace them with Tastie logo so that your
+                      shop can start to sell as soon as possible. You can still
+                      change those photos later.
+                    </span>
                   </div>
-                  <div className="merchant-form-input-wrapper-file">
-                    <div className="business-registration-browse">
-                      <Field
-                        className="form-file-field-2"
-                        type="file"
-                        name="merchant-id-card-1"
-                        maxLength={50}
-                        autoComplete="on"
-                      />
+                  <div className="merchant-form-field-wrapper-file">
+                    <div className="merchant-form-label-wrapper-file">
+                      Cover Picture
+                    </div>
+                    <div className="merchant-form-input-wrapper-file">
+                      <div className="business-registration-browse">
+                        <label className="form-file-field-2" for="upload">
+                          <FontAwesomeIcon
+                            className="upload-icon"
+                            icon={faImage}
+                          />
+                          <span>Choose a file to upload</span>
+                          <input
+                            type="file"
+                            id="upload"
+                          />
+                        </label>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div className="merchant-form-field-wrapper-file">
-                  <div className="merchant-form-label-wrapper-file">
-                    Facade Photo
-                  </div>
-                  <div className="merchant-form-input-wrapper-file">
-                    <div className="business-registration-browse">
-                      <Field
-                        className="form-file-field-2"
-                        type="file"
-                        name="merchant-id-card-1"
-                        maxLength={50}
-                        autoComplete="on"
-                      />
+                  <div className="merchant-form-field-wrapper-file">
+                    <div className="merchant-form-label-wrapper-file">
+                      Facade Photo
+                    </div>
+                    <div className="merchant-form-input-wrapper-file">
+                      <div className="business-registration-browse">
+                        <label className="form-file-field-2" for="upload">
+                          <FontAwesomeIcon
+                            className="upload-icon"
+                            icon={faImage}
+                          />
+                          <span>Choose a file to upload</span>
+                          <input
+                            type="file"
+                            id="upload"
+                          />
+                        </label>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div className="merchant-form-field-wrapper-file">
-                  <div className="merchant-form-label-wrapper-file">Avatar</div>
-                  <div className="merchant-form-input-wrapper-file">
-                    <div className="business-registration-browse">
-                      <Field
-                        className="form-file-field-2"
-                        type="file"
-                        name="merchant-id-card-1"
-                        maxLength={50}
-                        autoComplete="on"
-                      />
+                  <div className="merchant-form-field-wrapper-file">
+                    <div className="merchant-form-label-wrapper-file">
+                      Avatar
+                    </div>
+                    <div className="merchant-form-input-wrapper-file">
+                      <div className="business-registration-browse">
+                        <label className="form-file-field-2" for="upload">
+                          <FontAwesomeIcon
+                            className="upload-icon"
+                            icon={faImage}
+                          />
+                          <span>Choose a file to upload</span>
+                          <input
+                            type="file"
+                            id="upload"
+                          />
+                        </label>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -573,11 +699,15 @@ function BusinessUnitForm(props) {
               title={"Restaurant Category"}
               width={60}
               height={500}
-              close={() => setShowRestaurantCategory(false)}
+              close={() => {
+                setShowRestaurantCategory(false);
+              }}
             >
               <CategorySelector
-                close={() => setShowRestaurantCategory(false)}
-                list={selectedRestaurantCategory}
+                save={() => setShowRestaurantCategory(false)}
+                selectedCategory={selectedRestaurant}
+                setSelectedCategory={setSelectedRestaurant}
+                list={restaurantCategory}
                 title={"Select categories for restaurant's dishes (maximum: 3)"}
                 required={3}
               />
@@ -587,11 +717,17 @@ function BusinessUnitForm(props) {
               title={"Cuisine Category"}
               width={60}
               height={500}
-              close={() => setShowCuisineCategory(false)}
+              close={() => {
+                setShowCuisineCategory(false);
+              }}
             >
               <CategorySelector
-                close={() => setShowCuisineCategory(false)}
-                list={selectedCuisineCategory}
+                save={() => {
+                  setShowCuisineCategory(false);
+                }}
+                selectedCategory={selectedCuisine}
+                setSelectedCategory={setSelectedCuisine}
+                list={cuisineCategory}
                 title={"Select categories for your restaurant (maximum: 2)"}
                 required={2}
               />
@@ -603,4 +739,16 @@ function BusinessUnitForm(props) {
   );
 }
 
-export default BusinessUnitForm;
+BusinessUnitForm.propTypes = {
+  getCategoryAPI: PropTypes.func.isRequired,
+  updateBusinessUnitInfoFormAPI: PropTypes.func.isRequired,
+  setDialogBox: PropTypes.func.isRequired,
+};
+
+export default withRouter(
+  connect(null, {
+    getCategoryAPI,
+    updateBusinessUnitInfoFormAPI,
+    setDialogBox,
+  })(BusinessUnitForm)
+);

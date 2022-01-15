@@ -1,5 +1,5 @@
 import "./DetailMerchantForm.scss";
-import { useEffect, useState, useRef, useCallback } from "react";
+import { useEffect, useState, useRef, useCallback, Fragment } from "react";
 import "style/Common.scss";
 import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
@@ -25,18 +25,22 @@ import StepperArrow from "assets/stepper-arrow.png";
 
 const initialValues = {
   name: "",
+  type: "",
+  street: "",
   phone: "",
   city: "",
   district: "",
   ward: "",
   road: "",
-  address: "",
-  type: "",
-  street: "",
 };
 
+const formHeaderText = {
+  title: "1. Provider Service Information",
+  headerText: "Set up your Tastie's merchant account",
+  bodyText:
+    "Your restaurant information will be public on Tastie. Make sure the information is accurrate and visible to the public.",
+};
 function ServiceInfoForm(props) {
-  const [addressMapbox, setAddressMapbox] = useState("");
   const [viewport, setViewport] = useState({
     latitude: 37.7577,
     longitude: -122.4376,
@@ -80,24 +84,21 @@ function ServiceInfoForm(props) {
     return address.join(", ");
   };
 
-  const searchOnMap = (values) => {
-    const { road, city, district, ward } = values;
-
-    const result = getFullAddress(road, city, district, ward);
-    setAddressMapbox(result);
-  };
   const handleSubmitForm = async (values) => {
-    const { name, phone, city, district, ward, road } = values;
+    const { phone, city, district, ward, road } = values;
+    let merchantName = [values.name];
+    values.type && merchantName.push(values.type);
+    values.street && merchantName.push(values.street);
     const formData = {
       address: getFullAddress(road, city, district, ward),
+      latitude: viewport.latitude,
+      longitude: viewport.longitude,
+      merchant_name: merchantName.join(" "),
+      hotline: phone,
       city_id: city,
       district_id: district,
-      latitude: 0,
-      longitude: 0,
-      merchant_name: name,
-      hotline: phone,
-      road: road,
       ward_id: ward,
+      road: road,
     };
     if (!props.match.params.id) return;
     const updateStatus = await props.updateServiceInfoFormAPI(
@@ -106,7 +107,6 @@ function ServiceInfoForm(props) {
     );
     if (updateStatus) props.history.push("representative");
   };
-  const handleMapViewport = (e) => {};
   return (
     <Formik
       initialValues={initialValues}
@@ -116,11 +116,20 @@ function ServiceInfoForm(props) {
     >
       {(formikProps) => {
         const { values, errors, touched } = formikProps;
-
+        const [addressMapbox, setAddressMapbox] = useState("");
+        const searchOnMap = (values) => {
+          const { road, city, district, ward } = values;
+          const result = getFullAddress(road, city, district, ward);
+          setAddressMapbox(result);
+        };
         return (
-          <>
+          <Fragment>
             <Form className="merchant-form-container">
-              <FormHeader name="1. Provider Service Information" />
+              <FormHeader
+                title={formHeaderText.title}
+                headerText={formHeaderText.headerText}
+                bodyText={formHeaderText.bodyText}
+              />
               <div className="merchant-form-wrapper">
                 <div className="merchant-form-field-wrapper">
                   <div className="merchant-form-label-wrapper">
@@ -173,8 +182,9 @@ function ServiceInfoForm(props) {
                     fontWeight={"bold"}
                   />
                   <span className="field-description">
-                    Merchant name should be name by name of your restaurant,
-                    following with street name. e.g: "The Alley - Ho Tung Mau"
+                    Merchant name should be named by the name of the restaurant
+                    and must be in the same format as provided. <br />
+                    E.g: "The Alley - Tra Sua - Ho Tung Mau"
                   </span>
                 </div>
                 <div className="merchant-form-field-wrapper">
@@ -211,10 +221,16 @@ function ServiceInfoForm(props) {
                 </div>
 
                 <div className="group-field-name">Business address:</div>
+                <div className="field-bottom-side-wrapper">
+                  <span className="field-description">
+                    To make sure your business address is accurate. Please check
+                    location displayed on map below.
+                  </span>
+                </div>
                 <div className="location-wrapper">
                   <div
                     className="group-field-medium"
-                    onClick={searchOnMap(values)}
+                    onClick={() => searchOnMap(values)}
                   >
                     <div className="merchant-form-field-wrapper">
                       <div className="merchant-form-label-wrapper">City</div>
@@ -339,7 +355,7 @@ function ServiceInfoForm(props) {
                       ref={mapRef}
                       {...viewport}
                       width="100%"
-                      height="350px"
+                      height="320px"
                       onViewportChange={handleViewportChange}
                       mapStyle="mapbox://styles/mapbox/streets-v9"
                       containerStyle={{
@@ -385,7 +401,7 @@ function ServiceInfoForm(props) {
                 </button>
               </div>
             </Form>
-          </>
+          </Fragment>
         );
       }}
     </Formik>

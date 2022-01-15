@@ -14,9 +14,7 @@ function AvatarEdit({
   const [scaleValue, setScaleValue] = useState(1);
 
   const onCrop = () => {
-    console.log(editor);
     if (editor !== null) {
-      console.log(editor.getImageScaledToCanvas().toDataURL());
       setUserProfilePic(editor.getImageScaledToCanvas().toDataURL());
     }
   };

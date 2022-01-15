@@ -26,7 +26,7 @@ h2 {
   justify-content: flex-start;
 }
 .merchant-registration-form {
-  background-color: rgb(250, 250, 250);
+  background-color: rgb(255, 255, 255);
   width: 60%;
   display: flex;
   flex-direction: column;
@@ -62,7 +62,6 @@ h2 {
 .form-banner-wrapper {
   margin-top: 40px;
   width: 100%;
-  background: rgb(250, 250, 250);
   display: flex;
   flex-direction: row;
   align-items: flex-start;
@@ -147,98 +146,39 @@ h2 {
 
 //responsive design
 @media all and (max-width: 767px) {
-  .form-banner-wrapper {
-    margin-top: 10px;
-    background: rgb(250, 250, 250);
-    display: flex;
-    flex-direction: column-reverse;
-    align-items: center;
-    width: 100%;
-    img {
-      width: 100%;
-    }
-    .merchant-registration-header-title {
-      font-family: "Poppins", sans-serif;
-      background: rgba(146, 0, 0, 0.9);
-      align-self: flex-start;
-      width: 35%;
-      font-size: 13px;
-      color: white;
-      height: 22px;
-      text-align: left;
-      margin-left: 0.5%;
-      padding-top: 0.5%;
-      padding-bottom: 0.5%;
-      text-indent: 20px;
-      clip-path: polygon(0 0, 92% 0, 100% 100%, 0% 100%);
-    }
-  }
   .merchant-registration-form {
     width: 95% !important;
-  }
-  .merchant-registration-header-title {
-    font-size: 14px !important;
-    width: 65% !important;
   }
   .merchant-form-label-wrapper {
     font-size: 14px;
   }
   .merchant-form-wrapper {
     margin-top: 2%;
-    width: 85% !important;
+    width: 100% !important;
   }
   .header-content {
-    width: 85% !important;
+    width: 100% !important;
   }
   .form-name {
-    width: 85% !important;
+    width: 100% !important;
   }
 }
 
 @media only screen and (max-width: 1200px) and (min-width: 767px) {
-  .form-banner-wrapper {
-    margin-top: 10px;
-    background: rgb(250, 250, 250);
-    display: flex;
-    flex-direction: column-reverse;
-    align-items: center;
-    width: 100%;
-    img {
-      width: 100%;
-    }
-    .merchant-registration-header-title {
-      font-family: "Poppins", sans-serif;
-      background: rgba(146, 0, 0, 0.9);
-      align-self: flex-start;
-      width: 35%;
-      font-size: 13px;
-      color: white;
-      height: 22px;
-      text-align: left;
-      margin-left: 0.5%;
-      padding-top: 0.5%;
-      padding-bottom: 0.5%;
-      text-indent: 20px;
-      clip-path: polygon(0 0, 92% 0, 100% 100%, 0% 100%);
-    }
-  }
   .merchant-registration-form {
-    width: 800px !important;
-  }
-  .merchant-registration-header-title {
-    width: 65% !important;
+    width: 650px !important;
   }
   .merchant-form-label-wrapper {
     font-size: 13px;
   }
   .merchant-form-wrapper {
     margin-top: 2%;
-    width: 85% !important;
+    width: 100% !important;
   }
   .header-content {
-    width: 85% !important;
+    width: 100% !important;
   }
   .form-name {
-    width: 85% !important;
+    width: 100% !important;
   }
 }
