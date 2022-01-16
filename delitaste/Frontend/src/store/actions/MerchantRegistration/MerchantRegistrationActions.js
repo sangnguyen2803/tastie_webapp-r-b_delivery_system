@@ -7,6 +7,8 @@ import {
   UPDATE_SERVICE_INFO_FORM,
   UPDATE_REPRESENTATIVE_INFO_FORM,
   UPDATE_BUSINESS_UNIT_INFO_FORM,
+  UPDATE_PRODUCT_DETAIL_INFO_FORM,
+  UPDATE_BANK_INFO_FORM,
 } from "store/actions/types";
 
 //create provider
@@ -125,6 +127,56 @@ export const updateBusinessUnitInfoFormAPI = (id, data) => async (dispatch) => {
       dispatch({
         type: UPDATE_BUSINESS_UNIT_INFO_FORM,
         payload: { isBusinessUnitInfoFormSubmitted: true },
+      });
+      return true;
+    }
+    return false;
+  } catch (err) {
+    console.log(err.response.data.errors);
+    return false;
+  }
+};
+//form 4
+export const updateProductDetailInfoFormAPI =
+  (id, data) => async (dispatch) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const body = JSON.stringify(data);
+    try {
+      const endpoint = `/v1/api/provider/register/${id}/menu-photo`;
+      const res = await axios.post(endpoint, body, config);
+      if (res.data?.state) {
+        dispatch({
+          type: UPDATE_PRODUCT_DETAIL_INFO_FORM,
+          payload: { isProductDetailInfoFormSubmitted: true },
+        });
+        return true;
+      }
+      return false;
+    } catch (err) {
+      console.log(err.response.data.errors);
+      return false;
+    }
+  };
+
+//form 5
+export const updateBankInfoFormAPI = (id, data) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  const body = JSON.stringify(data);
+  try {
+    const endpoint = `/v1/api/provider/register/${id}/menu-photo`;
+    const res = await axios.post(endpoint, body, config);
+    if (res.data?.state) {
+      dispatch({
+        type: UPDATE_BANK_INFO_FORM,
+        payload: { isBankInfoFormSubmitted: true },
       });
       return true;
     }

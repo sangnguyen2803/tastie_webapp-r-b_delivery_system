@@ -4,14 +4,15 @@ import { connect } from "react-redux";
 import { Formik, ErrorMessage, Form, Field } from "formik";
 import { Link } from "react-router-dom";
 import { withRouter } from "react-router-dom";
-import { validateMerchantForm3 } from "utils/FormUtils/MerchantFormValidate";
+import { validateMerchantForm5 } from "utils/FormUtils/MerchantFormValidate";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAsterisk } from "@fortawesome/fontawesome-free-solid";
 import "./DetailMerchantForm.scss";
 import "style/Common.scss";
-
 import FormError from "components/Commons/ErrorHandlers/FormError/FormError";
 import FormHeader from "./FormHeader/FormHeader";
+import { updateBankInfoFormAPI } from "store/actions/MerchantRegistration/MerchantRegistrationActions";
+
 const formHeaderText = {
   title: "5. Bank Account Information",
   headerText: "One final step to finish your merchant registration.",
@@ -36,11 +37,27 @@ function BankInfoForm(props) {
       behavior: "smooth",
     });
   }, []);
-  const handleSubmitForm = (values) => {};
+  const handleSubmitForm = async (values) => {
+    const formData = {
+      id_card_number: values.idCardNumberBank,
+      date_of_issue: values.dateOfIssue,
+      bank_beneficiary_name: values.bankBeneficiaryName,
+      bank_account_number: values.bankAccountNumber,
+      bank_name: values.bankName,
+      bank_province: values.bankProvince,
+      bank_branch: values.bankBranch,
+    };
+    if (!props.match.params.id) return;
+    const updateStatus = await props.updateBankInfoFormAPI(
+      props.match.params.id,
+      formData
+    );
+    if (updateStatus) props.history.push("/merchant-dashboard");
+  };
   return (
     <Formik
       initialValues={initialValues}
-      validationSchema={validateMerchantForm3}
+      validationSchema={validateMerchantForm5}
       validateOnChange={false}
       onSubmit={(values) => handleSubmitForm(values)}
     >
@@ -301,4 +318,11 @@ function BankInfoForm(props) {
   );
 }
 
-export default withRouter(BankInfoForm);
+BankInfoForm.propTypes = {
+  updateBankInfoFormAPI: PropTypes.func.isRequired,
+};
+export default withRouter(
+  connect(null, {
+    updateBankInfoFormAPI,
+  })(BankInfoForm)
+);

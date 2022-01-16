@@ -41,17 +41,18 @@ const validateMerchantForm3 = yup.object().shape({
 });
 
 const validateMerchantForm5 = yup.object().shape({
-  idCardNumberBank: yup.string().required("This field cannot be left empty."),
-  dateOfIssue: yup.date().required("This field cannot be left empty."),
-  bankBeneficiaryName: yup
+  idCardNumberBank: yup.string(),
+  dateOfIssue: yup.date().required("This field is required."),
+  bankBeneficiaryName: yup.string(),
+  bankAccountNumber: yup
     .string()
-    .required("This field cannot be left empty."),
-  bankAccountNumber: yup.string().required("This field cannot be left empty."),
-  bankName: yup.string().required("This field cannot be left empty."),
-  bankProvince: yup.string().required("This field cannot be left empty."),
-  bankBranch: yup.string().required("This field cannot be left empty."),
+    .matches(/^[0-9]+$/, "Must be only digits")
+    .min(12, "Bank account must be over 12 digits in length."),
+  bankName: yup.string(),
+  bankProvince: yup.string(),
+  bankBranch: yup.string(),
 });
-
+  
 export {
   validateMerchantForm1,
   validateMerchantForm2,

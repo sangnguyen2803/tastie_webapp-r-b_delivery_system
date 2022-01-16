@@ -10,7 +10,18 @@ import "./DetailMerchantForm.scss";
 import "style/Common.scss";
 import FormHeader from "./FormHeader/FormHeader";
 import ImagePreview from "components/Commons/ImageHandlers/ImagePreview/ImagePreview";
+import { updateProductDetailInfoFormAPI } from "store/actions/MerchantRegistration/MerchantRegistrationActions";
 
+const priceRangeOptions = [
+  "0 - 20.000đ",
+  "20.000đ - 50.000đ",
+  "50.000đ - 100.000đ",
+  "100.000đ - 200.000đ",
+  "200.000đ - 500.000đ",
+  "500.000đ - 1.000.000đ",
+  "1.000.000đ - 2.000.000đ",
+  "2.000.000đ - 5.000.000đ",
+];
 const initialValues = {
   menu: null,
   priceRange: null,
@@ -23,9 +34,18 @@ const formHeaderText = {
 };
 function ProductDetailForm(props) {
   const [menu, setMenu] = useState(null);
-  const handleSubmitForm = (values) => {
-    console.log(values.menu);
-    console.log(values.priceRange);
+  const handleSubmitForm = async (values) => {
+    const formData = {
+      menu_image: "a",
+      price_range: values.priceRange,
+    };
+    console.log(formData);
+    if (!props.match.params.id) return;
+    const updateStatus = await props.updateProductDetailInfoFormAPI(
+      props.match.params.id,
+      formData
+    );
+    if (updateStatus) props.history.push("bank");
   };
   return (
     <Formik
@@ -135,5 +155,11 @@ function ProductDetailForm(props) {
     </Formik>
   );
 }
-
-export default withRouter(ProductDetailForm);
+ProductDetailForm.propTypes = {
+  updateProductDetailInfoFormAPI: PropTypes.func.isRequired,
+};
+export default withRouter(
+  connect(null, {
+    updateProductDetailInfoFormAPI,
+  })(ProductDetailForm)
+);
