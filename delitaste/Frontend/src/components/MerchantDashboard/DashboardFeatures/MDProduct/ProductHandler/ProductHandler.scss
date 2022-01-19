@@ -2,6 +2,7 @@
   overflow-y: scroll;
   overflow-x: hidden;
   flex: 1;
+  max-height: 540px;
   width: 100%;
   &::-webkit-scrollbar {
     width: 6px;
@@ -88,7 +89,7 @@
 
 .product-detail-form-with-select {
   display: flex;
-  width: 90%;
+  width: 92%;
   flex-direction: row;
   .select-currency {
     width: 30%;
@@ -97,7 +98,43 @@
     font-family: "Poppins", sans-serif !important;
   }
   .input-price {
+    text-indent: 20px;
     width: 70%;
     font-family: "Poppins", sans-serif !important;
+  }
+}
+
+.product-detail-form-with-select-2 {
+  display: flex;
+  width: 92%;
+  flex-direction: row;
+  .select-box {
+    text-indent: 20px;
+    width: 100%;
+    height: 35px;
+    font-family: "Poppins", sans-serif !important;
+  }
+}
+.option-box-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  .option-box {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    user-select: none;
+    width: 82px;
+    height: 25px;
+    font-size: 13px;
+    background-color: rgb(235, 235, 235);
+    border: 0.5px solid rgb(0, 0, 0);
   }
 }

@@ -23,7 +23,7 @@ function Home(props) {
   return (
     <Fragment>
       <NavBar fixed={true} />
-      <div className="main" style={backgroundStyling}>
+      <div className="main">
         <MainContent />
       </div>
       <Footer />

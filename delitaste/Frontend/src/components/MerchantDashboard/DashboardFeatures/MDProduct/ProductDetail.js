@@ -23,7 +23,7 @@ import Picture12 from "assets/FoodImg/picture12.jpg";
 import ProgressBar from "components/Commons/ProgressBar/ProgressBar";
 import Tabs from "../Tabs";
 import AddProduct from "./ProductHandler/AddProduct";
-import ButtonGroup from "components/Commons/Button/ButtonGroup/ButtonGroup";
+import EditProduct from "./ProductHandler/EditProduct";
 import ProductForMenu from "components/MerchantDashboard/DashboardFeatures/MDProduct/ProductForMenu";
 
 import "../Panel.scss";
@@ -262,34 +262,6 @@ function ProductDetail(props) {
         </div>
         <div className="sub-detail-panel-wrapper">
           <AddProduct />
-          <ButtonGroup
-            width={90}
-            float={"center"}
-            mgTop={10}
-            gap={10}
-            mgBottom={10}
-          >
-            <Button
-              type="secondary"
-              width={150}
-              height={36}
-              radius={"0px"}
-              label={"Undo"}
-              prefix={
-                <FontAwesomeIcon icon={faUndo} style={{ color: "white" }} />
-              }
-            />
-            <Button
-              type="primary"
-              width={150}
-              height={36}
-              radius={"0px"}
-              label={"Save"}
-              prefix={
-                <FontAwesomeIcon icon={faSave} style={{ color: "white" }} />
-              }
-            />
-          </ButtonGroup>
         </div>
       </div>
     </Fragment>

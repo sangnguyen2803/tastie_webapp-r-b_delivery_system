@@ -198,7 +198,7 @@ export const checkEmailVerificationCodeAPI = (data) => async (dispatch) => {
     console.log(err);
   }
 };
-
+//get profile
 export const getUserProfileAPI = (accessToken) => async (dispatch) => {
   const config = {
     headers: {
@@ -212,7 +212,10 @@ export const getUserProfileAPI = (accessToken) => async (dispatch) => {
     if (res.data) {
       dispatch({
         type: GET_PROFILE_SUCCESS,
-        payload: { profile: res.data.profile },
+        payload: {
+          profile: res.data.profile,
+          providerId: res.data.provider_id,
+        },
       });
     }
   } catch (err) {

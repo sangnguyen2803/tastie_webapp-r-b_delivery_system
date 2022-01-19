@@ -114,11 +114,16 @@ function CategorySelector(props) {
       <ButtonGroup float={"flex-end"} direction={"row"} gap={20} mgTop={25}>
         <Button
           label="Cancel"
-          type="secondary"
+          buttonType="secondary"
           onClick={props.close}
           width={100}
         />
-        <Button onClick={props.save} label="Save" type="primary" width={100} />
+        <Button
+          onClick={props.save}
+          label="Save"
+          buttonType="primary"
+          width={100}
+        />
       </ButtonGroup>
     </Fragment>
   );

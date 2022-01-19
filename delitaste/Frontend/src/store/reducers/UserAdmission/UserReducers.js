@@ -21,12 +21,13 @@ const initialState = {
   formData: {},
   isEmailVerified: false,
   isUserAuthenticated: false,
+  isLoading: true, //loading component after calling api.
   loginState: false,
+  providerId: -1,
   profile: null,
   styling: ["active", "default", "default", "default"],
   refreshToken: localStorage.getItem("refreshToken"),
   verifiedEmailToken: localStorage.getItem("verified_email_token"),
-  isLoading: true,
 };
 
 export default function (state = initialState, action) {

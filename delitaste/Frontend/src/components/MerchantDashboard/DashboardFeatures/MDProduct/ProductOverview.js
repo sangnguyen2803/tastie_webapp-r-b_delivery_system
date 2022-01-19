@@ -178,7 +178,7 @@ function ProductOverview(props) {
           />
           <Button
             left={20}
-            type="primary"
+            buttonType="primary"
             width={150}
             height={36}
             radius={"0px"}
@@ -189,7 +189,7 @@ function ProductOverview(props) {
           />
           <Button
             left={10}
-            type="primary"
+            buttonType="primary"
             width={150}
             height={36}
             radius={"0px"}

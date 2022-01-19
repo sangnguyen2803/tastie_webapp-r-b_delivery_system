@@ -43,6 +43,10 @@ $desktop-width: 1200px;
   flex-wrap: $flexWrap;
   flex-direction: row;
 }
+
+button {
+  font-family: "Poppins", sans-serif !important;
+}
 .file-image-preview {
   border: 2px solid grey;
   border-left: none;

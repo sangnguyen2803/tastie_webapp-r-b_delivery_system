@@ -8,7 +8,7 @@ export const common_en = {
         "sign-in-remember-me": "Remember Me",
         "sign-in-forget-password": "Forget Password?",
         "sign-in-with-google": "Continue with Google",
-        "sign-in-with-facebook": "Continue with Google",
+        "sign-in-with-facebook": "Continue with Facebook",
       },
       signUp: {
         "sign-up-username": "Email",

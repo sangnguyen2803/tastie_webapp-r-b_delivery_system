@@ -119,14 +119,14 @@ function ViewOrderDetail({ selectedOrder }) {
             bgColor={"white"}
             color="black"
             border={"2px solid rgb(170, 170, 170)"}
-            type="secondary"
+            buttonType="secondary"
             width={120}
             height={30}
             radius={"0px"}
             label={"Decline"}
           />
           <Button
-            type="primary"
+            buttonType="primary"
             width={120}
             height={30}
             radius={"0px"}
