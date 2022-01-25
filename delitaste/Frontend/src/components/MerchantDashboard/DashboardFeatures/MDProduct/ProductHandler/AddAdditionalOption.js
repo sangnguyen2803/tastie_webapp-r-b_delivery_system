@@ -29,7 +29,7 @@ function AddAdditionalOption(props) {
       optionList.push({
         id: choice.id,
         optionName: choice.value,
-        additionalPrice: choice.price,
+        additionalPrice: parseInt(choice.price),
       })
     );
     const option = {

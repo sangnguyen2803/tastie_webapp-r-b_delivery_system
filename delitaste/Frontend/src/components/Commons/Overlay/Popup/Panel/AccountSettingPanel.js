@@ -8,7 +8,7 @@ import { Fragment, useState } from "react";
 import "./AccountSettingPanel.scss";
 import "style/Common.scss";
 import { useTranslation } from "react-i18next";
-import { userSignOut } from "store/actions/UserAdmission/UserActions";
+import { userSignOut } from "store/actions/UserAction/UserAction";
 
 const AccountSettingPanel = ({ user, userSignOut, history }) => {
   const { i18n } = useTranslation();
@@ -116,7 +116,7 @@ AccountSettingPanel.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  user: state.UserReducers,
+  user: state.UserReducer,
 });
 
 export default withRouter(

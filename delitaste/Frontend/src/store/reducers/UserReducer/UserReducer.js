@@ -24,7 +24,7 @@ const initialState = {
   isLoading: true, //loading component after calling api.
   loginState: false,
   providerId: -1,
-  profile: null,
+  profile: [],
   styling: ["active", "default", "default", "default"],
   refreshToken: localStorage.getItem("refreshToken"),
   verifiedEmailToken: localStorage.getItem("verified_email_token"),

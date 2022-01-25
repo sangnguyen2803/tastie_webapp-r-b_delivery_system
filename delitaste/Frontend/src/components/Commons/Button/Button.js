@@ -67,7 +67,7 @@ const Button = ({
   return (
     <Fragment>
       {disabled ? (
-        <button
+        <div
           className="cs-button-wrapper"
           style={buttonStylingDisabled}
           type={type || ""}
@@ -76,9 +76,9 @@ const Button = ({
             {label || "Button"}
           </span>
           {surfix || <></>}
-        </button>
+        </div>
       ) : (
-        <button
+        <div
           className="cs-button-wrapper"
           onClick={onClick}
           style={buttonStyling}
@@ -89,7 +89,7 @@ const Button = ({
             {label || "Button"}
           </span>
           {surfix || <></>}
-        </button>
+        </div>
       )}
     </Fragment>
   );

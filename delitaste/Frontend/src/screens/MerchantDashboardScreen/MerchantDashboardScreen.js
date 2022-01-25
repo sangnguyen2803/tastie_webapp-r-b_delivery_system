@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { Switch, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
-import { setDialogBox } from "store/actions/UIComponents/DialogBoxAction";
+import { setDialogBox } from "store/actions/UIComponentAction/DialogBoxAction";
 import withAuth from "components/HigherOrderComponents(HOC)/withAuth";
 //components
 import MerchantDashboard from "components/MerchantDashboard/MerchantDashboard";
@@ -21,8 +21,8 @@ MerchantDashboardScreen.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  user: state.UserReducers,
-  merchant: state.MerchantRegistrationReducers,
+  user: state.UserReducer,
+  merchant: state.ProviderReducer,
 });
 export default withRouter(
   connect(mapStateToProps, null)(withAuth(MerchantDashboardScreen))

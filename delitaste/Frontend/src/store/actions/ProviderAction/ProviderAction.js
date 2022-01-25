@@ -9,7 +9,7 @@ import {
   UPDATE_BANK_INFO_FORM,
 } from "store/actions/types";
 
-//create provider
+//Create provider
 export const createMerchantAPI = (id) => async (dispatch) => {
   const registered_at = new Date().toISOString().slice(0, 10);
   const provider_update_at = new Date().toISOString().slice(0, 10);
@@ -20,11 +20,10 @@ export const createMerchantAPI = (id) => async (dispatch) => {
   };
   const body = JSON.stringify({
     user_id: id,
-    user_role: 1,
     registered_at,
     provider_update_at,
   });
-
+  console.log(body);
   try {
     const endpoint = "/v1/api/provider/sign-contract";
     const res = await axios.post(endpoint, body, config);
@@ -41,7 +40,7 @@ export const createMerchantAPI = (id) => async (dispatch) => {
     return -1;
   }
 };
-// update form 1:
+// Update form 1:
 export const updateServiceInfoFormAPI = (id, data) => async (dispatch) => {
   data.update_at = new Date().toISOString().slice(0, 10);
   data.registered_at = new Date().toISOString().slice(0, 10);
@@ -67,7 +66,7 @@ export const updateServiceInfoFormAPI = (id, data) => async (dispatch) => {
     return false;
   }
 };
-//form 2
+// Update form 2
 export const updateRepresentativeInfoFormAPI =
   (id, data) => async (dispatch) => {
     data.update_at = new Date().toISOString().slice(0, 10);
@@ -78,6 +77,8 @@ export const updateRepresentativeInfoFormAPI =
       },
     };
     const body = JSON.stringify(data);
+
+    console.log(body);
     try {
       const endpoint = `/v1/api/provider/register/${id}/representive`;
       const res = await axios.post(endpoint, body, config);
@@ -95,7 +96,7 @@ export const updateRepresentativeInfoFormAPI =
     }
   };
 
-//form 3
+// Update form 3
 export const getCategoryAPI = (type) => async (dispatch) => {
   try {
     const endpoint = `/v1/api/provider/register/${type}/get-categories`;
@@ -134,7 +135,7 @@ export const updateBusinessUnitInfoFormAPI = (id, data) => async (dispatch) => {
     return false;
   }
 };
-//form 4
+// Update form 4
 export const updateProductDetailInfoFormAPI =
   (id, data) => async (dispatch) => {
     const config = {
@@ -160,16 +161,18 @@ export const updateProductDetailInfoFormAPI =
     }
   };
 
-//form 5
+// Update form 5
 export const updateBankInfoFormAPI = (id, data) => async (dispatch) => {
   const config = {
     headers: {
       "Content-Type": "application/json",
     },
   };
+  //update user_role to merchant account
+  data.user_role = 2;
   const body = JSON.stringify(data);
   try {
-    const endpoint = `/v1/api/provider/register/${id}/menu-photo`;
+    const endpoint = `/v1/api/provider/register/${id}/bank-info`;
     const res = await axios.post(endpoint, body, config);
     if (res.data?.state) {
       dispatch({

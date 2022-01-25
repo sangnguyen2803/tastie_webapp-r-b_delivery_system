@@ -1,5 +1,7 @@
 import { Fragment, useState, useEffect } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faSearch,
@@ -8,6 +10,7 @@ import {
   faQuestionCircle,
   faSave,
 } from "@fortawesome/fontawesome-free-solid";
+import PropTypes from "prop-types";
 import Button from "components/Commons/Button/Button";
 import Metric from "../Metric/Metric";
 import Picture1 from "assets/FoodImg/picture2.jpg";
@@ -16,7 +19,9 @@ import Picture3 from "assets/FoodImg/picture3.jpg";
 import Picture4 from "assets/FoodImg/picture4.jpg";
 import Picture5 from "assets/FoodImg/picture5.jpg";
 import ProgressBar from "components/Commons/ProgressBar/ProgressBar";
+import { getProductListAPI } from "store/actions/ProductAction/ProductAction";
 import Tabs from "../Tabs";
+
 const productList = [
   {
     id: 1,
@@ -83,6 +88,12 @@ function ProductOverview(props) {
   const [products, setProducts] = useState(productList);
   const [searchResult, setSearchResult] = useState(productList);
   const [searchTerm, setSearchTerm] = useState("");
+  const { user, provider, getProductListAPI } = props;
+  useEffect(async () => {
+    if (user.providerId !== -1 && user.providerId !== null) {
+      const result = await getProductListAPI(user.providerId);
+    }
+  }, []);
 
   const handleDragEnd = (e) => {
     if (!e.destination) return;
@@ -212,29 +223,6 @@ function ProductOverview(props) {
           <div className="product-table">
             <DragDropContext onDragEnd={handleDragEnd}>
               <table className="table table-wrapper">
-                <thead className="table-head">
-                  <tr>
-                    <th colSpan="3" style={{ width: "20%" }}>
-                      Products (Dishes)
-                      <FontAwesomeIcon
-                        icon={faSort}
-                        className="table-sort-icon"
-                      />
-                    </th>
-                    <th className="field-hidden" style={{ width: "10%" }}>
-                      Description
-                    </th>
-                    <th style={{ width: "7.5%" }}>
-                      Categories
-                      <FontAwesomeIcon
-                        icon={faSort}
-                        className="table-sort-icon"
-                      />
-                    </th>
-                    <th style={{ width: "5%" }}>Price</th>
-                    <th style={{ width: "5%" }}>Last updated</th>
-                  </tr>
-                </thead>
                 <Droppable droppableId="droppable-1">
                   {(provider) => (
                     <tbody
@@ -298,4 +286,19 @@ function ProductOverview(props) {
   );
 }
 
-export default ProductOverview;
+ProductOverview.propTypes = {
+  user: PropTypes.object.isRequired,
+  provider: PropTypes.object.isRequired,
+  getProductListAPI: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  user: state.UserReducer,
+  provider: state.ProviderReducer,
+});
+
+export default withRouter(
+  connect(mapStateToProps, {
+    getProductListAPI,
+  })(ProductOverview)
+);

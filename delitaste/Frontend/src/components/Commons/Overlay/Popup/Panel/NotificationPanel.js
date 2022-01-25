@@ -29,7 +29,7 @@ NotificationPanel.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  user: state.UserReducers,
+  user: state.UserReducer,
 });
 
 export default withRouter(connect(mapStateToProps, null)(NotificationPanel));

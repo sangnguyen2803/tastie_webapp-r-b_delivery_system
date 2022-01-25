@@ -22,8 +22,8 @@ import {
 //scss
 import "style/Common.scss";
 import "./LoginForm.scss";
-import { accountSignInAPI } from "store/actions/UserAdmission/UserActions";
-import { setDialogBox } from "store/actions/UIComponents/DialogBoxAction";
+import { accountSignInAPI } from "store/actions/UserAction/UserAction";
+import { setDialogBox } from "store/actions/UIComponentAction/DialogBoxAction";
 
 function LoginForm(props) {
   const { t, i18n } = useTranslation("translation", {

@@ -14,8 +14,8 @@ import CategorySelector from "components/MerchantRegistration/Forms/DetailMercha
 import {
   getCategoryAPI,
   updateBusinessUnitInfoFormAPI,
-} from "store/actions/MerchantRegistration/MerchantRegistrationActions";
-import { setDialogBox } from "store/actions/UIComponents/DialogBoxAction";
+} from "store/actions/ProviderAction/ProviderAction";
+import { setDialogBox } from "store/actions/UIComponentAction/DialogBoxAction";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAsterisk, faImage } from "@fortawesome/fontawesome-free-solid";

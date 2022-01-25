@@ -1,14 +1,12 @@
-import { Fragment, useEffect, useState } from "react";
-import { Redirect, useSearchParams } from "react-router-dom";
+import { Fragment, useState } from "react";
+import { withRouter } from "react-router-dom";
 import ProductOverview from "components/MerchantDashboard/DashboardFeatures/MDProduct/ProductOverview";
 import ProductDetail from "components/MerchantDashboard/DashboardFeatures/MDProduct/ProductDetail";
-import "../Panel.scss";
 import Tabs from "components/MerchantDashboard/DashboardFeatures/Tabs";
-import { faTags } from "@fortawesome/fontawesome-free-solid";
+import "../Panel.scss";
 
 function ProductPanel(props) {
   const [currentTab, setCurrentTab] = useState(0);
-
   const TabList = {
     tab1: [
       { id: 0, name: "Overview" },
@@ -59,4 +57,4 @@ function ProductPanel(props) {
   }
 }
 
-export default ProductPanel;
+export default withRouter(ProductPanel);

@@ -10,7 +10,7 @@ import "./DetailMerchantForm.scss";
 import "style/Common.scss";
 import FormHeader from "./FormHeader/FormHeader";
 import ImagePreview from "components/Commons/ImageHandlers/ImagePreview/ImagePreview";
-import { updateProductDetailInfoFormAPI } from "store/actions/MerchantRegistration/MerchantRegistrationActions";
+import { updateProductDetailInfoFormAPI } from "store/actions/ProviderAction/ProviderAction";
 
 const priceRangeOptions = [
   "0 - 20.000đ",

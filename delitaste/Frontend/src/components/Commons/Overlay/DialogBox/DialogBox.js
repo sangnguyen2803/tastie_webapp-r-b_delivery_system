@@ -7,7 +7,7 @@ import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/fontawesome-free-solid";
 
-import { removeDialogBox } from "store/actions/UIComponents/DialogBoxAction";
+import { removeDialogBox } from "store/actions/UIComponentAction/DialogBoxAction";
 import { propTypes } from "react-map-gl-geocoder";
 
 const DialogBox = ({ width, height, close, dialog, removeDialogBox }) => {

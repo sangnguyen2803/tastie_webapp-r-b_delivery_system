@@ -12,7 +12,7 @@ import FormError from "components/Commons/ErrorHandlers/FormError/FormError";
 import FormHeader from "./FormHeader/FormHeader";
 import "react-map-gl-geocoder/dist/mapbox-gl-geocoder.css";
 
-import { updateServiceInfoFormAPI } from "store/actions/MerchantRegistration/MerchantRegistrationActions";
+import { updateServiceInfoFormAPI } from "store/actions/ProviderAction/ProviderAction";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAsterisk } from "@fortawesome/fontawesome-free-solid";

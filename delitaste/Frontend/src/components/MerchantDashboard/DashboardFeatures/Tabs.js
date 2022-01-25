@@ -2,6 +2,8 @@ import { Fragment, useEffect } from "react";
 import { Redirect, useSearchParams } from "react-router-dom";
 import ProductList from "components/MerchantDashboard/DashboardFeatures/MDProduct/ProductOverview";
 import "./Tabs.scss";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCog } from "@fortawesome/fontawesome-free-solid";
 
 function Tabs({
   tabs,

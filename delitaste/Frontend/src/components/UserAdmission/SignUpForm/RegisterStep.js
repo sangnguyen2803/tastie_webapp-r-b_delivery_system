@@ -37,6 +37,6 @@ RegisterStep.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  registerState: state.UserReducers,
+  registerState: state.UserReducer,
 });
 export default connect(mapStateToProps)(RegisterStep);

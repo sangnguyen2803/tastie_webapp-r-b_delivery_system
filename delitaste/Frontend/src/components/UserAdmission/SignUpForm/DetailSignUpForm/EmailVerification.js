@@ -19,8 +19,8 @@ import {
   accountRegistrationAPI,
   sendEmailVerificationCodeAPI,
   checkEmailVerificationCodeAPI,
-} from "store/actions/UserAdmission/UserActions";
-import { setDialogBox } from "store/actions/UIComponents/DialogBoxAction";
+} from "store/actions/UserAction/UserAction";
+import { setDialogBox } from "store/actions/UIComponentAction/DialogBoxAction";
 
 function EmailVerification(props) {
   useEffect(() => {
@@ -201,7 +201,7 @@ EmailVerification.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  submittedFormData: state.UserReducers,
+  submittedFormData: state.UserReducer,
 });
 export default connect(mapStateToProps, {
   mapRegistrationForm,

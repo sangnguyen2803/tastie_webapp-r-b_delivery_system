@@ -20,16 +20,18 @@ import {
   faUndo,
   faSave,
 } from "@fortawesome/fontawesome-free-solid";
-import { getCategoryAPI } from "store/actions/MerchantRegistration/MerchantRegistrationActions";
+import { getCategoryAPI } from "store/actions/ProviderAction/ProviderAction";
 import AddAdditionalOption from "components/MerchantDashboard/DashboardFeatures/MDProduct/ProductHandler/AddAdditionalOption";
 import UpdateAdditionalOption from "components/MerchantDashboard/DashboardFeatures/MDProduct/ProductHandler/UpdateAdditionalOption";
+import { addProductAPI } from "store/actions/ProductAction/ProductAction";
+
 const initialValues = {
   productName: "",
   description: "",
   available: 0,
   status: 1,
   quantityAvailable: 0,
-  productStatus: 0,
+  productStatus: 1,
   productPrice: 0,
   productPhoto: "",
   position: 1,
@@ -42,18 +44,13 @@ function AddProduct(props) {
   const [showAdditionalOption, setShowAdditionalOption] = useState(false);
   const [showUpdateAdditionalOption, setShowUpdateAdditionalOption] =
     useState(false);
-
   const [foodCategory, setFoodCategory] = useState([]);
   const [filteredFoodCategory, setFilteredFoodCategory] = useState([]);
   const [mainFoodCategory, setMainFoodCategory] = useState([]);
   const [menuCategory, setMenuCategory] = useState([]);
-
   const [selectedFood, setSelectedFood] = useState([]);
   const [selectedMainFood, setSelectedMainFood] = useState([]);
   const [selectedMenu, setSelectedMenu] = useState([]);
-
-  const [choices, setChoices] = useState([]);
-  const [currentId, setCurrentId] = useState(0);
   const [additionalOption, setAdditionalOption] = useState([]);
   const [selectedOption, setSelectedOption] = useState([]);
   useEffect(async () => {
@@ -75,15 +72,32 @@ function AddProduct(props) {
     setFilteredFoodCategory(foodCategoryList);
   }, [selectedMainFood]);
 
-  const addProduct = (values) => {};
+  const addProduct = async (values) => {
+    const { user } = props;
+    const formData = {
+      provider_id: user.providerId,
+      product_name: values.productName,
+      product_status: values.productStatus,
+      description: values.description,
+      price: values.productPrice || 0,
+      quantity: values.quantityAvailable || 0,
+      product_image: "product-image",
+      menuCategoryID: [1000001],
+      mainCategoryID: selectedMainFood,
+      foodCategoryID: selectedFood,
+      additionalOptions: additionalOption,
+    };
+    console.log(formData);
+    if (user.providerId !== -1 && user.providerId !== null) {
+      const status = await props.addProductAPI(formData);
+      if (status) console.log("Thanh cong");
+      else console.log("That bai");
+    }
+  };
   return (
-    <Formik
-      initialValues={initialValues}
-      onSubmit={(values) => addProduct(values)}
-    >
+    <Formik initialValues={initialValues}>
       {(formikProps) => {
         const { values, errors, touched } = formikProps;
-
         return (
           <Fragment>
             <Form style={{ width: "inherit" }}>
@@ -121,7 +135,26 @@ function AddProduct(props) {
                     )
                   )}
                 </div>
-                <ButtonGroup float="flex-start" mgTop={10} mgBottom={5}>
+                <ButtonGroup
+                  float="flex-start"
+                  mgTop={10}
+                  gap={12}
+                  mgBottom={5}
+                >
+                  <Button
+                    color={"black"}
+                    bglight={true}
+                    border={"#5d5d5d 1.5px solid"}
+                    prefix={
+                      <FontAwesomeIcon className="button-icon" icon={faPlus} />
+                    }
+                    gap={"10px"}
+                    justifyContent={"center"}
+                    width="44%"
+                    height={30}
+                    label="Add menu"
+                    onClick={() => setShowMenuCategory(true)}
+                  />
                   <Button
                     color={"black"}
                     bglight={true}
@@ -134,9 +167,9 @@ function AddProduct(props) {
                     }
                     gap={"10px"}
                     justifyContent={"center"}
-                    width="92%"
+                    width="44%"
                     height={30}
-                    label="Select Category"
+                    label="Select menu"
                     onClick={() => setShowMenuCategory(true)}
                   />
                 </ButtonGroup>
@@ -311,10 +344,9 @@ function AddProduct(props) {
                   }
                 />
                 <Button
+                  onClick={addProduct}
                   buttonType="primary"
                   justifyContent={"center"}
-                  onClick={(values) => addProduct(values)}
-                  type="submit"
                   width={100}
                   height={36}
                   radius={"0px"}
@@ -420,11 +452,20 @@ function AddProduct(props) {
 }
 
 AddProduct.propTypes = {
+  user: PropTypes.object.isRequired,
+  provider: PropTypes.object.isRequired,
   getCategoryAPI: PropTypes.func.isRequired,
+  addProductAPI: PropTypes.func.isRequired,
 };
 
+const mapStateToProps = (state) => ({
+  user: state.UserReducer,
+  provider: state.ProviderReducer,
+});
+
 export default withRouter(
-  connect(null, {
+  connect(mapStateToProps, {
     getCategoryAPI,
+    addProductAPI,
   })(AddProduct)
 );

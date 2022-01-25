@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { Route, withRouter, Switch } from "react-router-dom";
 import PropTypes from "prop-types";
 
-import { setDialogBox } from "store/actions/UIComponents/DialogBoxAction";
+import { setDialogBox } from "store/actions/UIComponentAction/DialogBoxAction";
 
 import MerchantForm from "components/MerchantRegistration/Forms/MerchantForm";
 import ServiceInfoForm from "components/MerchantRegistration/Forms/DetailMerchantForm/ServiceInfoForm";
@@ -17,7 +17,8 @@ import BankInfoForm from "components/MerchantRegistration/Forms/DetailMerchantFo
 import withAuth from "components/HigherOrderComponents(HOC)/withAuth";
 
 function MerchantFormScreen(props) {
-  useEffect(() => { /*
+  useEffect(() => {
+    /*
     if (!props.user.isUserAuthenticated) {
       props.setDialogBox(
         "You must sign up to access to this features.",
@@ -58,8 +59,8 @@ MerchantFormScreen.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  user: state.UserReducers,
-  merchant: state.MerchantRegistrationReducers,
+  user: state.UserReducer,
+  merchant: state.ProviderReducer,
 });
 export default withRouter(
   connect(mapStateToProps, {

@@ -2,14 +2,9 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getAccessTokenAPI } from "store/actions/UserAction/AuthAction";
-import {
-  getUserProfileAPI,
-  setLoading,
-} from "store/actions/UserAction/UserAction";
-import { setDialogBox } from "store/actions/UIComponentAction/DialogBoxAction";
 
 export default function (WrappedComponent) {
-  class Authentication extends Component {
+  class ProviderAuthentication extends Component {
     constructor(props) {
       super(props);
       this.state = {
@@ -45,21 +40,17 @@ export default function (WrappedComponent) {
       );
     }
   }
-  Authentication.propTypes = {
+  ProviderAuthentication.propTypes = {
     user: PropTypes.object.isRequired,
+    provider: PropTypes.object.isRequired,
     getAccessTokenAPI: PropTypes.func.isRequired,
-    getUserProfileAPI: PropTypes.func.isRequired,
-    setLoading: PropTypes.func.isRequired,
-    setDialogBox: PropTypes.func.isRequired,
   };
   const mapStateToProps = (state) => ({
     user: state.UserReducer,
+    provider: state.ProviderReducer,
   });
 
   return connect(mapStateToProps, {
     getAccessTokenAPI,
-    getUserProfileAPI,
-    setLoading,
-    setDialogBox,
   })(Authentication);
 }

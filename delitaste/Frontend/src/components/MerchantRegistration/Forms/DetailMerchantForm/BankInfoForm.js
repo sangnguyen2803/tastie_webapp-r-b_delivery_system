@@ -11,7 +11,7 @@ import "./DetailMerchantForm.scss";
 import "style/Common.scss";
 import FormError from "components/Commons/ErrorHandlers/FormError/FormError";
 import FormHeader from "./FormHeader/FormHeader";
-import { updateBankInfoFormAPI } from "store/actions/MerchantRegistration/MerchantRegistrationActions";
+import { updateBankInfoFormAPI } from "store/actions/ProviderAction/ProviderAction";
 
 const formHeaderText = {
   title: "5. Bank Account Information",

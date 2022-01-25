@@ -138,3 +138,15 @@
     border: 0.5px solid rgb(0, 0, 0);
   }
 }
+
+.product-image-wrapper-edit {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 92%;
+  margin: 0px 0px 10px 0px;
+  img {
+    border: 1px solid rgb(219, 219, 219);
+  }
+}

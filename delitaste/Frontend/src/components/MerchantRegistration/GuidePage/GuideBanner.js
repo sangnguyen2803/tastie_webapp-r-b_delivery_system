@@ -20,14 +20,21 @@ function GuideBanner(props) {
     description:
       "Tasite is an order and delivery management platform that instantly connects customers with your storefront. Built on the power of Tastie's network, we help merchants grow sales, reach more customers, and build their online brand.",
   });
+
   const redirectToMerchantRegistration = () => {
     const { user } = props;
-    if (user.providerId !== -1) {
+    console.log(user);
+    if (user.profile?.role === 2) {
+      props.history.push("/");
+      return;
+    }
+    if (user.providerId !== -1 && user.providerId !== null) {
       props.history.push(`/merchant-registration/${user.providerId}/service`);
       return;
     }
     props.history.push("/merchant-sign-contract");
   };
+
   return (
     <div className="guide-banner" style={backgroundStyling}>
       <div className="guide-banner-container">
@@ -65,7 +72,7 @@ GuideBanner.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  user: state.UserReducers,
+  user: state.UserReducer,
 });
 
 export default withRouter(connect(mapStateToProps, null)(GuideBanner));

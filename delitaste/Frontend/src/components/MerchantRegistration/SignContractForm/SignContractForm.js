@@ -11,7 +11,7 @@ import Contract from "assets/pdf/contract.pdf";
 import ToolBar from "components/Commons/Layout/Toolbar/Toolbar";
 import MerchantBanner from "assets/merchant-form-banner.png";
 import Stepper from "components/Commons/Stepper/Stepper";
-import { createMerchantAPI } from "store/actions/MerchantRegistration/MerchantRegistrationActions";
+import { createMerchantAPI } from "store/actions/ProviderAction/ProviderAction";
 
 import { faChevronDown, faDesktop } from "@fortawesome/fontawesome-free-solid";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -34,10 +34,11 @@ function SignContractForm(props) {
   const contractFormHandler = async () => {
     const { user, createMerchantAPI } = props;
     let result = -1;
-    if (user.profile.user_id)
+    if (user.profile?.user_id) {
       result = await createMerchantAPI(user.profile.user_id);
-    if (result !== -1)
-      props.history.push(`/merchant-registration/${result}/service`);
+      if (result !== -1)
+        props.history.push(`/merchant-registration/${result}/service`);
+    } else props.history.push("/sign-in");
   };
   return (
     <>
@@ -112,7 +113,7 @@ SignContractForm.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  user: state.UserReducers,
+  user: state.UserReducer,
 });
 
 export default withRouter(

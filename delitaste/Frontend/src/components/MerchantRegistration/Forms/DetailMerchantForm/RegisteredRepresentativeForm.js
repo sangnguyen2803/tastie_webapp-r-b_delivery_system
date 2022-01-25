@@ -8,7 +8,7 @@ import { validateMerchantForm2 } from "utils/FormUtils/MerchantFormValidate";
 
 import "./DetailMerchantForm.scss";
 import "style/Common.scss";
-import { updateRepresentativeInfoFormAPI } from "store/actions/MerchantRegistration/MerchantRegistrationActions";
+import { updateRepresentativeInfoFormAPI } from "store/actions/ProviderAction/ProviderAction";
 
 import FormError from "components/Commons/ErrorHandlers/FormError/FormError";
 import FormHeader from "./FormHeader/FormHeader";
@@ -67,8 +67,8 @@ function RegisteredRepresentativeForm(props) {
       email: values.representativeEmail,
       owner_phone: values.phone,
       owner_card_id: values.idCardNumber,
-      owner_card_image1: values.idCardFront,
-      owner_card_image2: values.idCardBack,
+      owner_card_image1: values.idCardFront || "front-card",
+      owner_card_image2: values.idCardBack || "back-card",
       tax_code: values.taxCode,
     };
     if (!props.match.params.id) return;
@@ -207,12 +207,12 @@ function RegisteredRepresentativeForm(props) {
                       />
                       <Field
                         className={
-                          errors.phone1
+                          errors.phone
                             ? "form-text-field error"
                             : "form-text-field"
                         }
                         type="text"
-                        name="phone1"
+                        name="phone"
                         placeholder="Phone number"
                         maxLength={50}
                         autoComplete="on"

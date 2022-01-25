@@ -7,7 +7,7 @@ import {
   faExclamationCircle,
   faTimes,
 } from "@fortawesome/fontawesome-free-solid";
-import { removeAlertNotification } from "store/actions/UIComponents/UIAlertAction";
+import { removeAlertNotification } from "store/actions/UIComponentAction/UIAlertAction";
 
 function AlertNotificationBox(props) {
   return props.msg && props.loadingAlert ? (
