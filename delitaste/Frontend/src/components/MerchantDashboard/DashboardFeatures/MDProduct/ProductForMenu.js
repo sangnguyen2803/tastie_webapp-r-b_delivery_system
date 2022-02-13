@@ -1,9 +1,18 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPencilAlt } from "@fortawesome/fontawesome-free-solid";
+import { faDollarSign, faTrashAlt } from "@fortawesome/fontawesome-free-solid";
 import React from "react";
-import Button from "components/Commons/Button/Button";
+import { Fragment, useState, useEffect } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import ButtonGroup from "components/Commons/Button/ButtonGroup/ButtonGroup";
+import {
+  removeProductAPI,
+  getProductListAPI,
+} from "store/actions/ProductAction/ProductAction";
+import { setDialogBox } from "store/actions/UIComponentAction/DialogBoxAction";
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import DialogBox from "components/Commons/Overlay/DialogBox/DialogBox";
+
 const grid = 8;
 const getItemStyle = (isDragging, draggableStyle) => ({
   // some basic styles to make the items look a bit nicer
@@ -19,7 +28,32 @@ const getListStyle = (isDraggingOver) => ({
 });
 
 function ProductForMenu(props) {
-  const { setShowHandlerPanel, selectedProduct, setSelectedProduct } = props;
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const [productIdForDelete, setProductIdForDelete] = useState(-1);
+  const { selectedProduct } = props;
+
+  const showDialogForDelete = (e, productId) => {
+    e.stopPropagation();
+    setProductIdForDelete(productId);
+    setShowDeleteDialog(true);
+  };
+  const removeProduct = async (productId) => {
+    if (productId === -1 || !productId) return;
+    const { product, user } = props;
+    const status = await props.removeProductAPI(productId);
+    if (status) {
+      if (user.providerId !== -1 && user.providerId !== null) {
+        const productList = await props.getProductListAPI(user.providerId);
+        console.log(productList);
+        props.setShowHandlerPanel(0);
+        props.setSelectedProduct([]);
+        props.setProductForEdit();
+        props.setItems(productList);
+      }
+    }
+    setShowDeleteDialog(false);
+  };
+
   return (
     <Droppable
       droppableId={String(props.type)}
@@ -31,6 +65,15 @@ function ProductForMenu(props) {
           ref={provided.innerRef}
           style={getListStyle(snapshot.isDraggingOver)}
         >
+          <DialogBox
+            visibility={showDeleteDialog}
+            headerText={"Delete"}
+            bodyText={"Are you sure you want to delete this item?"}
+            confirmOptionHandler={() => removeProduct(productIdForDelete)}
+            close={() => setShowDeleteDialog(false)}
+            cancelOptionText={"Cancel"}
+            confirmOptionText={"Delete"}
+          />
           {props.subItems.map((item, index) => (
             <Draggable
               key={String(item.product_id)}
@@ -41,8 +84,8 @@ function ProductForMenu(props) {
                 <div
                   className="menu-table-wrapper"
                   onClick={() => {
-                    setShowHandlerPanel(1);
-                    setSelectedProduct([item.product_id, props.type]);
+                    props.setShowHandlerPanel(1);
+                    props.setSelectedProduct([item.product_id, props.type]);
                   }}
                   style={{
                     backgroundColor:
@@ -66,35 +109,15 @@ function ProductForMenu(props) {
                     <span className="menu-product-description">
                       {item.description}
                     </span>
-                    <span className="menu-product-price">{item.price}</span>
+                    <span className="menu-product-price">
+                      &#36; {item.price}
+                    </span>
                     <div className="menu-product-price">
-                      <ButtonGroup
-                        float="flex-start"
-                        mgTop={10}
-                        gap={12}
-                        mgBottom={5}
-                      >
-                        <Button
-                          onClick={() => {
-                            setShowHandlerPanel(1);
-                            setSelectedProduct([item.product_id, props.type]);
-                          }}
-                          color={"black"}
-                          bglight={true}
-                          border={"#B6B6B6 1px solid"}
-                          prefix={
-                            <FontAwesomeIcon
-                              className="button-icon"
-                              icon={faPencilAlt}
-                            />
-                          }
-                          gap={"10px"}
-                          justifyContent={"center"}
-                          width="80px"
-                          height={30}
-                          label="Edit"
-                        />
-                      </ButtonGroup>
+                      <FontAwesomeIcon
+                        className="button-icon"
+                        icon={faTrashAlt}
+                        onClick={(e) => showDialogForDelete(e, item.product_id)}
+                      />
                     </div>
                   </div>
                   {provided.placeholder}
@@ -108,4 +131,22 @@ function ProductForMenu(props) {
     </Droppable>
   );
 }
-export default ProductForMenu;
+
+ProductForMenu.propTypes = {
+  removeProductAPI: PropTypes.func.isRequired,
+  getProductListAPI: PropTypes.func.isRequired,
+  setDialogBox: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  user: state.UserReducer,
+  product: state.ProductReducer,
+});
+
+export default withRouter(
+  connect(mapStateToProps, {
+    removeProductAPI,
+    getProductListAPI,
+    setDialogBox,
+  })(ProductForMenu)
+);

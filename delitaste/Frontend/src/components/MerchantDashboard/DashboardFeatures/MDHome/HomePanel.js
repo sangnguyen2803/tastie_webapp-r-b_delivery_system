@@ -1,15 +1,16 @@
 import { Fragment, useEffect, useState } from "react";
+import ProviderGeneralInformation from "components/MerchantDashboard/DashboardFeatures/MDHome/ProviderGeneralInformation";
 import "../Panel.scss";
 
 function HomePanel(props) {
   switch (props.match.params.name) {
-    case "my-restaurant":
+    case "general":
       return (
-        <Fragment>
-          <div className="panel-content-wrapper">ABC</div>
-        </Fragment>
+        <div className="panel-content-wrapper">
+          <ProviderGeneralInformation />
+        </div>
       );
-    case "operation-settings":
+    case "my-restaurant":
       return (
         <Fragment>
           <div className="panel-content-wrapper">abc</div>

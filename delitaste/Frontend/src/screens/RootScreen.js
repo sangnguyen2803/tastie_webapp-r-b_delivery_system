@@ -99,7 +99,6 @@ function RootScreen(props) {
             component={MerchantRegistrationScreen}
           />
         </Router>
-        <DialogBox />
       </Provider>
     </Fragment>
   );

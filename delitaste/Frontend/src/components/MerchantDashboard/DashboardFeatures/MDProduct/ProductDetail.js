@@ -46,7 +46,7 @@ function ProductDetail(props) {
       const productList = await getProductListAPI(user.providerId);
       setItems(productList);
     }
-  }, []);
+  }, [items]);
 
   useEffect(() => {
     if (items && selectedProduct[0] && selectedProduct[1]) {
@@ -129,7 +129,7 @@ function ProductDetail(props) {
                 setShowHandlerPanel(0);
                 setSelectedProduct([]);
               }}
-              width={130}
+              width={160}
               height={32}
               radius={"0px"}
               label={"Add product"}
@@ -185,9 +185,12 @@ function ProductDetail(props) {
                                 </span>
                               </div>
                               <ProductForMenu
+                                items={items}
+                                setItems={setItems}
                                 setShowHandlerPanel={setShowHandlerPanel}
                                 selectedProduct={selectedProduct}
                                 setSelectedProduct={setSelectedProduct}
+                                setProductForEdit={setProductForEdit}
                                 subItems={item.products}
                                 type={item.menu_category_id}
                               />
@@ -222,7 +225,7 @@ function ProductDetail(props) {
 
 ProductDetail.propTypes = {
   user: PropTypes.object.isRequired,
-  provider: PropTypes.object.isRequired,
+  product: PropTypes.object.isRequired,
   getProductListAPI: PropTypes.func.isRequired,
 };
 

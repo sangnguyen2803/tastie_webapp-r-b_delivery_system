@@ -84,7 +84,15 @@
   width: 90%;
 }
 .button-icon {
-  color: rgb(0, 0, 0);
+  color: rgb(97, 97, 97);
+  font-size: 18px;
+
+  transition: 0.5s;
+  &:hover {
+    color: rgb(100, 0, 0);
+    transform: scale(1.1);
+    cursor: pointer;
+  }
 }
 
 .product-detail-form-with-select {
@@ -148,5 +156,39 @@
   margin: 0px 0px 10px 0px;
   img {
     border: 1px solid rgb(219, 219, 219);
+  }
+}
+
+@media all and (max-width: 767px) {
+  .product-handler-container {
+  }
+}
+
+@media only screen and (max-width: 1000px) and (min-width: 767px) {
+  .product-handler-container {
+    max-height: 220px;
+  }
+  .cs-button-group-wrapper {
+    width: 100% !important;
+    justify-content: flex-start !important;
+  }
+  .product-detail-form-input-wrapper {
+    width: 98%;
+
+    input {
+      height: 25px;
+      width: 100%;
+      font-size: 13px;
+      text-indent: 20px;
+      margin-bottom: 10px;
+    }
+    .product-detail-textarea {
+      font-family: "Poppins", sans-serif !important;
+      text-indent: 20px;
+      width: 100%;
+      resize: none;
+      font-size: 13px;
+      height: 120px;
+    }
   }
 }

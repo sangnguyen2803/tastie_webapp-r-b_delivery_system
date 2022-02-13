@@ -11,19 +11,18 @@ import "style/Common.scss";
 
 import Modal from "components/Commons/Overlay/Popup/Modal/Modal";
 import CategorySelector from "components/MerchantRegistration/Forms/DetailMerchantForm/CategorySelector/CategorySelector";
+import AddMenuCategory from "./AddMenuCategory";
 import Button from "components/Commons/Button/Button";
 import ButtonGroup from "components/Commons/Button/ButtonGroup/ButtonGroup";
 import Tag from "components/Commons/Tag/Tag";
-import {
-  faPlus,
-  faSearch,
-  faUndo,
-  faSave,
-} from "@fortawesome/fontawesome-free-solid";
+import { faPlus, faSearch, faUndo } from "@fortawesome/fontawesome-free-solid";
 import { getCategoryAPI } from "store/actions/ProviderAction/ProviderAction";
 import AddAdditionalOption from "components/MerchantDashboard/DashboardFeatures/MDProduct/ProductHandler/AddAdditionalOption";
 import UpdateAdditionalOption from "components/MerchantDashboard/DashboardFeatures/MDProduct/ProductHandler/UpdateAdditionalOption";
-import { addProductAPI } from "store/actions/ProductAction/ProductAction";
+import {
+  getMenuCategoryAPI,
+  addProductAPI,
+} from "store/actions/ProductAction/ProductAction";
 
 const initialValues = {
   productName: "",
@@ -41,6 +40,7 @@ function AddProduct(props) {
   const [showFoodCategory, setShowFoodCategory] = useState(false);
   const [showMainFoodCategory, setShowMainFoodCategory] = useState(false);
   const [showMenuCategory, setShowMenuCategory] = useState(false);
+  const [showCreateMenu, setShowCreateMenu] = useState(false);
   const [showAdditionalOption, setShowAdditionalOption] = useState(false);
   const [showUpdateAdditionalOption, setShowUpdateAdditionalOption] =
     useState(false);
@@ -53,12 +53,19 @@ function AddProduct(props) {
   const [selectedMenu, setSelectedMenu] = useState([]);
   const [additionalOption, setAdditionalOption] = useState([]);
   const [selectedOption, setSelectedOption] = useState([]);
+
   useEffect(async () => {
+    const { user } = props;
     try {
       let foodCategory = await props.getCategoryAPI("food");
       let mainFoodCategory = await props.getCategoryAPI("main-food");
+      if (user.providerId) {
+        var menuCategory = await props.getMenuCategoryAPI(user.providerId);
+        console.log(menuCategory);
+      }
       setFoodCategory(foodCategory);
       setMainFoodCategory(mainFoodCategory);
+      setMenuCategory(menuCategory);
     } catch (err) {
       console.log(err);
     }
@@ -73,7 +80,6 @@ function AddProduct(props) {
   }, [selectedMainFood]);
 
   const addProduct = async (values) => {
-    const { user } = props;
     const formData = {
       provider_id: user.providerId,
       product_name: values.productName,
@@ -100,7 +106,7 @@ function AddProduct(props) {
         const { values, errors, touched } = formikProps;
         return (
           <Fragment>
-            <Form style={{ width: "inherit" }}>
+            <Form style={{ width: "100%" }}>
               <div className="panel-detail-title">Add Item</div>
               <div className="product-handler-container">
                 <span className="product-detail-form-label">Name</span>
@@ -153,9 +159,10 @@ function AddProduct(props) {
                     width="44%"
                     height={30}
                     label="Add menu"
-                    onClick={() => setShowMenuCategory(true)}
+                    onClick={() => setShowCreateMenu(true)}
                   />
                   <Button
+                    disabled={menuCategory.length ? false : true}
                     color={"black"}
                     bglight={true}
                     border={"#5d5d5d 1.5px solid"}
@@ -375,6 +382,20 @@ function AddProduct(props) {
                 />
               </Modal>
               <Modal
+                isOpen={showCreateMenu}
+                title={"Add Menu Category"}
+                width={50}
+                height={500}
+                close={() => {
+                  setShowCreateMenu(false);
+                }}
+              >
+                <AddMenuCategory
+                  save={() => setShowCreateMenu(false)}
+                  list={menuCategory}
+                />
+              </Modal>
+              <Modal
                 isOpen={showMainFoodCategory}
                 title={"Food Category"}
                 width={50}
@@ -455,6 +476,7 @@ AddProduct.propTypes = {
   user: PropTypes.object.isRequired,
   provider: PropTypes.object.isRequired,
   getCategoryAPI: PropTypes.func.isRequired,
+  getMenuCategoryAPI: PropTypes.func.isRequired,
   addProductAPI: PropTypes.func.isRequired,
 };
 
@@ -466,6 +488,7 @@ const mapStateToProps = (state) => ({
 export default withRouter(
   connect(mapStateToProps, {
     getCategoryAPI,
+    getMenuCategoryAPI,
     addProductAPI,
   })(AddProduct)
 );

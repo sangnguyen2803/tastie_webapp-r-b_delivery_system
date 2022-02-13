@@ -58,3 +58,42 @@ export const addProductAPI = (data) => async (dispatch) => {
     return false;
   }
 };
+
+//Remove product
+export const removeProductAPI = (id) => async (dispatch) => {
+  try {
+    const endpoint = `/v1/api/provider/dashboard/menu-overview/${id}/remove-item`;
+    const res = await axios.delete(endpoint);
+    if (res.data?.status) {
+      dispatch({
+        type: GET_PRODUCT_LIST,
+        payload: { productList: null },
+      });
+      return true;
+    }
+    return false;
+  } catch (err) {
+    console.log(err.response.data.errors);
+    return false;
+  }
+};
+
+
+//Get menu category
+export const getMenuCategoryAPI = (id) => async (dispatch) => {
+  try {
+    const endpoint = `/v1/api/provider/dashboard/menu-overview/${id}/get-menu-items`;
+    const res = await axios.get(endpoint);
+    if (res.data?.status) {
+      if (!res.data.result) return [];
+      dispatch({
+        type: GET_PRODUCT_LIST,
+        payload: { productList: res.data.result },
+      });
+      return res.data.result;
+    }
+    return [];
+  } catch (err) {
+    console.log(err);
+  }
+}

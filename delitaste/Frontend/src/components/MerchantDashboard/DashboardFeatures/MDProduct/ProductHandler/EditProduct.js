@@ -101,7 +101,7 @@ function EditProduct(props) {
         const { values, errors, touched } = formikProps;
         return (
           <Fragment>
-            <Form style={{ width: "inherit" }}>
+            <Form style={{ width: "100%" }}>
               <div className="panel-detail-title">Edit Item</div>
 
               <div className="product-handler-container">
@@ -123,7 +123,7 @@ function EditProduct(props) {
                           icon={faImage}
                         />
                       }
-                      width="100%"
+                      width={160}
                       height={30}
                       label="Change Photo"
                     />

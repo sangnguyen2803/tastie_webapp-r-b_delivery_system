@@ -30,8 +30,8 @@ const sidebarFeatures = [
     icon: faHome,
     title: "Home",
     subFeatures: [
-      { id: 1, title: "My Restaurant", link: "provider/my-restaurant" },
-      { id: 2, title: "Operation", link: "provider/operation-settings" },
+      { id: 1, title: "General Information", link: "provider/general" },
+      { id: 2, title: "My Restaurant", link: "provider/my-restaurant" },
     ],
   },
   {

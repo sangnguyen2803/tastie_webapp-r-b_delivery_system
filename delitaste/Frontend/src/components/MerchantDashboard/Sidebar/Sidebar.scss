@@ -126,6 +126,9 @@ $logoColor: #aa0033;
 //responsive-design
 
 @media all and (max-width: 767px) {
+  .sb-header-wrapper {
+    display: none !important;
+  }
   .sb-feature-text,
   .sb-dropdown-icon,
   .sb-sub-feature-row {
@@ -156,5 +159,5 @@ $logoColor: #aa0033;
   }
 }
 
-@media only screen and (max-width: 1200px) and (min-width: 767px) {
+@media only screen and (max-width: 1000px) and (min-width: 767px) {
 }
