@@ -12,7 +12,9 @@ import Discount1 from "../../../assets/DiscountBanner/Picture1.jpg";
 import Discount2 from "../../../assets/DiscountBanner/Picture2.jpg";
 import ProviderList from "./ProviderList/ProviderList";
 function MainContent(props) {
-  return (
+  return 1 !== 1 ? (
+    <></>
+  ) : (
     <Fragment>
       <div className="main-content-wrapper">
         <div className="category-banner-wrapper">

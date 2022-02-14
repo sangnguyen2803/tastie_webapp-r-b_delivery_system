@@ -33,6 +33,7 @@ html {
 }
 
 .main {
+  height: auto;
   margin-top: 80px;
   display: flex;
   flex-direction: column;
@@ -40,4 +41,15 @@ html {
   justify-content: center;
   width: 100%;
   align-items: center;
+}
+
+.home-content {
+  margin-top: 30px;
+  width: 94%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  height: auto;
 }

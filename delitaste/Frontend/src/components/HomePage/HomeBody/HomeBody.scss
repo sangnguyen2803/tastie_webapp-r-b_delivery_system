@@ -1,0 +1,448 @@
+.homebody-sb-container {
+  max-height: 650px;
+  height: 1200px;
+  width: 350px;
+  min-width: 350px;
+  position: -webkit-sticky; /* Safari & IE */
+  position: sticky;
+  top: 90px;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  .homebody-sb-header-title {
+    margin: 25px 0 5px 0;
+    align-self: flex-start;
+    font-weight: 700;
+    font-size: 24px;
+  }
+}
+
+.homebody-sb-function {
+  font-family: Poppins, sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+  margin: 10px 0;
+  .homebody-sb-function-title-wrapper {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: flex-start;
+    .homebody-sb-function-title {
+      margin-bottom: 5px;
+      align-self: flex-start;
+      font-size: 15px;
+      font-weight: 700;
+      width: 270px;
+    }
+  }
+}
+
+.homebody-sb-radio-detail-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  height: auto;
+  .hb-sb-type-wrapper {
+    margin: 4px 0;
+  }
+}
+
+.hb-sb-label-radio {
+  font-size: 13px;
+}
+.hb-sb-switch-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  margin: 8px 0;
+  .hb-sb-switch-label {
+    min-width: 200px;
+    font-size: 13px;
+    margin-right: 10px;
+  }
+}
+
+label > input[type="radio"] {
+  display: none;
+}
+label > input[type="radio"] + *::before {
+  content: "";
+  display: inline-block;
+  vertical-align: bottom;
+  width: 15px;
+  height: 15px;
+  margin-right: 10px;
+  border-radius: 50%;
+  border-style: solid;
+  border-width: 2px;
+}
+label > input[type="checkbox"] {
+  display: none;
+}
+label > input[type="checkbox"] + *::before {
+  content: "";
+  display: inline-block;
+  vertical-align: bottom;
+  width: 15px;
+  height: 15px;
+  margin-right: 10px;
+  border-radius: 50%;
+  border-style: solid;
+  border-width: 2px;
+}
+label > input[type="radio"]:checked + * {
+  color: rgb(0, 0, 0);
+}
+label > input[type="radio"]:checked + *::before {
+  background: radial-gradient(
+    rgb(0, 0, 0) 0%,
+    rgb(0, 0, 0) 40%,
+    transparent 50%,
+    transparent
+  );
+  border-color: rgb(0, 0, 0);
+}
+label > input[type="checkbox"]:checked + * {
+  color: #000000;
+}
+label > input[type="checkbox"]:checked + *::before {
+  background: radial-gradient(
+    rgb(194, 158, 0) 0%,
+    rgb(194, 158, 0) 40%,
+    transparent 50%,
+    transparent
+  );
+  border-color: #727272;
+}
+/* basic layout */
+
+label > input[type="radio"] + * {
+  display: inline-block;
+  padding-left: 0rem;
+  padding-right: 2rem;
+}
+label > input[type="checkbox"] + * {
+  display: inline-block;
+  padding-left: 0rem;
+  padding-right: 2rem;
+}
+
+//RADIO STEPPER
+$number-of-options: 5;
+
+#form-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+form1 {
+  width: 300px;
+  justify-self: flex-start;
+  align-self: flex-start;
+  max-width: 300px;
+  #radio-slider {
+    display: flex;
+    flex-direction: row;
+    align-content: stretch;
+    position: relative;
+    width: 100%;
+    height: 60px;
+    user-select: none;
+    &::before {
+      content: " ";
+      position: absolute;
+      height: 1px;
+      width: 100%;
+      width: calc(100% * (#{$number-of-options - 1} / #{$number-of-options}));
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #000;
+    }
+    input,
+    label {
+      box-sizing: border-box;
+      flex: 1;
+      user-select: none;
+      cursor: pointer;
+    }
+    label {
+      display: inline-block;
+      position: relative;
+      width: 20%;
+      height: 100%;
+      user-select: none;
+      &::before {
+        content: attr(data-debt-amount);
+        position: absolute;
+        left: 50%;
+        padding-top: 10px;
+        transform: translate(-50%, 40px);
+        font-size: 14px;
+        white-space: nowrap;
+        transition: all 0.15s ease-in-out;
+      }
+      &::after {
+        content: " ";
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 20px;
+        height: 20px;
+        border: 2px solid #000;
+        background: #fff;
+        border-radius: 50%;
+        pointer-events: none;
+        user-select: none;
+        z-index: 1;
+        cursor: pointer;
+        transition: all 0.15s ease-in-out;
+      }
+      &:hover::after {
+        transform: translate(-50%, -50%) scale(1.1);
+      }
+    }
+    input {
+      display: none;
+      &:checked {
+        + label::before {
+          opacity: 1;
+        }
+        + label::after {
+          border-width: 4px;
+          transform: translate(-50%, -50%) scale(0.75);
+        }
+        ~ #debt-amount-pos {
+          opacity: 1;
+        }
+        @for $i from 1 through $number-of-options {
+          &:nth-child(#{$i * 2 - 1}) ~ #debt-amount-pos {
+            left: #{($i * 20%) - 10%};
+          }
+        }
+      }
+    }
+    #debt-amount-pos {
+      display: block;
+      position: absolute;
+      top: 50%;
+      width: 12px;
+      height: 12px;
+      background: #000;
+      border-radius: 50%;
+      transition: all 0.15s ease-in-out;
+      transform: translate(-50%, -50%);
+      border: 2px solid #fff;
+      opacity: 0;
+      z-index: 2;
+    }
+  }
+  &:valid {
+    #debt-amount-slider {
+      input {
+        + label::before {
+          transform: translate(-50%, 45px) scale(0.9);
+          transition: all 0.15s linear;
+        }
+        &:checked + label::before {
+          transform: translate(-50%, 45px) scale(1.1);
+          transition: all 0.15s linear;
+        }
+      }
+    }
+  }
+  & + button {
+    display: block;
+    position: relative;
+    margin: 56px auto 0;
+    padding: 10px 20px;
+    appearance: none;
+    transition: all 0.15s ease-in-out;
+    font-family: inherit;
+    font-size: 24px;
+    font-weight: 600;
+    background: #fff;
+    border: 2px solid #000;
+    border-radius: 8px;
+    outline: 0;
+    user-select: none;
+    cursor: pointer;
+    &:hover {
+      // transform: scale(1.1);
+      background: #000;
+      color: #fff;
+      &:active {
+        transform: scale(0.9);
+      }
+    }
+    &:focus {
+      background: #4caf50;
+      border-color: #4caf50;
+      color: #fff;
+      pointer-events: none;
+      &::before {
+        animation: spin 1s linear infinite;
+      }
+    }
+    &::before {
+      display: inline-block;
+      width: 0;
+      opacity: 0;
+      content: "\f3f4";
+      font-family: "Font Awesome 5 Pro";
+      font-weight: 900;
+      margin-right: 0;
+      transform: rotate(0deg);
+    }
+  }
+  &:invalid + button {
+    pointer-events: none;
+    opacity: 0.25;
+  }
+}
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+    width: 24px;
+    opacity: 1;
+    margin-right: 12px;
+  }
+  to {
+    transform: rotate(360deg);
+    width: 24px;
+    opacity: 1;
+    margin-right: 12px;
+  }
+}
+
+.hb-sb-icon-color {
+  color: rgb(128, 0, 0);
+  margin-right: 15px;
+}
+
+.dietary-wrapper {
+  margin-top: 15px;
+  display: flex;
+  width: 90%;
+  height: auto;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  .dietary-item {
+    gap: 5px;
+    background-color: #eeeeee;
+    height: 25px;
+    font-size: 13px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    border-radius: 50px;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+    padding: 4px 8px;
+    margin: 5px 0;
+    margin-right: 15px;
+    transition: 0.2s;
+    &:hover {
+      cursor: pointer;
+      background-color: #e0e0e0;
+    }
+  }
+}
+
+.home-content-provider {
+  width: calc(100% - 350px);
+  height: 2000px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.home-product-row-container {
+  width: 95%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  margin: 20px 0 0 0;
+}
+
+.cbg-header {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+.home-product-row-title {
+  width: 400px;
+  font-size: 26px;
+  font-weight: 700;
+}
+.sub-icon-title {
+  font-size: 16px;
+  cursor: pointer;
+  color: rgb(190, 190, 190);
+  margin-left: 10px;
+}
+
+.home-product-description {
+  width: 400px;
+  font-size: 13px;
+  text-align: left;
+  margin: 0 0 5px 0;
+}
+.home-product-slider {
+  flex-direction: row;
+  width: 100%;
+  flex-wrap: nowrap;
+}
+.provider-card-container {
+  justify-self: center;
+  background-color: rgb(192, 192, 192);
+  width: 250px;
+  height: 140px;
+  margin-right: 10px;
+}
+
+.custom-button-group {
+  margin: 10px 0;
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  justify-content: flex-end;
+  gap: 10px;
+  .carousel-icon-visible {
+    cursor: pointer;
+    background-color: rgb(240, 240, 240);
+    border-radius: 50px;
+    padding: 8px 9px;
+    font-size: 16px;
+    color: #2c2c2c;
+  }
+  .carousel-icon-no-click {
+    cursor: not-allowed;
+    background-color: rgb(240, 240, 240);
+    border-radius: 50px;
+    padding: 8px 9px;
+    font-size: 16px;
+    color: #808080;
+  }
+}
