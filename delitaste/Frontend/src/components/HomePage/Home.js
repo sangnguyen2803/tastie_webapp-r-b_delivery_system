@@ -27,7 +27,7 @@ function Home(props) {
     window.addEventListener("scroll", listenScrollEvent);
   }, []);
   const listenScrollEvent = (e) => {
-    if (window.scrollY > 390) {
+    if (window.scrollY > 420) {
       setShowScrollbar("auto");
     } else {
       setShowScrollbar("hidden");

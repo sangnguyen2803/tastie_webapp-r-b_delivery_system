@@ -374,9 +374,35 @@ form1 {
   align-items: center;
   flex-wrap: wrap;
 }
+.provider-interaction-wrapper {
+  margin-top: 10px;
+  width: inherit;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+.icon-for-liking {
+  cursor: pointer;
+  margin-right: 10px;
+  font-size: 18px;
+  color: white;
+}
 
+.provider-card-tag {
+  width: auto;
+  font-weight: 500;
+  max-width: 180px;
+  font-size: 13px;
+  background-color: rgb(5, 163, 87);
+  color: white;
+  padding: 4px 10px 4px 10px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
 .home-product-row-container {
-  width: 95%;
+  width: 97%;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -415,15 +441,18 @@ form1 {
   flex-wrap: nowrap;
 }
 .provider-card-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
   justify-self: center;
   background-color: rgb(192, 192, 192);
   width: 250px;
-  height: 140px;
-  margin-right: 10px;
+  height: 135px;
+  cursor: pointer;
 }
 
 .custom-button-group {
-  margin: 10px 0;
   display: flex;
   width: 100%;
   flex-direction: row;
@@ -445,4 +474,104 @@ form1 {
     font-size: 16px;
     color: #808080;
   }
+}
+.product-sub-info-wrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  max-width: 250px;
+  width: inherit;
+  margin-bottom: 5px;
+  cursor: pointer;
+  .p-sub-info-main-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: auto;
+    font-size: 13px;
+  }
+  .p-sub-info-cooking-time {
+    font-size: 13px;
+    color: rgb(150, 150, 150);
+  }
+}
+.sub-info-icon {
+  color: rgb(0, 138, 62);
+}
+.product-info-wrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 250px;
+  width: inherit;
+  margin-top: 5px;
+  cursor: pointer;
+  .p-info-main-text {
+    font-family: "Kanit", sans-serif;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 220px;
+    font-size: 18px;
+    font-weight: 700;
+  }
+  .p-info-rating {
+    display: block;
+    border-radius: 50px;
+    padding: 3px 3px;
+    background-color: rgb(238, 238, 238);
+    font-size: 11px;
+  }
+}
+.react-multi-carousel-track {
+  gap: 3px !important;
+}
+.link-text {
+  font-size: 14px;
+  letter-spacing: 0.02rem;
+  text-decoration: underline;
+  width: 150px;
+  cursor: pointer;
+  &:hover {
+    font-weight: 700;
+  }
+}
+
+figcaption {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  width: inherit;
+  height: inherit;
+  background-color: rgba(0, 0, 0, 0.5);
+  .btn-schedule-wrapper {
+    margin: 2.5px 0;
+    gap: 2px;
+    display: flex;
+    flex-direction: row;
+    width: 130px;
+    justify-content: center;
+    align-items: center;
+    background-color: #eeeeee;
+    padding: 4px 0px;
+    border-radius: 25px;
+    font-size: 12px;
+    opacity: 1;
+  }
+  .icon-btn {
+    font-size: 16px;
+    color: black;
+  }
+}
+
+.a1-description {
+  font-size: 10px;
+  letter-spacing: 0.05rem;
+  color: white;
 }

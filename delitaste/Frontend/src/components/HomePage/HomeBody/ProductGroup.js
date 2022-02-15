@@ -4,7 +4,13 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { CustomButtonGroup } from "./CustomButtonGroup";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faInfo, faInfoCircle } from "@fortawesome/fontawesome-free-solid";
+import {
+  faCalendarPlus,
+  faInfoCircle,
+} from "@fortawesome/fontawesome-free-solid";
+import { faHeart as faHeart2 } from "@fortawesome/fontawesome-free-solid";
+import { faHeart as faHeart1 } from "@fortawesome/fontawesome-free-regular";
+import { faGetPocket } from "@fortawesome/free-brands-svg-icons";
 const responsive = {
   desktop: {
     breakpoint: { max: 3000, min: 1024 },
@@ -23,7 +29,7 @@ const responsive = {
   },
 };
 
-function ProductGroup({ groupTitle, groupDescription, productList }) {
+function ProductGroup({ groupTitle, groupDescription, providerList }) {
   return (
     <Fragment>
       <div className="home-product-row-container">
@@ -31,7 +37,9 @@ function ProductGroup({ groupTitle, groupDescription, productList }) {
           {groupTitle || "No title"}
           <FontAwesomeIcon className="sub-icon-title" icon={faInfoCircle} />
         </div>
-
+        {groupDescription && (
+          <span className="home-product-description">{groupDescription}</span>
+        )}
         <div className="home-product-slider">
           <Carousel
             swipeable={false}
@@ -47,26 +55,67 @@ function ProductGroup({ groupTitle, groupDescription, productList }) {
             arrows={false}
             customButtonGroup={
               <CustomButtonGroup>
-                {groupDescription && (
-                  <span className="home-product-description">
-                    {groupDescription}
-                  </span>
-                )}
+                <span className="link-text">See more</span>
               </CustomButtonGroup>
             }
             renderButtonGroupOutside={true}
             customTransition="transform 500ms ease-in-out"
           >
-            {productList.map((item) => (
-              <div
-                className="provider-card-container"
-                style={{
-                  backgroundImage: `url(${item.product_photo})`,
-                  backgroundPosition: "center",
-                  backgroundRepeat: "no-repeat",
-                  backgroundSize: "cover",
-                }}
-              ></div>
+            {providerList.map((item) => (
+              <Fragment>
+                <div
+                  className="provider-card-container"
+                  key={item.id}
+                  style={{
+                    backgroundImage: `url(${item.provider_photo})`,
+                    backgroundPosition: "center",
+                    backgroundRepeat: "no-repeat",
+                    backgroundSize: "cover",
+                  }}
+                >
+                  <div className="provider-interaction-wrapper">
+                    <FontAwesomeIcon
+                      className="icon-for-liking"
+                      style={{ zIndex: 1 }}
+                      icon={faHeart1}
+                    />
+                    {item.tag_name && (
+                      <div className="provider-card-tag">{item.tag_name}</div>
+                    )}
+                  </div>
+                  <figcaption className="figcaption-wrapper">
+                    <div className="btn-schedule-wrapper">
+                      <FontAwesomeIcon
+                        icon={faCalendarPlus}
+                        className="icon-btn"
+                      />
+                      <span>Schedule order</span>
+                    </div>
+                    <span className="a1-description">
+                      Opens Saturday 2:15 PM
+                    </span>
+                  </figcaption>
+                </div>
+
+                <div className="product-info-wrapper">
+                  <span className="p-info-main-text">{item.provider_name}</span>
+                  <div className="p-info-rating">{item.rating}</div>
+                </div>
+                <div className="product-sub-info-wrapper">
+                  <FontAwesomeIcon
+                    icon={faGetPocket}
+                    className="sub-info-icon"
+                  />
+                  &nbsp;•&nbsp;
+                  <span className="p-sub-info-main-text">
+                    {item.price_range}
+                  </span>
+                  &nbsp;•&nbsp;
+                  <div className="p-sub-info-cooking-time">
+                    {item.cooking_time}
+                  </div>
+                </div>
+              </Fragment>
             ))}
           </Carousel>
         </div>
