@@ -1,7 +1,7 @@
 import { GET_PRODUCT_LIST } from "store/actions/types";
 
 const initialState = {
-  productList: null,
+  productList: [],
 };
 
 export default function (state = initialState, action) {

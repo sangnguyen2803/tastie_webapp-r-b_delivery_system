@@ -13,6 +13,7 @@ import UserRegistrationScreen from "./UserAdmissionScreen/UserRegistrationScreen
 import MerchantRegistrationScreen from "./MerchantRegistrationScreen/MerchantRegistrationScreen";
 import SignContractScreen from "./MerchantRegistrationScreen/SignContractScreen/SignContractScreen";
 import MerchantFormScreen from "./MerchantRegistrationScreen/MerchantFormScreen";
+import ProviderDetailScreen from "./ProviderDetailScreen/ProviderDetailScreen";
 //merchant registration form screen
 import ServiceInfoForm from "components/MerchantRegistration/Forms/DetailMerchantForm/ServiceInfoForm";
 import RegisteredRepresentativeForm from "components/MerchantRegistration/Forms/DetailMerchantForm/RegisteredRepresentativeForm";
@@ -41,6 +42,11 @@ function RootScreen(props) {
           <Route exact path="/home" component={HomeScreen} />
           <Route exact path="/sign-up" component={UserRegistrationScreen} />
           <Route exact path="/sign-in" component={UserSignInScreen} />
+          <Route
+            exact
+            path="/provider-detail/:id"
+            component={ProviderDetailScreen}
+          />
           <Route
             exact
             path="/merchant-registration"

@@ -31,7 +31,7 @@ const Button = ({
     alignItems: "center",
     width: width || "80px",
     height: height || "30px",
-    borderRadius: radius || "2px",
+    borderRadius: radius || "0px",
     backgroundColor:
       bgColor ||
       (buttonType === "primary" ? "#940000" : bglight ? "#F5F5F5" : "#666666"),
