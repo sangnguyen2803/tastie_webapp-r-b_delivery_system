@@ -10,54 +10,17 @@ import Button from "components/Commons/Button/Button";
 import ButtonGroup from "components/Commons/Button/ButtonGroup/ButtonGroup";
 import { useRef } from "react";
 import {
-  faClock,
   faHeart as faHeart2,
-  faMapMarkerAlt,
-  faStar,
-  faCalendarPlus,
-  faComment,
   faBars,
   faPlus,
-  faMinus,
 } from "@fortawesome/fontawesome-free-solid";
-import { faHeart as faHeart1 } from "@fortawesome/fontawesome-free-regular";
-import Background from "assets/home_banner.png";
+import Modal from "components/Commons/Overlay/Popup/Modal/Modal";
+import PDProductDetail from "./PDProductDetail/PDProductDetail";
 import "../ProviderDetail.scss";
 
-function useOnClickOutside(ref, handler) {
-  useEffect(() => {
-    const listener = (event) => {
-      if (!ref.current || ref.current.contains(event.target)) {
-        return;
-      }
-      handler(event);
-    };
-    document.addEventListener("mousedown", listener);
-    document.addEventListener("touchstart", listener);
-    return () => {
-      document.removeEventListener("mousedown", listener);
-      document.removeEventListener("touchstart", listener);
-    };
-  }, [ref, handler]);
-}
-
 function PDBody(props) {
-  const ref = useRef(null);
   const [products, setProducts] = useState(props.item);
-  const [isButtonExpanded, setIsButtonExpanded] = useState(false);
-  /*
-  const disableNextClick = () => {
-    const listener = (evt) => {
-      evt.stopPropagation();
-      document.removeEventListener("click", listener, true);
-    };
-    document.addEventListener("click", listener, true);
-  };
-
-  useOnClickOutside(ref, () => {
-    setIsButtonExpanded(false);
-    disableNextClick();
-  });*/
+  const [showProductDetail, setShowProductDetail] = useState(false);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "auto" });
@@ -97,7 +60,7 @@ function PDBody(props) {
                       <FontAwesomeIcon
                         icon={faPlus}
                         className="inc-des-button"
-                        onClick={() => setIsButtonExpanded((prev) => !prev)}
+                        onClick={() => setShowProductDetail(true)}
                       />
                     </div>
                     <span className="pd-pl-text">{product.product_name}</span>
@@ -105,6 +68,15 @@ function PDBody(props) {
                   </div>
                 ))}
               </div>
+              <Modal
+                isOpen={showProductDetail}
+                title={"Product Detail"}
+                width={40}
+                height={500}
+                close={() => {
+                  setShowProductDetail(false);
+                }}
+              ></Modal>
             </Fragment>
           ))}
         </div>
