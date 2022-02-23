@@ -28,7 +28,6 @@ $logoColor: #aa0033;
   }
 }
 .sb-wrapper {
-  z-index: 1;
   border-right: 2px solid rgb(241, 241, 241);
   position: fixed;
   background-color: #ffffff;
@@ -138,6 +137,7 @@ $logoColor: #aa0033;
   .sb-wrapper {
     width: 50px;
     background-color: #490000;
+    
   }
 
   .sb-feature-row {

@@ -45,11 +45,9 @@ function ProviderDetail(props) {
   const { product, user } = props;
   const [items, setItems] = useState(product.productList || []);
   useEffect(async () => {
-    console.log(product.productList);
     if (product.productList.length !== 0) return;
-    const productList = await props.getProductListAPI(1000003);
-    console.log(productList);
-    setItems(productList);
+    const productList = await props.getProductListAPI(props.match.params?.id);
+    setItems([...productList]);
   }, []);
 
   return (
@@ -57,7 +55,7 @@ function ProviderDetail(props) {
       <NavBar fixed={true} />
       <div className="main">
         <PDHeader item={providerInfo} />
-        <PDBody item={items} />
+        <PDBody products={items} setProducts={setItems} />
       </div>
       <Footer />
       <ToolBar />

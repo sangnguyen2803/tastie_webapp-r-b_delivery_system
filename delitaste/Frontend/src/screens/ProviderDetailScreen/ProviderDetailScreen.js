@@ -10,16 +10,9 @@ import Spinner from "components/Commons/Overlay/Spinner/Spinner";
 function ProviderDetailScreen(props) {
   return (
     <Fragment>
-      {props.isLoader ? (
-        <ProviderDetail />
-      ) : (
-        <Fragment>
-          <ProviderDetail />
-          <Spinner visibility={true} />
-        </Fragment>
-      )}
+      <ProviderDetail />
     </Fragment>
   );
 }
 
-export default withRouter(withAuth(ProviderDetailScreen));
+export default withRouter(ProviderDetailScreen);

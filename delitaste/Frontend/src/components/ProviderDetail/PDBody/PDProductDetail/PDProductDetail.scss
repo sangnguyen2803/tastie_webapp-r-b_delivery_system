@@ -1,0 +1,214 @@
+.pd-pr-d-header {
+  position: relative;
+  width: inherit;
+  height: 250px;
+  flex-shrink: 0;
+  overflow: hidden;
+  transition: height 0.3s ease-out;
+
+  .pd-pr-d-image {
+    height: inherit;
+    width: 100%;
+    transition: transform 2s ease-in-out 0s;
+    transform: scale(1);
+    object-fit: cover;
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+  .pd-pr-d-icon-abs-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: flex-end;
+    position: absolute;
+    top: 0;
+    transition: max-height 0.15s ease-out;
+    margin-left: calc(100% - 30px);
+    .pd-pr-d-icon-abs {
+      cursor: pointer;
+      font-size: 20px;
+      color: #ffffff;
+      transition: transform 0.5s ease-in-out 0s;
+      &:hover {
+        transform: scale(1.2);
+      }
+    }
+  }
+}
+.pd-pr-d-body {
+  height: 350px;
+  width: inherit;
+  .pd-pr-d-main-text {
+    font-family: "Kanit", sans-serif;
+    font-size: 36px;
+    margin: 0px 0;
+    text-indent: 25px;
+    font-weight: 700;
+  }
+  .pd-pr-d-sub-text {
+    font-size: 14px;
+    margin: 0px 0 2px 0;
+    text-indent: 25px;
+  }
+  .pd-pr-option-box-container {
+    overflow-y: auto;
+    width: 100%;
+    height: 200px;
+    max-height: 235px;
+    display: flex;
+    flex-wrap: wrap !important;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin: 10px 0;
+    &::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+
+    &::-webkit-scrollbar-button:start:decrement {
+      display: block;
+      height: 10px;
+    }
+    &::-webkit-scrollbar-button:end:increment {
+      display: block;
+      height: 10px;
+    }
+
+    &::-webkit-scrollbar-button:vertical:increment {
+      background-color: #fff;
+    }
+
+    &::-webkit-scrollbar-track-piece {
+      background-color: #eee;
+      -webkit-border-radius: 3px;
+    }
+
+    &::-webkit-scrollbar-thumb:vertical {
+      height: 50px;
+      background-color: #ccc;
+      -webkit-border-radius: 3px;
+    }
+
+    &::-webkit-scrollbar-thumb:horizontal {
+      width: 50px;
+      background-color: #ccc;
+      -webkit-border-radius: 3px;
+    }
+    .option-box-wrapper {
+      width: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
+  }
+}
+.option-question {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  width: calc(100% - 50px);
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgb(240, 240, 240);
+  padding: 0 25px;
+  .option-box-show-more-icon {
+    font-size: 16px;
+  }
+  .option-box-title-wrapper-1 {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    font-size: 16px;
+    justify-content: center;
+    align-items: flex-start;
+
+    .option-box-title-main {
+      width: 150px;
+      font-weight: 700;
+      font-size: 15px;
+    }
+    .option-box-title-sub {
+      font-size: 12px;
+    }
+  }
+}
+.option-answer {
+  display: flex;
+  width: calc(100% - 50px);
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1px 25px;
+}
+
+.pd-pr-d-footer {
+  height: 50px;
+  background-color: white;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0 20px;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+.pd-pl-feedback-container {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  width: inherit;
+  height: auto;
+  justify-content: flex-start;
+  align-items: flex-start;
+  .pd-fb-sub-text {
+    font-size: 13px;
+  }
+  .pd-fb-counter {
+    font-size: 12px;
+    color: white;
+    padding: 2px 4.5px;
+    border-radius: 50px;
+    background-color: rgb(150, 0, 0);
+  }
+}
+.pd-pl-quantity-btn-open {
+  display: flex;
+  align-self: center;
+  width: 115px;
+
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  .inc-des-value {
+    width: 30px !important;
+    height: 33px !important;
+    font-size: 20px;
+    user-select: none;
+    color: rgb(0, 0, 0);
+    border: none !important;
+  }
+  .inc-des-button-open-left {
+    cursor: pointer;
+    font-size: 13px;
+    color: #ffffff;
+    padding: 11px 12px;
+    background-color: rgb(30, 30, 30);
+    border: 1px solid #f1f1f1;
+    border-radius: 50px;
+  }
+  .inc-des-button-open-right {
+    cursor: pointer;
+    font-size: 13px;
+    color: #ffffff;
+    padding: 11px 12px;
+    background-color: rgb(30, 30, 30);
+    border: 1px solid #f1f1f1;
+    border-radius: 50px;
+  }
+}
+.option-box-radio-label {
+  width: 380px !important;
+}

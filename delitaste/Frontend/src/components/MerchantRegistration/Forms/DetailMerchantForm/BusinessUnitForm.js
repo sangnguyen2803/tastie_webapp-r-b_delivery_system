@@ -632,10 +632,7 @@ function BusinessUnitForm(props) {
                             icon={faImage}
                           />
                           <span>Choose a file to upload</span>
-                          <input
-                            type="file"
-                            id="upload"
-                          />
+                          <input type="file" id="upload" />
                         </label>
                       </div>
                     </div>
@@ -652,10 +649,7 @@ function BusinessUnitForm(props) {
                             icon={faImage}
                           />
                           <span>Choose a file to upload</span>
-                          <input
-                            type="file"
-                            id="upload"
-                          />
+                          <input type="file" id="upload" />
                         </label>
                       </div>
                     </div>
@@ -672,10 +666,7 @@ function BusinessUnitForm(props) {
                             icon={faImage}
                           />
                           <span>Choose a file to upload</span>
-                          <input
-                            type="file"
-                            id="upload"
-                          />
+                          <input type="file" id="upload" />
                         </label>
                       </div>
                     </div>
@@ -693,11 +684,11 @@ function BusinessUnitForm(props) {
               </div>
             </Form>
             <Modal
-              isOpen={showRestaurantCategory}
+              openModal={showRestaurantCategory}
               title={"Restaurant Category"}
               width={60}
               height={500}
-              close={() => {
+              closeModal={() => {
                 setShowRestaurantCategory(false);
               }}
             >
@@ -711,11 +702,11 @@ function BusinessUnitForm(props) {
               />
             </Modal>
             <Modal
-              isOpen={showCuisineCategory}
+              openModal={showCuisineCategory}
               title={"Cuisine Category"}
               width={60}
               height={500}
-              close={() => {
+              closeModal={() => {
                 setShowCuisineCategory(false);
               }}
             >

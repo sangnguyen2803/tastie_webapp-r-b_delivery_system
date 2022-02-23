@@ -364,11 +364,11 @@ function AddProduct(props) {
                 />
               </ButtonGroup>
               <Modal
-                isOpen={showMenuCategory}
+                openModal={showMenuCategory}
                 title={"Menu Category"}
                 width={50}
                 height={500}
-                close={() => {
+                closeModal={() => {
                   setShowMenuCategory(false);
                 }}
               >
@@ -382,11 +382,11 @@ function AddProduct(props) {
                 />
               </Modal>
               <Modal
-                isOpen={showCreateMenu}
+                openModal={showCreateMenu}
                 title={"Add Menu Category"}
                 width={50}
                 height={500}
-                close={() => {
+                closeModal={() => {
                   setShowCreateMenu(false);
                 }}
               >
@@ -396,11 +396,11 @@ function AddProduct(props) {
                 />
               </Modal>
               <Modal
-                isOpen={showMainFoodCategory}
+                openModal={showMainFoodCategory}
                 title={"Food Category"}
                 width={50}
                 height={500}
-                close={() => {
+                closeModal={() => {
                   setShowMainFoodCategory(false);
                 }}
               >
@@ -414,11 +414,11 @@ function AddProduct(props) {
                 />
               </Modal>
               <Modal
-                isOpen={showFoodCategory}
+                openModal={showFoodCategory}
                 title={"Food Specialty Category"}
                 width={50}
                 height={500}
-                close={() => {
+                closeModal={() => {
                   setShowFoodCategory(false);
                 }}
               >
@@ -432,11 +432,11 @@ function AddProduct(props) {
                 />
               </Modal>
               <Modal
-                isOpen={showAdditionalOption}
+                openModal={showAdditionalOption}
                 title={"Add Additional Options"}
                 width={35}
                 height={520}
-                close={() => {
+                closeModal={() => {
                   setShowAdditionalOption(false);
                 }}
               >
@@ -448,11 +448,11 @@ function AddProduct(props) {
                 />
               </Modal>
               <Modal
-                isOpen={showUpdateAdditionalOption}
+                openModal={showUpdateAdditionalOption}
                 title={"Update Additional Options"}
                 width={35}
                 height={520}
-                close={() => {
+                closeModal={() => {
                   setShowUpdateAdditionalOption(false);
                 }}
               >

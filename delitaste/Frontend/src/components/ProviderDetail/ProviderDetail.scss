@@ -104,6 +104,30 @@
 }
 /*--------------------------------------------*/
 
+.pd-sb-cart-info-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  width: 100%;
+  height: auto;
+  margin-top: 10px;
+  .pd-sb-cart-info-main-text {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 5px;
+    span {
+      font-size: 14px;
+    }
+    .pd-sb-icon {
+      color: rgb(150, 0, 0);
+      font-size: 18px;
+    }
+  }
+}
 .p-d-body-container {
   width: 100%;
   display: flex;
@@ -242,6 +266,21 @@
   }
 }
 
+.pd-pl-title-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 10px;
+  .pd-pl-title {
+    margin: 0;
+  }
+  .pd-sb-icon-extent {
+    font-size: 14px;
+  }
+}
+
 .pd-pl-quantity-btn {
   display: flex;
   align-self: flex-end;
@@ -259,45 +298,6 @@
     background-color: black;
     border: 1px solid #f1f1f1;
     border-radius: 50px;
-  }
-}
-.pd-pl-quantity-btn-open {
-  display: flex;
-  align-self: flex-end;
-  height: 25px;
-  margin: 10px 2.5px;
-  width: 105px;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  .inc-des-value {
-    font-size: 15px;
-    user-select: none;
-    background-color: black;
-    color: white;
-    user-select: none;
-  }
-  .inc-des-button-open-left {
-    font-size: 13px;
-    color: #ffffff;
-    padding: 9px 10px;
-    background-color: black;
-    border: 1px solid #f1f1f1;
-    border-right: none;
-    border-top-left-radius: 50px;
-    border-bottom-left-radius: 50px;
-  }
-  .inc-des-button-open-right {
-    font-size: 13px;
-    color: #ffffff;
-    padding: 9px 10px;
-    background-color: black;
-    border: 1px solid #f1f1f1;
-
-    border-left: none;
-    border-top-right-radius: 50px;
-    border-bottom-right-radius: 50px;
   }
 }
 input#number {

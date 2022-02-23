@@ -18,7 +18,7 @@
     align-items: center;
     height: 40px;
 
-    background-color: black;
+    background-color: rgb(20, 20, 20);
     color: white;
     .modal-header-title {
       width: 95%;
@@ -38,7 +38,6 @@
 .modal-darken-transparent-background {
   display: block;
   position: fixed;
-  background: rgba(0, 0, 0, 0.45);
   width: 100vw;
   height: 100vh;
   left: 0%;
@@ -46,7 +45,6 @@
   z-index: 10;
 }
 .modal-content {
-  padding: 2% 3%;
   height: auto;
 }
 
@@ -69,4 +67,12 @@
       max-width: 100% !important;
     }
   }
+}
+
+.modal-cart-header-icon {
+  width: 100%;
+  font-size: 18px;
+  margin-top: 10px;
+  margin-left: 10px;
+  cursor: pointer;
 }
