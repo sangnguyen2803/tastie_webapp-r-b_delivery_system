@@ -75,5 +75,5 @@ const mapStateToProps = (state) => ({
 });
 
 export default withRouter(
-  connect(mapStateToProps, { getProductListAPI })(ProviderDetail)
+  withAuth(connect(mapStateToProps, { getProductListAPI })(ProviderDetail))
 );

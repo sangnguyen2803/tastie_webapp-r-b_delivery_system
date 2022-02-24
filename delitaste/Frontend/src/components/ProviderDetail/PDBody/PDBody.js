@@ -16,16 +16,24 @@ import {
 import Modal from "components/Commons/Overlay/Popup/Modal/Modal";
 import "../ProviderDetail.scss";
 import PDProductDetail from "components/ProviderDetail/PDBody/PDProductDetail/PDProductDetail";
-import Spinner from "components/Commons/Overlay/Spinner/Spinner";
+import { scroller } from "react-scroll";
 
 function PDBody({ products }) {
   const [showProductDetail, setShowProductDetail] = useState(false);
   const [selectedProductDetail, setSelectedProductDetail] = useState();
   const [showCustomerReview, setShowCustomerReview] = useState(false);
-
+  const scrollToSection = (sectionName) => {
+    scroller.scrollTo(sectionName, {
+      duration: 800,
+      delay: 0,
+      smooth: "easeInOutQuart",
+      offset: -100,
+    });
+  };
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "auto" });
   }, []);
+
   return (
     <Fragment>
       <div className="p-d-body-container">
@@ -44,7 +52,14 @@ function PDBody({ products }) {
             {products.length !== 0 &&
               products.map((product) => (
                 <Fragment>
-                  <span className="pd-sb-menu-item">
+                  <span
+                    className="pd-sb-menu-item"
+                    onClick={() =>
+                      scrollToSection(
+                        `product-group-${product.menu_category_id}`
+                      )
+                    }
+                  >
                     {product.menu_category_name}
                   </span>
                 </Fragment>
@@ -75,7 +90,11 @@ function PDBody({ products }) {
           {products.length !== 0 &&
             products.map((menu) => (
               <Fragment>
-                <div className="pd-pl-title">{menu.menu_category_name}</div>
+                <div
+                  className={`pd-pl-title product-group-${menu.menu_category_id}`}
+                >
+                  {menu.menu_category_name}
+                </div>
                 <div className="pd-pl-product-group">
                   {menu.products.map((product) => (
                     <div
@@ -124,7 +143,10 @@ function PDBody({ products }) {
           padding="0% 0%"
           hideHeader={true}
         >
-          <PDProductDetail product={selectedProductDetail} />
+          <PDProductDetail
+            setShowProductDetail={setShowProductDetail}
+            productItem={selectedProductDetail}
+          />
         </Modal>
       </div>
     </Fragment>

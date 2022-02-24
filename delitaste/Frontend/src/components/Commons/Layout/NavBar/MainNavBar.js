@@ -3,7 +3,6 @@ import ProfilePhoto from "assets/avatar.jpg";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBars,
@@ -12,14 +11,13 @@ import {
   faUser,
   faTimes,
 } from "@fortawesome/fontawesome-free-solid";
-
+import { faBell } from "@fortawesome/free-solid-svg-icons";
 import ENFlag from "assets/Flags/en_flag.png";
 import FRFlag from "assets/Flags/fr_flag.png";
 import VIFlag from "assets/Flags/vi_flag.png";
 import { Link } from "react-router-dom";
-
+import i18n from "i18n";
 //components
-
 import "./MainNavBar.scss";
 import SearchBar from "./SearchBar";
 import NavFlyout from "components/Commons/Overlay/Popup/NavFlyout/NavFlyout";
@@ -28,8 +26,7 @@ import Modal from "components/Commons/Overlay/Popup/Modal/Modal";
 import LanguageSettingPanel from "components/Commons/Overlay/Popup/Panel/LanguageSettingPanel";
 import AccountSettingPanel from "components/Commons/Overlay/Popup/Panel/AccountSettingPanel";
 import NotificationPanel from "components/Commons/Overlay/Popup/Panel/NotificationPanel";
-import i18n from "i18n";
-import { faBell } from "@fortawesome/free-solid-svg-icons";
+import Cart from "components/Commons/Cart/Cart";
 
 function MainNavBar({ user, history }) {
   const [accountPanel, setAccountPanel] = useState(false);
@@ -265,7 +262,9 @@ function MainNavBar({ user, history }) {
         closeModal={() => {
           setCartModal(false);
         }}
-      />
+      >
+        <Cart />
+      </Modal>
     </>
   );
 }

@@ -1,13 +1,14 @@
 import ReactDOM from "react-dom";
 import { useState, useEffect, useRef, Fragment } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faCartArrowDown,
+  faCartPlus,
+  faTimes,
+} from "@fortawesome/fontawesome-free-solid";
+import "./Modal.scss";
 
 const portalRoot = document.getElementById("portal-root");
-
-import { Link } from "react-router-dom";
-
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTimes } from "@fortawesome/fontawesome-free-solid";
-import "./Modal.scss";
 
 function useOnClickOutside(ref, handler) {
   useEffect(() => {
@@ -52,6 +53,7 @@ const Modal = ({ openModal, closeModal, ...rest }) => {
     background: `rgba(0, 0, 0, ${rest.transparent || 0.8})`,
   };
   const CartContainerStyle = {
+    opacity: rest.opacity || "1",
     boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 6px",
     width: `${rest.cartWidth}px`,
     height: `${rest.cartHeight}px`,
@@ -91,11 +93,19 @@ const Modal = ({ openModal, closeModal, ...rest }) => {
         style={ModalOutterBackgroundStyle}
       >
         <div className="modal-container" style={CartContainerStyle} ref={ref}>
-          <FontAwesomeIcon
-            className="modal-cart-header-icon"
-            onClick={closeModal}
-            icon={faTimes}
-          />
+          <div className="modal-cart-header-wrapper">
+            <FontAwesomeIcon
+              className="modal-cart-header-icon"
+              onClick={closeModal}
+              icon={faTimes}
+            />
+            <div className="modal-cart-header-title">
+              <span>Cart items • 0 item</span>
+            </div>
+          </div>
+          <div className="modal-content" style={ModalInnerStyle}>
+            {rest.children}
+          </div>
         </div>
       </div>
     </Fragment>

@@ -1,6 +1,8 @@
-import { withRouter } from "react-router-dom";
 import React, { Fragment, useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 import {
   faPlus,
   faMinus,
@@ -14,18 +16,50 @@ import ButtonGroup from "components/Commons/Button/ButtonGroup/ButtonGroup";
 import "./PDProductDetail.scss";
 
 function PDProductDetail(props) {
-  const [product, setProduct] = useState(props.product);
+  const { provider, user, match } = props;
+  const [productItem, setProductItem] = useState(props.productItem);
+  const [quantity, setQuantity] = useState(1);
+  const [totalPrice, setTotalPrice] = useState(productItem.price);
+  const [additionalOption, setAdditionalOption] = useState([]);
   const [heightViewPort, setHeightViewPort] = useState(180);
   const [isViewPortExpanded, setIsViewPortExpanded] = useState(false);
   const heightForExpansion = 120;
+
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "auto" });
   }, []);
+  const addToCart = () => {
+    const cart = {
+      providerId: match.params.id,
+      status: 1,
+      date: "2022-01-25T00:11:09.000Z",
+      cartItem: {
+        productId: productItem.product_id,
+        productName: productItem.product_name,
+        productImage: productItem.product_image,
+        productPrice: productItem.price,
+        additionalOption: additionalOption,
+        quantity: quantity,
+        totalPrice: totalPrice,
+      },
+    };
+    console.log(cart);
+    props.setShowProductDetail(false);
+  };
 
+  const onValueChange = (event, price) => {
+    let additionalOptionItem = {
+      optionName: event.target.name,
+      value: event.target.value,
+      price: price,
+    };
+    additionalOption.push(additionalOptionItem);
+    setTotalPrice(totalPrice + price);
+  };
   return (
     <Fragment>
       <div className="pd-pr-d-header" style={{ height: `${heightViewPort}px` }}>
-        <img className="pd-pr-d-image" src={product.product_image} />
+        <img className="pd-pr-d-image" src={productItem.product_image} />
         <div
           className="pd-pr-d-icon-abs-wrapper"
           style={{ marginTop: `calc(${heightViewPort}px - 30px)` }}
@@ -50,15 +84,15 @@ function PDProductDetail(props) {
             : `${350 - heightForExpansion}px`,
         }}
       >
-        <div className="pd-pr-d-main-text">{product.product_name}</div>
-        <div className="pd-pr-d-sub-text">{product.description}</div>
+        <div className="pd-pr-d-main-text">{productItem.product_name}</div>
+        <div className="pd-pr-d-sub-text">{productItem.description}</div>
         <div
           className="pd-pr-option-box-container"
           style={{
             height: isViewPortExpanded ? "130px" : `${130 + heightViewPort}px`,
           }}
         >
-          {product.product_options.map(
+          {productItem.product_options.map(
             (option) =>
               option.option_name && (
                 <Fragment>
@@ -82,6 +116,9 @@ function PDProductDetail(props) {
                               type="radio"
                               name={option.option_name}
                               value={item.value}
+                              onChange={(event) =>
+                                onValueChange(event, item.price)
+                              }
                             />
                             <span className="hb-sb-label-radio option-box-radio-label">
                               {item.value}
@@ -125,11 +162,22 @@ function PDProductDetail(props) {
           fontSize={13}
           height={35}
           label={"Add to order"}
+          onClick={addToCart}
         />
       </div>
     </Fragment>
   );
 }
 
-export default withRouter(PDProductDetail);
+PDProductDetail.propTypes = {
+  user: PropTypes.object.isRequired,
+  product: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  user: state.UserReducer,
+  product: state.ProductReducer,
+});
+
+export default withRouter(connect(mapStateToProps, null)(PDProductDetail));
 //<FontAwesomeIcon className="pd-pr-d-icon-abs-compress" icon={faCompress} />

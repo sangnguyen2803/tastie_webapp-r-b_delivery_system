@@ -72,7 +72,36 @@
 .modal-cart-header-icon {
   width: 100%;
   font-size: 18px;
-  margin-top: 10px;
-  margin-left: 10px;
   cursor: pointer;
+}
+.modal-cart-header-wrapper {
+  margin-top: 5px;
+  margin-left: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  flex-wrap: nowrap;
+  align-items: center;
+  height: 30px;
+  gap: 120px;
+  .modal-cart-header-title {
+    color: #4b4b4b;
+    font-weight: 700;
+    width: 100%;
+    height: 30px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 5px;
+    font-size: 15px;
+  }
+}
+.cart-quantity {
+  font-size: 11px;
+  font-weight: 500;
+  background-color: #bd0000;
+  padding: 2px 7px;
+  border-radius: 50px;
+  color: white;
 }

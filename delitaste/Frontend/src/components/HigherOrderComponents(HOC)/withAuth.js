@@ -35,7 +35,6 @@ export default function (WrappedComponent) {
         this.setState({ isLoader: true });
       }
       if (!this.props.user.isUserAuthenticated) {
-        this.props.history.push("/");
         return;
       }
     }

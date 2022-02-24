@@ -170,7 +170,7 @@
       }
     }
     .pd-sb-menu-category {
-      padding: 10px 0 0 0;
+      padding: 0px 0 0 0;
       display: flex;
       flex-direction: column;
       width: 100%;
@@ -180,18 +180,13 @@
         color: black;
         text-transform: capitalize;
         width: 90%;
-        text-indent: 30px;
-        border-top-right-radius: 15px;
-        border-bottom-right-radius: 15px;
+        text-indent: 25px;
         font-size: 16px;
-        margin: 2px 0;
         padding: 5px 0;
-        transition: 0.3s;
         &:hover {
           background-color: rgb(230, 230, 230);
           cursor: pointer;
           user-select: none;
-          font-weight: bold;
         }
       }
     }

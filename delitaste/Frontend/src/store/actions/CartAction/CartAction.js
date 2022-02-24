@@ -1,20 +1,31 @@
 import axios from "axios";
 
-import { INCREASE_PRODUCT, DESCREASE_PRODUCT } from "store/actions/types";
+import {
+  ADD_TO_CART,
+  INCREASE_PRODUCT,
+  DESCREASE_PRODUCT,
+} from "store/actions/types";
 
 //Get product list
-export const increaseProduct = (productId) => async (dispatch) => {
+export const addToCart = (item) => async (dispatch) => {
+  dispatch({
+    type: ADD_TO_CART,
+    payload: item,
+  });
+};
+
+export const increaseProductQuantity = (productId) => async (dispatch) => {
   dispatch({
     type: INCREASE_PRODUCT,
     payload: { id: productId },
   });
 };
 
-export const descreaseProduct = (productId) => async (dispatch) => {
+export const descreaseProductQuantity = (productId) => async (dispatch) => {
   dispatch({
     type: DESCREASE_PRODUCT,
     payload: { id: productId },
   });
 };
 
-export const addToCart = (item) => async (dispatch) => {};
+export const removeCart = (id) => async (dispatch) => {};
