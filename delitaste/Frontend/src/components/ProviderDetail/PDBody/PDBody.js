@@ -18,7 +18,7 @@ import "../ProviderDetail.scss";
 import PDProductDetail from "components/ProviderDetail/PDBody/PDProductDetail/PDProductDetail";
 import { scroller } from "react-scroll";
 
-function PDBody({ products }) {
+function PDBody({ products, user }) {
   const [showProductDetail, setShowProductDetail] = useState(false);
   const [selectedProductDetail, setSelectedProductDetail] = useState();
   const [showCustomerReview, setShowCustomerReview] = useState(false);
@@ -112,14 +112,29 @@ function PDBody({ products }) {
                         />
                       </div>
                       <div className="pd-pl-quantity-btn">
-                        <FontAwesomeIcon
-                          icon={faPlus}
-                          className="inc-des-button"
-                          onClick={() => {
-                            setShowProductDetail(true);
-                            setSelectedProductDetail(product);
-                          }}
-                        />
+                        {!user?.userCart.cart.filter(
+                          (item) =>
+                            item.productId === parseInt(product.product_id)
+                        )[0]?.quantity ? (
+                          <FontAwesomeIcon
+                            icon={faPlus}
+                            className="inc-des-button"
+                            onClick={() => {
+                              setShowProductDetail(true);
+                              setSelectedProductDetail(product);
+                            }}
+                          />
+                        ) : (
+                          <span className="inc-des-button-2">
+                            {
+                              user?.userCart.cart.filter(
+                                (item) =>
+                                  item.productId ===
+                                  parseInt(product.product_id)
+                              )[0]?.quantity
+                            }
+                          </span>
+                        )}
                       </div>
                       <span className="pd-pl-text">{product.product_name}</span>
                       <span className="pd-pl-sub-text">

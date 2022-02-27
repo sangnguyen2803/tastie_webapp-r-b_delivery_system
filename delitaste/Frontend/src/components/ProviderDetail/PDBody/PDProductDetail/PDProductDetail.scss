@@ -212,3 +212,22 @@
 .option-box-radio-label {
   width: 380px !important;
 }
+
+.pd-text-area-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  width: inherit;
+  .pd-textarea {
+    margin-top: 5px;
+    align-self: center;
+    font-family: "Poppins", sans-serif !important;
+    text-indent: 20px;
+    width: 90%;
+    resize: none;
+    font-size: 14px;
+    height: 90px;
+    border-color: grey;
+  }
+}

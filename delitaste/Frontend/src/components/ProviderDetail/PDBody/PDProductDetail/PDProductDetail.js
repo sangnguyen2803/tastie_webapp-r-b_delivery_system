@@ -14,36 +14,51 @@ import {
 import Button from "components/Commons/Button/Button";
 import ButtonGroup from "components/Commons/Button/ButtonGroup/ButtonGroup";
 import "./PDProductDetail.scss";
+import { addToCart } from "store/actions/CartAction/CartAction";
 
 function PDProductDetail(props) {
   const { provider, user, match } = props;
+  const [cartProductItem, setCartProductItem] = useState();
   const [productItem, setProductItem] = useState(props.productItem);
   const [quantity, setQuantity] = useState(1);
   const [totalPrice, setTotalPrice] = useState(productItem.price);
-  const [additionalOption, setAdditionalOption] = useState([]);
+  const [additionalOptions, setAdditionalOptions] = useState([]);
   const [heightViewPort, setHeightViewPort] = useState(180);
   const [isViewPortExpanded, setIsViewPortExpanded] = useState(false);
   const heightForExpansion = 120;
 
   useEffect(() => {
+    const currentCartItem = user?.userCart?.cart.filter(
+      (item) => parseInt(item.productId) === productItem.product_id
+    )[0];
+    if (currentCartItem) {
+      setQuantity(currentCartItem?.quantity);
+      setAdditionalOptions(currentCartItem?.additionalOptions);
+    }
+  }, []);
+  useEffect(() => {
+    console.log(additionalOptions);
+  }, [additionalOptions]);
+  useEffect(() => {
     window.scrollTo({ top: 0, behavior: "auto" });
   }, []);
   const addToCart = () => {
-    const cart = {
+    const cartItem = {
       providerId: match.params.id,
-      status: 1,
+      providerName: "Burger King - Lyon Garibaldi Davinci",
       date: "2022-01-25T00:11:09.000Z",
+      status: 1,
       cartItem: {
         productId: productItem.product_id,
         productName: productItem.product_name,
         productImage: productItem.product_image,
         productPrice: productItem.price,
-        additionalOption: additionalOption,
+        additionalOptions: additionalOptions,
+        totalPrice: totalPrice * quantity,
         quantity: quantity,
-        totalPrice: totalPrice,
       },
     };
-    console.log(cart);
+    props.addToCart(cartItem);
     props.setShowProductDetail(false);
   };
 
@@ -53,7 +68,7 @@ function PDProductDetail(props) {
       value: event.target.value,
       price: price,
     };
-    additionalOption.push(additionalOptionItem);
+    additionalOptions.push(additionalOptionItem);
     setTotalPrice(totalPrice + price);
   };
   return (
@@ -134,6 +149,16 @@ function PDProductDetail(props) {
                 </Fragment>
               )
           )}
+          <div className="pd-text-area-wrapper">
+            <span className="pd-pr-d-sub-text" style={{ fontSize: 13 }}>
+              Note for your dish:
+            </span>
+            <textarea
+              className="pd-textarea"
+              name="description"
+              placeholder="Description about your product"
+            />
+          </div>
         </div>
       </div>
       <div className="pd-pr-d-footer">
@@ -141,16 +166,22 @@ function PDProductDetail(props) {
           <FontAwesomeIcon
             icon={faMinus}
             className="inc-des-button-open-left"
+            onClick={() => {
+              quantity > 1 && setQuantity((prev) => prev - 1);
+            }}
           />
           <input
             className="inc-des-value"
             type="number"
             id="number"
-            value="1"
+            value={quantity}
           />
           <FontAwesomeIcon
             icon={faPlus}
             className="inc-des-button-open-right"
+            onClick={() => {
+              setQuantity((prev) => prev + 1);
+            }}
           />
         </div>
         <Button
@@ -172,6 +203,7 @@ function PDProductDetail(props) {
 PDProductDetail.propTypes = {
   user: PropTypes.object.isRequired,
   product: PropTypes.object.isRequired,
+  addToCart: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -179,5 +211,7 @@ const mapStateToProps = (state) => ({
   product: state.ProductReducer,
 });
 
-export default withRouter(connect(mapStateToProps, null)(PDProductDetail));
+export default withRouter(
+  connect(mapStateToProps, { addToCart })(PDProductDetail)
+);
 //<FontAwesomeIcon className="pd-pr-d-icon-abs-compress" icon={faCompress} />
