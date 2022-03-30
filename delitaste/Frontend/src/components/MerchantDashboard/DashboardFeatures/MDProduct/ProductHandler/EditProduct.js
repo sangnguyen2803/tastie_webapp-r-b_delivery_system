@@ -346,7 +346,6 @@ function EditProduct(props) {
                 <Button
                   buttonType="primary"
                   justifyContent={"center"}
-                  onClick={(values) => addProduct(values)}
                   width={100}
                   height={36}
                   radius={"0px"}

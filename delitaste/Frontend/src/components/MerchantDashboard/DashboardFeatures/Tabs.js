@@ -33,10 +33,10 @@ function Tabs({
                 ? {
                     paddingTop: "3px",
                     borderBottom: "3px solid rgb(44, 44, 44)",
-                    width: boxWidth || "50px",
+                    width: boxWidth || "80px",
                     fontSize: "18px",
                   }
-                : { borderBottom: "none", width: boxWidth || "50px" }
+                : { borderBottom: "none", width: boxWidth || "80px" }
             }
           >
             <span className="tab-item">{tab.name}</span>

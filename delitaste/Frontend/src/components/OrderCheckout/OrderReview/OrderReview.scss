@@ -1,0 +1,72 @@
+.oc-order-review {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  height: auto;
+  padding-top: 20px;
+  gap: 15px;
+  .oc-or-main-text {
+    font-size: 15px;
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    .oc-or-pre-text {
+      font-weight: 700;
+    }
+  }
+  .oc-or-sub-text {
+    width: 80%;
+    font-size: 13px;
+    font-style: italic;
+  }
+  .oc-or-radio-button-wrapper {
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+    height: 30px;
+    .oc-or-rb-option {
+      user-select: none;
+      cursor: pointer;
+      text-align: center;
+      border: 1px solid black;
+      width: 20%;
+      font-size: 12px;
+      color: rgb(0, 0, 0);
+      background-color: rgb(255, 255, 255);
+      border-radius: 25px;
+      padding: 2px 10px;
+    }
+  }
+}
+.oc-or-input-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 80%;
+  .oc-or-input-label {
+    font-size: 13px;
+  }
+  .oc-or-input-wrapper {
+    display: flex;
+    flex-direction: row;
+    width: auto;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+  }
+  .oc-or-input-field {
+    width: 60px;
+    border: 2px solid #d6d6d6;
+    text-align: center;
+  }
+}

@@ -44,11 +44,8 @@ function MainNavBar({ user, history }) {
     <>
       <div className="main-nav-menu-prefix">
         <div className="main-nav-prefix-container">
-          <div
-            className="nav-logo-wrapper"
-            onClick={() => history.push("/home")}
-          >
-            <img className="nav-logo" src={Logo} />
+          <div className="nav-logo-wrapper" onClick={() => history.push("/")}>
+            <img className="nav-logo" alt="Logo" src={Logo} />
             <span className="nav-logo-title">Tastie!</span>
           </div>
           <div className="nav-wrapper-2">
@@ -80,6 +77,7 @@ function MainNavBar({ user, history }) {
               <img
                 className="nav-icon-img"
                 src={flag[i18n.language] ? flag[i18n.language][0] : ENFlag}
+                alt="language"
               />
             </div>
             <div className="nav-language-text-wrapper" style={{ width: "70%" }}>
@@ -254,7 +252,8 @@ function MainNavBar({ user, history }) {
         title={"Add Additional Options"}
         position="right"
         cartWidth={400}
-        cartHeight={320}
+        cartHeight={"320"}
+        cartHeightAuto={true}
         cartPositionTop={90}
         cartPositionRight={0}
         useCartUI={true}

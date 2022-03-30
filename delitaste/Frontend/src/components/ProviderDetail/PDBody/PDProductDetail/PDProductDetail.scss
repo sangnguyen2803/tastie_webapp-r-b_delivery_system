@@ -49,7 +49,7 @@
   .pd-pr-d-sub-text {
     font-size: 14px;
     margin: 0px 0 2px 0;
-    text-indent: 25px;
+    margin-left: 25px;
   }
   .pd-pr-option-box-container {
     overflow-y: auto;
@@ -103,6 +103,16 @@
       align-items: flex-start;
       flex-wrap: wrap;
     }
+    .option-box-wrapper-survey {
+      overflow: scroll;
+      max-height: 300px;
+      width: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
   }
 }
 .option-question {
@@ -127,6 +137,12 @@
 
     .option-box-title-main {
       width: 150px;
+      font-weight: 700;
+      font-size: 15px;
+    }
+    .option-box-title-main-survey {
+      margin: 5px 0;
+      width: 100%;
       font-weight: 700;
       font-size: 15px;
     }
@@ -213,6 +229,17 @@
   width: 380px !important;
 }
 
+.pd-textarea-survey {
+  margin-top: 5px;
+  align-self: center;
+  font-family: "Poppins", sans-serif !important;
+  text-indent: 20px;
+  width: 90%;
+  resize: none;
+  font-size: 13px;
+  height: 30px;
+  border-color: grey;
+}
 .pd-text-area-wrapper {
   display: flex;
   flex-direction: column;

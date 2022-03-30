@@ -52,11 +52,14 @@ const Modal = ({ openModal, closeModal, ...rest }) => {
   const ModalOutterBackgroundStyle = {
     background: `rgba(0, 0, 0, ${rest.transparent || 0.8})`,
   };
+  const HeaderStyle = {
+    backgroundColor: rest.headerColor ? rest.headerColor : "",
+  };
   const CartContainerStyle = {
     opacity: rest.opacity || "1",
     boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 6px",
     width: `${rest.cartWidth}px`,
-    height: `${rest.cartHeight}px`,
+    height: rest.cartHeightAuto ? "auto" : `${rest.cartHeight}px`,
     top: `${rest.cartPositionTop}px`,
     left: "unset",
     right: `${
@@ -73,7 +76,7 @@ const Modal = ({ openModal, closeModal, ...rest }) => {
       style={ModalOutterBackgroundStyle}
     >
       <div className="modal-container" style={ModalContainerStyle} ref={ref}>
-        <div className="modal-header-row">
+        <div className="modal-header-row" style={HeaderStyle}>
           <div className="modal-header-title">{rest.title}</div>
           <FontAwesomeIcon
             className="modal-header-close-icon"

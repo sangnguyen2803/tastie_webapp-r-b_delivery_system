@@ -8,6 +8,9 @@ import {
   faCalendarPlus,
   faInfoCircle,
 } from "@fortawesome/fontawesome-free-solid";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 import { faHeart as faHeart2 } from "@fortawesome/fontawesome-free-solid";
 import { faHeart as faHeart1 } from "@fortawesome/fontawesome-free-regular";
 import { faGetPocket } from "@fortawesome/free-brands-svg-icons";
@@ -29,7 +32,20 @@ const responsive = {
   },
 };
 
-function ProductGroup({ groupTitle, groupDescription, providerList }) {
+function ProviderGroup({
+  groupTitle,
+  groupDescription,
+  providerList,
+  history,
+}) {
+  const openTime = "23:00:00";
+  const closeTime = "22:00:00";
+  const [currentTime, setCurrentTime] = useState(
+    new Date().toLocaleTimeString()
+  );
+  const handleOnClickProvider = (id) => {
+    history.push(`/provider-detail/${id}`);
+  };
   return (
     <Fragment>
       <div className="home-product-row-container">
@@ -47,7 +63,6 @@ function ProductGroup({ groupTitle, groupDescription, providerList }) {
             responsive={responsive}
             ssr={true} // means to render carousel on server-side.
             keyBoardControl={true}
-            customTransition="all .5"
             containerClass="carousel-container"
             removeArrowOnDeviceType={["tablet", "mobile"]}
             dotListClass="custom-dot-list-style"
@@ -59,15 +74,16 @@ function ProductGroup({ groupTitle, groupDescription, providerList }) {
               </CustomButtonGroup>
             }
             renderButtonGroupOutside={true}
-            customTransition="transform 500ms ease-in-out"
+            customTransition={"transform 500ms ease-in-out"}
           >
-            {providerList.map((item) => (
+            {providerList?.map((item) => (
               <Fragment>
                 <div
                   className="provider-card-container"
-                  key={item.id}
+                  onClick={() => handleOnClickProvider(item.provider_id)}
+                  key={item.provider_id}
                   style={{
-                    backgroundImage: `url(${item.provider_photo})`,
+                    backgroundImage: `url(https://${item.profile_pic})`,
                     backgroundPosition: "center",
                     backgroundRepeat: "no-repeat",
                     backgroundSize: "cover",
@@ -76,30 +92,36 @@ function ProductGroup({ groupTitle, groupDescription, providerList }) {
                   <div className="provider-interaction-wrapper">
                     <FontAwesomeIcon
                       className="icon-for-liking"
-                      style={{ zIndex: 1 }}
+                      style={{ zIndex: 1, marginTop: 5 }}
                       icon={faHeart1}
                     />
-                    {item.tag_name && (
-                      <div className="provider-card-tag">{item.tag_name}</div>
+                    {!item.tag_name && (
+                      <div className="provider-card-tag">
+                        {item.tag_name || "3 orders until €5 reward"}
+                      </div>
                     )}
                   </div>
-                  <figcaption className="figcaption-wrapper">
-                    <div className="btn-schedule-wrapper">
-                      <FontAwesomeIcon
-                        icon={faCalendarPlus}
-                        className="icon-btn"
-                      />
-                      <span>Schedule order</span>
-                    </div>
-                    <span className="a1-description">
-                      Opens Saturday 2:15 PM
-                    </span>
-                  </figcaption>
+                  {currentTime < closeTime && currentTime > openTime ? (
+                    <figcaption className="figcaption-wrapper">
+                      <div className="btn-schedule-wrapper">
+                        <FontAwesomeIcon
+                          icon={faCalendarPlus}
+                          className="icon-btn"
+                        />
+                        <span>Schedule order</span>
+                      </div>
+                      <span className="a1-description">
+                        Opens Saturday 2:15 PM
+                      </span>
+                    </figcaption>
+                  ) : (
+                    <Fragment></Fragment>
+                  )}
                 </div>
 
                 <div className="product-info-wrapper">
                   <span className="p-info-main-text">{item.provider_name}</span>
-                  <div className="p-info-rating">{item.rating}</div>
+                  <div className="p-info-rating">{item.rating || "5.0"}</div>
                 </div>
                 <div className="product-sub-info-wrapper">
                   <FontAwesomeIcon
@@ -112,7 +134,7 @@ function ProductGroup({ groupTitle, groupDescription, providerList }) {
                   </span>
                   &nbsp;•&nbsp;
                   <div className="p-sub-info-cooking-time">
-                    {item.cooking_time}
+                    {item.mean_estimated_cooking_time || "30-45 mins"}
                   </div>
                 </div>
               </Fragment>
@@ -124,4 +146,4 @@ function ProductGroup({ groupTitle, groupDescription, providerList }) {
   );
 }
 
-export default ProductGroup;
+export default withRouter(ProviderGroup);

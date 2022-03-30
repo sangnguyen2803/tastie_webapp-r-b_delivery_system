@@ -23,7 +23,6 @@ import "./ProviderDetail.scss";
 import PDHeader from "components/ProviderDetail/PDHeader/PDHeader";
 import PDBody from "components/ProviderDetail/PDBody/PDBody";
 import { getProductListAPI } from "store/actions/ProductAction/ProductAction";
-
 function ProviderDetail(props) {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "auto" });
@@ -42,20 +41,82 @@ function ProviderDetail(props) {
     provider_photo:
       "https://d1ralsognjng37.cloudfront.net/02f41a01-e3e0-42ff-be63-b65c393270b5.jpeg",
   };
-  const { product, user } = props;
+
+  const upcomingProduct = [
+    {
+      survey_id: 100001,
+      start_at: "2022-03-01 00:00:00",
+      expire_at: "2022-04-01 00:00:00",
+      product: {
+        upcoming_product_id: 100000,
+        product_name: "Smoked Salmon Tartine",
+        description:
+          "Salmon with organic butter, scallion, dill, and a side of herb aioli. [540 Cal.]",
+        estimated_price: 15.0,
+        release_date: "2022 March 28",
+        product_image:
+          "https://d1ralsognjng37.cloudfront.net/2cec0d90-b78c-488a-9e43-b97d589d8492.jpeg",
+      },
+      survey: {
+        question: "Are you eager to try this upcoming product?",
+        choices: [
+          "Absolutely yes! I cannot wait to try this!",
+          "It seems good. I am curious about its flavor.",
+          "Neutral. I am not sure.",
+          "I am not interested.",
+          "It is not my thing!",
+          "Other",
+        ],
+      },
+    },
+    {
+      survey_id: 100002,
+      start_at: "2022-03-01 00:00:00",
+      expire_at: "2022-04-01 00:00:00",
+      product: {
+        upcoming_product_id: 100000,
+        product_name: "Smoked Salmon Tartine",
+        description:
+          "Salmon with organic butter, scallion, dill, and a side of herb aioli. [540 Cal.]",
+        estimated_price: 15.0,
+        release_date: "2022 March 28",
+        product_image:
+          "https://tb-static.uber.com/prod/image-proc/processed_images/5a5e9e22b4efb745ad1629055cad13c5/859baff1d76042a45e319d1de80aec7a.jpeg",
+      },
+      survey: {
+        question: "Are you eager to try this upcoming product?",
+        choices: [
+          "Absolutely yes! I cannot wait to try this!",
+          "It seems good. I am curious about its flavor.",
+          "Neutral. I am not sure.",
+          "I am not interested.",
+          "It is not my thing!",
+          "Other",
+        ],
+      },
+    },
+  ];
+  const { product } = props;
+  const [providerDetail, setProviderDetail] = useState();
   const [items, setItems] = useState(product.productList || []);
-  useEffect(async () => {
-    if (product.productList.length !== 0) return;
-    const productList = await props.getProductListAPI(props.match.params?.id);
-    setItems([...productList]);
+  useEffect(() => {
+    async function fetchingDataAPI() {
+      const productList = await props.getProductListAPI(props.match.params?.id);
+      setItems([...productList]);
+    }
+    fetchingDataAPI();
   }, []);
 
   return (
     <Fragment>
       <NavBar fixed={true} />
       <div className="main">
-        <PDHeader item={providerInfo} />
-        <PDBody products={items} setProducts={setItems} />
+        <PDHeader />
+        <PDBody
+          products={items}
+          upcomingProducts={upcomingProduct}
+          setProducts={setItems}
+        />
       </div>
       <Footer />
       <ToolBar />

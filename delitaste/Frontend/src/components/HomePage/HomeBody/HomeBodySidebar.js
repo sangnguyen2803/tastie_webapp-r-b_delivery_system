@@ -2,7 +2,11 @@ import "./HomeBody.scss";
 import { Fragment, useState, useEffect } from "react";
 import Switch from "react-switch";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 import {
+  faAddressBook,
   faAllergies,
   faChevronDown,
   faChevronUp,
@@ -18,6 +22,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 function HomeBodySidebar(props) {
+  const { user } = props;
   const [checkedOption1, setCheckedOption1] = useState(false);
   const [checkedOption2, setCheckedOption2] = useState(false);
 
@@ -33,6 +38,28 @@ function HomeBodySidebar(props) {
     { id: 4, dietary_name: "Good for health", dietary_icon: faHeart },
     { id: 5, dietary_name: "Alergy-friendly", dietary_icon: faAllergies },
   ];
+
+  const addressBook = [
+    {
+      delivery_address_1:
+        "543, Nguyen Dinh Chieu, ward 10, district 3, Ho Chi Minh city",
+      latitude: 5.31414214,
+      longitude: 1.4214214,
+      type: 1
+    },
+    {
+      delivery_address_2:
+        "141, TMA Solution, Quang Trung, ward 2, district 12, Ho Chi Minh city",
+      latitude: 5.31414214,
+      longitude: 1.4214214,
+    },
+    {
+      delivery_address_3:
+        "214, Trần Phú, ward 2, Tan Binh district, Ho Chi Minh city",
+      latitude: 5.31414214,
+      longitude: 1.4214214,
+    },
+  ];
   return (
     <Fragment>
       <div
@@ -40,6 +67,17 @@ function HomeBodySidebar(props) {
         style={{ overflowY: props.showScrollbar }}
       >
         <span className="homebody-sb-header-title">All stores</span>
+        <div className="address-list">
+          <FontAwesomeIcon
+            className="address-book-icon"
+            onClick={() => setShowFunction1((prev) => !prev)}
+            icon={faAddressBook}
+          />
+          <span className="address-book-picked">
+            543, Nguyen Dinh Chieu, ward 10, district 3, Ho Chi Minh city
+          </span>
+          <span className="address-book-button">Change</span>
+        </div>
         <div className="homebody-sb-function">
           <div className="homebody-sb-function-title-wrapper">
             <span className="homebody-sb-function-title">Sort</span>
@@ -52,21 +90,41 @@ function HomeBodySidebar(props) {
           {showFunction1 && (
             <div className="homebody-sb-radio-detail-wrapper">
               <label className="hb-sb-type-wrapper radio">
-                <input type="radio" name="sortType" value={1} />
+                <input
+                  type="radio"
+                  name="sortType"
+                  value={1}
+                  onChange={(e) => props.setCurrentSortMode(e.target.value)}
+                />
                 <span className="hb-sb-label-radio">
                   Picked for you (default)
                 </span>
               </label>
               <label className="hb-sb-type-wrapper radio">
-                <input type="radio" name="sortType" value={2} />
+                <input
+                  type="radio"
+                  name="sortType"
+                  value={2}
+                  onChange={(e) => props.setCurrentSortMode(e.target.value)}
+                />
                 <span className="hb-sb-label-radio">Most popular</span>
               </label>
               <label className="hb-sb-type-wrapper radio">
-                <input type="radio" name="sortType" value={3} />
+                <input
+                  type="radio"
+                  name="sortType"
+                  value={3}
+                  onChange={(e) => props.setCurrentSortMode(e.target.value)}
+                />
                 <span className="hb-sb-label-radio">Rating</span>
               </label>
               <label className="hb-sb-type-wrapper radio">
-                <input type="radio" name="sortType" value={4} />
+                <input
+                  type="radio"
+                  name="sortType"
+                  value={4}
+                  onChange={(e) => props.setCurrentSortMode(e.target.value)}
+                />
                 <span className="hb-sb-label-radio">Delivery time</span>
               </label>
             </div>
@@ -223,5 +281,11 @@ function HomeBodySidebar(props) {
     </Fragment>
   );
 }
+HomeBodySidebar.propTypes = {
+  user: PropTypes.object.isRequired,
+};
 
-export default HomeBodySidebar;
+const mapStateToProps = (state) => ({
+  user: state.UserReducer,
+});
+export default withRouter(connect(mapStateToProps, null)(HomeBodySidebar));

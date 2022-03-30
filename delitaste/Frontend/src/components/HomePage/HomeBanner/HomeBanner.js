@@ -11,7 +11,7 @@ function HomeBanner(props) {
       banner_title: "Discover local favorites in your area",
       banner_redirect_text: "Tap to explore",
       banner_background:
-        "https://d1g1f25tn8m2e6.cloudfront.net/0f8ff190-4110-4898-b475-f7d84d41e619.png",
+        "https://cn-geo1.uber.com/static/mobile-content/eats/billboard-split-gratis.png",
       banner_text_color: "black",
       banner_link: "",
     },

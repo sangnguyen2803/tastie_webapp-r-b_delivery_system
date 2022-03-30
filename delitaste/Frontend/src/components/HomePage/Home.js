@@ -22,6 +22,7 @@ const backgroundStyling = {
 
 function Home(props) {
   const [showScrollbar, setShowScrollbar] = useState("hidden");
+  const [currentSortMode, setCurrentSortMode] = useState(1);
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "auto" });
     window.addEventListener("scroll", listenScrollEvent);
@@ -38,18 +39,26 @@ function Home(props) {
     <Fragment>
       <NavBar fixed={true} />
       <div className="main">
-        <HomeHeader />
-        <HomeBanner />
+        {currentSortMode == 1 && (
+          <Fragment>
+            <HomeHeader />
+            <HomeBanner />
+          </Fragment>
+        )}
         <div className="home-content">
           <HomeBodySidebar
             showScrollbar={showScrollbar}
             setShowScrollbar={setShowScrollbar}
+            currentSortMode={currentSortMode}
+            setCurrentSortMode={setCurrentSortMode}
           />
-          <HomeBodyContent />
+          <HomeBodyContent
+            currentSortMode={currentSortMode}
+            setCurrentSortMode={setCurrentSortMode}
+          />
         </div>
       </div>
       <Footer />
-      <VoucherToolBar />
       <ToolBar />
     </Fragment>
   );

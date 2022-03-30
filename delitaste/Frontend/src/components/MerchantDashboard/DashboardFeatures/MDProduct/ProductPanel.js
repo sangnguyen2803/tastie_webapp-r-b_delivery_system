@@ -2,6 +2,7 @@ import { Fragment, useState } from "react";
 import { withRouter } from "react-router-dom";
 import ProductOverview from "components/MerchantDashboard/DashboardFeatures/MDProduct/ProductOverview";
 import ProductDetail from "components/MerchantDashboard/DashboardFeatures/MDProduct/ProductDetail";
+import UpcomingProductDetail from "components/MerchantDashboard/DashboardFeatures/MDProduct/UpcomingProductDetail";
 import Tabs from "components/MerchantDashboard/DashboardFeatures/Tabs";
 import "../Panel.scss";
 
@@ -11,7 +12,8 @@ function ProductPanel(props) {
     tab1: [
       { id: 0, name: "Overview" },
       { id: 1, name: "Menu" },
-      { id: 2, name: "Category" },
+      { id: 2, name: "Pre-release" },
+      { id: 3, name: "Category" },
     ],
   };
   const handleSelectTab = (value) => {
@@ -23,6 +25,8 @@ function ProductPanel(props) {
         return <ProductOverview />;
       case 1:
         return <ProductDetail />;
+      case 2:
+        return <UpcomingProductDetail />;
       default:
         return <h1>No project match</h1>;
     }

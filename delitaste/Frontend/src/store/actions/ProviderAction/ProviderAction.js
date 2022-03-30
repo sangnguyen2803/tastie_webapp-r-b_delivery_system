@@ -187,3 +187,16 @@ export const updateBankInfoFormAPI = (id, data) => async (dispatch) => {
     return false;
   }
 };
+//get provider by id
+export const getProviderByIdAPI = (id) => async (dispatch) => {
+  try {
+    const endpoint = `/v1/api/provider/dashboard/${id}/get-info`;
+    const res = await axios.get(endpoint);
+    if (res.data?.state) {
+      if (!res.data.provider_info) return [];
+      return res.data.provider_info;
+    }
+  } catch (err) {
+    console.log(err.response.data.errors);
+  }
+};

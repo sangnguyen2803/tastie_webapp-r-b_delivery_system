@@ -16,11 +16,16 @@ import {
 import Modal from "components/Commons/Overlay/Popup/Modal/Modal";
 import "../ProviderDetail.scss";
 import PDProductDetail from "components/ProviderDetail/PDBody/PDProductDetail/PDProductDetail";
+import PDUpcomingProduct from "components/ProviderDetail/PDBody/PDUpcomingProduct/PDUpcomingProduct";
 import { scroller } from "react-scroll";
 
-function PDBody({ products, user }) {
+function PDBody({ products, upcomingProducts, user }) {
   const [showProductDetail, setShowProductDetail] = useState(false);
+  const [showUpcomingProductDetail, setShowUpcomingProductDetail] =
+    useState(false);
   const [selectedProductDetail, setSelectedProductDetail] = useState();
+  const [selectedUpcomingProductDetail, setSelectedUpcomingProductDetail] =
+    useState();
   const [showCustomerReview, setShowCustomerReview] = useState(false);
   const scrollToSection = (sectionName) => {
     scroller.scrollTo(sectionName, {
@@ -49,6 +54,12 @@ function PDBody({ products, user }) {
             <span>Menu</span>
           </span>
           <div className="pd-sb-menu-category">
+            <span
+              className="pd-sb-menu-item"
+              onClick={() => scrollToSection(`product-group-upcoming`)}
+            >
+              Upcoming
+            </span>
             {products.length !== 0 &&
               products.map((product) => (
                 <Fragment>
@@ -87,6 +98,34 @@ function PDBody({ products, user }) {
               </span>
             )}
           </div>
+          <div className={`pd-pl-title product-group-upcoming`}>Upcoming</div>
+
+          <div className="pd-pl-upcoming-product-group">
+            {upcomingProducts.map((up) => (
+              <Fragment>
+                <div
+                  className="pd-pl-upcoming-product-item"
+                  onClick={() => {
+                    setShowUpcomingProductDetail(true);
+                    setSelectedUpcomingProductDetail(up);
+                  }}
+                >
+                  <div className="pd-pl-up-img-wrapper">
+                    <img
+                      className="pd-pl-up-product-img"
+                      src={up.product.product_image}
+                    />
+                  </div>
+                  <div className="pd-pl-up-tag-btn">
+                    <span className="pd-pl-up-main-text">Coming soon</span>
+                    <span className="pd-pl-up-sub-text">
+                      {up.product.release_date}
+                    </span>
+                  </div>
+                </div>
+              </Fragment>
+            ))}
+          </div>
           {products.length !== 0 &&
             products.map((menu) => (
               <Fragment>
@@ -114,7 +153,7 @@ function PDBody({ products, user }) {
                       <div className="pd-pl-quantity-btn">
                         {!user?.userCart.cart.filter(
                           (item) =>
-                            item.productId === parseInt(product.product_id)
+                            item.product_id === parseInt(product.product_id)
                         )[0]?.quantity ? (
                           <FontAwesomeIcon
                             icon={faPlus}
@@ -129,7 +168,7 @@ function PDBody({ products, user }) {
                             {
                               user?.userCart.cart.filter(
                                 (item) =>
-                                  item.productId ===
+                                  item.product_id ===
                                   parseInt(product.product_id)
                               )[0]?.quantity
                             }
@@ -161,6 +200,25 @@ function PDBody({ products, user }) {
           <PDProductDetail
             setShowProductDetail={setShowProductDetail}
             productItem={selectedProductDetail}
+          />
+        </Modal>
+        <Modal
+          openModal={showUpcomingProductDetail}
+          closeModal={() => {
+            setShowUpcomingProductDetail(false);
+          }}
+          title={"Coming soon"}
+          width={35}
+          height={670}
+          padding="0% 0%"
+          headerColor="#53B404"
+          headerFontWeight={700}
+          header
+          hideHeader={true}
+        >
+          <PDUpcomingProduct
+            setShowProductDetail={setShowUpcomingProductDetail}
+            upcomingProduct={selectedUpcomingProductDetail}
           />
         </Modal>
       </div>

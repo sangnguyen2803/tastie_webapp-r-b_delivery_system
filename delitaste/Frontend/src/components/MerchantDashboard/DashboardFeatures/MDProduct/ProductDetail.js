@@ -195,7 +195,6 @@ function ProductDetail(props) {
                                 type={item.menu_category_id}
                               />
                             </div>
-
                             {provided.placeholder}
                           </div>
                         )}

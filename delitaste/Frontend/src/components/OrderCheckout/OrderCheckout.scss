@@ -1,0 +1,108 @@
+$desktop-panel-width: 500px;
+$desktop-left-panel-content: 70%;
+.order-checkout-container {
+  margin-top: 90px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+  height: 1000px;
+  color: black;
+  .oc-order-detail {
+    width: calc(100% - $desktop-panel-width);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    .oc-od-container {
+      display: flex;
+      width: $desktop-left-panel-content;
+      padding-top: 15px;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-start;
+      .oc-od-main-text-head {
+        font-size: 28px;
+        font-weight: 700;
+      }
+      .oc-od-switcher-wrapper {
+        width: 250px;
+        height: 35px;
+        z-index: 0;
+        margin: 5px 0;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        align-items: center;
+      }
+      .oc-od-address-option {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        height: 30px;
+        margin: 5px 0;
+        width: 100%;
+        .oc-od-small-icon {
+          font-size: 14px;
+          width: 30px;
+          justify-self: flex-start;
+          cursor: pointer;
+        }
+        .oc-od-address-text {
+          margin: 0 5px;
+          font-size: 14px;
+          width: auto;
+        }
+      }
+    }
+  }
+
+  .oc-od-radio {
+    margin-left: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    font-size: 14px;
+    gap: 5px;
+  }
+  .oc-order-review {
+    top: 90px;
+    height: 670px;
+    background-color: #f6f6f6;
+    position: -webkit-sticky; /* Safari & IE */
+    position: sticky;
+    width: $desktop-panel-width;
+  }
+}
+
+.oc-od-form-text-field {
+  height: 30px;
+  display: block;
+  border: 2px #949494 solid;
+  font-weight: 400;
+  padding-left: 20px;
+  font-size: 13px;
+  border-radius: 3px;
+  background: #ffffff;
+}
+.oc-od-promotion-input-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+.oc-od-submit-button {
+  height: 36px;
+  border: none;
+  background-color: black;
+  color: white;
+  cursor: pointer;
+}
+.add-promotion {
+  width: 200px;
+}

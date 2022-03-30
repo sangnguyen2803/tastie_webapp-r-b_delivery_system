@@ -21,6 +21,14 @@ import {
   DESCREASE_PRODUCT,
 } from "store/actions/types";
 import {} from "store/actions/types";
+import storage from "redux-persist/lib/storage";
+import { persistReducer } from "redux-persist";
+
+const persistConfig = {
+  key: "user",
+  storage: storage,
+  whitelist: ["userCart"],
+};
 
 const initialState = {
   currentForm: 0,
@@ -36,15 +44,16 @@ const initialState = {
   verifiedEmailToken: localStorage.getItem("verified_email_token"),
 
   userCart: {
-    providerId: -1,
-    providerName: -1,
+    provider_id: -1,
+    user_id: -1,
+    provider_name: -1,
     date: "",
     status: -1,
     cart: [],
   },
 };
 
-export default function (state = initialState, action) {
+const UserReducer = (state = initialState, action) => {
   const { type, payload } = action;
   switch (type) {
     case REGISTER_SUCCESS:
@@ -127,12 +136,12 @@ export default function (state = initialState, action) {
     case ADD_TO_CART:
       var itemInCart = [];
       let isProductExist = state.userCart.cart.some(
-        (item) => item.productId === payload.userCart.cartItem.productId
+        (item) => item.product_id === payload.userCart.cartItem.product_id
       );
       if (isProductExist) {
         const newState = [...state.userCart.cart];
         const index = state.userCart.cart.findIndex(
-          (element) => element.productId === payload.userCart.cartItem.productId
+          (element) => element.product_id === payload.userCart.cartItem.product_id
         );
         newState[index] = payload.userCart.cartItem;
         itemInCart = newState;
@@ -143,8 +152,9 @@ export default function (state = initialState, action) {
       return {
         ...state,
         userCart: {
-          providerId: payload.userCart.providerId,
-          providerName: payload.userCart.providerName,
+          provider_id: payload.userCart.provider_id,
+          user_id: payload.userCart.user_id,
+          provider_name: payload.userCart.provider_name,
           date: payload.userCart.date,
           status: payload.userCart.status,
           cart: itemInCart,
@@ -204,4 +214,6 @@ export default function (state = initialState, action) {
     default:
       return state;
   }
-}
+};
+
+export default persistReducer(persistConfig, UserReducer);

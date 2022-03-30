@@ -27,8 +27,10 @@
 }
 .cart-body {
   margin-top: 30px;
-  overflow-y: hidden;
-  height: 195px;
+  overflow-y: auto;
+  min-height: 180px;
+  height: auto;
+  max-height: 350px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -43,8 +45,95 @@
     width: 280px;
     color: rgb(155, 155, 155);
   }
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  &::-webkit-scrollbar-button:start:decrement {
+    display: block;
+    height: 10px;
+  }
+  &::-webkit-scrollbar-button:end:increment {
+    display: block;
+    height: 10px;
+  }
+
+  &::-webkit-scrollbar-button:vertical:increment {
+    background-color: #fff;
+  }
+
+  &::-webkit-scrollbar-track-piece {
+    background-color: #eee;
+    -webkit-border-radius: 3px;
+  }
+
+  &::-webkit-scrollbar-thumb:vertical {
+    height: 50px;
+    background-color: #ccc;
+    -webkit-border-radius: 3px;
+  }
+
+  &::-webkit-scrollbar-thumb:horizontal {
+    width: 50px;
+    background-color: #ccc;
+    -webkit-border-radius: 3px;
+  }
 }
 
 .cart-content-wrapper {
   position: relative;
+}
+.cart-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  .cart-item-wrapper {
+    display: flex;
+    flex-direction: row;
+    height: auto;
+    width: 96%;
+    align-items: center;
+    .cart-item-quantity {
+      align-self: flex-start;
+      margin-top: 10px;
+      width: 40px;
+      font-size: 16px;
+      font-weight: 700;
+    }
+    .cart-item-image {
+      align-self: flex-start;
+      width: 50px;
+      height: 50px;
+    }
+    .cart-item-sub-text {
+      width: 55px;
+      align-self: center;
+      font-size: 13px;
+    }
+  }
+}
+.cart-main-text-section {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 200px;
+  margin-left: 10px;
+  .cart-item-main-text {
+    font-size: 13px;
+  }
+  .cart-item-option-text-1 {
+    font-size: 11px;
+    color: rgb(50, 50, 50);
+  }
+  .cart-item-option-text-2 {
+    font-size: 11px;
+    color: rgb(155, 155, 155);
+  }
+}
+.cart-note {
+  font-size: 11px;
 }

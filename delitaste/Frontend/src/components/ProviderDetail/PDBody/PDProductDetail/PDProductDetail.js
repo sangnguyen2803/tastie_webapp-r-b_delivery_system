@@ -18,57 +18,59 @@ import { addToCart } from "store/actions/CartAction/CartAction";
 
 function PDProductDetail(props) {
   const { provider, user, match } = props;
-  const [cartProductItem, setCartProductItem] = useState();
   const [productItem, setProductItem] = useState(props.productItem);
   const [quantity, setQuantity] = useState(1);
   const [totalPrice, setTotalPrice] = useState(productItem.price);
   const [additionalOptions, setAdditionalOptions] = useState([]);
   const [heightViewPort, setHeightViewPort] = useState(180);
   const [isViewPortExpanded, setIsViewPortExpanded] = useState(false);
+  const [note, setNote] = useState("");
   const heightForExpansion = 120;
 
   useEffect(() => {
     const currentCartItem = user?.userCart?.cart.filter(
-      (item) => parseInt(item.productId) === productItem.product_id
+      (item) => parseInt(item.product_id) === productItem.product_id
     )[0];
     if (currentCartItem) {
       setQuantity(currentCartItem?.quantity);
-      setAdditionalOptions(currentCartItem?.additionalOptions);
+      setNote(currentCartItem?.note);
+      setAdditionalOptions(currentCartItem?.product_options);
     }
   }, []);
   useEffect(() => {
     console.log(additionalOptions);
   }, [additionalOptions]);
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "auto" });
-  }, []);
   const addToCart = () => {
     const cartItem = {
-      providerId: match.params.id,
-      providerName: "Burger King - Lyon Garibaldi Davinci",
+      provider_id: match.params.id,
+      user_id: user?.profile?.user_id,
+      provider_name: "Burger King - Lyon Garibaldi Davinci",
       date: "2022-01-25T00:11:09.000Z",
       status: 1,
       cartItem: {
-        productId: productItem.product_id,
-        productName: productItem.product_name,
-        productImage: productItem.product_image,
-        productPrice: productItem.price,
-        additionalOptions: additionalOptions,
+        product_id: productItem.product_id,
+        product_name: productItem.product_name,
+        product_image: productItem.product_image,
+        product_price: productItem.price,
+        product_options: additionalOptions,
         totalPrice: totalPrice * quantity,
+        note: note,
         quantity: quantity,
       },
     };
     props.addToCart(cartItem);
     props.setShowProductDetail(false);
+    if (props.pushReload) window.location.reload(false);
   };
 
   const onValueChange = (event, price) => {
     let additionalOptionItem = {
-      optionName: event.target.name,
+      option_name: event.target.name,
       value: event.target.value,
       price: price,
     };
-    additionalOptions.push(additionalOptionItem);
+    console.log(additionalOptionItem);
+    additionalOptions?.push(additionalOptionItem);
     setTotalPrice(totalPrice + price);
   };
   return (
@@ -107,7 +109,7 @@ function PDProductDetail(props) {
             height: isViewPortExpanded ? "130px" : `${130 + heightViewPort}px`,
           }}
         >
-          {productItem.product_options.map(
+          {productItem?.product_options?.map(
             (option) =>
               option.option_name && (
                 <Fragment>
@@ -124,7 +126,7 @@ function PDProductDetail(props) {
                       </div>
                     </div>
                     <div className="homebody-sb-radio-detail-wrapper">
-                      {option.options.map((item) => (
+                      {option?.options?.map((item) => (
                         <div className="option-answer ">
                           <label className="hb-sb-type-wrapper radio">
                             <input
@@ -156,7 +158,9 @@ function PDProductDetail(props) {
             <textarea
               className="pd-textarea"
               name="description"
-              placeholder="Description about your product"
+              value={note}
+              placeholder="Place your note here to notice the shipper for this dish."
+              onChange={(e) => setNote(e.target.value)}
             />
           </div>
         </div>
@@ -189,10 +193,14 @@ function PDProductDetail(props) {
           bgColor={"black"}
           justifyContent={"center"}
           gap={"10px"}
-          width={140}
+          width={180}
           fontSize={13}
           height={35}
-          label={"Add to order"}
+          label={
+            props.buttonTitle
+              ? props.buttonTitle
+              : `Add to order • $ ${totalPrice}`
+          }
           onClick={addToCart}
         />
       </div>

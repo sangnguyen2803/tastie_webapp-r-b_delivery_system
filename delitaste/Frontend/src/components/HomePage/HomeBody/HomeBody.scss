@@ -334,7 +334,7 @@ form1 {
 }
 
 .dietary-wrapper {
-  margin-top: 15px;
+  margin-top: 5px;
   display: flex;
   width: 90%;
   height: auto;
@@ -345,8 +345,8 @@ form1 {
   .dietary-item {
     gap: 5px;
     background-color: #eeeeee;
-    height: 25px;
-    font-size: 13px;
+    height: 15px;
+    font-size: 12px;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -367,7 +367,7 @@ form1 {
 
 .home-content-provider {
   width: calc(100% - 350px);
-  height: 2000px;
+  height: auto;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -573,4 +573,89 @@ figcaption {
   font-size: 10px;
   letter-spacing: 0.05rem;
   color: white;
+}
+
+.apro-home-product-slider-all {
+  width: 100%;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px 0px;
+  display: grid;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  .apro-home-product-container {
+    margin: 10px 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    width: 340px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    cursor: pointer;
+  }
+}
+.apro-provider-card-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  justify-self: center;
+  background-color: rgb(192, 192, 192);
+  width: inherit;
+  height: 150px;
+  cursor: pointer;
+}
+
+.apro-product-info-wrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 100%;
+  width: inherit;
+  margin-top: 5px;
+  cursor: pointer;
+  .apro-p-info-main-text {
+    font-family: "Kanit", sans-serif;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    font-size: 16px;
+    font-weight: 700;
+  }
+  .apro-p-info-rating {
+    display: block;
+    border-radius: 50px;
+    padding: 3px 3px;
+    background-color: rgb(238, 238, 238);
+    font-size: 13px;
+  }
+}
+
+.address-list {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  width: 270px;
+  .address-book-icon {
+    color: rgb(128, 0, 0);
+    font-size: 18px;
+    margin: 0 10px 0 0;
+  }
+  .address-book-picked {
+    font-size: 11px;
+    width: 90%;
+    user-select: none;
+  }
+  .address-book-button {
+    font-size: 12px;
+    width: 10%;
+    color: rgb(148, 0, 0);
+    font-weight: 700;
+    cursor: pointer;
+  }
 }

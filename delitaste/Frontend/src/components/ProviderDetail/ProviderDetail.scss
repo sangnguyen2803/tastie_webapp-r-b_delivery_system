@@ -181,7 +181,7 @@
         text-transform: capitalize;
         width: 90%;
         text-indent: 25px;
-        font-size: 16px;
+        font-size: 14px;
         padding: 5px 0;
         &:hover {
           background-color: rgb(230, 230, 230);
@@ -206,6 +206,74 @@
     font-family: "Kanit", sans-serif;
     font-size: 22px;
     font-weight: 700;
+  }
+  .pd-pl-upcoming-product-group {
+    width: 100%;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px 0px;
+    display: grid;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    .pd-pl-upcoming-product-item {
+      display: flex;
+      flex-direction: column;
+      width: 180px;
+      height: auto;
+      align-items: flex-start;
+      justify-content: flex-start;
+      cursor: pointer;
+      &:hover {
+        -webkit-transition: box-shadow 0.3s ease-in-out;
+        -moz-transition: box-shadow 0.3s ease-in-out;
+        transition: box-shadow 0.3s ease-in-out;
+        box-shadow: 0px 4px 16px rgb(0 0 0 / 12%);
+        margin: -8px;
+        padding: 8px;
+      }
+      .pd-pl-up-tag-btn {
+        margin-top: 10px;
+        display: block;
+        position: absolute;
+        height: auto;
+        width: 150px;
+        border-top-right-radius: 25px;
+        border-bottom-right-radius: 25px;
+        background-color: rgba(100, 182, 130, 0.705);
+        color: white;
+        height: 30px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        .pd-pl-up-main-text {
+          font-weight: 700;
+          margin-left: 10px;
+          font-size: 11px;
+        }
+        .pd-pl-up-sub-text {
+          margin-left: 10px;
+          font-size: 9px;
+        }
+      }
+      .pd-pl-up-img-wrapper {
+        height: 150px;
+        border-radius: 5px;
+        width: 100%;
+        flex-shrink: 0;
+        overflow: hidden;
+        .pd-pl-up-product-img {
+          height: inherit;
+          width: inherit;
+          transition: transform 0.5s ease-in-out 0s;
+          transform: scale(1);
+          object-fit: cover;
+          &:hover {
+            transform: scale(1.1);
+          }
+        }
+      }
+    }
   }
   .pd-pl-product-group {
     width: 100%;
