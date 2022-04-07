@@ -76,7 +76,7 @@ function PDProductDetail(props) {
   return (
     <Fragment>
       <div className="pd-pr-d-header" style={{ height: `${heightViewPort}px` }}>
-        <img className="pd-pr-d-image" src={productItem.product_image} />
+        <img className="pd-pr-d-image" alt="product_photo" src={productItem.product_image} />
         <div
           className="pd-pr-d-icon-abs-wrapper"
           style={{ marginTop: `calc(${heightViewPort}px - 30px)` }}
@@ -141,7 +141,7 @@ function PDProductDetail(props) {
                               {item.value}
                             </span>
                             <span className="option-price">
-                              {item.price != 0 && `+ $${item.price}.00`}
+                              {item.price !== 0 && `+ $${item.price}.00`}
                             </span>
                           </label>
                         </div>
@@ -199,7 +199,7 @@ function PDProductDetail(props) {
           label={
             props.buttonTitle
               ? props.buttonTitle
-              : `Add to order • $ ${totalPrice}`
+              : `Add to order • € ${totalPrice.toFixed(2)}`
           }
           onClick={addToCart}
         />

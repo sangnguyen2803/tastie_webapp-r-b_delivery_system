@@ -24,6 +24,7 @@ function PDUpcomingProduct(props) {
         <img
           className="pd-pr-d-image"
           src={upcomingProduct.product.product_image}
+          alt="product_photo"
         />
         <div
           className="pd-pr-d-icon-abs-wrapper"
@@ -59,6 +60,11 @@ function PDUpcomingProduct(props) {
           {" • "}
           <span style={{ fontSize: 12 }}>
             {upcomingProduct.product.description}
+          </span>
+        </div>
+        <div className="pd-pr-d-sub-text">
+          <span style={{ fontSize: 13, fontWeight: 700, fontStyle: "italic" }}>
+            Will be released at {upcomingProduct.product.release_date}
           </span>
         </div>
         <div className="option-box-wrapper-survey">

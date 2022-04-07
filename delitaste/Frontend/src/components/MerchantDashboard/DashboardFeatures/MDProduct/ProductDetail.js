@@ -40,12 +40,14 @@ function ProductDetail(props) {
   const [selectedProduct, setSelectedProduct] = useState([]);
   const [productForEdit, setProductForEdit] = useState();
   // product handler panel - 0: add_product - 1: edit_product
-  useEffect(async () => {
-    if (product.productList) return;
-    if (user.providerId !== -1 && user.providerId !== null) {
-      const productList = await getProductListAPI(user.providerId);
-      setItems(productList);
+  useEffect(() => {
+    async function fetchingData() {
+      if (user.providerId !== -1 && user.providerId !== null) {
+        const productList = await getProductListAPI(user.providerId);
+        setItems(productList);
+      }
     }
+    fetchingData();
   }, [items]);
 
   useEffect(() => {
@@ -125,7 +127,7 @@ function ProductDetail(props) {
             <Button
               buttonType="primary"
               justifyContent={"center"}
-              onClick={(values) => {
+              onClick={() => {
                 setShowHandlerPanel(0);
                 setSelectedProduct([]);
               }}

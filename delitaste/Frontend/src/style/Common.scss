@@ -264,3 +264,32 @@ button {
     background-color: $formButtonColorOnHover;
   }
 }
+
+.dialog-detail-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 150px;
+
+  .dialogbox-content {
+    gap: 2.5px;
+    height: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    width: 80%;
+    .dialogbox-content-detail-main {
+      font-size: 14px;
+      font-weight: 700;
+    }
+    .dialogbox-content-detail-sub {
+      font-size: 12px
+    }
+  }
+  .dialogbox-action {
+    height: 20px;
+  }
+}

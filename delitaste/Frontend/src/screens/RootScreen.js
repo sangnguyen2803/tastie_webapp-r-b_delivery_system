@@ -25,6 +25,7 @@ import BankInfoForm from "components/MerchantRegistration/Forms/DetailMerchantFo
 import DialogBox from "components/Commons/Overlay/DialogBox/DialogBox";
 import MerchantDashboardScreen from "./MerchantDashboardScreen/MerchantDashboardScreen";
 import OrderCheckoutScreen from "./OrderCheckoutScreen/OrderCheckoutScreen";
+import OrderTrackingScreen from "./OrderTrackingScreen/OrderTrackingScreen";
 
 const history = createBrowserHistory();
 
@@ -54,6 +55,11 @@ function RootScreen(props) {
               exact
               path="/order-checkout"
               component={OrderCheckoutScreen}
+            />
+            <Route
+              exact
+              path="/order-tracking"
+              component={OrderTrackingScreen}
             />
             <Route
               exact

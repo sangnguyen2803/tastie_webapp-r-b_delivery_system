@@ -7,25 +7,10 @@ import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/fontawesome-free-solid";
 
-import { removeDialogBox } from "store/actions/UIComponentAction/DialogBoxAction";
-import { propTypes } from "react-map-gl-geocoder";
-import ButtonGroup from "components/Commons/Button/ButtonGroup/ButtonGroup";
-import Button from "components/Commons/Button/Button";
-
-const DialogBox = ({
-  visibility,
-  headerText,
-  bodyText,
-  cancelOptionText,
-  confirmOptionText,
-  confirmOptionHandler,
-  close,
-  width,
-  height,
-}) => {
+const DialogBox = ({ visibility, close, ...rest }) => {
   const dialogStyling = {
-    width: width || "400px",
-    height: height || "200px",
+    width: rest.width || "400px",
+    height: rest.height || "200px",
   };
   return ReactDOM.createPortal(
     visibility ? (
@@ -37,38 +22,14 @@ const DialogBox = ({
             style={dialogStyling}
           >
             <div className="header-row">
-              <div className="header-title">{headerText || "Error"}</div>
+              <div className="header-title">{rest.headerText || "Error"}</div>
               <FontAwesomeIcon
                 className="header-close-icon"
                 icon={faTimes}
                 onClick={close}
               />
             </div>
-            <div className="content">{bodyText || "Error"}</div>
-            <ButtonGroup float="flex-end" gap={5} mgRight={5}>
-              <Button
-                color={"black"}
-                bgColor={"#ECECEC"}
-                justifyContent={"center"}
-                gap={"10px"}
-                width={80}
-                height={30}
-                label={cancelOptionText || "Cancel"}
-                onClick={() => {
-                  close();
-                }}
-              />
-              <Button
-                color={"white"}
-                bgColor={"#800000"}
-                justifyContent={"center"}
-                gap={"10px"}
-                width={80}
-                height={30}
-                label={confirmOptionText || "OK"}
-                onClick={confirmOptionHandler}
-              />
-            </ButtonGroup>
+            {rest.children}
           </div>
         </div>
       </Fragment>
@@ -78,12 +39,4 @@ const DialogBox = ({
     document.getElementById("portal-root")
   );
 };
-DialogBox.propTypes = {
-  dialog: PropTypes.object.isRequired,
-  removeDialogBox: PropTypes.func.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  dialog: state.UIAlertReducers,
-});
-export default connect(mapStateToProps, { removeDialogBox })(DialogBox);
+export default DialogBox;

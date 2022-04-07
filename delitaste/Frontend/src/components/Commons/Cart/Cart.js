@@ -44,7 +44,7 @@ const Cart = (props) => {
                       } ${
                         parseInt(option.price) === 0
                           ? "(FREE)"
-                          : `($${option.price})`
+                          : `(€ ${option.price.toFixed(2)})`
                       }:`}</span>
                       <span className="cart-item-option-text-2">
                         • {`${option.value} `}
@@ -55,7 +55,9 @@ const Cart = (props) => {
                     <span className="cart-note">• NOTE: {cart.note}</span>
                   )}
                 </div>
-                <span className="cart-item-sub-text">${cart.totalPrice}</span>
+                <span className="cart-item-sub-text">
+                  € {cart?.totalPrice?.toFixed(2)}
+                </span>
               </div>
             ))}
           </div>

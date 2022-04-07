@@ -55,7 +55,7 @@ function ProviderDetail(props) {
         estimated_price: 15.0,
         release_date: "2022 March 28",
         product_image:
-          "https://d1ralsognjng37.cloudfront.net/2cec0d90-b78c-488a-9e43-b97d589d8492.jpeg",
+          "https://d1ralsognjng37.cloudfront.net/6b599bdb-8c5d-4d11-ae78-4f87f49c6550.jpeg",
       },
       survey: {
         question: "Are you eager to try this upcoming product?",
@@ -81,7 +81,7 @@ function ProviderDetail(props) {
         estimated_price: 15.0,
         release_date: "2022 March 28",
         product_image:
-          "https://tb-static.uber.com/prod/image-proc/processed_images/5a5e9e22b4efb745ad1629055cad13c5/859baff1d76042a45e319d1de80aec7a.jpeg",
+          "https://d1ralsognjng37.cloudfront.net/a513ef8a-e005-457d-a8e8-e49d82cf8720.jpeg",
       },
       survey: {
         question: "Are you eager to try this upcoming product?",
@@ -97,14 +97,16 @@ function ProviderDetail(props) {
     },
   ];
   const { product } = props;
-  const [providerDetail, setProviderDetail] = useState();
-  const [items, setItems] = useState(product.productList || []);
+  const [items, setItems] = useState([]);
   useEffect(() => {
     async function fetchingDataAPI() {
       const productList = await props.getProductListAPI(props.match.params?.id);
       setItems([...productList]);
     }
     fetchingDataAPI();
+    return () => {
+      setItems([]);
+    };
   }, []);
 
   return (

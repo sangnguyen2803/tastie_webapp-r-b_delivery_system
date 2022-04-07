@@ -41,7 +41,6 @@ const groupOffset = 1;
 const longitude = 106.68250448518744;
 const latitude = 10.763019107348029;
 function HomeBodyContent(props) {
-  const [loading, setLoading] = useState(true);
   const [group1, setGroup1] = useState([]);
   const [group2, setGroup2] = useState([]);
   const [group3, setGroup3] = useState([]);
@@ -51,7 +50,6 @@ function HomeBodyContent(props) {
   const [allProvider, setAllProvider] = useState([]);
   useEffect(() => {
     async function fetchingDataAPI() {
-      setLoading(false);
       const result1 = await props.getProviderGroup(
         1,
         groupLimit,
@@ -84,7 +82,6 @@ function HomeBodyContent(props) {
         longitude
       );
       setGroup4(result4);
-      setLoading(true);
     }
 
     fetchingDataAPI();
@@ -107,28 +104,28 @@ function HomeBodyContent(props) {
       <div className="home-content-provider">
         {props.currentSortMode == 1 && (
           <Fragment>
-            {group1?.length > 0 && loading && (
+            {group1?.length > 0 && (
               <ProviderGroup
                 groupTitle={providerGroup[0].group_title}
                 groupDescription={providerGroup[0].group_description}
                 providerList={group1}
               />
             )}
-            {group2?.length > 0 && loading && (
+            {group2?.length > 0 && (
               <ProviderGroup
                 groupTitle={providerGroup[1].group_title}
                 groupDescription={providerGroup[1].group_description}
                 providerList={group2}
               />
             )}
-            {group3?.length > 0 && loading && (
+            {group3?.length > 0 && (
               <ProviderGroup
                 groupTitle={providerGroup[2].group_title}
                 groupDescription={providerGroup[2].group_description}
                 providerList={group3}
               />
             )}
-            {group4?.length > 0 && loading && (
+            {group4?.length > 0 && (
               <ProviderGroup
                 groupTitle={providerGroup[3].group_title}
                 groupDescription={providerGroup[3].group_description}

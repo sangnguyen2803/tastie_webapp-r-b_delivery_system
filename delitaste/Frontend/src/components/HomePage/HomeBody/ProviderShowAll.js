@@ -51,7 +51,7 @@ function ProviderShowAll({ providerList, history }) {
                 key={item.provider_id}
                 onClick={() => handleOnClickProvider(item.provider_id)}
                 style={{
-                  backgroundImage: `url(https://${item.profile_pic})`,
+                  backgroundImage: `url(${item.profile_pic})`,
                   backgroundPosition: "center",
                   backgroundRepeat: "no-repeat",
                   backgroundSize: "cover",

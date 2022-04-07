@@ -12,16 +12,9 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import DialogBox from "components/Commons/Overlay/DialogBox/DialogBox";
-
-const grid = 8;
-const getItemStyle = (isDragging, draggableStyle) => ({
-  // some basic styles to make the items look a bit nicer
-  userSelect: "none",
-  // change background colour if dragging
-  background: isDragging ? "lightgreen" : "white",
-  // styles we need to apply on draggables
-  ...draggableStyle,
-});
+import ButtonGroup from "components/Commons/Button/ButtonGroup/ButtonGroup";
+import Button from "components/Commons/Button/Button";
+import "style/Common.scss";
 
 const getListStyle = (isDraggingOver) => ({
   background: isDraggingOver ? "lightblue" : "lightgrey",
@@ -68,12 +61,46 @@ function ProductForMenu(props) {
           <DialogBox
             visibility={showDeleteDialog}
             headerText={"Delete"}
-            bodyText={"Are you sure you want to delete this item?"}
             confirmOptionHandler={() => removeProduct(productIdForDelete)}
             close={() => setShowDeleteDialog(false)}
-            cancelOptionText={"Cancel"}
-            confirmOptionText={"Delete"}
-          />
+          >
+            <div className="dialog-detail-wrapper">
+              <div className="dialogbox-content">
+                <span className="dialogbox-content-detail-main">
+                  Are you sure you want to delete this product?
+                </span>
+                <span className="dialogbox-content-detail-sub">
+                  This product will be deleted immediately. You can't undo this
+                  action.
+                </span>
+              </div>
+              <div className="dialogbox-action">
+                <ButtonGroup gap={5} mgRight={5}>
+                  <Button
+                    color={"black"}
+                    bgColor={"#ECECEC"}
+                    justifyContent={"center"}
+                    gap={"10px"}
+                    width={80}
+                    height={30}
+                    label={"Cancel"}
+                    onClick={() => {
+                      setShowDeleteDialog(false);
+                    }}
+                  />
+                  <Button
+                    color={"white"}
+                    bgColor={"#800000"}
+                    justifyContent={"center"}
+                    gap={"10px"}
+                    width={80}
+                    height={30}
+                    label={"Delete"}
+                  />
+                </ButtonGroup>
+              </div>
+            </div>
+          </DialogBox>
           {props.subItems.map((item, index) => (
             <Draggable
               key={String(item.product_id)}

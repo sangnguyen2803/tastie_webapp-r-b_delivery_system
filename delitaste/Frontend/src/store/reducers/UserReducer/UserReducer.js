@@ -26,7 +26,7 @@ import { persistReducer } from "redux-persist";
 
 const persistConfig = {
   key: "user",
-  storage: storage,
+  storage,
   whitelist: ["userCart"],
 };
 
@@ -42,7 +42,6 @@ const initialState = {
   styling: ["active", "default", "default", "default"],
   refreshToken: localStorage.getItem("refreshToken"),
   verifiedEmailToken: localStorage.getItem("verified_email_token"),
-
   userCart: {
     provider_id: -1,
     user_id: -1,
@@ -141,7 +140,8 @@ const UserReducer = (state = initialState, action) => {
       if (isProductExist) {
         const newState = [...state.userCart.cart];
         const index = state.userCart.cart.findIndex(
-          (element) => element.product_id === payload.userCart.cartItem.product_id
+          (element) =>
+            element.product_id === payload.userCart.cartItem.product_id
         );
         newState[index] = payload.userCart.cartItem;
         itemInCart = newState;

@@ -5,7 +5,7 @@ const Tag = (props) => {
   return (
     <>
       <div className="tag-wrapper">
-        <FontAwesomeIcon className="tag-icon" icon={faTag} />
+        <FontAwesomeIcon className="tag-icon" icon={props.icon || faTag} />
         <span className="tag-text">{props.text}</span>
       </div>
     </>

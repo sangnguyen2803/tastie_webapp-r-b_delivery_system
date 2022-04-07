@@ -83,7 +83,7 @@ function ProviderGroup({
                   onClick={() => handleOnClickProvider(item.provider_id)}
                   key={item.provider_id}
                   style={{
-                    backgroundImage: `url(https://${item.profile_pic})`,
+                    backgroundImage: `url(${item.profile_pic})`,
                     backgroundPosition: "center",
                     backgroundRepeat: "no-repeat",
                     backgroundSize: "cover",

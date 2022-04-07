@@ -233,10 +233,17 @@ export const accountSignInAPI = (data) => async (dispatch) => {
   try {
     const endpoint = "/v1/api/auth/sign-in";
     const res = await axios.post(endpoint, body, config);
-    dispatch({
-      type: LOGIN_SUCCESS,
-      payload: res.data,
-    });
+    if (res.data.loginState) {
+      dispatch({
+        type: LOGIN_SUCCESS,
+        payload: res.data,
+      });
+    } else {
+      dispatch({
+        type: LOGIN_FAIL,
+        payload: res.data,
+      });
+    }
     return {
       state: res.data.loginState || "",
       msg: res.data.loginState ? "" : res.data.err.message,

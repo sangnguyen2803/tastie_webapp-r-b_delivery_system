@@ -1,7 +1,5 @@
 import {
-  UPDATE_MERCHANT_SUCCESS,
-  UPDATE_MERCHANT_FAIL,
-  CREATE_MERCHANT,
+  CREATE_MERCHANT ,
   UPDATE_SERVICE_INFO_FORM,
   UPDATE_REPRESENTATIVE_INFO_FORM,
   UPDATE_BUSINESS_UNIT_INFO_FORM,
@@ -35,7 +33,7 @@ export default function (state = initialState, action) {
       return { ...state, ...payload, currentForm: 3 };
     case UPDATE_PRODUCT_DETAIL_INFO_FORM:
       return { ...state, ...payload, currentForm: 4 };
-    case UPDATE_PRODUCT_DETAIL_INFO_FORM:
+    case UPDATE_BANK_INFO_FORM:
       return { ...state, ...payload, currentForm: -1 };
     default:
       return state;

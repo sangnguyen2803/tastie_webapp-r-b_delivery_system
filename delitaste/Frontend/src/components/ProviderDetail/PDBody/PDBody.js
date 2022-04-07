@@ -18,9 +18,11 @@ import "../ProviderDetail.scss";
 import PDProductDetail from "components/ProviderDetail/PDBody/PDProductDetail/PDProductDetail";
 import PDUpcomingProduct from "components/ProviderDetail/PDBody/PDUpcomingProduct/PDUpcomingProduct";
 import { scroller } from "react-scroll";
+import Tag from "components/Commons/Tag/Tag";
 
 function PDBody({ products, upcomingProducts, user }) {
   const [showProductDetail, setShowProductDetail] = useState(false);
+  const [selectedMenu, setSelectedMenu] = useState(-1);
   const [showUpcomingProductDetail, setShowUpcomingProductDetail] =
     useState(false);
   const [selectedProductDetail, setSelectedProductDetail] = useState();
@@ -55,8 +57,13 @@ function PDBody({ products, upcomingProducts, user }) {
           </span>
           <div className="pd-sb-menu-category">
             <span
-              className="pd-sb-menu-item"
-              onClick={() => scrollToSection(`product-group-upcoming`)}
+              className={`pd-sb-menu-item  ${
+                selectedMenu === -1 ? "selected-menu" : ""
+              }`}
+              onClick={() => {
+                setSelectedMenu(-1);
+                scrollToSection(`product-group-upcoming`);
+              }}
             >
               Upcoming
             </span>
@@ -64,12 +71,17 @@ function PDBody({ products, upcomingProducts, user }) {
               products.map((product) => (
                 <Fragment>
                   <span
-                    className="pd-sb-menu-item"
-                    onClick={() =>
+                    className={`pd-sb-menu-item ${
+                      selectedMenu === product.menu_category_id
+                        ? "selected-menu"
+                        : ""
+                    }`}
+                    onClick={() => {
+                      setSelectedMenu(product.menu_category_id);
                       scrollToSection(
                         `product-group-${product.menu_category_id}`
-                      )
-                    }
+                      );
+                    }}
                   >
                     {product.menu_category_name}
                   </span>
@@ -99,7 +111,6 @@ function PDBody({ products, upcomingProducts, user }) {
             )}
           </div>
           <div className={`pd-pl-title product-group-upcoming`}>Upcoming</div>
-
           <div className="pd-pl-upcoming-product-group">
             {upcomingProducts.map((up) => (
               <Fragment>
@@ -114,13 +125,23 @@ function PDBody({ products, upcomingProducts, user }) {
                     <img
                       className="pd-pl-up-product-img"
                       src={up.product.product_image}
+                      alt="product_photo"
                     />
+                  </div>
+                  <div
+                    className="pd-pl-up-tag-btn"
+                    style={{
+                      width: "auto",
+                      marginRight: 5,
+                      marginTop: 0,
+                      backgroundColor: "unset",
+                      alignSelf: "flex-end",
+                    }}
+                  >
+                    <Tag text="New" />
                   </div>
                   <div className="pd-pl-up-tag-btn">
                     <span className="pd-pl-up-main-text">Coming soon</span>
-                    <span className="pd-pl-up-sub-text">
-                      {up.product.release_date}
-                    </span>
                   </div>
                 </div>
               </Fragment>
@@ -148,6 +169,7 @@ function PDBody({ products, upcomingProducts, user }) {
                         <img
                           className="pd-pl-product-img"
                           src={product.product_image}
+                          alt="product_photo"
                         />
                       </div>
                       <div className="pd-pl-quantity-btn">
@@ -177,7 +199,7 @@ function PDBody({ products, upcomingProducts, user }) {
                       </div>
                       <span className="pd-pl-text">{product.product_name}</span>
                       <span className="pd-pl-sub-text">
-                        {product.price} VNĐ
+                        € {product.price?.toFixed(2)}
                       </span>
                     </div>
                   ))}
@@ -211,7 +233,7 @@ function PDBody({ products, upcomingProducts, user }) {
           width={35}
           height={670}
           padding="0% 0%"
-          headerColor="#53B404"
+          headerColor="#900d09"
           headerFontWeight={700}
           header
           hideHeader={true}
