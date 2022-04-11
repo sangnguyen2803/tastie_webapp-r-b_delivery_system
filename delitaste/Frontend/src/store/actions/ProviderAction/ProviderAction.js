@@ -7,6 +7,7 @@ import {
   UPDATE_BUSINESS_UNIT_INFO_FORM,
   UPDATE_PRODUCT_DETAIL_INFO_FORM,
   UPDATE_BANK_INFO_FORM,
+  GET_PROVIDER_DETAIL,
 } from "store/actions/types";
 
 //Create provider
@@ -194,6 +195,10 @@ export const getProviderByIdAPI = (id) => async (dispatch) => {
     const res = await axios.get(endpoint);
     if (res.data?.state) {
       if (!res.data.provider_info) return [];
+      dispatch({
+        type: GET_PROVIDER_DETAIL,
+        payload: { currentProvider: res.data.provider_info },
+      });
       return res.data.provider_info;
     }
   } catch (err) {

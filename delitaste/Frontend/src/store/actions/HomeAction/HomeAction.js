@@ -18,7 +18,6 @@ export const getProviderGroup =
       const endpoint = "/v1/api/provider/dashboard/home/get-group-provider";
       const res = await axios.post(endpoint, body, config);
       if (res?.data) {
-        console.log(res.data.response);
         return res.data.response;
       }
       return [];
@@ -45,7 +44,6 @@ export const getAllProvider =
       const endpoint = "/v1/api/provider/dashboard/home/get-near-by-provider";
       const res = await axios.post(endpoint, body, config);
       if (res?.data) {
-        console.log(res.data.response);
         return res.data.response;
       }
       return [];

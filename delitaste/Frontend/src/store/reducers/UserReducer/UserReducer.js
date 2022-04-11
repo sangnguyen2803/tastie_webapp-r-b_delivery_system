@@ -13,6 +13,7 @@ import {
   RETRIEVE_TOKEN,
   SET_LOADING,
   SIGN_OUT,
+  GET_PROVIDER_DETAIL,
 } from "store/actions/types";
 import {
   ADD_TO_CART,
@@ -50,6 +51,7 @@ const initialState = {
     status: -1,
     cart: [],
   },
+  currentProvider: {},
 };
 
 const UserReducer = (state = initialState, action) => {
@@ -131,8 +133,22 @@ const UserReducer = (state = initialState, action) => {
       return { ...state, ...payload };
     case RETRIEVE_TOKEN:
       return { ...state, ...payload };
-
+    case GET_PROVIDER_DETAIL:
+      return { ...state, ...payload };
     case ADD_TO_CART:
+      if (payload.userCart.provider_id !== state.userCart.provider_id) {
+        return {
+          ...state,
+          userCart: {
+            provider_id: payload.userCart.provider_id,
+            user_id: payload.userCart.user_id,
+            provider_name: payload.userCart.provider_name,
+            date: payload.userCart.date,
+            status: payload.userCart.status,
+            cart: [payload.userCart.cartItem],
+          },
+        };
+      }
       var itemInCart = [];
       let isProductExist = state.userCart.cart.some(
         (item) => item.product_id === payload.userCart.cartItem.product_id

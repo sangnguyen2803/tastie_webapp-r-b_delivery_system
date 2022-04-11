@@ -48,7 +48,7 @@ function ProductDetail(props) {
       }
     }
     fetchingData();
-  }, [items]);
+  }, []);
 
   useEffect(() => {
     if (items && selectedProduct[0] && selectedProduct[1]) {

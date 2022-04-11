@@ -16,11 +16,15 @@ const Cart = (props) => {
     <Fragment>
       <div className="cart-content-wrapper">
         <div className="cart-header">
-          <div className="cart-title">Burger King - Lyon Garibaldi Davinci</div>
+          <div className="cart-title" style={{ fontSize: 14 }}>
+            {cartItemList?.provider_name !== -1
+              ? cartItemList?.provider_name
+              : ""}
+          </div>
         </div>
         {cartItemList?.cart?.length === 0 ? (
           <div className="cart-body" style={{ justifyContent: "center" }}>
-            <img src={CartImage} className="cart-image" />
+            <img src={CartImage} alt="cart_image" className="cart-image" />
             <span className="cart-image-description">
               Add items from a restaurant or store to start a new cart
             </span>

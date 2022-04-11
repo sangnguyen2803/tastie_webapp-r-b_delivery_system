@@ -67,7 +67,7 @@ function PDBody({ products, upcomingProducts, user }) {
             >
               Upcoming
             </span>
-            {products.length !== 0 &&
+            {products?.length !== 0 &&
               products.map((product) => (
                 <Fragment>
                   <span
@@ -112,7 +112,7 @@ function PDBody({ products, upcomingProducts, user }) {
           </div>
           <div className={`pd-pl-title product-group-upcoming`}>Upcoming</div>
           <div className="pd-pl-upcoming-product-group">
-            {upcomingProducts.map((up) => (
+            {upcomingProducts?.map((up) => (
               <Fragment>
                 <div
                   className="pd-pl-upcoming-product-item"
@@ -147,7 +147,7 @@ function PDBody({ products, upcomingProducts, user }) {
               </Fragment>
             ))}
           </div>
-          {products.length !== 0 &&
+          {products?.length !== 0 &&
             products.map((menu) => (
               <Fragment>
                 <div
@@ -173,7 +173,7 @@ function PDBody({ products, upcomingProducts, user }) {
                         />
                       </div>
                       <div className="pd-pl-quantity-btn">
-                        {!user?.userCart.cart.filter(
+                        {!user?.userCart?.cart.filter(
                           (item) =>
                             item.product_id === parseInt(product.product_id)
                         )[0]?.quantity ? (

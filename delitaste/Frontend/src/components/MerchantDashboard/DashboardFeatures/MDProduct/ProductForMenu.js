@@ -61,7 +61,6 @@ function ProductForMenu(props) {
           <DialogBox
             visibility={showDeleteDialog}
             headerText={"Delete"}
-            confirmOptionHandler={() => removeProduct(productIdForDelete)}
             close={() => setShowDeleteDialog(false)}
           >
             <div className="dialog-detail-wrapper">
@@ -96,6 +95,7 @@ function ProductForMenu(props) {
                     width={80}
                     height={30}
                     label={"Delete"}
+                    onClick={() => removeProduct(productIdForDelete)}
                   />
                 </ButtonGroup>
               </div>

@@ -11,6 +11,7 @@ import {
   faChevronDown,
   faChevronUp,
 } from "@fortawesome/fontawesome-free-solid";
+import DialogBox from "components/Commons/Overlay/DialogBox/DialogBox";
 import Button from "components/Commons/Button/Button";
 import ButtonGroup from "components/Commons/Button/ButtonGroup/ButtonGroup";
 import "./PDProductDetail.scss";
@@ -27,6 +28,8 @@ function PDProductDetail(props) {
   const [note, setNote] = useState("");
   const heightForExpansion = 120;
 
+  const [showRemoveCartDialog, setShowRemoveCartDialog] = useState(true);
+
   useEffect(() => {
     const currentCartItem = user?.userCart?.cart.filter(
       (item) => parseInt(item.product_id) === productItem.product_id
@@ -37,14 +40,12 @@ function PDProductDetail(props) {
       setAdditionalOptions(currentCartItem?.product_options);
     }
   }, []);
-  useEffect(() => {
-    console.log(additionalOptions);
-  }, [additionalOptions]);
+
   const addToCart = () => {
     const cartItem = {
       provider_id: match.params.id,
       user_id: user?.profile?.user_id,
-      provider_name: "Burger King - Lyon Garibaldi Davinci",
+      provider_name: user?.currentProvider?.data?.merchant_name,
       date: "2022-01-25T00:11:09.000Z",
       status: 1,
       cartItem: {
@@ -75,8 +76,54 @@ function PDProductDetail(props) {
   };
   return (
     <Fragment>
+      <DialogBox
+        visibility={showRemoveCartDialog}
+        headerText={"Remove"}
+        close={() => setShowRemoveCartDialog(false)}
+      >
+        <div className="dialog-detail-wrapper">
+          <div className="dialogbox-content">
+            <span className="dialogbox-content-detail-main">
+              Are you sure you want to change to another restaurant?
+            </span>
+            <span className="dialogbox-content-detail-sub">
+              All your previous cart items will be cleared. You can't undo this
+              action.
+            </span>
+          </div>
+          <div className="dialogbox-action">
+            <ButtonGroup gap={5} mgRight={5}>
+              <Button
+                color={"black"}
+                bgColor={"#ECECEC"}
+                justifyContent={"center"}
+                gap={"10px"}
+                width={80}
+                height={30}
+                label={"Cancel"}
+                onClick={() => {
+                  setShowRemoveCartDialog(false);
+                }}
+              />
+              <Button
+                color={"white"}
+                bgColor={"#800000"}
+                justifyContent={"center"}
+                gap={"10px"}
+                width={80}
+                height={30}
+                label={"OK"}
+              />
+            </ButtonGroup>
+          </div>
+        </div>
+      </DialogBox>
       <div className="pd-pr-d-header" style={{ height: `${heightViewPort}px` }}>
-        <img className="pd-pr-d-image" alt="product_photo" src={productItem.product_image} />
+        <img
+          className="pd-pr-d-image"
+          alt="product_photo"
+          src={productItem.product_image}
+        />
         <div
           className="pd-pr-d-icon-abs-wrapper"
           style={{ marginTop: `calc(${heightViewPort}px - 30px)` }}

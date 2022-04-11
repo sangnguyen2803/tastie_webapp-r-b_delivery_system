@@ -14,9 +14,41 @@ import { faCartPlus } from "@fortawesome/fontawesome-free-solid";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import OrderStatus from "components/OrderTracking/OrderStatus/OrderStatus";
 import OTOrderDetail from "components/OrderTracking/OTOrderDetail/OTOrderDetail";
+import ReactMapGl, { Source, Layer, Marker, Popup } from "react-map-gl";
+import axios from "axios";
 
-const key = "AIzaSyDRXvYbjscujWed7pBPKRGCIsmx922HTJI";
 function OrderTracking(props) {
+  const [viewport, setViewport] = useState({
+    width: "100%",
+    height: "100vh",
+    latitude: 10.768685473523648,
+    longitude: 106.68057155417674,
+    zoom: 16,
+  });
+  const [departureCoordinates, setDepartureCoordinates] = useState([
+    106.68057155417674, 10.768685473523648,
+  ]);
+  const [arrivalCoordinates, setArrivalCoordinates] = useState([
+    106.68060027236189, 10.75909421616193,
+  ]);
+  const [routes, setRoutes] = useState([]);
+  useEffect(() => {
+    async function fetchingRoutesAndDirections() {
+      const endpoint = `https://api.mapbox.com/directions/v5/mapbox/driving/${departureCoordinates[0]},${departureCoordinates[1]};${arrivalCoordinates[0]},${arrivalCoordinates[1]}?geometries=geojson&access_token=pk.eyJ1IjoiaG9hbmduYW0yNDMiLCJhIjoiY2t1dHJxdjdlMHg5ZDJwbnlpcmo0a2NnMiJ9.DUrlIOzvO6-kWt-VCKZW1g`;
+      const res = await axios.get(endpoint);
+      const points = res.data.routes[0].geometry.coordinates;
+      points.unshift(departureCoordinates);
+      points.push(arrivalCoordinates);
+      setRoutes(points);
+    }
+    fetchingRoutesAndDirections();
+  }, []);
+
+  useEffect(() => {
+    console.log(routes);
+  }, [routes]);
+
+  const [showPopup, togglePopup] = useState(false);
   const [showOrderDetail, setShowOrderDetail] = useState(false);
   const [submittedStatus, setSubmittedStatus] = useState(true);
   const [confirmedStatus, setConfirmedStatus] = useState(false);
@@ -26,26 +58,69 @@ function OrderTracking(props) {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "auto" });
   }, []);
+
+  const dataOne = {
+    type: "Feature",
+    properties: {},
+    geometry: {
+      type: "LineString",
+      coordinates: routes,
+    },
+  };
+
   return (
     <Fragment>
       <NavBar fixed={true} />
       <div className="order-tracking-container">
         <div className="order-tracking-left-side">
-          <Map
-            googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${key}&v=3.exp&libraries=geometry,drawing,places`}
-            loadingElement={<div style={{ height: `100%` }} />}
-            containerElement={
-              <div
-                style={{
-                  height: `100vh`,
-                  margin: `auto`,
+          <ReactMapGl
+            {...viewport}
+            mapStyle="mapbox://styles/mapbox/streets-v11"
+            onViewportChange={(viewport) => setViewport(viewport)}
+            mapboxApiAccessToken="pk.eyJ1IjoiaG9hbmduYW0yNDMiLCJhIjoiY2t1dHJxdjdlMHg5ZDJwbnlpcmo0a2NnMiJ9.DUrlIOzvO6-kWt-VCKZW1g"
+          >
+            <Source id="polylineLayer" type="geojson" data={dataOne}>
+              <Layer
+                id="lineLayer"
+                type="line"
+                source="my-data"
+                layout={{
+                  "line-join": "round",
+                  "line-cap": "round",
+                }}
+                paint={{
+                  "line-color": "rgba(3, 170, 238, 0.5)",
+                  "line-width": 10,
                 }}
               />
-            }
-            latitude={10.762622}
-            longitude={106.660172}
-            mapElement={<div style={{ height: `100%` }} />}
-          />
+            </Source>
+            <Marker
+              latitude={departureCoordinates[1]}
+              longitude={departureCoordinates[0]}
+              offsetLeft={-20}
+              offsetTop={-30}
+            >
+              <img
+                alt="marker"
+                onClick={() => togglePopup(true)}
+                style={{ height: 30, width: 30 }}
+                src="https://xuonginthanhpho.com/wp-content/uploads/2020/03/map-marker-icon.png"
+              />
+            </Marker>
+            <Marker
+              alt="marker"
+              latitude={arrivalCoordinates[1]}
+              longitude={arrivalCoordinates[0]}
+              offsetLeft={-20}
+              offsetTop={-30}
+            >
+              <img
+                style={{ height: 30, width: 30 }}
+                alt="marker"
+                src="https://xuonginthanhpho.com/wp-content/uploads/2020/03/map-marker-icon.png"
+              />
+            </Marker>
+          </ReactMapGl>
         </div>
         <div className="order-tracking-right-side">
           <div className="order-status-container">

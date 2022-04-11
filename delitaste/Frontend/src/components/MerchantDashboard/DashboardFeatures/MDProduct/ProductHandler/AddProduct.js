@@ -53,23 +53,25 @@ function AddProduct(props) {
   const [selectedMenu, setSelectedMenu] = useState([]);
   const [additionalOption, setAdditionalOption] = useState([]);
   const [selectedOption, setSelectedOption] = useState([]);
-
-  useEffect(async () => {
-    const { user } = props;
-    try {
-      let foodCategory = await props.getCategoryAPI("food");
-      let mainFoodCategory = await props.getCategoryAPI("main-food");
-      if (user.providerId) {
-        var menuCategory = await props.getMenuCategoryAPI(user.providerId);
-        console.log(menuCategory);
+  const { user } = props;
+  useEffect(() => {
+    async function fetchingCategoryData() {
+      try {
+        let foodCategory = await props.getCategoryAPI("food");
+        let mainFoodCategory = await props.getCategoryAPI("main-food");
+        if (user.providerId) {
+          var menuCategory = await props.getMenuCategoryAPI(user.providerId);
+        }
+        setFoodCategory(foodCategory);
+        setMainFoodCategory(mainFoodCategory);
+        setMenuCategory(menuCategory);
+      } catch (err) {
+        console.log(err);
       }
-      setFoodCategory(foodCategory);
-      setMainFoodCategory(mainFoodCategory);
-      setMenuCategory(menuCategory);
-    } catch (err) {
-      console.log(err);
     }
+    fetchingCategoryData();
   }, []);
+
   useEffect(() => {
     setFilteredFoodCategory([]);
     if (selectedMainFood.length !== 1) return;

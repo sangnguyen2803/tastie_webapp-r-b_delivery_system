@@ -271,7 +271,7 @@ button {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  height: 150px;
+  height: 160px;
 
   .dialogbox-content {
     gap: 2.5px;
@@ -290,6 +290,11 @@ button {
     }
   }
   .dialogbox-action {
-    height: 20px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    height: auto;
   }
 }
