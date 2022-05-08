@@ -15,14 +15,11 @@ import {
   faSeedling,
   faUtensils,
 } from "@fortawesome/fontawesome-free-solid";
-import {
-  faCandyCane,
-  faCarrot,
-  faCookie,
-} from "@fortawesome/free-solid-svg-icons";
-
+import { faCandyCane, faCarrot } from "@fortawesome/free-solid-svg-icons";
+const HOME_RENDER = 1;
+const SEARCH_RENDER = 2;
 function HomeBodySidebar(props) {
-  const { user } = props;
+  const { type, totalResult, query } = props;
   const [checkedOption1, setCheckedOption1] = useState(false);
   const [checkedOption2, setCheckedOption2] = useState(false);
 
@@ -38,46 +35,46 @@ function HomeBodySidebar(props) {
     { id: 4, dietary_name: "Good for health", dietary_icon: faHeart },
     { id: 5, dietary_name: "Alergy-friendly", dietary_icon: faAllergies },
   ];
-
-  const addressBook = [
-    {
-      delivery_address_1:
-        "543, Nguyen Dinh Chieu, ward 10, district 3, Ho Chi Minh city",
-      latitude: 5.31414214,
-      longitude: 1.4214214,
-      type: 1
-    },
-    {
-      delivery_address_2:
-        "141, TMA Solution, Quang Trung, ward 2, district 12, Ho Chi Minh city",
-      latitude: 5.31414214,
-      longitude: 1.4214214,
-    },
-    {
-      delivery_address_3:
-        "214, Trần Phú, ward 2, Tan Binh district, Ho Chi Minh city",
-      latitude: 5.31414214,
-      longitude: 1.4214214,
-    },
-  ];
   return (
     <Fragment>
       <div
         className="homebody-sb-container"
         style={{ overflowY: props.showScrollbar }}
       >
-        <span className="homebody-sb-header-title">All stores</span>
-        <div className="address-list">
-          <FontAwesomeIcon
-            className="address-book-icon"
-            onClick={() => setShowFunction1((prev) => !prev)}
-            icon={faAddressBook}
-          />
-          <span className="address-book-picked">
-            543, Nguyen Dinh Chieu, ward 10, district 3, Ho Chi Minh city
-          </span>
-          <span className="address-book-button">Change</span>
-        </div>
+        {type === SEARCH_RENDER && query && (
+          <Fragment>
+            <span className="homebody-sb-header-for-query-up">{`"${query}"`}</span>
+            <span className="homebody-sb-header-for-query-down">{`Results for "${query}"`}</span>
+          </Fragment>
+        )}
+        <span
+          className="homebody-sb-header-title"
+          style={type === SEARCH_RENDER ? { marginTop: 0 } : {}}
+        >
+          All stores
+        </span>
+        {type === SEARCH_RENDER && totalResult ? (
+          <span className="homebody-sb-header-for-result">{`${totalResult} Result${
+            totalResult > 1 ? "s" : ""
+          }`}</span>
+        ) : (
+          <span className="homebody-sb-header-for-result">Not found</span>
+        )}
+        {type === HOME_RENDER ? (
+          <div className="address-list">
+            <FontAwesomeIcon
+              className="address-book-icon"
+              onClick={() => setShowFunction1((prev) => !prev)}
+              icon={faAddressBook}
+            />
+            <span className="address-book-picked">
+              543, Nguyen Dinh Chieu, ward 10, district 3, Ho Chi Minh city
+            </span>
+            <span className="address-book-button">Change</span>
+          </div>
+        ) : (
+          <></>
+        )}
         <div className="homebody-sb-function">
           <div className="homebody-sb-function-title-wrapper">
             <span className="homebody-sb-function-title">Sort</span>
@@ -191,92 +188,101 @@ function HomeBodySidebar(props) {
             </>
           )}
         </div>
-        <div className="homebody-sb-function">
-          <div className="homebody-sb-function-title-wrapper">
-            <span className="homebody-sb-function-title">Price Range</span>
-            <FontAwesomeIcon
-              className="homebody-sb-function-title-icon"
-              onClick={() => setShowFunction3((prev) => !prev)}
-              icon={showFunction3 ? faChevronUp : faChevronDown}
-            />
-          </div>
-          {showFunction3 && (
-            <div id="form-wrapper">
-              <form1>
-                <div id="radio-slider">
-                  <input
-                    type="radio"
-                    name="debt-amount"
-                    id="1"
-                    value="1"
-                    required
-                  />
-                  <label
-                    className="label-radio-slider"
-                    for="1"
-                    data-debt-amount="Free"
-                  ></label>
-                  <input
-                    type="radio"
-                    name="debt-amount"
-                    id="2"
-                    value="2"
-                    required
-                  />
-                  <label for="2" data-debt-amount="$"></label>
-                  <input
-                    type="radio"
-                    name="debt-amount"
-                    id="3"
-                    value="3"
-                    required
-                  />
-                  <label for="3" data-debt-amount="$$"></label>
-                  <input
-                    type="radio"
-                    name="debt-amount"
-                    id="4"
-                    value="4"
-                    required
-                  />
-                  <label for="4" data-debt-amount="$$$"></label>
-                  <input
-                    type="radio"
-                    name="debt-amount"
-                    id="5"
-                    value="5"
-                    required
-                  />
-                  <label for="5" data-debt-amount="$$$$"></label>
-                  <div id="debt-amount-pos"></div>
-                </div>
-              </form1>
+        {type === HOME_RENDER ? (
+          <div className="homebody-sb-function">
+            <div className="homebody-sb-function-title-wrapper">
+              <span className="homebody-sb-function-title">Price Range</span>
+              <FontAwesomeIcon
+                className="homebody-sb-function-title-icon"
+                onClick={() => setShowFunction3((prev) => !prev)}
+                icon={showFunction3 ? faChevronUp : faChevronDown}
+              />
             </div>
-          )}
-        </div>
-        <div className="homebody-sb-function">
-          <div className="homebody-sb-function-title-wrapper">
-            <span className="homebody-sb-function-title">Dietary</span>
-            <FontAwesomeIcon
-              className="homebody-sb-function-title-icon"
-              onClick={() => setShowFunction4((prev) => !prev)}
-              icon={showFunction4 ? faChevronUp : faChevronDown}
-            />
+            {showFunction3 && (
+              <div id="form-wrapper">
+                <form1>
+                  <div id="radio-slider">
+                    <input
+                      type="radio"
+                      name="debt-amount"
+                      id="1"
+                      value="1"
+                      required
+                    />
+                    <label
+                      className="label-radio-slider"
+                      for="1"
+                      data-debt-amount="Free"
+                    ></label>
+                    <input
+                      type="radio"
+                      name="debt-amount"
+                      id="2"
+                      value="2"
+                      required
+                    />
+                    <label for="2" data-debt-amount="$"></label>
+                    <input
+                      type="radio"
+                      name="debt-amount"
+                      id="3"
+                      value="3"
+                      required
+                    />
+                    <label for="3" data-debt-amount="$$"></label>
+                    <input
+                      type="radio"
+                      name="debt-amount"
+                      id="4"
+                      value="4"
+                      required
+                    />
+                    <label for="4" data-debt-amount="$$$"></label>
+                    <input
+                      type="radio"
+                      name="debt-amount"
+                      id="5"
+                      value="5"
+                      required
+                    />
+                    <label for="5" data-debt-amount="$$$$"></label>
+                    <div id="debt-amount-pos"></div>
+                  </div>
+                </form1>
+              </div>
+            )}
           </div>
-          {showFunction4 && (
-            <div className="dietary-wrapper">
-              {dietary.map((item) => (
-                <div className="dietary-item" key={item.id}>
-                  <FontAwesomeIcon
-                    icon={item.dietary_icon}
-                    className="dietary-icon"
-                  />
-                  <span className="dietary-text">{item.dietary_name}</span>
-                </div>
-              ))}
+        ) : (
+          <></>
+        )}
+        {type === HOME_RENDER ? (
+          <div className="homebody-sb-function">
+            <div className="homebody-sb-function-title-wrapper">
+              <span className="homebody-sb-function-title">Dietary</span>
+              <FontAwesomeIcon
+                className="homebody-sb-function-title-icon"
+                onClick={() => setShowFunction4((prev) => !prev)}
+                icon={showFunction4 ? faChevronUp : faChevronDown}
+              />
             </div>
-          )}
-        </div>
+
+            {showFunction4 && (
+              <div className="dietary-wrapper">
+                {dietary.map((item) => (
+                  <div className="dietary-item" key={item.id}>
+                    <FontAwesomeIcon
+                      icon={item.dietary_icon}
+                      className="dietary-icon"
+                    />
+                    <span className="dietary-text">{item.dietary_name}</span>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        ) : (
+          <></>
+        )}
       </div>
     </Fragment>
   );

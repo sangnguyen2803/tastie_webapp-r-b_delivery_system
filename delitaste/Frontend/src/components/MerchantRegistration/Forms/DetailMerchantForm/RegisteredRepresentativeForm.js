@@ -48,15 +48,13 @@ const formHeaderText = {
     "The representative’s infos must also be the provider’s infos. Our staff will contact via phone number within 24 hours to confirm the provided information.",
 };
 function RegisteredRepresentativeForm(props) {
-  const [registerAs, setRegisterAs] = useState(1);
   const [showRegisterAsEnterprise, setShowRegisterAsEnterprise] =
     useState(false);
+
   const onChange = () => {
     setShowRegisterAsEnterprise((prev) => !prev);
   };
-  const initialSelectedIndex = options.findIndex(
-    ({ value }) => value === "individual"
-  );
+  const initialSelectedIndex = options.findIndex(({ value }) => value === 0);
 
   const handleSubmitForm = async (values) => {
     const formData = {
@@ -112,9 +110,9 @@ function RegisteredRepresentativeForm(props) {
                         fontColor={"#2C2C2C"}
                         selectedFontColor={"#E6E6E6"}
                         fontSize={13}
-                        wrapperBorderRadius={5}
-                        optionBorderRadius={5}
-                        width={200}
+                        wrapperBorderRadius={0}
+                        optionBorderRadius={0}
+                        width={80}
                       />
                     </div>
                   </div>

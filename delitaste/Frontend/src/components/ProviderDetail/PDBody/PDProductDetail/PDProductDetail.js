@@ -15,7 +15,11 @@ import DialogBox from "components/Commons/Overlay/DialogBox/DialogBox";
 import Button from "components/Commons/Button/Button";
 import ButtonGroup from "components/Commons/Button/ButtonGroup/ButtonGroup";
 import "./PDProductDetail.scss";
-import { addToCart } from "store/actions/CartAction/CartAction";
+import {
+  addToCart,
+  getCart,
+  updateCart,
+} from "store/actions/CartAction/CartAction";
 
 function PDProductDetail(props) {
   const { provider, user, match } = props;
@@ -28,10 +32,8 @@ function PDProductDetail(props) {
   const [note, setNote] = useState("");
   const heightForExpansion = 120;
 
-  const [showRemoveCartDialog, setShowRemoveCartDialog] = useState(true);
-
   useEffect(() => {
-    const currentCartItem = user?.userCart?.cart.filter(
+    const currentCartItem = user?.userCart?.cart?.filter(
       (item) => parseInt(item.product_id) === productItem.product_id
     )[0];
     if (currentCartItem) {
@@ -40,13 +42,28 @@ function PDProductDetail(props) {
       setAdditionalOptions(currentCartItem?.product_options);
     }
   }, []);
-
+  const navigateAddToCart = () => {
+    if (match.params.id) {
+      //to check whether cart provider id is different from provider id in current page
+      if (
+        parseInt(match.params.id || "||") !== user.userCart?.provider_id &&
+        user.userCart?.provider_id !== -1
+      ) {
+        props.setShowProductDetail(false);
+        props.setShowRemoveCartDialog(true);
+        return;
+      }
+    }
+    addToCart();
+  };
   const addToCart = () => {
+    const { addToCart, updateCart } = props;
+
     const cartItem = {
-      provider_id: match.params.id,
+      provider_id: parseInt(match.params.id),
       user_id: user?.profile?.user_id,
       provider_name: user?.currentProvider?.data?.merchant_name,
-      date: "2022-01-25T00:11:09.000Z",
+      date: "",
       status: 1,
       cartItem: {
         product_id: productItem.product_id,
@@ -54,12 +71,21 @@ function PDProductDetail(props) {
         product_image: productItem.product_image,
         product_price: productItem.price,
         product_options: additionalOptions,
-        totalPrice: totalPrice * quantity,
+        totalPrice: (parseFloat(productItem.price) * quantity).toFixed(2),
         note: note,
         quantity: quantity,
       },
     };
-    props.addToCart(cartItem);
+    let isProductExist = user.userCart?.cart?.some(
+      (item) => item.product_id === cartItem.cartItem.product_id
+    );
+    var code = "";
+    if (isProductExist) {
+      code = user?.userCart?.cart?.filter(
+        (item) => item.product_id === cartItem.cartItem.product_id
+      )[0].item_code;
+    }
+    isProductExist ? updateCart(cartItem, code) : addToCart(cartItem);
     props.setShowProductDetail(false);
     if (props.pushReload) window.location.reload(false);
   };
@@ -70,54 +96,11 @@ function PDProductDetail(props) {
       value: event.target.value,
       price: price,
     };
-    console.log(additionalOptionItem);
     additionalOptions?.push(additionalOptionItem);
     setTotalPrice(totalPrice + price);
   };
   return (
     <Fragment>
-      <DialogBox
-        visibility={showRemoveCartDialog}
-        headerText={"Remove"}
-        close={() => setShowRemoveCartDialog(false)}
-      >
-        <div className="dialog-detail-wrapper">
-          <div className="dialogbox-content">
-            <span className="dialogbox-content-detail-main">
-              Are you sure you want to change to another restaurant?
-            </span>
-            <span className="dialogbox-content-detail-sub">
-              All your previous cart items will be cleared. You can't undo this
-              action.
-            </span>
-          </div>
-          <div className="dialogbox-action">
-            <ButtonGroup gap={5} mgRight={5}>
-              <Button
-                color={"black"}
-                bgColor={"#ECECEC"}
-                justifyContent={"center"}
-                gap={"10px"}
-                width={80}
-                height={30}
-                label={"Cancel"}
-                onClick={() => {
-                  setShowRemoveCartDialog(false);
-                }}
-              />
-              <Button
-                color={"white"}
-                bgColor={"#800000"}
-                justifyContent={"center"}
-                gap={"10px"}
-                width={80}
-                height={30}
-                label={"OK"}
-              />
-            </ButtonGroup>
-          </div>
-        </div>
-      </DialogBox>
       <div className="pd-pr-d-header" style={{ height: `${heightViewPort}px` }}>
         <img
           className="pd-pr-d-image"
@@ -180,6 +163,7 @@ function PDProductDetail(props) {
                               type="radio"
                               name={option.option_name}
                               value={item.value}
+                              defaultValue={item.value}
                               onChange={(event) =>
                                 onValueChange(event, item.price)
                               }
@@ -205,7 +189,7 @@ function PDProductDetail(props) {
             <textarea
               className="pd-textarea"
               name="description"
-              value={note}
+              value={note || ""}
               placeholder="Place your note here to notice the shipper for this dish."
               onChange={(e) => setNote(e.target.value)}
             />
@@ -246,9 +230,9 @@ function PDProductDetail(props) {
           label={
             props.buttonTitle
               ? props.buttonTitle
-              : `Add to order • € ${totalPrice.toFixed(2)}`
+              : `Add to order • € ${(totalPrice * quantity).toFixed(2)}`
           }
-          onClick={addToCart}
+          onClick={navigateAddToCart}
         />
       </div>
     </Fragment>
@@ -259,6 +243,8 @@ PDProductDetail.propTypes = {
   user: PropTypes.object.isRequired,
   product: PropTypes.object.isRequired,
   addToCart: PropTypes.func.isRequired,
+  updateCart: PropTypes.func.isRequired,
+  getCart: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -267,6 +253,9 @@ const mapStateToProps = (state) => ({
 });
 
 export default withRouter(
-  connect(mapStateToProps, { addToCart })(PDProductDetail)
+  connect(mapStateToProps, { addToCart, updateCart, getCart })(PDProductDetail)
 );
 //<FontAwesomeIcon className="pd-pr-d-icon-abs-compress" icon={faCompress} />
+
+/*
+ */

@@ -21,9 +21,8 @@ const Spinner = (props) => {
         color={color}
         loading={loading}
         css={override}
-        margin={10}
-        size={90}
         margin={5}
+        size={90}
         height={50}
         width={10}
         speedMultiplier={0.8}

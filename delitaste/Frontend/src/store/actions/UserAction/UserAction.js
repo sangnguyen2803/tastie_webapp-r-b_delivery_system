@@ -16,6 +16,7 @@ import {
   GET_PROFILE_SUCCESS,
   SET_LOADING,
   SIGN_OUT,
+  GET_ADDRESS_BOOK,
 } from "store/actions/types";
 
 //UPDATE UI
@@ -173,7 +174,6 @@ export const checkEmailVerificationCodeAPI = (data) => async (dispatch) => {
     },
   };
   const body = JSON.stringify(data);
-  console.log(body);
   try {
     const endpoint = "/v1/api/auth/verify-code-with-email";
     const res = await axios.post(endpoint, body, config);
@@ -218,6 +218,41 @@ export const getUserProfileAPI = (accessToken) => async (dispatch) => {
         },
       });
     }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const getAddressBookAPI = (id) => async (dispatch) => {
+  try {
+    const endpoint = `/v1/api/tastie/checkout/get_contact/${id}`;
+    const res = await axios.get(endpoint);
+    if (res.data?.status) {
+      let phone = res.data.response.user_phone;
+      let address = res.data.response.user_address;
+      return { phone, address };
+    }
+  } catch (err) {
+    return { phone: "", address: [] };
+  }
+};
+
+export const getDeliveryFee = (id, longitude, latitude) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  const body = JSON.stringify({
+    provider_id: id,
+    longitude,
+    latitude,
+  });
+  try {
+    const endpoint = "/v1/api/tastie/tastie/delivery-fee-to-checkout";
+    const res = await axios.post(endpoint, body, config);
+    if (res.data) return res.data.delivery_fee;
+    return 0;
   } catch (err) {
     console.log(err);
   }

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getAccessTokenAPI } from "store/actions/UserAction/AuthAction";
+import { getCart } from "store/actions/CartAction/CartAction";
 import {
   getUserProfileAPI,
   setLoading,
@@ -14,6 +15,7 @@ export default function (WrappedComponent) {
       super(props);
       this.state = {
         isLoader: true,
+        cart: {},
       };
     }
     async componentDidMount() {
@@ -32,6 +34,8 @@ export default function (WrappedComponent) {
           return;
         }
         await this.props.getUserProfileAPI(result?.accessToken);
+        if (this.props.user.profile?.user_id)
+          await this.props.getCart(this.props.user.profile?.user_id);
         this.setState({ isLoader: true });
       }
       if (!this.props.user.isUserAuthenticated) {
@@ -48,6 +52,7 @@ export default function (WrappedComponent) {
     user: PropTypes.object.isRequired,
     getAccessTokenAPI: PropTypes.func.isRequired,
     getUserProfileAPI: PropTypes.func.isRequired,
+    getCart: PropTypes.func.isRequired,
     setLoading: PropTypes.func.isRequired,
     setDialogBox: PropTypes.func.isRequired,
   };
@@ -58,6 +63,7 @@ export default function (WrappedComponent) {
   return connect(mapStateToProps, {
     getAccessTokenAPI,
     getUserProfileAPI,
+    getCart,
     setLoading,
     setDialogBox,
   })(Authentication);

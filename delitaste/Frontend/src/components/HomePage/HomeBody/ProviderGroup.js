@@ -14,6 +14,7 @@ import { withRouter } from "react-router-dom";
 import { faHeart as faHeart2 } from "@fortawesome/fontawesome-free-solid";
 import { faHeart as faHeart1 } from "@fortawesome/fontawesome-free-regular";
 import { faGetPocket } from "@fortawesome/free-brands-svg-icons";
+import LazyLoad from "react-lazyload";
 const responsive = {
   desktop: {
     breakpoint: { max: 3000, min: 1024 },
@@ -77,47 +78,49 @@ function ProviderGroup({
             customTransition={"transform 500ms ease-in-out"}
           >
             {providerList?.map((item) => (
-              <Fragment>
-                <div
-                  className="provider-card-container"
-                  onClick={() => handleOnClickProvider(item.provider_id)}
-                  key={item.provider_id}
-                  style={{
-                    backgroundImage: `url(${item.profile_pic})`,
-                    backgroundPosition: "center",
-                    backgroundRepeat: "no-repeat",
-                    backgroundSize: "cover",
-                  }}
-                >
-                  <div className="provider-interaction-wrapper">
-                    <FontAwesomeIcon
-                      className="icon-for-liking"
-                      style={{ zIndex: 1, marginTop: 5 }}
-                      icon={faHeart1}
-                    />
-                    {!item.tag_name && (
-                      <div className="provider-card-tag">
-                        {item.tag_name || "3 orders until €5 reward"}
-                      </div>
+              <div key={item.provider_id}>
+                <LazyLoad style={{ width: "100%" }}>
+                  <div
+                    className="provider-card-container"
+                    onClick={() => handleOnClickProvider(item.provider_id)}
+                    key={item.provider_id}
+                    style={{
+                      backgroundImage: `url(${item.profile_pic})`,
+                      backgroundPosition: "center",
+                      backgroundRepeat: "no-repeat",
+                      backgroundSize: "cover",
+                    }}
+                  >
+                    <div className="provider-interaction-wrapper">
+                      <FontAwesomeIcon
+                        className="icon-for-liking"
+                        style={{ zIndex: 1, marginTop: 5 }}
+                        icon={faHeart1}
+                      />
+                      {!item.tag_name && (
+                        <div className="provider-card-tag">
+                          {item.tag_name || "3 orders until €5 reward"}
+                        </div>
+                      )}
+                    </div>
+                    {currentTime < closeTime && currentTime > openTime ? (
+                      <figcaption className="figcaption-wrapper">
+                        <div className="btn-schedule-wrapper">
+                          <FontAwesomeIcon
+                            icon={faCalendarPlus}
+                            className="icon-btn"
+                          />
+                          <span>Schedule order</span>
+                        </div>
+                        <span className="a1-description">
+                          Opens Saturday 2:15 PM
+                        </span>
+                      </figcaption>
+                    ) : (
+                      <Fragment></Fragment>
                     )}
                   </div>
-                  {currentTime < closeTime && currentTime > openTime ? (
-                    <figcaption className="figcaption-wrapper">
-                      <div className="btn-schedule-wrapper">
-                        <FontAwesomeIcon
-                          icon={faCalendarPlus}
-                          className="icon-btn"
-                        />
-                        <span>Schedule order</span>
-                      </div>
-                      <span className="a1-description">
-                        Opens Saturday 2:15 PM
-                      </span>
-                    </figcaption>
-                  ) : (
-                    <Fragment></Fragment>
-                  )}
-                </div>
+                </LazyLoad>
 
                 <div className="product-info-wrapper">
                   <span className="p-info-main-text">{item.provider_name}</span>
@@ -134,10 +137,10 @@ function ProviderGroup({
                   </span>
                   &nbsp;•&nbsp;
                   <div className="p-sub-info-cooking-time">
-                    {item.mean_estimated_cooking_time || "30-45 mins"}
+                    {item.estimated_cooking_time || "30-45 mins"}
                   </div>
                 </div>
-              </Fragment>
+              </div>
             ))}
           </Carousel>
         </div>

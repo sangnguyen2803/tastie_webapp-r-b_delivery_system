@@ -103,7 +103,7 @@ const Modal = ({ openModal, closeModal, ...rest }) => {
               icon={faTimes}
             />
             <div className="modal-cart-header-title">
-              <span>Cart items • 0 item</span>
+              <span>Cart items • {rest.cartQuantity || 0} item</span>
             </div>
           </div>
           <div className="modal-content" style={ModalInnerStyle}>

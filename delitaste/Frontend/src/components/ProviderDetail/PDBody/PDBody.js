@@ -14,13 +14,20 @@ import {
 } from "@fortawesome/fontawesome-free-solid";
 
 import Modal from "components/Commons/Overlay/Popup/Modal/Modal";
-import "../ProviderDetail.scss";
+import Tag from "components/Commons/Tag/Tag";
+import DialogBox from "components/Commons/Overlay/DialogBox/DialogBox";
+import Button from "components/Commons/Button/Button";
+import ButtonGroup from "components/Commons/Button/ButtonGroup/ButtonGroup";
 import PDProductDetail from "components/ProviderDetail/PDBody/PDProductDetail/PDProductDetail";
 import PDUpcomingProduct from "components/ProviderDetail/PDBody/PDUpcomingProduct/PDUpcomingProduct";
-import { scroller } from "react-scroll";
-import Tag from "components/Commons/Tag/Tag";
 
-function PDBody({ products, upcomingProducts, user }) {
+import { clearCart } from "store/actions/CartAction/CartAction";
+import { scroller } from "react-scroll";
+
+import "../ProviderDetail.scss";
+import { propTypes } from "react-map-gl-geocoder";
+
+function PDBody({ products, upcomingProducts, user, ...rest }) {
   const [showProductDetail, setShowProductDetail] = useState(false);
   const [selectedMenu, setSelectedMenu] = useState(-1);
   const [showUpcomingProductDetail, setShowUpcomingProductDetail] =
@@ -29,6 +36,7 @@ function PDBody({ products, upcomingProducts, user }) {
   const [selectedUpcomingProductDetail, setSelectedUpcomingProductDetail] =
     useState();
   const [showCustomerReview, setShowCustomerReview] = useState(false);
+  const [showRemoveCartDialog, setShowRemoveCartDialog] = useState(false);
   const scrollToSection = (sectionName) => {
     scroller.scrollTo(sectionName, {
       duration: 800,
@@ -40,6 +48,18 @@ function PDBody({ products, upcomingProducts, user }) {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "auto" });
   }, []);
+
+  const clearCartItem = (id) => {
+    async function clearCartItem(id) {
+      await rest.clearCart(
+        id,
+        parseInt(rest.match.params.id),
+        user?.currentProvider?.data?.merchant_name
+      );
+    }
+    clearCartItem(user.profile?.user_id);
+    setShowRemoveCartDialog(false);
+  };
 
   return (
     <Fragment>
@@ -173,7 +193,7 @@ function PDBody({ products, upcomingProducts, user }) {
                         />
                       </div>
                       <div className="pd-pl-quantity-btn">
-                        {!user?.userCart?.cart.filter(
+                        {!user?.userCart?.cart?.filter(
                           (item) =>
                             item.product_id === parseInt(product.product_id)
                         )[0]?.quantity ? (
@@ -188,7 +208,7 @@ function PDBody({ products, upcomingProducts, user }) {
                         ) : (
                           <span className="inc-des-button-2">
                             {
-                              user?.userCart.cart.filter(
+                              user.userCart?.cart.filter(
                                 (item) =>
                                   item.product_id ===
                                   parseInt(product.product_id)
@@ -221,9 +241,53 @@ function PDBody({ products, upcomingProducts, user }) {
         >
           <PDProductDetail
             setShowProductDetail={setShowProductDetail}
+            setShowRemoveCartDialog={setShowRemoveCartDialog}
             productItem={selectedProductDetail}
           />
         </Modal>
+        <DialogBox
+          visibility={showRemoveCartDialog}
+          headerText={"Remove"}
+          close={() => setShowRemoveCartDialog(false)}
+        >
+          <div className="dialog-detail-wrapper">
+            <div className="dialogbox-content">
+              <span className="dialogbox-content-detail-main">
+                Are you sure you want to change to another restaurant?
+              </span>
+              <span className="dialogbox-content-detail-sub">
+                All your previous cart items will be cleared. You can't undo
+                this action.
+              </span>
+            </div>
+            <div className="dialogbox-action">
+              <ButtonGroup gap={5} mgRight={5}>
+                <Button
+                  color={"black"}
+                  bgColor={"#ECECEC"}
+                  justifyContent={"center"}
+                  gap={"10px"}
+                  width={80}
+                  height={30}
+                  label={"Cancel"}
+                  onClick={() => {
+                    setShowRemoveCartDialog(false);
+                  }}
+                />
+                <Button
+                  color={"white"}
+                  bgColor={"#800000"}
+                  justifyContent={"center"}
+                  gap={"10px"}
+                  width={80}
+                  height={30}
+                  label={"OK"}
+                  onClick={clearCartItem}
+                />
+              </ButtonGroup>
+            </div>
+          </div>
+        </DialogBox>
         <Modal
           openModal={showUpcomingProductDetail}
           closeModal={() => {
@@ -251,13 +315,14 @@ function PDBody({ products, upcomingProducts, user }) {
 PDBody.propTypes = {
   user: PropTypes.object.isRequired,
   product: PropTypes.object.isRequired,
+  clearCart: PropTypes.func.isRequired,
 };
 const mapStateToProps = (state) => ({
   user: state.UserReducer,
   product: state.ProductReducer,
 });
 
-export default withRouter(connect(mapStateToProps, null)(PDBody));
+export default withRouter(connect(mapStateToProps, { clearCart })(PDBody));
 
 /*
  {!isButtonExpanded ? (

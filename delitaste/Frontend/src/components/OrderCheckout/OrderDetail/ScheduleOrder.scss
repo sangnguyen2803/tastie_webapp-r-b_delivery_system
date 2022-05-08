@@ -1,0 +1,43 @@
+.schedule-order-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+.sch-o-head-text {
+    margin: 5px 0;
+    display: flex;
+    flex-direction: row;
+    width: 90%;
+    text-align: left;
+    font-size: 18px;
+    font-weight: 700;
+}
+.sch-o-dropdown-date-container {
+    display: flex;
+    flex-direction: row;
+    justify-content:center;
+    align-items: center;
+    width: 90%;
+    height: 45px;
+    .sch-o-select-label {
+        font-size: 13px;
+        width: 15%;
+    }
+    .sch-o-select-container {
+        width: 85%;
+        height: 30px;
+        font-family:"Poppins" ;
+        font-size: 13px;
+        text-indent: 10px;
+        background-color: #fefefe;
+    }
+}
+
+.validate-schedule-time {
+    width: 90%;
+    font-size: 11px;
+    color: rgb(74, 0, 0);
+    height: 20px;
+}

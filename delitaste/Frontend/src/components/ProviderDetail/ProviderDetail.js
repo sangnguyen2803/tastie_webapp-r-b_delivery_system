@@ -96,7 +96,6 @@ function ProviderDetail(props) {
       },
     },
   ];
-  const { product } = props;
   const [items, setItems] = useState([]);
   useEffect(() => {
     async function fetchingDataAPI() {

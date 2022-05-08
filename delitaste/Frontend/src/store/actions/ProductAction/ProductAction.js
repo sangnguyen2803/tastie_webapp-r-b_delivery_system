@@ -2,6 +2,30 @@ import axios from "axios";
 
 import { GET_PRODUCT_LIST } from "store/actions/types";
 
+//Search
+export const searchAPI = (query, type, long, lat) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  const body = JSON.stringify({
+    q: query,
+    type,
+    longitude: long,
+    latitude: lat,
+  });
+  try {
+    const endpoint = "/v1/api/tastie/search";
+    const res = await axios.post(endpoint, body, config);
+    if (res.data?.status) return res.data.data;
+    return {};
+  } catch (err) {
+    console.log(err);
+    return {};
+  }
+};
+
 //Get product list
 export const getProductListAPI = (providerId) => async (dispatch) => {
   try {
@@ -44,7 +68,6 @@ export const addProductAPI = (data) => async (dispatch) => {
   data.create_at = currentDateTime;
   data.update_at = currentDateTime;
   const body = JSON.stringify(data);
-  console.log(body);
   try {
     const endpoint = `/v1/api/provider/dashboard/menu-overview/add-item`;
     const res = await axios.post(endpoint, body, config);
@@ -78,7 +101,6 @@ export const removeProductAPI = (id) => async (dispatch) => {
   }
 };
 
-
 //Get menu category
 export const getMenuCategoryAPI = (id) => async (dispatch) => {
   try {
@@ -96,4 +118,4 @@ export const getMenuCategoryAPI = (id) => async (dispatch) => {
   } catch (err) {
     console.log(err);
   }
-}
+};

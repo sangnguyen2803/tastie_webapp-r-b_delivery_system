@@ -14,13 +14,18 @@ import {
   SET_LOADING,
   SIGN_OUT,
   GET_PROVIDER_DETAIL,
+  GET_ADDRESS_BOOK,
 } from "store/actions/types";
 import {
+  GET_CART,
   ADD_TO_CART,
+  UPDATE_CART,
+  CLEAR_CART,
   REMOVE_CART,
   INCREASE_PRODUCT,
   DESCREASE_PRODUCT,
 } from "store/actions/types";
+import axios from "axios";
 import {} from "store/actions/types";
 import storage from "redux-persist/lib/storage";
 import { persistReducer } from "redux-persist";
@@ -28,28 +33,33 @@ import { persistReducer } from "redux-persist";
 const persistConfig = {
   key: "user",
   storage,
-  whitelist: ["userCart"],
+  whitelist: [],
 };
 
 const initialState = {
-  currentForm: 0,
-  formData: {},
+  currentForm: 0, //provider-registration
+  formData: {}, 
   isEmailVerified: false,
   isUserAuthenticated: false,
   isLoading: true, //loading component after calling api.
   loginState: false,
-  providerId: -1,
-  profile: [],
+  providerId: -1, //provider created by user
+  profile: [], 
   styling: ["active", "default", "default", "default"],
   refreshToken: localStorage.getItem("refreshToken"),
   verifiedEmailToken: localStorage.getItem("verified_email_token"),
+  currentAddress: {
+    address: "",
+    latitude: 0,
+    longitude: 0,
+  },
   userCart: {
-    provider_id: -1,
-    user_id: -1,
-    provider_name: -1,
-    date: "",
-    status: -1,
     cart: [],
+    date: "",
+    provider_id: -1,
+    provider_name: -1,
+    status: -1,
+    user_id: -1,
   },
   currentProvider: {},
 };
@@ -135,12 +145,29 @@ const UserReducer = (state = initialState, action) => {
       return { ...state, ...payload };
     case GET_PROVIDER_DETAIL:
       return { ...state, ...payload };
+    case GET_CART:
+      return { ...state, ...payload };
+    case CLEAR_CART:
+      return { ...state, ...payload };
+    case REMOVE_CART:
+      let copy = { ...state };
+      let removedPosition = copy.userCart.cart.findIndex(
+        (element) =>
+          element.product_id === payload.product_id &&
+          element.item_code === payload.item_code
+      );
+      console.log(removedPosition);
+      copy.userCart.cart.splice(removedPosition, 1);
+      return {
+        ...state,
+        ...copy,
+      };
     case ADD_TO_CART:
       if (payload.userCart.provider_id !== state.userCart.provider_id) {
         return {
           ...state,
           userCart: {
-            provider_id: payload.userCart.provider_id,
+            provider_id: parseInt(payload.userCart.provider_id),
             user_id: payload.userCart.user_id,
             provider_name: payload.userCart.provider_name,
             date: payload.userCart.date,
@@ -168,7 +195,7 @@ const UserReducer = (state = initialState, action) => {
       return {
         ...state,
         userCart: {
-          provider_id: payload.userCart.provider_id,
+          provider_id: parseInt(payload.userCart.provider_id),
           user_id: payload.userCart.user_id,
           provider_name: payload.userCart.provider_name,
           date: payload.userCart.date,
@@ -176,28 +203,17 @@ const UserReducer = (state = initialState, action) => {
           cart: itemInCart,
         },
       };
-
-    case REMOVE_CART:
-      let copy = { ...state };
-      let removedPosition = copy.userCart.cart.indexOf(payload.cartRemoved);
-      copy.userCart.cart.splice(removedPosition, 1);
-
-      // if the cart is empty
-      if (copy.userCart.cart.length === 0) {
-        return {
-          ...state,
-          userCart: {
-            provider_id: null,
-            provider_name: null,
-            date: null,
-            cart: [],
-          },
-        };
-      }
-
+    case UPDATE_CART:
       return {
         ...state,
-        ...copy,
+        userCart: {
+          provider_id: payload.userCart.provider_id,
+          user_id: payload.userCart.user_id,
+          provider_name: payload.userCart.provider_name,
+          date: payload.userCart.date,
+          status: payload.userCart.status,
+          cart: itemInCart,
+        },
       };
     case INCREASE_PRODUCT: {
       let prevCart = [...state.userCart.cart];

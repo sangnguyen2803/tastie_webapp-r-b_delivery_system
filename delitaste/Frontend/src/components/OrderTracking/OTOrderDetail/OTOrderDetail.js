@@ -12,15 +12,7 @@ function OTOrderDetail(props) {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "auto" });
   }, []);
-  useEffect(() => {
-    //fetching from database only
-    async function fetchingOrderDetail() {}
-    if (!localStorage.getItem("persist:user")) return;
-    const cart = JSON.parse(
-      JSON.parse(localStorage.getItem("persist:user")).userCart
-    );
-    setOrderDetail(cart);
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <Fragment>
@@ -96,7 +88,9 @@ function OTOrderDetail(props) {
               style={{ color: "rgb(145, 0, 0)" }}
             >
               <span className="ot-od-body-item-left-text">Coupon</span>
-              <span className="ot-od-body-item-right-text"><span className="ot-od-minus">-</span>€ 1.50</span>
+              <span className="ot-od-body-item-right-text">
+                <span className="ot-od-minus">-</span>€ 1.50
+              </span>
             </div>
             <div className="ot-od-body-item">
               <span className="ot-od-body-item-left-text">Payment method</span>

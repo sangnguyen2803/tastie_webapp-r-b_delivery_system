@@ -47,6 +47,7 @@ function Home(props) {
         )}
         <div className="home-content">
           <HomeBodySidebar
+            type={1}
             showScrollbar={showScrollbar}
             setShowScrollbar={setShowScrollbar}
             currentSortMode={currentSortMode}

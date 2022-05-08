@@ -28,8 +28,8 @@ $desktop-left-panel-content: 70%;
         font-weight: 700;
       }
       .oc-od-switcher-wrapper {
-        width: 250px;
-        height: 35px;
+        width: 200px;
+        height: 30px;
         z-index: 0;
         margin: 5px 0;
         display: flex;
@@ -44,11 +44,11 @@ $desktop-left-panel-content: 70%;
         justify-content: flex-start;
         align-items: center;
         height: 30px;
-        margin: 5px 0;
+        margin: 0px 0;
         width: 100%;
         .oc-od-small-icon {
+          margin-right: 5px;
           font-size: 14px;
-          width: 30px;
           justify-self: flex-start;
           cursor: pointer;
         }
@@ -81,28 +81,77 @@ $desktop-left-panel-content: 70%;
 }
 
 .oc-od-form-text-field {
-  height: 30px;
+  width: 300px !important;
+  height: 26px;
   display: block;
-  border: 2px #949494 solid;
+  border: 1px #949494 solid;
   font-weight: 400;
   padding-left: 20px;
+  margin: 0 0 0 5px;
   font-size: 13px;
-  border-radius: 3px;
   background: #ffffff;
+  border-right: none;
 }
 .oc-od-promotion-input-wrapper {
+  width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
 }
-.oc-od-submit-button {
-  height: 36px;
+.oc-od-btn-edit {
+  display: flex;
+  flex-direction: row;
+  width: 80px;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  cursor: pointer;
+  .oc-od-edit-text-underline {
+    font-size: 14px;
+    text-decoration: underline;
+    text-underline-position: under;
+    color: rgb(89, 0, 0);
+    user-select: none;
+    
+  }
+}
+.oc-od-popup-button {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: nowrap;
+  gap: 5px;
+  width: 120px;
+  height: 30px;
   border: none;
-  background-color: black;
-  color: white;
+  background-color: #fafafa;
+  border: 1px solid rgb(159, 159, 159);
+  color: rgb(0, 0, 0);
   cursor: pointer;
 }
-.add-promotion {
+.oc-od-input-promos {
   width: 200px;
+  
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.oc-od-submit-button {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 30px;
+  border: none;
+  font-size: 14px;
+  background-color: #f3f3f3;
+  color: rgb(0, 0, 0);
+  cursor: pointer;
+}
+.oc-od-submit-button-2 {
+  width: 80px;
+  margin-left: 0px;
 }

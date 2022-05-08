@@ -108,20 +108,22 @@
       height: 50px;
     }
     .cart-item-sub-text {
-      width: 55px;
+      width: 80px;
       align-self: center;
       font-size: 13px;
     }
   }
 }
 .cart-main-text-section {
+  user-select: none;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
   justify-content: flex-start;
   align-items: flex-start;
-  width: 200px;
+  width: 180px;
   margin-left: 10px;
+  cursor: pointer;
   .cart-item-main-text {
     font-size: 13px;
   }
@@ -136,4 +138,18 @@
 }
 .cart-note {
   font-size: 11px;
+}
+.cart-surfix-pos-wrapper {
+  margin-left: 5px;
+  align-self: center;
+  justify-self: center;
+  width: 20px;
+  .cart-close-icon {
+    font-size: 11px;
+    padding: 2px 4px;
+    border-radius: 50px;
+    background-color: #6c6c6c;
+    color: white;
+    cursor: pointer;
+  }
 }

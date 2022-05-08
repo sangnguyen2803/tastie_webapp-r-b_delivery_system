@@ -37,7 +37,6 @@ export const createMerchantAPI = (id) => async (dispatch) => {
     }
     return -1;
   } catch (err) {
-    const errs = err.response.data.errors;
     return -1;
   }
 };
@@ -203,5 +202,17 @@ export const getProviderByIdAPI = (id) => async (dispatch) => {
     }
   } catch (err) {
     console.log(err.response.data.errors);
+  }
+};
+
+export const getScheduleTime = (id) => async (dispatch) => {
+  try {
+    const endpoint = `/v1/api/tastie/checkout/get_schedule_time/${id}`;
+    const res = await axios.get(endpoint);
+    if (res.data) {
+      return res.data.response;
+    }
+  } catch (err) {
+    console.log(err);
   }
 };

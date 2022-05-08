@@ -11,4 +11,9 @@ module.exports = function (app) {
       target: "http://localhost:3008/",
     })
   );
+  app.use(
+    createProxyMiddleware("/v1/api/tastie", {
+      target: "http://localhost:3007/",
+    })
+  );
 };

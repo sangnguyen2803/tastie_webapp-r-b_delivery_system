@@ -26,6 +26,7 @@ import DialogBox from "components/Commons/Overlay/DialogBox/DialogBox";
 import MerchantDashboardScreen from "./MerchantDashboardScreen/MerchantDashboardScreen";
 import OrderCheckoutScreen from "./OrderCheckoutScreen/OrderCheckoutScreen";
 import OrderTrackingScreen from "./OrderTrackingScreen/OrderTrackingScreen";
+import SearchScreen from "./SearchScreen/SearchScreen";
 
 const history = createBrowserHistory();
 
@@ -46,6 +47,7 @@ function RootScreen(props) {
             <Route exact path="/home" component={HomeScreen} />
             <Route exact path="/sign-up" component={UserRegistrationScreen} />
             <Route exact path="/sign-in" component={UserSignInScreen} />
+            <Route exact path="/search" component={SearchScreen} />
             <Route
               exact
               path="/provider-detail/:id"
@@ -53,12 +55,12 @@ function RootScreen(props) {
             />
             <Route
               exact
-              path="/order-checkout"
+              path="/order-checkout/:uid"
               component={OrderCheckoutScreen}
             />
             <Route
               exact
-              path="/order-tracking"
+              path="/order-tracking/:order_code"
               component={OrderTrackingScreen}
             />
             <Route

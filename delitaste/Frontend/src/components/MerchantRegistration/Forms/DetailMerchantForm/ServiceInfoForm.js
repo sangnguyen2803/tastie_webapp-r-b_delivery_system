@@ -41,6 +41,7 @@ const formHeaderText = {
     "Your restaurant information will be public on Tastie. Make sure the information is accurrate and visible to the public.",
 };
 function ServiceInfoForm(props) {
+  const [addressMapbox, setAddressMapbox] = useState("");
   const [viewport, setViewport] = useState({
     latitude: 37.7577,
     longitude: -122.4376,
@@ -116,7 +117,7 @@ function ServiceInfoForm(props) {
     >
       {(formikProps) => {
         const { values, errors, touched } = formikProps;
-        const [addressMapbox, setAddressMapbox] = useState("");
+
         const searchOnMap = (values) => {
           const { road, city, district, ward } = values;
           const result = getFullAddress(road, city, district, ward);

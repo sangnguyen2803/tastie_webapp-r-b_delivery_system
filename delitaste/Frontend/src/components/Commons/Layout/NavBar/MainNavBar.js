@@ -203,6 +203,7 @@ function MainNavBar({ user, history }) {
               <div className="profile-container-mobile">
                 <img
                   src={ProfilePhoto}
+                  alt="profile_photo"
                   className="profile-photo-preview-mobile"
                 />
                 <span className="profile-name-mobile">
@@ -248,6 +249,7 @@ function MainNavBar({ user, history }) {
         <></>
       )}
       <Modal
+        cartQuantity={user.userCart?.cart?.length}
         openModal={cartModal}
         title={"Add Additional Options"}
         position="right"

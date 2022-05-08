@@ -26,7 +26,8 @@ export const SET_ALERT = "SET_ALERT";
 export const REMOVE_ALERT = "REMOVE_ALERT";
 export const SET_DIALOG_BOX = "SET_DIALOG_BOX";
 export const REMOVE_DIALOG_BOX = "REMOVE_DIALOG_BOX";
-
+//6 Checkout
+export const GET_ADDRESS_BOOK = "GET_ADDRESS_BOOK";
 //-- Provider Actions
 //1 Get provider information
 export const GET_DETAIL_PROVIDER_INFO = "GET_DETAIL_PROVIDER_INFO";
@@ -47,8 +48,11 @@ export const UPDATE_BANK_INFO_FORM = "UPDATE_BANK_INFO_FORM";
 export const GET_PRODUCT_LIST = "GET_PRODUCT_LIST";
 
 //Cart
+export const GET_CART = "GET_CART";
 export const ADD_TO_CART = "ADD_TO_CART";
+export const CLEAR_CART = "CLEAR_CART";
 export const REMOVE_CART = "REMOVE_CART";
+export const UPDATE_CART = "UPDATE_CART";
 export const INCREASE_PRODUCT = "INCREASE_PRODUCT_QUANTITY";
 export const DESCREASE_PRODUCT = "DESCREASE_PRODUCT_QUANTITY";
 //Provider

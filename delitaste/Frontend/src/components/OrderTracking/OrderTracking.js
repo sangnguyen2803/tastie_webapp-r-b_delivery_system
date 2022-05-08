@@ -6,18 +6,18 @@ import ToolBar from "../Commons/Layout/Toolbar/Toolbar";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import Button from "components/Commons/Button/Button";
-import ButtonGroup from "components/Commons/Button/ButtonGroup/ButtonGroup";
 import "./OrderTracking.scss";
 import Map from "components/HigherOrderComponents(HOC)/Map/Map";
-import { faCartPlus } from "@fortawesome/fontawesome-free-solid";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import OrderStatus from "components/OrderTracking/OrderStatus/OrderStatus";
 import OTOrderDetail from "components/OrderTracking/OTOrderDetail/OTOrderDetail";
 import ReactMapGl, { Source, Layer, Marker, Popup } from "react-map-gl";
+import io from "socket.io-client";
 import axios from "axios";
 
 function OrderTracking(props) {
+  let socket;
+  const { user } = props;
   const [viewport, setViewport] = useState({
     width: "100%",
     height: "100vh",
@@ -32,6 +32,57 @@ function OrderTracking(props) {
     106.68060027236189, 10.75909421616193,
   ]);
   const [routes, setRoutes] = useState([]);
+  const { order_code } = props.match.params;
+  const [showPopup, togglePopup] = useState(false);
+  const [submittedStatus, setSubmittedStatus] = useState(true);
+  const [confirmedStatus, setConfirmedStatus] = useState(false);
+  const [assignedStatus, setAssignedStatus] = useState(false);
+  const [pickedStatus, setPickedStatus] = useState(false);
+  const [completedStatus, setCompletedStatus] = useState(false);
+  const [showOrderDetail, setShowOrderDetail] = useState(false);
+  const [orderData, setOrderData] = useState({
+    merchant_name: null,
+    items: [],
+    num_items: 0,
+    delivery_fee: 0,
+  });
+  const [trackingMessage, setTrackingMessage] = useState({
+    title: "",
+    message: "",
+  });
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "auto" });
+  }, []);
+
+  useEffect(() => {
+    if (!assignedStatus && orderData.items.length > 0) {
+      socket = io(`http://localhost:3015`);
+      socket.emit("join-room", order_code);
+      socket.emit(
+        "customer-submit-order",
+        orderData.items,
+        {
+          name: user.profile.first_name + " " + user.profile.last_name,
+          phone: user.profile.phone,
+          address: "334235, Nguyễn Văn Cừ",
+          location: {
+            latitude: 1.0421414214124,
+            longitude: 110.24212523555,
+          },
+        },
+        {
+          name: user.userCart.provider_name,
+          address: "135B Tran Hung Dao, Cau Ong Lanh, District 1",
+          location: {
+            latitude: 10.770426270078108,
+            longitude: 106.69433674255707,
+          },
+        },
+        order_code
+      );
+    }
+  }, [assignedStatus, orderData]);
+
   useEffect(() => {
     async function fetchingRoutesAndDirections() {
       const endpoint = `https://api.mapbox.com/directions/v5/mapbox/driving/${departureCoordinates[0]},${departureCoordinates[1]};${arrivalCoordinates[0]},${arrivalCoordinates[1]}?geometries=geojson&access_token=pk.eyJ1IjoiaG9hbmduYW0yNDMiLCJhIjoiY2t1dHJxdjdlMHg5ZDJwbnlpcmo0a2NnMiJ9.DUrlIOzvO6-kWt-VCKZW1g`;
@@ -43,22 +94,6 @@ function OrderTracking(props) {
     }
     fetchingRoutesAndDirections();
   }, []);
-
-  useEffect(() => {
-    console.log(routes);
-  }, [routes]);
-
-  const [showPopup, togglePopup] = useState(false);
-  const [showOrderDetail, setShowOrderDetail] = useState(false);
-  const [submittedStatus, setSubmittedStatus] = useState(true);
-  const [confirmedStatus, setConfirmedStatus] = useState(false);
-  const [assignedStatus, setAssignedStatus] = useState(false);
-  const [pickedStatus, setPickedStatus] = useState(false);
-  const [completedStatus, setCompletedStatus] = useState(false);
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "auto" });
-  }, []);
-
   const dataOne = {
     type: "Feature",
     properties: {},
@@ -130,7 +165,7 @@ function OrderTracking(props) {
             </div>
             <div className="order-status-header">
               <span className="or-s-main-text-header">
-                Fancy Grill - District 2
+              Fresh Hamilton
               </span>
               <span className="or-s-sub-text-header">
                 Total: <span className="highlight-main-text">$ 24.60 </span> "(2
@@ -140,25 +175,6 @@ function OrderTracking(props) {
                 Delivery estimated:{" "}
                 <span className="highlight-main-text">2021-06-04 16:30 </span>
               </span>
-              <ButtonGroup float="flex-start" mgTop={10} mgBottom={0}>
-                <Button
-                  color={"black"}
-                  bglight={true}
-                  border={"#5d5d5d 1.5px solid"}
-                  prefix={
-                    <FontAwesomeIcon
-                      className="button-icon"
-                      icon={faCartPlus}
-                    />
-                  }
-                  justifyContent={"center"}
-                  gap={"10px"}
-                  width="130px"
-                  height={30}
-                  label="Order Detail"
-                  onClick={() => setShowOrderDetail(true)}
-                />
-              </ButtonGroup>
             </div>
           </div>
           <div className="or-s-stepper-wrapper">
@@ -191,6 +207,13 @@ function OrderTracking(props) {
             showOrderDetail={showOrderDetail}
             setShowOrderDetail={setShowOrderDetail}
           />
+          {!showOrderDetail && (
+            <OrderStatus
+              status={1}
+              showOrderDetail={showOrderDetail}
+              setShowOrderDetail={setShowOrderDetail}
+            />
+          )}
         </div>
       </div>
       <Footer />

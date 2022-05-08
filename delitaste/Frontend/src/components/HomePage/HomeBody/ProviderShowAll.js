@@ -13,6 +13,8 @@ import { withRouter } from "react-router-dom";
 import { faHeart as faHeart2 } from "@fortawesome/fontawesome-free-solid";
 import { faHeart as faHeart1 } from "@fortawesome/fontawesome-free-regular";
 import { faGetPocket } from "@fortawesome/free-brands-svg-icons";
+import LazyLoad from "react-lazyload";
+
 const responsive = {
   desktop: {
     breakpoint: { max: 3000, min: 1024 },
@@ -45,46 +47,46 @@ function ProviderShowAll({ providerList, history }) {
       <div className="home-product-row-container">
         <div className="apro-home-product-slider-all">
           {providerList?.map((item) => (
-            <div className="apro-home-product-container">
-              <div
-                className="apro-provider-card-container"
-                key={item.provider_id}
-                onClick={() => handleOnClickProvider(item.provider_id)}
-                style={{
-                  backgroundImage: `url(${item.profile_pic})`,
-                  backgroundPosition: "center",
-                  backgroundRepeat: "no-repeat",
-                  backgroundSize: "cover",
-                }}
-              >
-                <div className="apro-provider-interaction-wrapper">
-                  <FontAwesomeIcon
-                    className="icon-for-liking"
-                    style={{ zIndex: 1, marginTop: 5 }}
-                    icon={faHeart1}
-                  />
+            <div className="apro-home-product-container" key={item.provider_id}>
+              <LazyLoad height={200} style={{ width: "100%" }}>
+                <div
+                  className="apro-provider-card-container"
+                  onClick={() => handleOnClickProvider(item.provider_id)}
+                  style={{
+                    backgroundImage: `url(${item.profile_pic})`,
+                    backgroundPosition: "center",
+                    backgroundRepeat: "no-repeat",
+                    backgroundSize: "cover",
+                  }}
+                >
+                  <div className="apro-provider-interaction-wrapper">
+                    <FontAwesomeIcon
+                      className="icon-for-liking"
+                      style={{ zIndex: 1, marginTop: 5 }}
+                      icon={faHeart1}
+                    />
+                  </div>
+                  {currentTime < closeTime && currentTime > openTime ? (
+                    <figcaption className="figcaption-wrapper">
+                      <div className="btn-schedule-wrapper">
+                        <FontAwesomeIcon
+                          icon={faCalendarPlus}
+                          className="icon-btn"
+                        />
+                        <span>Schedule order</span>
+                      </div>
+                      <span className="a1-description">
+                        Opens Saturday 2:15 PM
+                      </span>
+                    </figcaption>
+                  ) : (
+                    <Fragment></Fragment>
+                  )}
                 </div>
-                {currentTime < closeTime && currentTime > openTime ? (
-                  <figcaption className="figcaption-wrapper">
-                    <div className="btn-schedule-wrapper">
-                      <FontAwesomeIcon
-                        icon={faCalendarPlus}
-                        className="icon-btn"
-                      />
-                      <span>Schedule order</span>
-                    </div>
-                    <span className="a1-description">
-                      Opens Saturday 2:15 PM
-                    </span>
-                  </figcaption>
-                ) : (
-                  <Fragment></Fragment>
-                )}
-              </div>
-
+              </LazyLoad>
               <div className="apro-product-info-wrapper">
                 <span className="apro-p-info-main-text">
-                  {item.provider_name}
+                  {item.provider_name || item.name}
                 </span>
                 <div className="apro-p-info-rating">{item.rating || "5.0"}</div>
               </div>
