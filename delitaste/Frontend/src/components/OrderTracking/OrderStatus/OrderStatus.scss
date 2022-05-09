@@ -52,3 +52,88 @@
         font-size: 13px;
     }
 }
+
+//status 2
+.or-st-shipper {
+    height: 65px;
+    width: 90%;
+    padding-left: 5%;
+    padding-right: 5%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    border-bottom: 1px solid #E1E1E1;
+    .or-st-shipper-image {
+        width: 50px;
+        height: 50px;
+        border-radius: 50px;
+        margin-right: 20px;
+    }
+    
+    .or-st-shipper-text-wrapper {
+        width: 80%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        height: inherit;
+        .or-st-sh-main-text {
+            font-size: 14px;
+            font-weight: 700;
+        }
+        .or-st-sh-sub-text {
+            font-size: 13px;
+            font-weight: 500;
+        }
+    }
+    .shipper-chat-icon {
+        font-size: 22px;
+        color: #b8b8b8;
+        cursor: pointer;
+    }
+}
+
+.or-st-ship-conversation {
+    min-height: 320px;
+    height: 320px;
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    overflow: hidden;
+    .or-st-chat-item-client {
+        font-size: 13px;
+        background-color: grey;
+    }
+}
+.or-st-ship-chat-bar {
+    margin-top: 5px;
+    width: 100%;
+    height: 40px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    input{
+        width: 80%;
+        height: 30px;
+        text-indent: 15px;
+        border: 2px solid #e6e6e6;
+        font-size: 14px;
+    }
+    .or-st-chat-submit {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        width: 20%;
+        height: 35px;
+        color: rgb(255, 255, 255);
+        background-color: rgb(44, 44, 44);
+        cursor: pointer;
+    }
+}

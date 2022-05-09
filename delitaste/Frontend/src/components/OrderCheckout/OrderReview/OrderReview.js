@@ -5,24 +5,36 @@ import PropTypes from "prop-types";
 import Button from "components/Commons/Button/Button";
 import ButtonGroup from "components/Commons/Button/ButtonGroup/ButtonGroup";
 import { calculateSubTotalPrice } from "utils/BusinessUtils";
-import { submitOrderCheckoutAPI } from "store/actions/OrderAction/OrderAction";
+import {
+  submitOrderCheckoutAPI,
+  submitOrderItemAPI,
+} from "store/actions/OrderAction/OrderAction";
 import "./OrderReview.scss";
 
 function OrderReview(props) {
-  const { user, orderForm, setOrderForm, submitOrderCheckoutAPI } = props;
+  const {
+    user,
+    orderForm,
+    setOrderForm,
+    submitOrderCheckoutAPI,
+    submitOrderItemAPI,
+  } = props;
   const [subTotal, setSubTotal] = useState();
   const [tip, setTip] = useState(0);
   const [tipOption, setTipOption] = useState(1);
   const tipOptionStyle = { backgroundColor: "#2c2c2c", color: "#ffffff" };
   const submitOrderForm = async () => {
+    const { uid } = props.match.params;
     setOrderForm((prevState) => ({
       ...prevState,
-      customer_id: props.match.params.uid,
+      customer_id: uid,
       tips: tip,
     }));
     var code = await submitOrderCheckoutAPI(orderForm);
-    console.log(code);
-    props.history.push(`/order-tracking/${code}`);
+    if (code && uid !== -1) {
+      let submitOrder = await submitOrderItemAPI(uid, code);
+      if (submitOrder) props.history.push(`/order-tracking/${code}`);
+    }
   };
   useEffect(() => {
     var result;

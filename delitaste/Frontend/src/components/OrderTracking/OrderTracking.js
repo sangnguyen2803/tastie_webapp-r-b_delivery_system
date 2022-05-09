@@ -35,8 +35,8 @@ function OrderTracking(props) {
   const { order_code } = props.match.params;
   const [showPopup, togglePopup] = useState(false);
   const [submittedStatus, setSubmittedStatus] = useState(true);
-  const [confirmedStatus, setConfirmedStatus] = useState(false);
   const [assignedStatus, setAssignedStatus] = useState(false);
+  const [confirmedStatus, setConfirmedStatus] = useState(false);
   const [pickedStatus, setPickedStatus] = useState(false);
   const [completedStatus, setCompletedStatus] = useState(false);
   const [showOrderDetail, setShowOrderDetail] = useState(false);
@@ -54,34 +54,6 @@ function OrderTracking(props) {
     window.scrollTo({ top: 0, behavior: "auto" });
   }, []);
 
-  useEffect(() => {
-    if (!assignedStatus && orderData.items.length > 0) {
-      socket = io(`http://localhost:3015`);
-      socket.emit("join-room", order_code);
-      socket.emit(
-        "customer-submit-order",
-        orderData.items,
-        {
-          name: user.profile.first_name + " " + user.profile.last_name,
-          phone: user.profile.phone,
-          address: "334235, Nguyễn Văn Cừ",
-          location: {
-            latitude: 1.0421414214124,
-            longitude: 110.24212523555,
-          },
-        },
-        {
-          name: user.userCart.provider_name,
-          address: "135B Tran Hung Dao, Cau Ong Lanh, District 1",
-          location: {
-            latitude: 10.770426270078108,
-            longitude: 106.69433674255707,
-          },
-        },
-        order_code
-      );
-    }
-  }, [assignedStatus, orderData]);
 
   useEffect(() => {
     async function fetchingRoutesAndDirections() {
@@ -164,9 +136,7 @@ function OrderTracking(props) {
               <div className="or-s-sub-text">mins</div>
             </div>
             <div className="order-status-header">
-              <span className="or-s-main-text-header">
-              Fresh Hamilton
-              </span>
+              <span className="or-s-main-text-header">Fresh Hamilton</span>
               <span className="or-s-sub-text-header">
                 Total: <span className="highlight-main-text">$ 24.60 </span> "(2
                 items)"
@@ -178,27 +148,81 @@ function OrderTracking(props) {
             </div>
           </div>
           <div className="or-s-stepper-wrapper">
-            <div className="or-s-stepper-node">
+            <div
+              className={
+                submittedStatus
+                  ? "or-s-stepper-node-checked"
+                  : "or-s-stepper-node-not-checked"
+              }
+            >
               <span className="or-s-stepper-node-index">1</span>
               <span className="or-s-stepper-node-title">Submitted</span>
             </div>
-            <div className="or-s-stepper-line"></div>
-            <div className="or-s-stepper-node">
+            <div
+              className={
+                assignedStatus
+                  ? "or-s-stepper-line-checked"
+                  : "or-s-stepper-line-not-checked"
+              }
+            ></div>
+            <div
+              className={
+                assignedStatus
+                  ? "or-s-stepper-node-checked"
+                  : "or-s-stepper-node-not-checked"
+              }
+            >
               <span className="or-s-stepper-node-index">2</span>
               <span className="or-s-stepper-node-title">Assigning</span>
             </div>
-            <div className="or-s-stepper-line"></div>
-            <div className="or-s-stepper-node">
+            <div
+              className={
+                confirmedStatus
+                  ? "or-s-stepper-line-checked"
+                  : "or-s-stepper-line-not-checked"
+              }
+            ></div>
+            <div
+              className={
+                confirmedStatus
+                  ? "or-s-stepper-node-checked"
+                  : "or-s-stepper-node-not-checked"
+              }
+            >
               <span className="or-s-stepper-node-index">3</span>
               <span className="or-s-stepper-node-title">Confirmed</span>
             </div>
-            <div className="or-s-stepper-line"></div>
-            <div className="or-s-stepper-node">
+            <div
+              className={
+                pickedStatus
+                  ? "or-s-stepper-line-checked"
+                  : "or-s-stepper-line-not-checked"
+              }
+            ></div>
+            <div
+              className={
+                pickedStatus
+                  ? "or-s-stepper-node-checked"
+                  : "or-s-stepper-node-not-checked"
+              }
+            >
               <span className="or-s-stepper-node-index">4</span>
               <span className="or-s-stepper-node-title">Picked</span>
             </div>
-            <div className="or-s-stepper-line"></div>
-            <div className="or-s-stepper-node">
+            <div
+              className={
+                completedStatus
+                  ? "or-s-stepper-line-checked"
+                  : "or-s-stepper-line-not-checked"
+              }
+            ></div>
+            <div
+              className={
+                completedStatus
+                  ? "or-s-stepper-node-checked"
+                  : "or-s-stepper-node-not-checked"
+              }
+            >
               <span className="or-s-stepper-node-index">5</span>
               <span className="or-s-stepper-node-title">Completed</span>
             </div>
