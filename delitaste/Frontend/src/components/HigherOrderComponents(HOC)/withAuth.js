@@ -14,37 +14,32 @@ export default function (WrappedComponent) {
     constructor(props) {
       super(props);
       this.state = {
-        isLoader: true,
-        cart: {},
+        isLoading: true,
+        isAuth: false,
       };
     }
     async componentDidMount() {
-      window.scrollTo({
-        top: 0,
-        left: 0,
-        behavior: "smooth",
-      });
-      const refreshToken =
-        localStorage.getItem("refreshToken") || this.props.user.refreshToken;
+      const refreshToken = localStorage.getItem("refreshToken");
       if (refreshToken) {
-        this.setState({ isLoader: false });
         const result = await this.props.getAccessTokenAPI(refreshToken);
-        if (typeof result === undefined || !result) {
-          this.setState({ isLoader: true });
-          return;
+        if (result.isAuth && result.accessToken) {
+          this.setState({ isLoading: false });
+          this.setState({ isAuth: true });
+          await this.props.getUserProfileAPI(result.accessToken);
+          if (this.props.user.profile.user_id)
+            await this.props.getCart(this.props.user.profile.user_id);
+          this.setState({ isLoading: false });
         }
-        await this.props.getUserProfileAPI(result?.accessToken);
-        if (this.props.user.profile?.user_id)
-          await this.props.getCart(this.props.user.profile?.user_id);
-        this.setState({ isLoader: true });
-      }
-      if (!this.props.user.isUserAuthenticated) {
         return;
       }
     }
     render() {
       return (
-        <WrappedComponent isLoader={this.state.isLoader} {...this.props} />
+        <WrappedComponent
+          isLoading={this.state.isLoading}
+          isAuth={this.state.isAuth}
+          {...this.props}
+        />
       );
     }
   }

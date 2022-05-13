@@ -3,7 +3,8 @@ export const calculateSubTotalPrice = (items) => {
   items.forEach(
     (element) =>
       (sumTotalPrice +=
-        parseFloat(element.product_price) * parseFloat(element.quantity))
+        (parseFloat(element.product_price) || 0.0) *
+        parseFloat(element.quantity))
   );
   return sumTotalPrice;
 };

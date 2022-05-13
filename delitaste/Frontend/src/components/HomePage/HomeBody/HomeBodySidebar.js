@@ -54,11 +54,13 @@ function HomeBodySidebar(props) {
           All stores
         </span>
         {type === SEARCH_RENDER && totalResult ? (
-          <span className="homebody-sb-header-for-result">{`${totalResult} Result${
-            totalResult > 1 ? "s" : ""
-          }`}</span>
+          <span className="homebody-sb-header-for-result">
+            {totalResult !== 0
+              ? `${totalResult} Result${totalResult > 1 ? "s" : ""}`
+              : "Not found"}
+          </span>
         ) : (
-          <span className="homebody-sb-header-for-result">Not found</span>
+          <Fragment></Fragment>
         )}
         {type === HOME_RENDER ? (
           <div className="address-list">

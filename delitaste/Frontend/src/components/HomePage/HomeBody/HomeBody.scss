@@ -1,9 +1,11 @@
 .homebody-sb-container {
+  background-color: white;
   max-height: 650px;
   height: 1200px;
   width: 350px;
   min-width: 350px;
-  position: -webkit-sticky; /* Safari & IE */
+  position: -webkit-sticky;
+  /* Safari & IE */
   position: sticky;
   top: 90px;
   z-index: 3;
@@ -11,18 +13,21 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
+
   .homebody-sb-header-title {
     margin: 25px 0 5px 0;
     align-self: flex-start;
     font-weight: 700;
     font-size: 24px;
   }
+
   .homebody-sb-header-for-result {
     margin: 0 0 5px 0;
     align-self: flex-start;
     font-weight: 700;
     font-size: 18px;
   }
+
   .homebody-sb-header-for-query-up {
     width: 85%;
     margin: 30px 0 0px 0;
@@ -30,6 +35,7 @@
     font-weight: 700;
     font-size: 32px;
   }
+
   .homebody-sb-header-for-query-down {
     width: 85%;
     margin: 0 0 5px 0;
@@ -48,11 +54,13 @@
   align-items: flex-start;
   width: 100%;
   margin: 10px 0;
+
   .homebody-sb-function-title-wrapper {
     display: flex;
     flex-direction: row;
     width: 100%;
     justify-content: flex-start;
+
     .homebody-sb-function-title {
       margin-bottom: 5px;
       align-self: flex-start;
@@ -71,6 +79,7 @@
   justify-content: flex-start;
   align-items: flex-start;
   height: auto;
+
   .hb-sb-type-wrapper {
     margin: 2px 0;
   }
@@ -79,6 +88,7 @@
 .hb-sb-label-radio {
   font-size: 13px;
 }
+
 .hb-sb-switch-wrapper {
   display: flex;
   flex-direction: row;
@@ -86,6 +96,7 @@
   align-items: center;
   width: 100%;
   margin: 8px 0;
+
   .hb-sb-switch-label {
     min-width: 200px;
     font-size: 13px;
@@ -93,10 +104,11 @@
   }
 }
 
-label > input[type="radio"] {
+label>input[type="radio"] {
   display: none;
 }
-label > input[type="radio"] + *::before {
+
+label>input[type="radio"]+*::before {
   content: "";
   display: inline-block;
   vertical-align: bottom;
@@ -107,10 +119,12 @@ label > input[type="radio"] + *::before {
   border-style: solid;
   border-width: 2px;
 }
-label > input[type="checkbox"] {
+
+label>input[type="checkbox"] {
   display: none;
 }
-label > input[type="checkbox"] + *::before {
+
+label>input[type="checkbox"]+*::before {
   content: "";
   display: inline-block;
   vertical-align: bottom;
@@ -121,38 +135,40 @@ label > input[type="checkbox"] + *::before {
   border-style: solid;
   border-width: 2px;
 }
-label > input[type="radio"]:checked + * {
+
+label>input[type="radio"]:checked+* {
   color: rgb(0, 0, 0);
 }
-label > input[type="radio"]:checked + *::before {
-  background: radial-gradient(
-    rgb(0, 0, 0) 0%,
-    rgb(0, 0, 0) 40%,
-    transparent 50%,
-    transparent
-  );
+
+label>input[type="radio"]:checked+*::before {
+  background: radial-gradient(rgb(0, 0, 0) 0%,
+      rgb(0, 0, 0) 40%,
+      transparent 50%,
+      transparent);
   border-color: rgb(0, 0, 0);
 }
-label > input[type="checkbox"]:checked + * {
+
+label>input[type="checkbox"]:checked+* {
   color: #000000;
 }
-label > input[type="checkbox"]:checked + *::before {
-  background: radial-gradient(
-    rgb(194, 158, 0) 0%,
-    rgb(194, 158, 0) 40%,
-    transparent 50%,
-    transparent
-  );
+
+label>input[type="checkbox"]:checked+*::before {
+  background: radial-gradient(rgb(194, 158, 0) 0%,
+      rgb(194, 158, 0) 40%,
+      transparent 50%,
+      transparent);
   border-color: #727272;
 }
+
 /* basic layout */
 
-label > input[type="radio"] + * {
-  
+label>input[type="radio"]+* {
+
   padding-left: 0rem;
   padding-right: 1rem;
 }
-label > input[type="checkbox"] + * {
+
+label>input[type="checkbox"]+* {
   display: inline-block;
   padding-left: 0rem;
   padding-right: 2rem;
@@ -173,6 +189,7 @@ form1 {
   justify-self: flex-start;
   align-self: flex-start;
   max-width: 300px;
+
   #radio-slider {
     display: flex;
     flex-direction: row;
@@ -181,6 +198,7 @@ form1 {
     width: 100%;
     height: 60px;
     user-select: none;
+
     &::before {
       content: " ";
       position: absolute;
@@ -192,6 +210,7 @@ form1 {
       transform: translate(-50%, -50%);
       background: #000;
     }
+
     input,
     label {
       box-sizing: border-box;
@@ -199,12 +218,14 @@ form1 {
       user-select: none;
       cursor: pointer;
     }
+
     label {
       display: inline-block;
       position: relative;
       width: 20%;
       height: 100%;
       user-select: none;
+
       &::before {
         content: attr(data-debt-amount);
         position: absolute;
@@ -215,6 +236,7 @@ form1 {
         white-space: nowrap;
         transition: all 0.15s ease-in-out;
       }
+
       &::after {
         content: " ";
         position: absolute;
@@ -232,30 +254,37 @@ form1 {
         cursor: pointer;
         transition: all 0.15s ease-in-out;
       }
+
       &:hover::after {
         transform: translate(-50%, -50%) scale(1.1);
       }
     }
+
     input {
       display: none;
+
       &:checked {
-        + label::before {
+        +label::before {
           opacity: 1;
         }
-        + label::after {
+
+        +label::after {
           border-width: 4px;
           transform: translate(-50%, -50%) scale(0.75);
         }
-        ~ #debt-amount-pos {
+
+        ~#debt-amount-pos {
           opacity: 1;
         }
+
         @for $i from 1 through $number-of-options {
-          &:nth-child(#{$i * 2 - 1}) ~ #debt-amount-pos {
+          &:nth-child(#{$i * 2 - 1})~#debt-amount-pos {
             left: #{($i * 20%) - 10%};
           }
         }
       }
     }
+
     #debt-amount-pos {
       display: block;
       position: absolute;
@@ -271,21 +300,24 @@ form1 {
       z-index: 2;
     }
   }
+
   &:valid {
     #debt-amount-slider {
       input {
-        + label::before {
+        +label::before {
           transform: translate(-50%, 45px) scale(0.9);
           transition: all 0.15s linear;
         }
-        &:checked + label::before {
+
+        &:checked+label::before {
           transform: translate(-50%, 45px) scale(1.1);
           transition: all 0.15s linear;
         }
       }
     }
   }
-  & + button {
+
+  &+button {
     display: block;
     position: relative;
     margin: 56px auto 0;
@@ -301,23 +333,28 @@ form1 {
     outline: 0;
     user-select: none;
     cursor: pointer;
+
     &:hover {
       // transform: scale(1.1);
       background: #000;
       color: #fff;
+
       &:active {
         transform: scale(0.9);
       }
     }
+
     &:focus {
       background: #4caf50;
       border-color: #4caf50;
       color: #fff;
       pointer-events: none;
+
       &::before {
         animation: spin 1s linear infinite;
       }
     }
+
     &::before {
       display: inline-block;
       width: 0;
@@ -329,11 +366,13 @@ form1 {
       transform: rotate(0deg);
     }
   }
-  &:invalid + button {
+
+  &:invalid+button {
     pointer-events: none;
     opacity: 0.25;
   }
 }
+
 @keyframes spin {
   from {
     transform: rotate(0deg);
@@ -341,6 +380,7 @@ form1 {
     opacity: 1;
     margin-right: 12px;
   }
+
   to {
     transform: rotate(360deg);
     width: 24px;
@@ -363,6 +403,7 @@ form1 {
   justify-content: flex-start;
   align-items: flex-start;
   flex-wrap: wrap;
+
   .dietary-item {
     gap: 5px;
     background-color: #eeeeee;
@@ -379,6 +420,7 @@ form1 {
     margin: 5px 0;
     margin-right: 15px;
     transition: 0.2s;
+
     &:hover {
       cursor: pointer;
       background-color: #e0e0e0;
@@ -395,6 +437,7 @@ form1 {
   align-items: center;
   flex-wrap: wrap;
 }
+
 .provider-interaction-wrapper {
   width: inherit;
   display: flex;
@@ -403,6 +446,7 @@ form1 {
   flex-wrap: nowrap;
   align-items: center;
 }
+
 .icon-for-liking {
   cursor: pointer;
   margin-right: 10px;
@@ -421,6 +465,7 @@ form1 {
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
 }
+
 .home-product-row-container {
   width: 97%;
   display: flex;
@@ -437,11 +482,13 @@ form1 {
   justify-content: space-between;
   width: 100%;
 }
+
 .home-product-row-title {
   width: 400px;
   font-size: 26px;
   font-weight: 700;
 }
+
 .sub-icon-title {
   font-size: 16px;
   cursor: pointer;
@@ -455,11 +502,13 @@ form1 {
   text-align: left;
   margin: 0 0 5px 0;
 }
+
 .home-product-slider {
   flex-direction: row;
   width: 100%;
   flex-wrap: nowrap;
 }
+
 .provider-card-container {
   display: flex;
   flex-direction: column;
@@ -478,6 +527,7 @@ form1 {
   flex-direction: row;
   justify-content: flex-end;
   gap: 10px;
+
   .carousel-icon-visible {
     cursor: pointer;
     background-color: rgb(240, 240, 240);
@@ -486,6 +536,7 @@ form1 {
     font-size: 16px;
     color: #2c2c2c;
   }
+
   .carousel-icon-no-click {
     cursor: not-allowed;
     background-color: rgb(240, 240, 240);
@@ -495,6 +546,7 @@ form1 {
     color: #808080;
   }
 }
+
 .product-sub-info-wrapper {
   display: flex;
   flex-direction: row;
@@ -505,6 +557,7 @@ form1 {
   width: inherit;
   margin-bottom: 5px;
   cursor: pointer;
+
   .p-sub-info-main-text {
     white-space: nowrap;
     overflow: hidden;
@@ -512,14 +565,17 @@ form1 {
     width: auto;
     font-size: 13px;
   }
+
   .p-sub-info-cooking-time {
     font-size: 13px;
     color: rgb(150, 150, 150);
   }
 }
+
 .sub-info-icon {
   color: rgb(0, 138, 62);
 }
+
 .product-info-wrapper {
   display: flex;
   flex-direction: row;
@@ -530,15 +586,16 @@ form1 {
   width: inherit;
   margin-top: 5px;
   cursor: pointer;
+
   .p-info-main-text {
-    font-family: "Kanit", sans-serif;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 220px;
-    font-size: 18px;
+    font-size: 14px;
     font-weight: 700;
   }
+
   .p-info-rating {
     display: block;
     border-radius: 50px;
@@ -547,15 +604,17 @@ form1 {
     font-size: 11px;
   }
 }
+
 .react-multi-carousel-track {
   gap: 3px !important;
 }
+
 .link-text {
   font-size: 14px;
-  letter-spacing: 0.02rem;
   text-decoration: underline;
   width: 150px;
   cursor: pointer;
+
   &:hover {
     font-weight: 700;
   }
@@ -570,6 +629,7 @@ figcaption {
   width: inherit;
   height: inherit;
   background-color: rgba(0, 0, 0, 0.5);
+
   .btn-schedule-wrapper {
     margin: 2.5px 0;
     gap: 2px;
@@ -584,6 +644,7 @@ figcaption {
     font-size: 12px;
     opacity: 1;
   }
+
   .icon-btn {
     font-size: 16px;
     color: black;
@@ -605,6 +666,7 @@ figcaption {
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
+
   .apro-home-product-container {
     margin: 10px 0;
     width: 100%;
@@ -616,6 +678,7 @@ figcaption {
     cursor: pointer;
   }
 }
+
 .apro-provider-card-container {
   display: flex;
   flex-direction: column;
@@ -638,15 +701,16 @@ figcaption {
   width: inherit;
   margin-top: 5px;
   cursor: pointer;
+
   .apro-p-info-main-text {
-    font-family: "Kanit", sans-serif;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 100%;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 700;
   }
+
   .apro-p-info-rating {
     display: block;
     border-radius: 50px;
@@ -662,16 +726,19 @@ figcaption {
   justify-content: flex-start;
   align-items: center;
   width: 270px;
+
   .address-book-icon {
     color: rgb(128, 0, 0);
     font-size: 18px;
     margin: 0 10px 0 0;
   }
+
   .address-book-picked {
     font-size: 11px;
     width: 90%;
     user-select: none;
   }
+
   .address-book-button {
     font-size: 12px;
     width: 10%;
@@ -682,6 +749,10 @@ figcaption {
 }
 
 @media only screen and (max-width: 1400px) and (min-width: 767px) {
+  .home-content-provider {
+    width: calc(100% - 300px)
+  }
+
   .apro-home-product-slider-all {
     width: 100%;
     grid-template-columns: repeat(3, 1fr);
@@ -691,6 +762,7 @@ figcaption {
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
+
     .apro-home-product-container {
       margin: 10px 0;
       width: 100%;
@@ -701,5 +773,27 @@ figcaption {
       justify-content: flex-start;
       cursor: pointer;
     }
+  }
+
+  .provider-card-container {
+    width: 180px;
+    height: 100px;
+  }
+
+  .provider-card-tag {
+    width: auto;
+    font-weight: 500;
+    max-width: 120px;
+    font-size: 10px;
+    background-color: rgb(5, 163, 87);
+    color: white;
+    padding: 4px 10px 4px 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+
+  .homebody-sb-container {
+    width: 300px !important;
+    min-width: 300px !important;
   }
 }

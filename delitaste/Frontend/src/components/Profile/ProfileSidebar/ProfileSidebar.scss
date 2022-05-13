@@ -1,0 +1,179 @@
+$sidebar-width: 300px;
+
+.u-pf-sb-wrapper {
+    position: fixed;
+    color: rgb(20, 20, 20);
+    width: $sidebar-width;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: calc(100vh - 90px);
+    background-color: #fafafa;
+
+}
+
+.u-pf-sb-header {
+    width: calc(100% - 30px);
+    padding: 20px 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    padding-left: 30px;
+    gap: 10px;
+    border-bottom: 2px solid #EEEEEE;
+}
+
+.u-pf-sb-profile-text-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    user-select: none;
+
+}
+
+.u-pf-sb-pt-icon {
+    color: rgb(255, 217, 0);
+    font-size: 13px;
+    height: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+.u-pf-sb-low-text {
+    text-indent: 30px;
+    font-size: 15px;
+    color: #808080;
+}
+
+.u-pf-sb-pt-main-text {
+    font-size: 14px;
+    color: #000000;
+}
+
+.u-pf-sb-pt-sub-text-type {
+    font-size: 12px;
+    color: rgb(226, 181, 0);
+    cursor: pointer;
+}
+
+.u-pf-sb-pt-sub-text {
+    font-size: 11px;
+    color: rgb(0, 0, 0);
+    cursor: pointer;
+}
+
+.u-pf-sb-profile-img {
+    width: 60px;
+    height: 60px;
+    border-radius: 5px;
+}
+
+.u-pf-sb-row-end {
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    flex-direction: row;
+    color: #101010;
+    width: $sidebar-width;
+    height: 45px;
+    font-size: 14px;
+    justify-content: flex-start;
+    border-bottom: 2px solid #EEEEEE;
+    align-items: center;
+    gap: 10px;
+
+}
+
+.u-pf-sb-body {
+    padding-top: 5px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: flex-start;
+    align-items: flex-start;
+    height: 150px;
+
+    .u-pf-sb-bd-text {
+        font-family: 'Bai Jamjuree', sans-serif;
+        font-weight: 700;
+        font-size: 13px;
+        text-indent: 30px;
+        letter-spacing: 0.5px;
+        margin-top: 15px;
+        user-select: none;
+        cursor: pointer;
+    }
+}
+
+.u-pf-sb-row {
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    flex-direction: row;
+    color: #101010;
+    width: $sidebar-width;
+    height: 45px;
+    font-size: 14px;
+    justify-content: flex-start;
+
+    align-items: center;
+    gap: 10px;
+
+    .u-pf-sb-row-icon {
+        width: 18px;
+        margin-left: 30px;
+        font-size: 15px;
+    }
+
+    .u-pf-sb-row-text {
+        font-size: 14px;
+    }
+
+}
+
+.android-ios-app {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    height: 55px;
+
+    .ad-io-app-item {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50px;
+        padding: 8px 12px;
+        width: 70px;
+        font-size: 13px;
+        background-color: #cacaca;
+        color: #101010;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+
+        .ad-io-icon {
+            font-size: 16px;
+        }
+    }
+}
+
+.u-pf-sb-items-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: auto;
+}

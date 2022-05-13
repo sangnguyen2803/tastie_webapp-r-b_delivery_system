@@ -180,6 +180,7 @@ OrderReview.propTypes = {
   user: PropTypes.object.isRequired,
   product: PropTypes.object.isRequired,
   submitOrderCheckoutAPI: PropTypes.func.isRequired,
+  submitOrderItemAPI: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -188,5 +189,7 @@ const mapStateToProps = (state) => ({
 });
 
 export default withRouter(
-  connect(mapStateToProps, { submitOrderCheckoutAPI })(OrderReview)
+  connect(mapStateToProps, { submitOrderCheckoutAPI, submitOrderItemAPI })(
+    OrderReview
+  )
 );

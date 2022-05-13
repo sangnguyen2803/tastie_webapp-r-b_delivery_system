@@ -1,0 +1,114 @@
+.profile-pd-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: rgb(255, 255, 255);
+
+    .p-pd-header-wrapper {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        height: 170px;
+
+
+    }
+
+    .p-pd-body-wrapper {
+        width: 100%;
+        display: flex;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        height: 400px;
+    }
+}
+
+.p-pd-hd-summary-wrapper {
+    width: 90%;
+}
+
+.p-pd-header-profile-summary {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+    height: inherit;
+
+    .p-pd-hp-s-profile-image {
+        width: 170px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+
+        img {
+            border: 5px solid rgb(241, 241, 241);
+            width: 160px;
+            height: 160px;
+        }
+    }
+
+    .p-pd-hp-s-profile-info {
+        width: calc(100% - 190px);
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        padding-left: 20px;
+
+        .p-pd-hp-s-pi-main-text {
+            margin-top: 10px;
+            font-size: 26px;
+            font-weight: 700;
+        }
+
+        .p-pd-hp-s-pi-sub-text {
+            font-size: 13px;
+        }
+
+        .p-pd-hp-s-pi-sub-text-medium {
+            gap: 5px;
+            width: auto;
+            font-size: 13px;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            height: auto;
+        }
+
+        .mars-icon {
+            font-size: 16px;
+            color: rgb(0, 157, 255);
+        }
+    }
+}
+
+.p-pd-bt-icon {
+    font-size: 18px;
+    color: rgb(0, 0, 0);
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.p-pd-body-title {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: 10px;
+    padding: 2px 5px;
+    width: calc(100% - 10px);
+    height: 20px;
+    font-size: 15px;
+    font-weight: 700;
+    background-color: #f1f1f1;
+    color: rgb(52, 52, 52);
+}

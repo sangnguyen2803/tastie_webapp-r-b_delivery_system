@@ -14,6 +14,7 @@ export const submitOrderCheckoutAPI = (data) => async (dispatch) => {
   try {
     const endpoint = "/v1/api/tastie/order/submit-order-info-delivery";
     const res = await axios.post(endpoint, body, config);
+    console.log(res.data);
     if (res.data?.status) {
       return res.data.order_code;
     }
@@ -41,5 +42,26 @@ export const submitOrderItemAPI = (id, code) => async (dispatch) => {
     return false;
   } catch (err) {
     return false;
+  }
+};
+
+export const getAllProductFromOrderAPI = (code) => async (dispatch) => {
+  try {
+    const endpoint = `/v1/api/tastie/order/get-all-products-from-order/${code}`;
+    const res = await axios.get(endpoint);
+    if (res.data) return res.data.response;
+    return {};
+  } catch (err) {
+    return {};
+  }
+};
+export const getOrderStatusAPI = (code) => async (dispatch) => {
+  try {
+    const endpoint = `/v1/api/tastie/order/get-order-summary/${code}`;
+    const res = await axios.get(endpoint);
+    if (res.data) return res.data.response;
+    return {};
+  } catch (err) {
+    return {};
   }
 };

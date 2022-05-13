@@ -27,13 +27,17 @@ const AccountSettingPanel = ({ user, userSignOut, history }) => {
       {user.isUserAuthenticated ? (
         <Fragment>
           <div className="sub-panel-title">
-            <img src={ProfilePhoto} className="profile-photo-preview" />
+            <img
+              src={ProfilePhoto}
+              alt="profile_photo"
+              className="profile-photo-preview"
+            />
             <span className="profile-name">
               {user.profile
                 ? `${user.profile.first_name} ${user.profile.last_name}`
                 : ""}
             </span>
-            <Link to="/sign-up" className="sub-panel-text-link">
+            <Link to="/profile" className="sub-panel-text-link">
               Edit profile
             </Link>
           </div>

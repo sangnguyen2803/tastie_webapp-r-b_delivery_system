@@ -6,6 +6,7 @@
   align-items: center;
   width: 100%;
   height: 65%;
+  margin-left: 20px;
 }
 .search-type-dropdown-show {
   background-color: #f8f8f8;
@@ -175,7 +176,7 @@
   }
 }
 
-@media all and (max-width: 1200px) and (min-width: 767px) {
+@media all and (max-width: 1100px) and (min-width: 767px) {
   .search-bar-type {
     display: none !important;
   }

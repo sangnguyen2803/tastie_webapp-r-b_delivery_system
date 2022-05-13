@@ -1,6 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
-
+import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
+import { store, persistor } from "store";
 import RootScreen from "screens/RootScreen";
 import "./index.scss";
 import reportWebVitals from "./reportWebVitals";
@@ -8,7 +10,11 @@ import "./i18n";
 
 ReactDOM.render(
   <React.StrictMode>
-    <RootScreen />
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <RootScreen />
+      </PersistGate>
+    </Provider>
   </React.StrictMode>,
   document.getElementById("root")
 );

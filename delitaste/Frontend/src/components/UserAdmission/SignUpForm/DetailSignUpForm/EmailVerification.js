@@ -34,7 +34,6 @@ function EmailVerification(props) {
   const [enableVerifyButton, setEnableVerifyButton] = useState(false);
   const [email, setEmail] = useState(props.submittedFormData.email);
   const [verifiedCode, setVerifiedcode] = useState({ digits: "xxxxxx" });
-  enableVerifyButton;
   const [changeEmailDialog, setChangeEmailDialog] = useState(false);
 
   const collectVerifyDigits = (e) => {

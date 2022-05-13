@@ -175,7 +175,7 @@ function MainNavBar({ user, history }) {
             <Fragment></Fragment>
           )}
 
-          <a
+          <div
             className="nav-cart-container"
             onClick={() => setCartModal((prev) => !prev)}
           >
@@ -183,10 +183,20 @@ function MainNavBar({ user, history }) {
               <FontAwesomeIcon className="nav-icon" icon={faCartArrowDown} />
             </div>
             <div className="nav-cart-text-wrapper">
-              <div className="nav-cart-number">99+</div>
+              <div
+                className="nav-cart-number"
+                style={{
+                  padding:
+                    user.userCart?.cart?.length < 10 ? "10% 17%" : "10% 10%",
+                }}
+              >
+                {user.userCart?.cart?.length <= 99
+                  ? user.userCart.cart.length
+                  : "99+"}
+              </div>
               <div className="nav-cart-text">Cart</div>
             </div>
-          </a>
+          </div>
         </div>
       </div>
 

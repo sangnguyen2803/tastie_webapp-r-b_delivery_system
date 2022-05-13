@@ -1,0 +1,25 @@
+.profile-container {
+    margin-top: 90px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    .profile-sidebar-wrapper {
+        width: 300px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+
+    .profile-content-wrapper {
+        height: 1000px;
+        width: calc(100% - 300px);
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: flex-start;
+        background-color: #ffffff;
+    }
+}

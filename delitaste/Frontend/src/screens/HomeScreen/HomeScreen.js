@@ -11,14 +11,7 @@ import Spinner from "components/Commons/Overlay/Spinner/Spinner";
 function HomeScreen(props) {
   return (
     <Fragment>
-      {props.isLoader ? (
-        <Home />
-      ) : (
-        <Fragment>
-          <Home />
-          <Spinner visibility={true} />
-        </Fragment>
-      )}
+      <Home />
     </Fragment>
   );
 }

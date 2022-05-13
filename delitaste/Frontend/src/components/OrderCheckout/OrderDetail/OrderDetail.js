@@ -13,6 +13,7 @@ import {
   faPencilAlt,
   faPhone,
   faSearch,
+  faTimes,
 } from "@fortawesome/fontawesome-free-solid";
 import { faMapMarkedAlt } from "@fortawesome/free-solid-svg-icons";
 import "./OrderDetail.scss";
@@ -116,7 +117,14 @@ function OrderDetail(props) {
     <Fragment>
       <div className="oc-order-detail">
         <div className="oc-od-container">
-          <span className="oc-od-main-text-head">
+          <span
+            className="oc-od-main-text-head"
+            onClick={() =>
+              props.history.push(
+                `/provider-detail/${user.userCart?.provider_id}`
+              )
+            }
+          >
             {user.userCart?.provider_name !== -1 && user.userCart.provider_name}
           </span>
           <div className="oc-od-switcher-wrapper">
@@ -363,7 +371,6 @@ function OrderDetail(props) {
                 fontWeight: 700,
                 fontSize: 14,
                 marginTop: 10,
-                borderBottom: "2px solid #D6D6D6",
               }}
             >
               <div className="oc-od-address-text">
@@ -396,18 +403,20 @@ function OrderDetail(props) {
                       alt={"product_img"}
                     />
                     <div className="oc-od-item-main-text">
-                      {order.product_name}
-                    </div>
-                    <div className="oc-od-item-sub-text">
-                      $ {order.product_price}
-                    </div>
-                  </div>
-                  <div className="oc-od-item-row-underline">
-                    <div>
+                      <span className="oc-od-mt-1" style={{ fontWeight: 700 }}>
+                        {order.product_name}
+                      </span>
+                      <span className="oc-od-mt-2">
+                        € {order.product_price}
+                      </span>
+                      {order.note && (
+                        <span className="oc-od-cart-note">
+                          Special instruction: {order.note}
+                        </span>
+                      )}
                       {order?.product_options?.map((option) => (
-                        <Fragment>
-                          •{" "}
-                          <span className="oc-od-cart-note">{`${
+                        <div className="oc-od-mt-ao-wrapper">
+                          <span className="oc-od-cart-note">{`+ ${
                             option.option_name
                           } ${
                             parseInt(option.price) === 0
@@ -417,14 +426,25 @@ function OrderDetail(props) {
                           <span className="oc-od-cart-note">
                             {` ${option.value} `}
                           </span>
-                        </Fragment>
+                        </div>
                       ))}
                     </div>
-                    {order.note && (
-                      <span className="oc-od-cart-note">
-                        • NOTE: {order.note}
-                      </span>
-                    )}
+                    <div className="oc-od-item-sub-text">
+                      ${" "}
+                      {(
+                        parseFloat(order.product_price) *
+                        parseFloat(order.quantity)
+                      ).toFixed(2)}
+                    </div>
+                    <span className="cart-surfix-pos-wrapper">
+                      <FontAwesomeIcon
+                        className="cart-close-icon"
+                        icon={faTimes}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                        }}
+                      />
+                    </span>
                   </div>
                 </Fragment>
               ))}

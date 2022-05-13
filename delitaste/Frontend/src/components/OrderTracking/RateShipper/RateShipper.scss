@@ -1,0 +1,99 @@
+.rate-shipper-feedback-container {
+    width: 100%;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    height: inherit;
+    .rshi-fb-wrapper {
+        display: flex;
+        flex-direction: column;
+        width: 90%;
+        align-items: center;
+        justify-content: flex-start;
+        .rshi-fb-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 50px;
+            margin: 5px 0;
+        }
+        .rshi-fb-main-text {
+            font-size: 22px;
+            font-weight: 700;
+            text-align: center;
+        }
+        .rsh-fb-rating {
+            width:100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            height: 50px;
+        }
+        .rshi-fb-sub-text {
+            width: 100%;
+            font-size: 15px;
+            text-align: center;
+        }
+    }
+}
+.rshi-fb-main-text-medium {
+    margin-top: 10px;
+    padding: 10px 0;
+    width: 100%;
+    border-top: 2px solid #e6e6e6;
+    text-align: center;
+    font-size: 14px;
+}
+.rshi-fb-compliments {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    .rshi-fb-compliment-tag {
+        overflow: hidden;
+        user-select: none;
+        cursor: pointer;
+        font-size: 11px;
+        height: auto;
+        &:hover {
+            background-color: #8f8f8f;
+        }
+    }
+}
+.rshi-fb-comment {
+    display: flex;
+    width: 100%;
+    position: relative;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    .rshi-fb-text-area-wrapper {
+        margin-top: 10px;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        .rshi-fb-text-area {
+            height: 160px;
+            margin-top: 5px;
+            align-self: center;
+            font-family: "Poppins", sans-serif !important;
+            text-indent: 20px;
+            width: 100%;
+            resize: none;
+            font-size: 13px;
+            border-color: grey;
+        }
+    }
+    .rshi-fb-word-counter {
+        position: absolute;
+        bottom: 5px;
+        right: 10px;
+        font-size: 13px;
+        color: #c1c1c1;
+    }
+}

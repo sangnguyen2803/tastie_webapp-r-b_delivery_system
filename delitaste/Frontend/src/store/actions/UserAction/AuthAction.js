@@ -21,7 +21,6 @@ export const getAccessTokenAPI = (refreshToken) => async (dispatch) => {
     if (res.data.isAuth) return res.data;
     return null;
   } catch (err) {
-    console.log(err);
     const errs = err.response.data.errors;
     console.log(errs);
   }

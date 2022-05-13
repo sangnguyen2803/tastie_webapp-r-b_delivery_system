@@ -18,6 +18,7 @@ const Cart = (props) => {
     async function fetchingCart(id) {
       const cart = await getCart(id);
       setCartItemList(cart);
+      console.log(cart);
     }
     if (user.isUserAuthenticated) {
       fetchingCart(user.profile?.user_id);
@@ -98,7 +99,9 @@ const Cart = (props) => {
                     <span className="cart-note">• NOTE: {cart.note}</span>
                   )}
                 </div>
-                <span className="cart-item-sub-text">€ {cart?.totalPrice}</span>
+                <span className="cart-item-sub-text">
+                  € {((cart.product_price || 0.0) * cart.quantity).toFixed(2)}
+                </span>
                 <span className="cart-surfix-pos-wrapper">
                   <FontAwesomeIcon
                     className="cart-close-icon"
@@ -122,7 +125,7 @@ const Cart = (props) => {
               width={180}
               fontSize={13}
               height={35}
-              label={`Go to checkout • € ${subTotal.toFixed(2)}`}
+              label={`Go to checkout • € ${parseFloat(subTotal).toFixed(2)}`}
               onClick={() => {
                 props.history.push(`/order-checkout/${user.userCart?.user_id}`);
               }}

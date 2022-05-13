@@ -12,8 +12,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import OrderStatus from "components/OrderTracking/OrderStatus/OrderStatus";
 import OTOrderDetail from "components/OrderTracking/OTOrderDetail/OTOrderDetail";
 import ReactMapGl, { Source, Layer, Marker, Popup } from "react-map-gl";
+import Modal from "components/Commons/Overlay/Popup/Modal/Modal";
 import io from "socket.io-client";
 import axios from "axios";
+import RateShipper from "./RateShipper/RateShipper";
 
 function OrderTracking(props) {
   let socket;
@@ -33,27 +35,31 @@ function OrderTracking(props) {
   ]);
   const [routes, setRoutes] = useState([]);
   const { order_code } = props.match.params;
-  const [showPopup, togglePopup] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
+  const [showRatingOrder, setShowRatingOrder] = useState(true);
+  const [currentStatus, setCurrentStatus] = useState(5);
   const [submittedStatus, setSubmittedStatus] = useState(true);
   const [assignedStatus, setAssignedStatus] = useState(false);
   const [confirmedStatus, setConfirmedStatus] = useState(false);
   const [pickedStatus, setPickedStatus] = useState(false);
   const [completedStatus, setCompletedStatus] = useState(false);
   const [showOrderDetail, setShowOrderDetail] = useState(false);
+  useEffect(() => {
+    setSubmittedStatus(1 <= currentStatus ? true : false);
+    setAssignedStatus(2 <= currentStatus ? true : false);
+    setConfirmedStatus(3 <= currentStatus ? true : false);
+    setPickedStatus(4 <= currentStatus ? true : false);
+    setCompletedStatus(5 <= currentStatus ? true : false);
+  }, [currentStatus]);
   const [orderData, setOrderData] = useState({
     merchant_name: null,
     items: [],
     num_items: 0,
     delivery_fee: 0,
   });
-  const [trackingMessage, setTrackingMessage] = useState({
-    title: "",
-    message: "",
-  });
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "auto" });
   }, []);
-
 
   useEffect(() => {
     async function fetchingRoutesAndDirections() {
@@ -109,7 +115,7 @@ function OrderTracking(props) {
             >
               <img
                 alt="marker"
-                onClick={() => togglePopup(true)}
+                onClick={() => setShowPopup(true)}
                 style={{ height: 30, width: 30 }}
                 src="https://xuonginthanhpho.com/wp-content/uploads/2020/03/map-marker-icon.png"
               />
@@ -233,15 +239,27 @@ function OrderTracking(props) {
           />
           {!showOrderDetail && (
             <OrderStatus
-              status={1}
+              status={currentStatus}
               showOrderDetail={showOrderDetail}
               setShowOrderDetail={setShowOrderDetail}
             />
           )}
         </div>
       </div>
-      <Footer />
-      <ToolBar />
+      <Modal
+        openModal={showRatingOrder}
+        closeModal={() => {
+          setShowRatingOrder(false);
+        }}
+        transparent={0.5}
+        title={"Rate Shipper"}
+        width={40}
+        height={600}
+        padding="0% 0%"
+        hideHeader={true}
+      >
+        <RateShipper />
+      </Modal>
     </Fragment>
   );
 }
