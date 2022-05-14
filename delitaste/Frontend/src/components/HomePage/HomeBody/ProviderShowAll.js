@@ -14,7 +14,7 @@ import { faHeart as faHeart2 } from "@fortawesome/fontawesome-free-solid";
 import { faHeart as faHeart1 } from "@fortawesome/fontawesome-free-regular";
 import { faGetPocket } from "@fortawesome/free-brands-svg-icons";
 import LazyLoad from "react-lazyload";
-
+import Skeleton from "react-loading-skeleton";
 const responsive = {
   desktop: {
     breakpoint: { max: 3000, min: 1024 },

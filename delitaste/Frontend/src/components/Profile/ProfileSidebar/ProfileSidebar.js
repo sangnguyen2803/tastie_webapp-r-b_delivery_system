@@ -44,7 +44,9 @@ function ProfileSidebar(props) {
           />
           <div className="u-pf-sb-profile-text-wrapper">
             <span className="u-pf-sb-pt-main-text">
-              {`${user.profile.first_name} ${user.profile.last_name}`}
+              {`${user?.profile?.first_name || ""} ${
+                user?.profile?.last_name || ""
+              }`}
             </span>
             <span className="u-pf-sb-pt-icon">
               <FontAwesomeIcon className="vip-customer" icon={faCrown} />

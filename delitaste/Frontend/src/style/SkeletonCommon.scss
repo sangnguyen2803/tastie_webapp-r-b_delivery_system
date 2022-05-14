@@ -1,0 +1,15 @@
+.skeleton-box-vertical {
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.skeleton-row {
+    gap: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}

@@ -9,6 +9,7 @@ import Profile from "components/Profile/Profile";
 import { getAccessTokenAPI } from "store/actions/UserAction/AuthAction";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 
 function ProfileScreen(props) {
   const [loading, setLoading] = useState(true);
@@ -29,13 +30,7 @@ function ProfileScreen(props) {
     }
     props.history.push("/sign-in");
   }, []);
-  return (
-    !loading && (
-      <Fragment>
-        <Profile />
-      </Fragment>
-    )
-  );
+  return !loading && <Profile />;
 }
 
 ProfileScreen.propTypes = {
@@ -50,5 +45,5 @@ const mapStateToProps = (state) => ({
 });
 
 export default withRouter(
-  withAuth(connect(mapStateToProps, { getAccessTokenAPI })(ProfileScreen))
+  connect(mapStateToProps, { getAccessTokenAPI })(ProfileScreen)
 );

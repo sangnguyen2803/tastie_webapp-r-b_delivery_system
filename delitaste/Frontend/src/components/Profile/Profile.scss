@@ -5,8 +5,9 @@
     flex-wrap: nowrap;
     justify-content: flex-start;
     align-items: flex-start;
+
     .profile-sidebar-wrapper {
-        width: 300px;
+        width: 320px;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -15,7 +16,7 @@
 
     .profile-content-wrapper {
         height: 1000px;
-        width: calc(100% - 300px);
+        width: calc(100% - 320px);
         display: flex;
         flex-direction: row;
         justify-content: center;

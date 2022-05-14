@@ -77,4 +77,4 @@ const mapStateToProps = (state) => ({
   product: state.ProductReducer,
 });
 
-export default withRouter(withAuth(connect(mapStateToProps, null)(Profile)));
+export default withRouter(connect(mapStateToProps, null)(Profile));

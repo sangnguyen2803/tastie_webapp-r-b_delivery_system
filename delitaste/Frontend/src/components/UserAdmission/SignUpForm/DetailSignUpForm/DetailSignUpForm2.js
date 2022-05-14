@@ -93,7 +93,8 @@ function DetailSignUpForm2(props) {
               <img
                 className="profile-photo-small-size"
                 src={userProfilePic}
-              ></img>
+                alt="profile_pic"
+              />
             </div>
             <button
               disabled={avatarState === "edit"}
