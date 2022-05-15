@@ -86,11 +86,18 @@
             height: auto;
         }
 
-        .mars-icon {
-            font-size: 16px;
-            color: rgb(0, 157, 255);
-        }
+
     }
+}
+
+.mars-icon {
+    font-size: 18px;
+    color: rgb(0, 157, 255);
+}
+
+.venus-icon {
+    font-size: 18px;
+    color: rgb(255, 63, 121);
 }
 
 .p-pd-bt-icon {
@@ -183,7 +190,7 @@
         margin: 5px 0;
 
         .p-pd-b-gp-label {
-            width: 80px;
+            width: 90px;
             font-size: 13px;
             margin: 2px 0;
 
@@ -219,4 +226,23 @@
     flex-direction: row;
     justify-content: flex-end;
     align-items: center;
+}
+
+.p-pd-b-iu-input-general-radio {
+    display: flex;
+    flex-direction: row;
+    height: 20px;
+    align-items: flex-start;
+    justify-content: center;
+    font-size: 13px;
+}
+
+.p-pd-b-iu-input-general-select {
+    height: 30px !important;
+    width: 162px !important;
+    font-size: 13px !important;
+    font-family: 'Poppins', sans-serif;
+    border-radius: 0px !important;
+    border: 1px solid black;
+    text-indent: 10px;
 }

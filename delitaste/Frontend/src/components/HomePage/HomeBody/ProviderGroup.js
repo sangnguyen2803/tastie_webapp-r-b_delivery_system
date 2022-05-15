@@ -15,7 +15,7 @@ import { faHeart as faHeart2 } from "@fortawesome/fontawesome-free-solid";
 import { faHeart as faHeart1 } from "@fortawesome/fontawesome-free-regular";
 import { faGetPocket } from "@fortawesome/free-brands-svg-icons";
 import LazyLoad from "react-lazyload";
-import ProductGroupSkeleton from "components/Skeleton/ProductGroupSkeleton";
+import ProviderGroupSkeleton from "components/Skeleton/ProviderGroupSkeleton";
 const responsive = {
   desktop: {
     breakpoint: { max: 3000, min: 1024 },
@@ -46,7 +46,8 @@ function ProviderGroup({
   const [currentTime, setCurrentTime] = useState(
     new Date().toLocaleTimeString()
   );
-  const handleOnClickProvider = (id) => {
+  const handleOnClickProvider = (e, id) => {
+    e.stopPropagation();
     history.push(`/provider-detail/${id}`);
   };
   useEffect(() => {
@@ -84,11 +85,13 @@ function ProviderGroup({
               customTransition={"transform 500ms ease-in-out"}
             >
               {providerList?.map((item) => (
-                <div key={item.provider_id}>
+                <div
+                  key={item.provider_id}
+                  onClick={(e) => handleOnClickProvider(e, item.provider_id)}
+                >
                   <LazyLoad style={{ width: "100%" }}>
                     <div
                       className="provider-card-container"
-                      onClick={() => handleOnClickProvider(item.provider_id)}
                       key={item.provider_id}
                       style={{
                         backgroundImage: `url(${item.profile_pic})`,
@@ -153,7 +156,7 @@ function ProviderGroup({
             </Carousel>
           </div>
         ) : (
-          <ProductGroupSkeleton col={4} />
+          <ProviderGroupSkeleton col={4} />
         )}
       </div>
     </Fragment>

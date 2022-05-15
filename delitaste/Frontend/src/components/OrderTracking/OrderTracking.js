@@ -7,7 +7,6 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import "./OrderTracking.scss";
-import Map from "components/HigherOrderComponents(HOC)/Map/Map";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import OrderStatus from "components/OrderTracking/OrderStatus/OrderStatus";
 import OTOrderDetail from "components/OrderTracking/OTOrderDetail/OTOrderDetail";
