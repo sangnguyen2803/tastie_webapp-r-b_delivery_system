@@ -18,6 +18,11 @@ let socket;
 function OrderDetail(props) {
   const [orderList, setOrderList] = useState(orderListData);
   const [selectedOrder, setSelectedOrder] = useState(orderList[0]);
+  const [incomingOrder, setIncomingOrder] = useState({
+    order: null,
+    customer: null,
+    order_code: null,
+  });
 
   const filterOrderList = (type) => {
     if (type === "All") {
@@ -34,6 +39,12 @@ function OrderDetail(props) {
   }, [props.type]);
 
   useEffect(() => {
+    if (incomingOrder.order_code) {
+      console.log(incomingOrder);
+    }
+  }, [incomingOrder]);
+
+  useEffect(() => {
     // provider joins room
     socket = io(`http://localhost:3015`);
     const provider_id = 1000062; // thay chỗ này
@@ -42,6 +53,15 @@ function OrderDetail(props) {
       "provider-received-order",
       (orderData, customerData, order_code) => {
         console.log(orderData, customerData, order_code);
+        setIncomingOrder((prev) => ({
+          ...prev,
+          order: orderData,
+          customer: {
+            ...prev.customer,
+            customerData,
+          },
+          order_code: order_code,
+        }));
       }
     );
   }, []);
@@ -146,7 +166,7 @@ function OrderDetail(props) {
           </div>
         </div>
         <div className="sub-detail-panel-wrapper" style={{ paddingTop: "0" }}>
-          <ViewOrderDetail selectedOrder={selectedOrder} />
+          <ViewOrderDetail selectedOrder={incomingOrder} />
         </div>
       </div>
     </Fragment>

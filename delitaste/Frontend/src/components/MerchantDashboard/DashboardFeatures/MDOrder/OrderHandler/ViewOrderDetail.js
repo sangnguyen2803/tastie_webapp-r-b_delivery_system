@@ -21,13 +21,13 @@ function ViewOrderDetail({ selectedOrder }) {
     <Fragment>
       <div className="od-handler-wrapper">
         <div className="od-header-wrapper">
-          <div className="od-header-title">{selectedOrder.customer_name}</div>
-          <div className="od-header-sub-title">{selectedOrder.order_id}</div>
+          <div className="od-header-title">{selectedOrder.customer?.name}</div>
+          <div className="od-header-sub-title">{selectedOrder.order_code}</div>
         </div>
         <div className="od-body-wrapper">
-          {selectedOrder.items ? (
-            selectedOrder.items.map((product) => (
-              <>
+          {selectedOrder.order ? (
+            selectedOrder.order?.cart?.map((product, index) => (
+              <Fragment key={index}>
                 <div className="od-product-box">
                   <div className="od-product-quantity">
                     {product.quantity} &#215;
@@ -35,10 +35,10 @@ function ViewOrderDetail({ selectedOrder }) {
                   <div className="od-product-detail-wrapper">
                     <div className="od-product-detail-main">
                       <div className="od-product-detail-name">
-                        {product.item_name}
+                        {product.product_name}
                       </div>
                       <div className="od-product-detail-price">
-                        {product.item_price}
+                        {product.price}
                       </div>
                     </div>
                     {product.item_additional_options ? (
@@ -62,19 +62,19 @@ function ViewOrderDetail({ selectedOrder }) {
                     )}
                   </div>
                 </div>
-                {product.note ? (
+                {product.special_instruction ? (
                   <div className="note-wrapper">
                     <FontAwesomeIcon
                       className="note-icon"
                       icon={faStickyNote}
                     />
                     **
-                    {product.note}
+                    {product.special_instruction}
                   </div>
                 ) : (
                   <></>
                 )}
-              </>
+              </Fragment>
             ))
           ) : (
             <></>
@@ -84,7 +84,7 @@ function ViewOrderDetail({ selectedOrder }) {
           <div className="od-footer-row">
             <div className="od-footer-title">Subtotal</div>
             <div className="od-footer-sub-title">
-              {selectedOrder.order_subtotal}
+              {/* {selectedOrder.order_subtotal} */}
             </div>
           </div>
           <div className="od-footer-row">

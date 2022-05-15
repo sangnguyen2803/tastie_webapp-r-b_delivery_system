@@ -58,6 +58,9 @@ function OrderTracking(props) {
   });
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "auto" });
+    // socket = io("http://localhost:3015");
+
+    // socket.on("shipper-accepted-order", (room) => {});
   }, []);
 
   useEffect(() => {
