@@ -11,11 +11,15 @@ import orderListData from "components/MerchantDashboard/DashboardFeatures/MDOrde
 import "../Panel.scss";
 import ViewOrderDetail from "./OrderHandler/ViewOrderDetail";
 import ProgressBar from "components/Commons/ProgressBar/ProgressBar";
+import io from "socket.io-client";
+
+let socket;
+
 function OrderDetail(props) {
   const [orderList, setOrderList] = useState(orderListData);
   const [selectedOrder, setSelectedOrder] = useState(orderList[0]);
+
   const filterOrderList = (type) => {
-    
     if (type === "All") {
       setOrderList(orderListData);
       return;
@@ -28,6 +32,19 @@ function OrderDetail(props) {
   useEffect(() => {
     filterOrderList(props.type);
   }, [props.type]);
+
+  useEffect(() => {
+    // provider joins room
+    socket = io(`http://localhost:3015`);
+    const provider_id = 1000062; // thay chỗ này
+    socket.emit("provider-join-room", `provider-${provider_id}`);
+    socket.on(
+      "provider-received-order",
+      (orderData, customerData, order_code) => {
+        console.log(orderData, customerData, order_code);
+      }
+    );
+  }, []);
 
   const mapOrderStatusIcon = (status) => {
     switch (status) {

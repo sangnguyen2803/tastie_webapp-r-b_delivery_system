@@ -16,4 +16,9 @@ module.exports = function (app) {
       target: "http://localhost:3007/",
     })
   );
+  // app.use(
+  //   createProxyMiddleware("/socket.io", {
+  //     target: "http://localhost:3015/",
+  //   })
+  // );
 };
