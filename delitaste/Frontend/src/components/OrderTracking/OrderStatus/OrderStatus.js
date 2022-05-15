@@ -157,7 +157,7 @@ function OrderStatus(props) {
                 />
                 <div className="or-st-head-wrapper">Shipper assigned</div>
                 <div className="or-st-body-wrapper">
-                  Your shipper (<strong>{shipper.name}</strong>) has accepted
+                  Shipper (<strong>{shipper.name}</strong>) is taking care of
                   your order.
                 </div>
                 <ButtonGroup float="flex-start" mgTop={10} mgBottom={0}>

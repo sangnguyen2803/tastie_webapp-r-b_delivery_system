@@ -15,10 +15,14 @@ import Modal from "components/Commons/Overlay/Popup/Modal/Modal";
 import io from "socket.io-client";
 import axios from "axios";
 import RateShipper from "./RateShipper/RateShipper";
+import {
+  getAllProductFromOrderAPI,
+  getOrderStatusAPI,
+} from "store/actions/OrderAction/OrderAction";
 
 function OrderTracking(props) {
   let socket;
-  const { user } = props;
+  const { user, getAllProductFromOrderAPI, getOrderStatusAPI, match } = props;
   const [viewport, setViewport] = useState({
     width: "100%",
     height: "100vh",
@@ -32,6 +36,7 @@ function OrderTracking(props) {
   const [arrivalCoordinates, setArrivalCoordinates] = useState([
     106.68060027236189, 10.75909421616193,
   ]);
+  const [loading, setLoading] = useState(false);
   const [routes, setRoutes] = useState([]);
   const { order_code } = props.match.params;
   const [showPopup, setShowPopup] = useState(false);
@@ -43,6 +48,7 @@ function OrderTracking(props) {
   const [pickedStatus, setPickedStatus] = useState(false);
   const [completedStatus, setCompletedStatus] = useState(false);
   const [showOrderDetail, setShowOrderDetail] = useState(false);
+
   useEffect(() => {
     setSubmittedStatus(1 <= currentStatus ? true : false);
     setAssignedStatus(2 <= currentStatus ? true : false);
@@ -50,6 +56,9 @@ function OrderTracking(props) {
     setPickedStatus(4 <= currentStatus ? true : false);
     setCompletedStatus(5 <= currentStatus ? true : false);
   }, [currentStatus]);
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "auto" });
+  }, []);
   const [orderData, setOrderData] = useState({
     merchant_name: null,
     items: [],
@@ -57,10 +66,37 @@ function OrderTracking(props) {
     delivery_fee: 0,
   });
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "auto" });
-    // socket = io("http://localhost:3015");
-
-    // socket.on("shipper-accepted-order", (room) => {});
+    const code = match.params.order_code;
+    async function fetchingOrder(orderCode) {
+      const result1 = await getAllProductFromOrderAPI(orderCode);
+      const result2 = await getOrderStatusAPI(orderCode);
+      Promise.all([result1, result2]).then((data) => {
+        if (data[0] && data[1]) {
+          setOrderData((prev) => ({
+            ...prev,
+            merchant_name: data[0].merchant_name,
+            items: data[0].items,
+            num_items: data[0].num_items,
+            delivery_fee: data[0].delivery_fee,
+          }));
+          const status = [
+            "Submitted",
+            "Assigned",
+            "Confirmed",
+            "Picked",
+            "Completed",
+          ];
+          setCurrentStatus(
+            status.indexOf(
+              data[1].order_status[data[1].order_status.length - 1]
+                .order_status_name
+            ) + 2
+          );
+        }
+      });
+      setLoading(true);
+    }
+    fetchingOrder(code);
   }, []);
 
   useEffect(() => {
@@ -269,6 +305,8 @@ function OrderTracking(props) {
 OrderTracking.propTypes = {
   user: PropTypes.object.isRequired,
   product: PropTypes.object.isRequired,
+  getAllProductFromOrderAPI: PropTypes.func.isRequired,
+  getOrderStatusAPI: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -277,5 +315,9 @@ const mapStateToProps = (state) => ({
 });
 
 export default withRouter(
-  withAuth(connect(mapStateToProps, null)(OrderTracking))
+  withAuth(
+    connect(mapStateToProps, { getAllProductFromOrderAPI, getOrderStatusAPI })(
+      OrderTracking
+    )
+  )
 );

@@ -381,13 +381,13 @@ function ProfileDetail(props) {
           {(formikProps) => {
             const { values, errors, touched } = formikProps;
             const handleGeoCoding = (values) => {
-              console.log(values);
               const { road, city, district, ward } = values;
               const address = getFullAddress(road, city, district, ward);
               if (!address) return;
               const endpoint = `https://api.geoapify.com/v1/geocode/search?text=${address}&apiKey=6d74076cb237412e9abb06e88020a7a5`;
               async function fetchCoordinates(url) {
                 const result = await axios.get(url);
+                console.log(result);
                 if (result.data?.features?.length !== 0) {
                   setLongitude(
                     result.data.features[0]?.geometry?.coordinates[0]
