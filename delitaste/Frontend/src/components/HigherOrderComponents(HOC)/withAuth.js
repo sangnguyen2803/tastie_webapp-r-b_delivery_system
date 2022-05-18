@@ -22,7 +22,7 @@ export default function (WrappedComponent) {
       const refreshToken = localStorage.getItem("refreshToken");
       if (refreshToken) {
         const result = await this.props.getAccessTokenAPI(refreshToken);
-        if (result.isAuth && result.accessToken) {
+        if (result?.isAuth && result?.accessToken) {
           this.setState({ isLoading: false });
           this.setState({ isAuth: true });
           await this.props.getUserProfileAPI(result.accessToken);

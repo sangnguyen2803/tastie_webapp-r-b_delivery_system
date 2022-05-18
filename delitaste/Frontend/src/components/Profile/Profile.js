@@ -57,7 +57,7 @@ function Profile(props) {
             />
             <Route
               exact
-              path={`${match.path}/order-history`}
+              path={`${match.path}/order-history/:id`}
               component={OrderHistory}
             />
           </Switch>
