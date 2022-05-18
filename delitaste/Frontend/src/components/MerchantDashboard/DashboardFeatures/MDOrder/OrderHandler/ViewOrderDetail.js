@@ -15,8 +15,24 @@ import {
 import Button from "components/Commons/Button/Button";
 import ButtonGroup from "components/Commons/Button/ButtonGroup/ButtonGroup";
 import Tag from "components/Commons/Tag/Tag";
+import axios from "axios";
 
-function ViewOrderDetail({ selectedOrder }) {
+function ViewOrderDetail({ selectedOrder, socket }) {
+  const AcceptOrder = async () => {
+    // accepted the order then send the message to the room of customer (the room's name is order_code)
+    socket.emit("provider-confirmed", selectedOrder?.order_code);
+    try {
+      const res = await axios.post("/v1/api/tastie/order/update_order_status", {
+        order_code: selectedOrder?.order_code,
+        status: 3, // confirmed
+        shipper_id: null, // edit actual shiper_id here
+        update_at: "2022-04-21 20:11:11",
+      });
+    } catch (error) {
+      console.error("Cannot update order status", error);
+    }
+  };
+
   return selectedOrder ? (
     <Fragment>
       <div className="od-handler-wrapper">
@@ -131,6 +147,7 @@ function ViewOrderDetail({ selectedOrder }) {
             height={30}
             radius={"0px"}
             label={"Accept"}
+            onClick={() => AcceptOrder()}
           />
         </ButtonGroup>
       </div>

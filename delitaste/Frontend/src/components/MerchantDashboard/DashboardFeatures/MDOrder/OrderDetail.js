@@ -13,7 +13,7 @@ import ViewOrderDetail from "./OrderHandler/ViewOrderDetail";
 import ProgressBar from "components/Commons/ProgressBar/ProgressBar";
 import io from "socket.io-client";
 
-let socket;
+// let socket;
 
 function OrderDetail(props) {
   const [orderList, setOrderList] = useState(orderListData);
@@ -23,6 +23,8 @@ function OrderDetail(props) {
     customer: null,
     order_code: null,
   });
+
+  const socket = io(`http://localhost:3015`);
 
   const filterOrderList = (type) => {
     if (type === "All") {
@@ -46,7 +48,7 @@ function OrderDetail(props) {
 
   useEffect(() => {
     // provider joins room
-    socket = io(`http://localhost:3015`);
+    // socket = io(`http://localhost:3015`);
     const provider_id = 1000062; // thay chỗ này
     socket.emit("provider-join-room", `provider-${provider_id}`);
     socket.on(
@@ -166,7 +168,7 @@ function OrderDetail(props) {
           </div>
         </div>
         <div className="sub-detail-panel-wrapper" style={{ paddingTop: "0" }}>
-          <ViewOrderDetail selectedOrder={incomingOrder} />
+          <ViewOrderDetail selectedOrder={incomingOrder} socket={socket} />
         </div>
       </div>
     </Fragment>
