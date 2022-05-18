@@ -12,7 +12,6 @@ export const clearCart = (userId, providerId, name) => async (dispatch) => {
     const endpoint = `/v1/api/tastie/tastie/clear-cart/${userId}`;
     const res = await axios.delete(endpoint);
     if (res.data?.status) {
-      console.log(res.data);
       dispatch({
         type: CLEAR_CART,
         payload: {
@@ -142,6 +141,7 @@ export const addToCart = (cartItem) => async (dispatch) => {
   try {
     const endpoint = "/v1/api/tastie/tastie/insert_product-into-cart";
     const res = await axios.post(endpoint, body, config);
+
     if (res.data.status && res.data.item_code) {
       dispatch({
         type: ADD_TO_CART,

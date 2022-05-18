@@ -90,11 +90,13 @@ function ProfileSidebar(props) {
         <div
           className="u-pf-sb-row"
           style={
-            location.pathname === "/profile/order-history"
+            location.pathname.includes(`/profile/order-history`)
               ? sidebarItemSelected
               : {}
           }
-          onClick={() => history.push("/profile/order-history")}
+          onClick={() =>
+            history.push(`/profile/order-history/${user.profile.user_id}`)
+          }
         >
           <FontAwesomeIcon className="u-pf-sb-row-icon" icon={faScroll} />
           <span>Order History</span>

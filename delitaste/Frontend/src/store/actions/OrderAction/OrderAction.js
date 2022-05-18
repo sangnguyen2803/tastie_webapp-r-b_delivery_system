@@ -2,6 +2,17 @@ import axios from "axios";
 
 import { CREATE_ORDER } from "store/actions/types";
 
+//Get order history
+export const getOrderHistoryAPI = (id) => async (dispatch) => {
+  try {
+    const endpoint = `/v1/api/tastie/order/get-order-history/${id}`;
+    const res = await axios.get(endpoint);
+    if (res.data) return res.data.response;
+    return {};
+  } catch (err) {
+    return {};
+  }
+};
 //Add product
 export const submitOrderCheckoutAPI = (data) => async (dispatch) => {
   const config = {
@@ -11,6 +22,7 @@ export const submitOrderCheckoutAPI = (data) => async (dispatch) => {
   };
   const body = JSON.stringify(data);
   var orderCode = "";
+  console.log(body);
   try {
     const endpoint = "/v1/api/tastie/order/submit-order-info-delivery";
     const res = await axios.post(endpoint, body, config);

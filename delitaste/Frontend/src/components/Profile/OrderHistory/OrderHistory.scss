@@ -1,0 +1,102 @@
+.profile-ohis-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: rgb(255, 255, 255);
+
+    .p-ohis-header-wrapper {
+        width: calc(100% - 20px);
+        margin-top: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        height: auto;
+    }
+}
+
+.p-ohis-body-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: calc(100% - 20px);
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: 10px;
+    gap: 5px;
+
+    .p-ohis-item-wrapper {
+        padding: 10px 0;
+        width: 100%;
+        height: auto;
+        max-height: 200px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        height: auto;
+        background-color: rgb(245, 245, 245);
+
+        .p-ohis-item-head {
+            width: 96%;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+            color: rgb(140, 140, 140);
+        }
+
+        .p-ohis-item-body {
+            width: 96%;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: flex-start;
+            height: auto;
+            padding: 5px 0;
+        }
+    }
+}
+
+.p-ohis-item-img {
+    width: 220px;
+    height: 120px;
+}
+
+.p-ohis-item-content {
+    display: flex;
+    width: 100%;
+    height: auto;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-left: 15px;
+}
+
+.p-ohis-item-main-text {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.p-ohis-item-sub-text {
+    font-size: 13px;
+}
+
+.p-ohis-item-sub-text-medium {
+    font-size: 14px;
+}
+
+.p-ohis-item-sub-text-large {
+    font-size: 15px;
+    justify-self: flex-end;
+}
+
+.p-ohis-submit-btn {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
