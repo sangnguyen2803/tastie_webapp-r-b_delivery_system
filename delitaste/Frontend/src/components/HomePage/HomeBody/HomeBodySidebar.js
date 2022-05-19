@@ -202,7 +202,7 @@ function HomeBodySidebar(props) {
             </div>
             {showFunction3 && (
               <div id="form-wrapper">
-                <form1>
+                <div className="form1">
                   <div id="radio-slider">
                     <input
                       type="radio"
@@ -213,7 +213,7 @@ function HomeBodySidebar(props) {
                     />
                     <label
                       className="label-radio-slider"
-                      for="1"
+                      htmlFor="1"
                       data-debt-amount="Free"
                     ></label>
                     <input
@@ -223,7 +223,7 @@ function HomeBodySidebar(props) {
                       value="2"
                       required
                     />
-                    <label for="2" data-debt-amount="$"></label>
+                    <label htmlFor="2" data-debt-amount="$"></label>
                     <input
                       type="radio"
                       name="debt-amount"
@@ -231,7 +231,7 @@ function HomeBodySidebar(props) {
                       value="3"
                       required
                     />
-                    <label for="3" data-debt-amount="$$"></label>
+                    <label htmlFor="3" data-debt-amount="$$"></label>
                     <input
                       type="radio"
                       name="debt-amount"
@@ -239,7 +239,7 @@ function HomeBodySidebar(props) {
                       value="4"
                       required
                     />
-                    <label for="4" data-debt-amount="$$$"></label>
+                    <label htmlFor="4" data-debt-amount="$$$"></label>
                     <input
                       type="radio"
                       name="debt-amount"
@@ -247,10 +247,10 @@ function HomeBodySidebar(props) {
                       value="5"
                       required
                     />
-                    <label for="5" data-debt-amount="$$$$"></label>
+                    <label htmlFor="5" data-debt-amount="$$$$"></label>
                     <div id="debt-amount-pos"></div>
                   </div>
-                </form1>
+                </div>
               </div>
             )}
           </div>

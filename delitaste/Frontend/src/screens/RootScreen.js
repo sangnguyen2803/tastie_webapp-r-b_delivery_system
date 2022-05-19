@@ -6,6 +6,8 @@ import { createBrowserHistory } from "history";
 //components
 import RouteWithSubRoutes from "components/Commons/RouteWithSubRoutes";
 import { routes } from "config/routes";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 //common screen
 import HomeScreen from "./HomeScreen/HomeScreen";
 import UserSignInScreen from "./UserAdmissionScreen/UserSignInScreen";
@@ -27,8 +29,8 @@ import MerchantDashboardScreen from "./MerchantDashboardScreen/MerchantDashboard
 import OrderCheckoutScreen from "./OrderCheckoutScreen/OrderCheckoutScreen";
 import OrderTrackingScreen from "./OrderTrackingScreen/OrderTrackingScreen";
 import SearchScreen from "./SearchScreen/SearchScreen";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
+
+import ShipperScreen from "./ShipperScreen/ShipperScreen";
 const history = createBrowserHistory();
 
 function RootScreen(props) {
@@ -41,6 +43,7 @@ function RootScreen(props) {
         <Route exact path="/sign-in" component={UserSignInScreen} />
         <Route exact path="/search" component={SearchScreen} />
         <Route path="/profile" component={ProfileScreen} />
+        <Route path="/shipper-simulator" component={ShipperScreen} />
         <Route
           exact
           path="/provider-detail/:id"

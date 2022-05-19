@@ -46,77 +46,58 @@ function OrderStatus(props) {
     font-size: 14px;
     color: red;
   `;
+
+  const stepImage = [
+    Step1Image,
+    Step1Image,
+    Step3Image,
+    Step4Image,
+    Step5Image,
+  ];
+  const waitingMessage = [
+    "Order received. Working on it right now...",
+    "Shipper assigned. Waiting for the restaurant order's confirmation.",
+    "Restaurant confirmed. Shipper is on the way to the restaurant",
+    "Shipper's on the way to pick up your order. Please wait for a while.",
+    "Order completed",
+    "Order canceled",
+  ];
+
+  const statusMainText = [
+    "Order submitted",
+    "Shipper assigned",
+    "Restaurant confirmed",
+    "Delivering",
+    "Order delivered",
+    "Order canceled",
+  ];
+  const statusSubText = [
+    "Your order has been placed.",
+    "Shipper is taking care of your order.",
+    "Restaurant has confirmed your order and preparing for your dishes.",
+    "Shipper has your order. You'll get an alert when it's at your door.",
+    "Your order has been completed. Enjoy your meal.",
+    "Order canceled",
+  ];
+
   return (
     <Fragment>
       <div className="or-st-container" style={{ marginBottom: 20 }}>
-        {status === 1 && (
-          <Fragment>
-            <div className="or-st-head-bar">
-              <span className="or-st-waiting">
-                Order received. Working on it right now...
-              </span>
-              <div className="or-st-spinner">
-                <Loader
-                  color={color}
-                  loading={loading}
-                  css={override}
-                  size={10}
-                  margin={2}
-                  speedMultiplier={0.8}
-                />
-              </div>
-            </div>
-            <span className="or-st-pre-body">
-              Latest arrival by 10:55am
-              <FontAwesomeIcon
-                className="or-st-icon"
-                icon={faExclamationCircle}
+        <Fragment>
+          <div className="or-st-head-bar">
+            <span className="or-st-waiting">{waitingMessage[status - 1]}</span>
+            <div className="or-st-spinner">
+              <Loader
+                color={color}
+                loading={loading}
+                css={override}
+                size={10}
+                margin={2}
+                speedMultiplier={0.8}
               />
-            </span>
-            <img
-              style={{ marginTop: 67 }}
-              className="or-st-image"
-              src={Step1Image}
-              width={300}
-              alt="step_1"
-            />
-            <div className="or-st-head-wrapper">Order submitted</div>
-            <div className="or-st-body-wrapper">
-              Your order from Fancy Grill has been placed.
             </div>
-            <ButtonGroup float="flex-start" mgTop={10} mgBottom={0}>
-              <Button
-                color={"white"}
-                bgColor={"#2c2c2c"}
-                justifyContent={"center"}
-                gap={"10px"}
-                width={120}
-                fontSize={14}
-                height={35}
-                label={`Delivery detail`}
-                onClick={() => props.setShowOrderDetail(true)}
-              />
-            </ButtonGroup>
-          </Fragment>
-        )}
-        {status === 2 && (
-          <Fragment>
-            <div className="or-st-head-bar">
-              <span className="or-st-waiting">
-                Shipper assigned. Waiting for the restaurant order's
-                confirmation.
-              </span>
-              <div className="or-st-spinner">
-                <Loader
-                  color={color}
-                  loading={loading}
-                  css={override}
-                  size={10}
-                  margin={2}
-                  speedMultiplier={0.8}
-                />
-              </div>
-            </div>
+          </div>
+          {status >= 2 && (
             <div className="or-st-shipper">
               <img
                 className="or-st-shipper-image"
@@ -138,266 +119,47 @@ function OrderStatus(props) {
                 />
               </div>
             </div>
-            {showShipperChat ? (
-              <ChatBox shipper={shipper} />
-            ) : (
-              <Fragment>
-                <span className="or-st-pre-body">
-                  Latest arrival by 10:55am
-                  <FontAwesomeIcon
-                    className="or-st-icon"
-                    icon={faExclamationCircle}
-                  />
-                </span>
-                <img
-                  className="or-st-image"
-                  src={Step1Image}
-                  width={300}
-                  alt="step_1"
-                />
-                <div className="or-st-head-wrapper">Shipper assigned</div>
-                <div className="or-st-body-wrapper">
-                  Shipper (<strong>{shipper.name}</strong>) is taking care of
-                  your order.
-                </div>
-                <ButtonGroup float="flex-start" mgTop={10} mgBottom={0}>
-                  <Button
-                    color={"white"}
-                    bgColor={"#2c2c2c"}
-                    justifyContent={"center"}
-                    gap={"10px"}
-                    width={120}
-                    fontSize={14}
-                    height={35}
-                    label={`Delivery detail`}
-                    onClick={() => props.setShowOrderDetail(true)}
-                  />
-                </ButtonGroup>
-              </Fragment>
-            )}
-          </Fragment>
-        )}
-        {status === 3 && (
-          <Fragment>
-            <div className="or-st-head-bar">
-              <span className="or-st-waiting">
-                Restaurant confirmed. Shipper is on the way to the restaurant
-              </span>
-              <div className="or-st-spinner">
-                <Loader
-                  color={color}
-                  loading={loading}
-                  css={override}
-                  size={10}
-                  margin={2}
-                  speedMultiplier={0.8}
-                />
-              </div>
-            </div>
-            <div className="or-st-shipper">
-              <img
-                className="or-st-shipper-image"
-                src={shipper.profile_image}
-                width={300}
-                alt="shipper_profile_image"
-              />
-              <div className="or-st-shipper-text-wrapper">
-                <span className="or-st-sh-main-text">{shipper.name}</span>
-                <span className="or-st-sh-sub-text">
-                  {shipper.license_plate}
-                </span>
-              </div>
-              <div className="or-st-shipper-communication">
+          )}
+          {showShipperChat ? (
+            <ChatBox shipper={shipper} />
+          ) : (
+            <Fragment>
+              <span className="or-st-pre-body">
+                Latest arrival by 10:55am
                 <FontAwesomeIcon
-                  className="shipper-chat-icon"
-                  icon={showShipperChat ? faTimes : faCommentDots}
-                  onClick={() => setShowShipperChat((prev) => !prev)}
+                  className="or-st-icon"
+                  icon={faExclamationCircle}
                 />
-              </div>
-            </div>
-            {showShipperChat ? (
-              <ChatBox shipper={shipper} />
-            ) : (
-              <Fragment>
-                <span className="or-st-pre-body">
-                  Latest arrival by 10:55am
-                  <FontAwesomeIcon
-                    className="or-st-icon"
-                    icon={faExclamationCircle}
-                  />
-                </span>
-                <img
-                  className="or-st-image"
-                  src={Step3Image}
-                  width={300}
-                  alt="step_1"
-                />
-                <div className="or-st-head-wrapper">Restaurant confirmed</div>
-                <div className="or-st-body-wrapper">
-                  Restaurant has confirmed your order and preparing for your
-                  dishes.
-                </div>
-                <ButtonGroup float="flex-start" mgTop={10} mgBottom={0}>
-                  <Button
-                    color={"white"}
-                    bgColor={"#2c2c2c"}
-                    justifyContent={"center"}
-                    gap={"10px"}
-                    width={120}
-                    fontSize={14}
-                    height={35}
-                    label={`Delivery detail`}
-                    onClick={() => props.setShowOrderDetail(true)}
-                  />
-                </ButtonGroup>
-              </Fragment>
-            )}
-          </Fragment>
-        )}
-        {status === 4 && (
-          <Fragment>
-            <div className="or-st-head-bar">
-              <span className="or-st-waiting">
-                Shipper's on the way to pick up your order. Please wait for a
-                while.
               </span>
-              <div className="or-st-spinner">
-                <Loader
-                  color={color}
-                  loading={loading}
-                  css={override}
-                  size={10}
-                  margin={2}
-                  speedMultiplier={0.8}
-                />
-              </div>
-            </div>
-            <div className="or-st-shipper">
               <img
-                className="or-st-shipper-image"
-                src={shipper.profile_image}
+                style={status === 1 ? { marginTop: 67 } : {}}
+                className="or-st-image"
+                src={stepImage[status - 1]}
                 width={300}
-                alt="shipper_profile_image"
+                alt="step_1"
               />
-              <div className="or-st-shipper-text-wrapper">
-                <span className="or-st-sh-main-text">{shipper.name}</span>
-                <span className="or-st-sh-sub-text">
-                  {shipper.license_plate}
-                </span>
+              <div className="or-st-head-wrapper">
+                {statusMainText[status - 1]}
               </div>
-              <div className="or-st-shipper-communication">
-                <FontAwesomeIcon
-                  className="shipper-chat-icon"
-                  icon={showShipperChat ? faTimes : faCommentDots}
-                  onClick={() => setShowShipperChat((prev) => !prev)}
-                />
+              <div className="or-st-body-wrapper">
+                {statusSubText[status - 1]}
               </div>
-            </div>
-            {showShipperChat ? (
-              <ChatBox shipper={shipper} />
-            ) : (
-              <Fragment>
-                <span className="or-st-pre-body">
-                  Latest arrival by 10:55am
-                  <FontAwesomeIcon
-                    className="or-st-icon"
-                    icon={faExclamationCircle}
-                  />
-                </span>
-                <img
-                  className="or-st-image"
-                  src={Step4Image}
-                  width={300}
-                  alt="step_1"
+              <ButtonGroup float="flex-start" mgTop={10} mgBottom={0}>
+                <Button
+                  color={"white"}
+                  bgColor={"#2c2c2c"}
+                  justifyContent={"center"}
+                  gap={"10px"}
+                  width={120}
+                  fontSize={14}
+                  height={35}
+                  label={`Delivery detail`}
+                  onClick={() => props.setShowOrderDetail(true)}
                 />
-                <div className="or-st-head-wrapper">Delivering</div>
-                <div className="or-st-body-wrapper">
-                  Shipper has your order. You'll get an alert when it's at your
-                  door.
-                </div>
-                <ButtonGroup float="flex-start" mgTop={10} mgBottom={0}>
-                  <Button
-                    color={"white"}
-                    bgColor={"#2c2c2c"}
-                    justifyContent={"center"}
-                    gap={"10px"}
-                    width={120}
-                    fontSize={14}
-                    height={35}
-                    label={`Delivery detail`}
-                    onClick={() => props.setShowOrderDetail(true)}
-                  />
-                </ButtonGroup>
-              </Fragment>
-            )}
-          </Fragment>
-        )}
-        {status === 5 && (
-          <Fragment>
-            <div className="or-st-head-bar">
-              <span className="or-st-waiting" style={{ width: "90%" }}>
-                Order completed
-              </span>
-            </div>
-            <div className="or-st-shipper">
-              <img
-                className="or-st-shipper-image"
-                src={shipper.profile_image}
-                width={300}
-                alt="shipper_profile_image"
-              />
-              <div className="or-st-shipper-text-wrapper">
-                <span className="or-st-sh-main-text">{shipper.name}</span>
-                <span className="or-st-sh-sub-text">
-                  {shipper.license_plate}
-                </span>
-              </div>
-              <div className="or-st-shipper-communication">
-                <FontAwesomeIcon
-                  className="shipper-chat-icon"
-                  icon={showShipperChat ? faTimes : faCommentDots}
-                  onClick={() => setShowShipperChat((prev) => !prev)}
-                />
-              </div>
-            </div>
-            {showShipperChat ? (
-              <ChatBox shipper={shipper} />
-            ) : (
-              <Fragment>
-                <span className="or-st-pre-body">
-                  Latest arrival by 10:55am
-                  <FontAwesomeIcon
-                    className="or-st-icon"
-                    icon={faExclamationCircle}
-                  />
-                </span>
-                <img
-                  className="or-st-image"
-                  src={Step5Image}
-                  width={300}
-                  alt="step_1"
-                />
-                <div className="or-st-head-wrapper">Order delivered</div>
-                <div className="or-st-body-wrapper">
-                  Your order has been completed. Enjoy your meal.
-                </div>
-                <ButtonGroup float="flex-start" mgTop={10} mgBottom={0}>
-                  <Button
-                    color={"white"}
-                    bgColor={"#2c2c2c"}
-                    justifyContent={"center"}
-                    gap={"10px"}
-                    width={120}
-                    fontSize={14}
-                    height={35}
-                    label={`Delivery detail`}
-                    onClick={() => props.setShowOrderDetail(true)}
-                  />
-                </ButtonGroup>
-              </Fragment>
-            )}
-          </Fragment>
-        )}
+              </ButtonGroup>
+            </Fragment>
+          )}
+        </Fragment>
       </div>
     </Fragment>
   );

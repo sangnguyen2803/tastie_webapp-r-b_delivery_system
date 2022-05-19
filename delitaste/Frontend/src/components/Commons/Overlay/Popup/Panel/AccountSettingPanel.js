@@ -77,11 +77,16 @@ const AccountSettingPanel = ({ user, userSignOut, history }) => {
         </div>
         <div className="account-services">
           <span className="account-service-title">Your Account</span>
-          <Link to="/merchant-registration" className="service-name">
-            Order & Bills
-          </Link>
           <div
-            onClick={() => history.push("/merchant-dashboard")}
+            className="service-name"
+            onClick={() =>
+              history.push(`/profile/order-history/${user.profile.user_id}`)
+            }
+          >
+            Order History
+          </div>
+          <div
+            onClick={() => history.push(`/merchant-dashboard`)}
             className="service-name"
           >
             Merchant Dashboard

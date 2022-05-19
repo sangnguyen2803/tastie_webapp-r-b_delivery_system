@@ -88,12 +88,12 @@ function ViewOrderDetail({ selectedOrder, socket }) {
                     {product.special_instruction}
                   </div>
                 ) : (
-                  <></>
+                  <Fragment></Fragment>
                 )}
               </Fragment>
             ))
           ) : (
-            <></>
+            <Fragment></Fragment>
           )}
         </div>
         <div className="od-footer-wrapper">

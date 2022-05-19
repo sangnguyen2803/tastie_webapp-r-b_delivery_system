@@ -12,10 +12,13 @@ import "../Panel.scss";
 import ViewOrderDetail from "./OrderHandler/ViewOrderDetail";
 import ProgressBar from "components/Commons/ProgressBar/ProgressBar";
 import io from "socket.io-client";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
 // let socket;
 
 function OrderDetail(props) {
+  const { user } = props;
   const [orderList, setOrderList] = useState(orderListData);
   const [selectedOrder, setSelectedOrder] = useState(orderList[0]);
   const [incomingOrder, setIncomingOrder] = useState({
@@ -49,7 +52,7 @@ function OrderDetail(props) {
   useEffect(() => {
     // provider joins room
     // socket = io(`http://localhost:3015`);
-    const provider_id = 1000062; // thay chỗ này
+    const provider_id = user.providerId; // thay chỗ này
     socket.emit("provider-join-room", `provider-${provider_id}`);
     socket.on(
       "provider-received-order",
@@ -66,7 +69,7 @@ function OrderDetail(props) {
         }));
       }
     );
-  }, []);
+  }, [user.providerId]);
 
   const mapOrderStatusIcon = (status) => {
     switch (status) {
@@ -175,4 +178,12 @@ function OrderDetail(props) {
   );
 }
 
-export default OrderDetail;
+OrderDetail.propTypes = {
+  user: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  user: state.UserReducer,
+});
+
+export default connect(mapStateToProps, {})(OrderDetail);

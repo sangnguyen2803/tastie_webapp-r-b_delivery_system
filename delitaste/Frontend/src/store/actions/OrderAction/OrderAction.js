@@ -20,13 +20,13 @@ export const submitOrderCheckoutAPI = (data) => async (dispatch) => {
       "Content-Type": "application/json",
     },
   };
+  data.total = data.subtotal + data.tips;
   const body = JSON.stringify(data);
   var orderCode = "";
-  console.log(body);
+  console.log(data);
   try {
     const endpoint = "/v1/api/tastie/order/submit-order-info-delivery";
     const res = await axios.post(endpoint, body, config);
-    console.log(res.data);
     if (res.data?.status) {
       return res.data.order_code;
     }

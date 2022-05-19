@@ -158,7 +158,7 @@ function RateShipper(props) {
               width={120}
               fontSize={14}
               height={35}
-              label={`Delivery detail`}
+              label={`Submit`}
             />
           </ButtonGroup>
         </div>

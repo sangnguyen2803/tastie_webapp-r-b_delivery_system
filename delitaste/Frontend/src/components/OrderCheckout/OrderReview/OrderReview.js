@@ -28,7 +28,7 @@ function OrderReview(props) {
     setOrderForm((prevState) => ({
       ...prevState,
       customer_id: uid,
-      tips: tip,
+      tips: 0 + tip,
     }));
     var code = await submitOrderCheckoutAPI(orderForm);
     if (code && uid !== -1) {

@@ -19,7 +19,7 @@ import OrderHistory from "./OrderHistory/OrderHistory";
 import ProfileSidebar from "./ProfileSidebar/ProfileSidebar";
 
 function Profile(props) {
-  const { match, location } = props;
+  const { match, location, user } = props;
   useEffect(() => {
     console.log(location);
   }, [location]);

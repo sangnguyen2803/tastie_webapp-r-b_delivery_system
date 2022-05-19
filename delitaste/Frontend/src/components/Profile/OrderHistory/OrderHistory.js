@@ -14,22 +14,33 @@ import "./OrderHistory.scss";
 import { getOrderHistoryAPI } from "store/actions/OrderAction/OrderAction";
 import ButtonGroup from "components/Commons/Button/ButtonGroup/ButtonGroup";
 import Button from "components/Commons/Button/Button";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from "@fortawesome/fontawesome-free-solid";
 
 function OrderHistory(props) {
   const { user, history, match, getOrderHistoryAPI } = props;
   const [filterMode, setFilterMode] = useState(1);
   const [orderHistory, setOrderHistory] = useState([]);
+  const [filterOrderHistory, setFilterOrderHistory] = useState([]);
   useEffect(() => {
-    console.log("again");
     async function fetchOrderHistory(id) {
       const result = await getOrderHistoryAPI(id);
       setOrderHistory(result);
+      setFilterOrderHistory(result);
     }
     fetchOrderHistory(match.params.id);
     return function cleanup() {
       setOrderHistory([]);
     };
   }, []);
+  const filterItems = (status) => {
+    if (parseInt(status) !== 0) {
+      const result = orderHistory.filter(
+        (element) => element.order_status_nb === parseInt(status)
+      );
+      setFilterOrderHistory(result);
+    } else setFilterOrderHistory(orderHistory);
+  };
   useEffect(() => {}, [filterMode]);
   return (
     <Fragment>
@@ -37,8 +48,54 @@ function OrderHistory(props) {
         <div className="p-ohis-header-wrapper">
           <div className="p-ohis-header-main-text">Order History</div>
         </div>
+        <div className="p-ohis-general-profile-row ">
+          <span className="p-ohis-b-gp-label">Status:</span>
+          <select
+            onChange={(e) => filterItems(e.target.value)}
+            className="p-ohis-b-iu-input-general-select"
+            name="status"
+          >
+            {[
+              "All",
+              "Submitted",
+              "Assigned",
+              "Confirmed",
+              "Picked",
+              "Completed",
+              "Cancel",
+            ].map((item, index) => (
+              <option value={index} label={item} />
+            ))}
+          </select>
+          —<span className="p-ohis-b-gp-label">Date:</span>
+          <input
+            type="date"
+            className="p-ohis-b-iu-input-general"
+            name="from"
+          />
+          —
+          <input
+            type="date"
+            style={{ marginRight: 10 }}
+            className="p-ohis-b-iu-input-general"
+            name="to"
+          />
+          <Button
+            buttonType="primary"
+            width={90}
+            height={30}
+            prefix={
+              <FontAwesomeIcon icon={faSearch} style={{ color: "white" }} />
+            }
+            bgColor={"black"}
+            color={"white"}
+            radius={"0px"}
+            label={"Search"}
+          />
+        </div>
+
         <div className="p-ohis-body-wrapper">
-          {orderHistory?.map((item) => (
+          {filterOrderHistory?.map((item) => (
             <div className="p-ohis-item-wrapper" key={item.order_id}>
               <div className="p-ohis-item-head">
                 <span>#{item.order_code}</span>
@@ -46,7 +103,9 @@ function OrderHistory(props) {
               </div>
               <div className="p-ohis-item-body">
                 <img
-                  className="p-ohis-item-img"
+                  className={`p-ohis-item-img ${
+                    item.order_status_nb === 6 && "p-ohis-grey-scale"
+                  }`}
                   src={item.provider_avatar}
                   alt={"product_img"}
                 />
@@ -58,7 +117,7 @@ function OrderHistory(props) {
                     {item.provider_name}
                   </div>
                   <div className="p-ohis-item-sub-text-medium">
-                    <b>$ 32.00 (2 items)</b>
+                    <b>$ {item.total_amount.toFixed(2)} (2 items)</b>
                   </div>
                   <div className="p-ohis-item-sub-text">
                     221 Tran Binh Trong, Ward 3, District 5, Ho Chi Minh City
@@ -68,7 +127,7 @@ function OrderHistory(props) {
                   </div>
                   <div
                     className="p-ohis-item-sub-text-medium p-ohis-submit-btn"
-                    style={{ fontWeight: 700, width: "100%" }}
+                    style={{ fontWeight: 500, width: "100%" }}
                   >
                     <span style={{ width: 200 }}>
                       Status: {item.order_status}

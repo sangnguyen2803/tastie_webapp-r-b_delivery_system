@@ -20,7 +20,7 @@
 
 .p-ohis-body-wrapper {
     display: flex;
-    flex-direction: column;
+    flex-direction: column-reverse;
     width: calc(100% - 20px);
     justify-content: flex-start;
     align-items: center;
@@ -28,6 +28,7 @@
     gap: 5px;
 
     .p-ohis-item-wrapper {
+        border: 2px solid rgb(242, 242, 242);
         padding: 10px 0;
         width: 100%;
         height: auto;
@@ -37,7 +38,7 @@
         justify-content: flex-start;
         align-items: center;
         height: auto;
-        background-color: rgb(245, 245, 245);
+        background-color: rgb(250, 250, 250);
 
         .p-ohis-item-head {
             width: 96%;
@@ -99,4 +100,46 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+}
+
+.p-ohis-grey-scale {
+    -webkit-filter: grayscale(100%);
+    /* Safari 6.0 - 9.0 */
+    filter: grayscale(100%);
+}
+
+.p-ohis-general-profile-row {
+    display: flex;
+    flex-direction: row;
+    width: calc(100% - 20px);
+    justify-content: flex-start;
+    align-items: center;
+    gap: 5px;
+    margin: 5px 0;
+
+    .p-ohis-b-gp-label {
+        width: auto;
+        font-size: 14px;
+        margin: 2px 0;
+
+    }
+
+    .p-ohis-b-iu-input-general-select {
+        height: 30px !important;
+        width: 150px !important;
+        font-size: 13px !important;
+        font-family: 'Poppins', sans-serif;
+        border-radius: 0px !important;
+        border: 1px solid black;
+        text-indent: 10px;
+    }
+
+    .p-ohis-b-iu-input-general {
+        height: 25px;
+        width: 150px;
+        font-size: 13px;
+        border-radius: 0px !important;
+        border: 1px solid black;
+        text-indent: 10px;
+    }
 }

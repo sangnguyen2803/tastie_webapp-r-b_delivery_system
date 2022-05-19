@@ -18,6 +18,9 @@ import {
   faLink,
   faSave,
   faMap,
+  faHome,
+  faBuilding,
+  faAddressBook,
 } from "@fortawesome/fontawesome-free-solid";
 import ButtonGroup from "components/Commons/Button/ButtonGroup/ButtonGroup";
 import Button from "components/Commons/Button/Button";
@@ -25,7 +28,7 @@ import DialogBox from "components/Commons/Overlay/DialogBox/DialogBox";
 import ReactMapGl, { Source, Layer, Marker, Popup } from "react-map-gl";
 import axios from "axios";
 import "./ProfileDetail.scss";
-import { faMapMarkedAlt } from "@fortawesome/free-solid-svg-icons";
+import { faHouseUser, faMapMarkedAlt } from "@fortawesome/free-solid-svg-icons";
 
 const initialValues1 = {
   firstname: "",
@@ -55,6 +58,11 @@ function ProfileDetail(props) {
     text2: "",
   });
   //Map
+  const selectedAddressType = {
+    border: "1px solid #101010",
+    backgroundColor: "#f6f6f6",
+  };
+  const [addressType, setAddressType] = useState(1);
   const getFullAddress = (road, city_id, district_id, ward_id) => {
     const address = [];
     locations
@@ -547,6 +555,50 @@ function ProfileDetail(props) {
                             placeholder={"Road. Eg. 100A, St. Laurant Street"}
                             style={{ width: "526px" }}
                           />
+                        </div>
+                        <div className="p-pd-general-profile-row">
+                          <span className="p-pd-b-gp-label">Address:</span>
+                          <div
+                            className="p-pd-a-item"
+                            onClick={() => setAddressType(1)}
+                            style={addressType === 1 ? selectedAddressType : {}}
+                          >
+                            <div className="p-pd-a-image-wrapper">
+                              <FontAwesomeIcon
+                                icon={faHome}
+                                className="p-pd-a-icon"
+                              />
+                            </div>
+                            <span className="p-pd-a-label-radio">House</span>
+                          </div>
+                          <div
+                            className="p-pd-a-item"
+                            onClick={() => setAddressType(2)}
+                            style={addressType === 2 ? selectedAddressType : {}}
+                          >
+                            <div className="p-pd-a-image-wrapper">
+                              <FontAwesomeIcon
+                                icon={faBuilding}
+                                className="p-pd-a-icon"
+                              />
+                            </div>
+                            <span className="p-pd-a-label-radio">
+                              Workplace
+                            </span>
+                          </div>
+                          <div
+                            className="p-pd-a-item"
+                            onClick={() => setAddressType(3)}
+                            style={addressType === 3 ? selectedAddressType : {}}
+                          >
+                            <div className="p-pd-a-image-wrapper">
+                              <FontAwesomeIcon
+                                icon={faAddressBook}
+                                className="p-pd-a-icon"
+                              />
+                            </div>
+                            <span className="p-pd-a-label-radio">Other</span>
+                          </div>
                         </div>
                         <ButtonGroup gap={5} mgTop={5} mgBottom={5}>
                           <Button

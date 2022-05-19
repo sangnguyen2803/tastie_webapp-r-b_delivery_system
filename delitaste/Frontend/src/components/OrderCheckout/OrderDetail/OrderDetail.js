@@ -53,9 +53,7 @@ function OrderDetail(props) {
   const [currentPhone, setCurrentPhone] = useState("");
   const [deliveryAddress, setDeliveryAddress] = useState("");
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(1);
-
   const [orderScheduleTime, setOrderScheduleTime] = useState("");
-
   const [enableAddressEdit, setEnableAddressEdit] = useState(false);
   const [showProductDetail, setShowProductDetail] = useState(false);
   const [showScheduleTable, setShowScheduleTable] = useState(false);

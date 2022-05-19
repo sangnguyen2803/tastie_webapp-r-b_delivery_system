@@ -246,3 +246,43 @@
     border: 1px solid black;
     text-indent: 10px;
 }
+
+
+.p-pd-a-item {
+    border: 1px solid rgb(208, 208, 208);
+    width: 21.5%;
+    height: 30px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+    background-color: #ffffff;
+    cursor: pointer;
+    user-select: none;
+}
+
+
+.p-pd-a-image-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-left: 5%;
+
+    .p-pd-a-img {
+        border-radius: 5px;
+        width: 30px;
+        height: 30px;
+    }
+
+    .p-pd-a-icon {
+        font-size: 22px;
+        color: rgb(175, 175, 175);
+    }
+}
+
+.p-pd-a-label-radio {
+    width: auto;
+    font-size: 13px;
+}

@@ -40,22 +40,16 @@ function OrderTracking(props) {
   const [routes, setRoutes] = useState([]);
   const { order_code } = props.match.params;
   const [showPopup, setShowPopup] = useState(false);
-  const [showRatingOrder, setShowRatingOrder] = useState(true);
-  const [currentStatus, setCurrentStatus] = useState(5);
+  const [showRatingShipper, setShowRatingShipper] = useState(false);
+  const [currentStatus, setCurrentStatus] = useState(1);
   const [submittedStatus, setSubmittedStatus] = useState(true);
   const [assignedStatus, setAssignedStatus] = useState(false);
   const [confirmedStatus, setConfirmedStatus] = useState(false);
   const [pickedStatus, setPickedStatus] = useState(false);
   const [completedStatus, setCompletedStatus] = useState(false);
-  const [showOrderDetail, setShowOrderDetail] = useState(false);
+  const [cancelStatus, setCancelStatus] = useState(false);
 
-  useEffect(() => {
-    setSubmittedStatus(1 <= currentStatus ? true : false);
-    setAssignedStatus(2 <= currentStatus ? true : false);
-    setConfirmedStatus(3 <= currentStatus ? true : false);
-    setPickedStatus(4 <= currentStatus ? true : false);
-    setCompletedStatus(5 <= currentStatus ? true : false);
-  }, [currentStatus]);
+  const [showOrderDetail, setShowOrderDetail] = useState(false);
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "auto" });
   }, []);
@@ -65,6 +59,76 @@ function OrderTracking(props) {
     num_items: 0,
     delivery_fee: 0,
   });
+
+  useEffect(() => {
+    setSubmittedStatus(1 <= currentStatus ? true : false);
+    setAssignedStatus(2 <= currentStatus ? true : false);
+    setConfirmedStatus(3 <= currentStatus ? true : false);
+    setPickedStatus(4 <= currentStatus ? true : false);
+    setCompletedStatus(5 <= currentStatus ? true : false);
+    setCancelStatus(6 <= currentStatus ? true : false);
+
+    setShowRatingShipper(currentStatus === 5 ? true : false);
+  }, [currentStatus]);
+
+  useEffect(() => {
+    if (currentStatus === 1 && orderData.items.length !== 0) {
+      socket = io(`http://localhost:3015`);
+      socket.emit("join-room", order_code);
+      socket.emit(
+        "customer-submit-order",
+        orderData.items,
+        {
+          name: user.profile.first_name + " " + user.profile.last_name,
+          phone: user.profile.phone,
+          address: "344, Lý Thái Tổ, W2, D2, Ho Chi Minh city",
+          location: {
+            latitude: 10.799635410926035,
+            longitude: 106.6735069727208,
+          },
+        },
+        {
+          name: orderData.merchant_name,
+          address: "135B Tran Hung Dao, Cau Ong Lanh, District 1",
+          provider_id: 1000091,
+          location: {
+            latitude: 10.770426270078108,
+            longitude: 106.69433674255707,
+          },
+        },
+        order_code
+      );
+    }
+  }, [orderData, currentStatus]);
+
+  useEffect(() => {
+    socket = io(`http://localhost:3015`);
+    socket.emit("join-room", order_code);
+    //order status 2
+    socket.on("order-accepted", (message) => {
+      setAssignedStatus(true);
+      setCurrentStatus(2);
+    });
+    //order status 3
+    socket.on("order-confirmed-from-provider", () => {
+      setConfirmedStatus(true);
+      setCurrentStatus(3);
+    });
+    //order status 4
+    socket.on("shipper-on-the-way", (message) => {
+      setPickedStatus(true);
+      setCurrentStatus(4);
+    });
+    //order status 5
+    socket.on("shipper-has-arrived", (message) => {
+      setPickedStatus(true);
+      setCurrentStatus(5);
+    });
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
+
   useEffect(() => {
     const code = match.params.order_code;
     async function fetchingOrder(orderCode) {
@@ -90,7 +154,7 @@ function OrderTracking(props) {
             status.indexOf(
               data[1].order_status[data[1].order_status.length - 1]
                 .order_status_name
-            ) + 2
+            ) + 1
           );
         }
       });
@@ -110,6 +174,7 @@ function OrderTracking(props) {
     }
     fetchingRoutesAndDirections();
   }, []);
+
   const dataOne = {
     type: "Feature",
     properties: {},
@@ -122,6 +187,7 @@ function OrderTracking(props) {
   return (
     <Fragment>
       <NavBar fixed={true} />
+
       <div className="order-tracking-container">
         <div className="order-tracking-left-side">
           <ReactMapGl
@@ -285,9 +351,9 @@ function OrderTracking(props) {
         </div>
       </div>
       <Modal
-        openModal={showRatingOrder}
+        openModal={showRatingShipper}
         closeModal={() => {
-          setShowRatingOrder(false);
+          setShowRatingShipper(false);
         }}
         transparent={0.5}
         title={"Rate Shipper"}
