@@ -216,3 +216,27 @@ export const getScheduleTime = (id) => async (dispatch) => {
     console.log(err);
   }
 };
+
+export const getAllOrderAPI = (id) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  const body = JSON.stringify({
+    provider_id: id,
+    limit: 20,
+    offset: 1,
+  });
+  try {
+    const endpoint = `/v1/api/provider/order/get-all-order`;
+    const res = await axios.post(endpoint, body, config);
+    if (res.data.status) {
+      return res.data.response;
+    }
+    return [];
+  } catch (err) {
+    console.log(err);
+    return [];
+  }
+};

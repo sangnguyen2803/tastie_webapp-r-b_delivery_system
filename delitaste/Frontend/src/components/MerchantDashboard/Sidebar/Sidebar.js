@@ -3,6 +3,8 @@ import ProfilePhoto from "assets/avatar.jpg";
 import ProviderImage from "assets/provider_avatar.jpg";
 import { Fragment, useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 import {
   faShoppingBag,
   faUtensils,
@@ -108,14 +110,19 @@ function Sidebar(props) {
     }));
   };
 
-  const { match, history } = props;
+  const { match } = props;
   const mappingDashboard = (destination) => {
+    console.log(`${match.path}/${destination}`);
     props.history.push(`${match.path}/${destination}`);
   };
   return (
     <div className="sb-wrapper">
       <div className="sb-header-wrapper">
-        <img src={ProviderImage} className="sb-header-avatar" />
+        <img
+          src={ProviderImage}
+          className="sb-header-avatar"
+          alt="header_img"
+        />
         <span className="sb-header-text">Phuc Long - Coffee & Tea</span>
       </div>
       {sidebarFeatures.map((feature) => (
@@ -135,7 +142,7 @@ function Sidebar(props) {
                 className="sb-sub-feature-row"
                 onClick={() => {
                   setSelectedFeature([feature.id, item.id]);
-                  mappingDashboard(item.link);
+                  mappingDashboard(`${item.link}/${props.user.providerId}`);
                 }}
                 style={
                   selectedFeature[0] === feature.id &&
@@ -162,7 +169,16 @@ function Sidebar(props) {
   );
 }
 
-export default withRouter(Sidebar);
+Sidebar.propTypes = {
+  user: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  user: state.UserReducer,
+});
+
+export default withRouter(connect(mapStateToProps, null)(Sidebar));
+
 /*
 
       <div className="sb-feature-row">

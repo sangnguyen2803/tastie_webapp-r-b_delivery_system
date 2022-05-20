@@ -4,6 +4,7 @@ import "components/MerchantDashboard/DashboardFeatures/Panel.scss";
 import "style/Common.scss";
 import "components/MerchantDashboard/DashboardFeatures/MDOrder/OrderHandler/OrderHandler.scss";
 import { Formik, ErrorMessage, Form, Field } from "formik";
+import CartImage from "assets/cart.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPlus,
@@ -17,13 +18,13 @@ import ButtonGroup from "components/Commons/Button/ButtonGroup/ButtonGroup";
 import Tag from "components/Commons/Tag/Tag";
 import axios from "axios";
 
-function ViewOrderDetail({ selectedOrder, socket }) {
+function ViewOrderDetail({ orderSummary, orderItems, orderStatus, socket }) {
   const AcceptOrder = async () => {
     // accepted the order then send the message to the room of customer (the room's name is order_code)
-    socket.emit("provider-confirmed", selectedOrder?.order_code);
+    socket.emit("provider-confirmed", orderSummary.order_code);
     try {
       const res = await axios.post("/v1/api/tastie/order/update_order_status", {
-        order_code: selectedOrder?.order_code,
+        order_code: orderSummary?.order_code,
         status: 3, // confirmed
         shipper_id: null, // edit actual shiper_id here
         update_at: "2022-04-21 20:11:11",
@@ -33,16 +34,16 @@ function ViewOrderDetail({ selectedOrder, socket }) {
     }
   };
 
-  return selectedOrder ? (
+  return orderSummary ? (
     <Fragment>
       <div className="od-handler-wrapper">
         <div className="od-header-wrapper">
-          <div className="od-header-title">{selectedOrder.customer?.name}</div>
-          <div className="od-header-sub-title">{selectedOrder.order_code}</div>
+          <div className="od-header-title">{orderItems.merchant_name}</div>
+          <div className="od-header-sub-title">{orderSummary.order_code}</div>
         </div>
         <div className="od-body-wrapper">
-          {selectedOrder.order ? (
-            selectedOrder.order?.cart?.map((product, index) => (
+          {orderItems.items ? (
+            orderItems.items.map((product, index) => (
               <Fragment key={index}>
                 <div className="od-product-box">
                   <div className="od-product-quantity">
@@ -54,7 +55,7 @@ function ViewOrderDetail({ selectedOrder, socket }) {
                         {product.product_name}
                       </div>
                       <div className="od-product-detail-price">
-                        {product.price}
+                        $ {product.price.toFixed(2)}
                       </div>
                     </div>
                     {product.item_additional_options ? (
@@ -100,7 +101,7 @@ function ViewOrderDetail({ selectedOrder, socket }) {
           <div className="od-footer-row">
             <div className="od-footer-title">Subtotal</div>
             <div className="od-footer-sub-title">
-              {/* {selectedOrder.order_subtotal} */}
+              $ {orderSummary.subtotal.toFixed(2)}
             </div>
           </div>
           <div className="od-footer-row">
@@ -114,46 +115,57 @@ function ViewOrderDetail({ selectedOrder, socket }) {
               className="od-footer-sub-title"
               style={{ fontSize: "12px", color: "rgb(156, 156, 156)" }}
             >
-              {selectedOrder.delivery_fee}
+              $ {orderSummary.delivery_fee.toFixed(2)}
             </div>
           </div>
           <div className="od-footer-row">
-            <div className="od-footer-title">Subtotal</div>
+            <div className="od-footer-title">Total</div>
             <div className="od-footer-sub-title">
-              {selectedOrder.total_price}
+              $ {orderSummary.subtotal.toFixed(2)}
             </div>
           </div>
         </div>
-        <ButtonGroup
-          width={100}
-          float={"center"}
-          mgTop={20}
-          gap={30}
-          mgBottom={10}
-        >
-          <Button
-            bgColor={"white"}
-            color="black"
-            border={"2px solid rgb(170, 170, 170)"}
-            buttonType="secondary"
-            width={120}
-            height={30}
-            radius={"0px"}
-            label={"Decline"}
-          />
-          <Button
-            buttonType="primary"
-            width={120}
-            height={30}
-            radius={"0px"}
-            label={"Accept"}
-            onClick={() => AcceptOrder()}
-          />
-        </ButtonGroup>
+        {orderStatus === 2 && (
+          <ButtonGroup
+            width={100}
+            float={"center"}
+            mgTop={20}
+            gap={30}
+            mgBottom={10}
+          >
+            <Button
+              bgColor={"white"}
+              color="black"
+              border={"2px solid rgb(170, 170, 170)"}
+              buttonType="secondary"
+              width={120}
+              height={30}
+              radius={"0px"}
+              label={"Decline"}
+            />
+            <Button
+              buttonType="primary"
+              width={120}
+              height={30}
+              radius={"0px"}
+              label={"Accept"}
+              onClick={() => AcceptOrder()}
+            />
+          </ButtonGroup>
+        )}
       </div>
     </Fragment>
   ) : (
-    <Fragment>ABCd</Fragment>
+    <Fragment>
+      <div className="od-handler-wrapper">
+        <div className="cart-body" style={{ justifyContent: "center" }}>
+          <img src={CartImage} alt="cart_image" className="cart-image" />
+          <span className="cart-image-description" style={{ fontSize: 14 }}>
+            Your restaurant or store currently has no new orders.
+          </span>
+        </div>
+      </div>
+    </Fragment>
   );
 }
 

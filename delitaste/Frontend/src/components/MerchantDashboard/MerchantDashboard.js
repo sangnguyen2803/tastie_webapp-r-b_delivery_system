@@ -7,6 +7,7 @@ import MerchantBanner from "assets/merchant-form-banner.png";
 import ProductPanel from "components/MerchantDashboard/DashboardFeatures/MDProduct/ProductPanel";
 import OrderPanel from "components/MerchantDashboard/DashboardFeatures/MDOrder/OrderPanel";
 import HomePanel from "./DashboardFeatures/MDHome/HomePanel";
+import withAuth from "components/HigherOrderComponents(HOC)/withAuth";
 const backgroundStyling = {
   background: `url(${MerchantBanner})`,
   backgroundPosition: "center",
@@ -52,17 +53,17 @@ function MerchantDashboard(props) {
 
             <Route
               exact
-              path={`${match.path}/order/:name`}
+              path={`${match.path}/order/:name/:id`}
               component={OrderPanel}
             />
             <Route
               exact
-              path={`${match.path}/product/:name`}
+              path={`${match.path}/product/:name/:id`}
               component={ProductPanel}
             />
             <Route
               exact
-              path={`${match.path}/provider/:name`}
+              path={`${match.path}/provider/:name/:id`}
               component={HomePanel}
             />
           </Switch>
@@ -72,4 +73,4 @@ function MerchantDashboard(props) {
   );
 }
 
-export default withRouter(MerchantDashboard);
+export default withRouter(withAuth(MerchantDashboard));
