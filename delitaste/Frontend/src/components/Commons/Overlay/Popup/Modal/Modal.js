@@ -41,15 +41,17 @@ const Modal = ({ openModal, closeModal, ...rest }) => {
   });
 
   const ModalContainerStyle = {
-    width: `${rest.width}%`,
+    width: rest.widthPX ? `unset` : `${rest.width}%`,
+    widthPX: `${rest.width}px`,
     height: rest.heightAuto ? "auto" : `${rest.height}px`,
-    marginLeft: `-${rest.width / 2}%`,
+    marginLeft: rest.widthPX ? `-${rest.widthPX / 2}px` : `-${rest.width / 2}%`,
     marginTop: `-${rest.height / 2 - 20}px`,
   };
   const ModalInnerStyle = {
     padding: rest.padding || "2% 2%",
   };
   const ModalOutterBackgroundStyle = {
+    marginTop: rest.transparentUnderNavbar ? 90 : 0,
     background: `rgba(0, 0, 0, ${rest.transparent || 0.8})`,
   };
   const HeaderStyle = {
@@ -61,6 +63,7 @@ const Modal = ({ openModal, closeModal, ...rest }) => {
     width: `${rest.cartWidth}px`,
     height: rest.cartHeightAuto ? "auto" : `${rest.cartHeight}px`,
     top: `${rest.cartPositionTop}px`,
+
     left: "unset",
     right: `${
       rest.cartPositionRight +

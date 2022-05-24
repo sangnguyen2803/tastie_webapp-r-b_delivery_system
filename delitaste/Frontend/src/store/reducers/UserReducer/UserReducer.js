@@ -14,7 +14,7 @@ import {
   SET_LOADING,
   SIGN_OUT,
   GET_PROVIDER_DETAIL,
-  GET_ADDRESS_BOOK,
+  GET_CONTACT,
 } from "store/actions/types";
 import {
   GET_CART,
@@ -26,7 +26,6 @@ import {
   DESCREASE_PRODUCT,
 } from "store/actions/types";
 import axios from "axios";
-import {} from "store/actions/types";
 import storage from "redux-persist/lib/storage";
 import { persistReducer } from "redux-persist";
 
@@ -38,13 +37,13 @@ const persistConfig = {
 
 const initialState = {
   currentForm: 0, //provider-registration
-  formData: {}, 
+  formData: {},
   isEmailVerified: false,
   isUserAuthenticated: false,
   isLoading: true, //loading component after calling api.
   loginState: false,
-  providerId: -1, //provider created by user
-  profile: [], 
+  provider_id: -1, //provider created by user
+  profile: [],
   styling: ["active", "default", "default", "default"],
   refreshToken: localStorage.getItem("refreshToken"),
   verifiedEmailToken: localStorage.getItem("verified_email_token"),
@@ -53,6 +52,8 @@ const initialState = {
     latitude: 0,
     longitude: 0,
   },
+  phone: null,
+  location: [],
   userCart: {
     cart: [],
     date: "",
@@ -66,6 +67,9 @@ const initialState = {
 const UserReducer = (state = initialState, action) => {
   const { type, payload } = action;
   switch (type) {
+    case GET_CONTACT:
+      return { ...state, phone: payload.phone, location: payload.address };
+
     case REGISTER_SUCCESS:
       localStorage.setItem("refreshToken", payload.refreshtoken);
       return {
@@ -231,7 +235,6 @@ const UserReducer = (state = initialState, action) => {
     case DESCREASE_PRODUCT: {
       let prevCart = [...state.userCart.cart];
       let position = state.userCart.cart.indexOf(payload.cart);
-
       prevCart[position].quantity -= 1;
       prevCart[position].totalProductPrice -= prevCart[position].productPrice;
       return {

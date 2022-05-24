@@ -8,7 +8,10 @@ import Button from "components/Commons/Button/Button";
 import ButtonGroup from "components/Commons/Button/ButtonGroup/ButtonGroup";
 import io from "socket.io-client";
 import axios from "axios";
+import CartImage from "assets/cart.svg";
 import { ShipperLocation } from "assets/dummy/ShipperLocations";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCartArrowDown } from "@fortawesome/fontawesome-free-solid";
 
 function Shipper(props) {
   const socket = io("http://localhost:3015");
@@ -115,7 +118,7 @@ function Shipper(props) {
       <NavBar fixed={true} hideBreadcrumb={true} />
       <div className="shipper-main">
         <div className="shipper-container">
-          {shipperConfirmBox && (
+          {shipperConfirmBox ? (
             <div className="shipper-utility-row">
               <span className="shi-uti-text">
                 You received a new order at <b>{orderData.provider.name}</b>
@@ -163,6 +166,27 @@ function Shipper(props) {
                 />
               </ButtonGroup>
             </div>
+          ) : (
+            <Fragment>
+              <div className="shipper-utility-row">
+                <div
+                  className="cart-body"
+                  style={{ justifyContent: "center", width: "100%" }}
+                >
+                  <img
+                    src={CartImage}
+                    alt="cart_image"
+                    className="cart-image"
+                  />
+                  <span
+                    className="cart-image-description"
+                    style={{ fontSize: 14 }}
+                  >
+                    You have no new order at the moment.
+                  </span>
+                </div>
+              </div>
+            </Fragment>
           )}
           <div className="shipper-utility-row">
             <ButtonGroup
@@ -181,7 +205,7 @@ function Shipper(props) {
                 width={140}
                 fontSize={13}
                 height={30}
-                label={"Arrive at restaurant"}
+                label={"Go to restaurant"}
                 onClick={() => shipperAcceptOrder()}
               />
 
@@ -193,7 +217,7 @@ function Shipper(props) {
                 width={140}
                 fontSize={13}
                 height={30}
-                label={"Delivering order"}
+                label={"On the way"}
                 onClick={() => shipperOnTheWay()}
               />
 
@@ -205,7 +229,7 @@ function Shipper(props) {
                 width={140}
                 fontSize={13}
                 height={30}
-                label={"Finish order"}
+                label={"Complete order"}
                 onClick={() => shipperFinishOrder()}
               />
             </ButtonGroup>

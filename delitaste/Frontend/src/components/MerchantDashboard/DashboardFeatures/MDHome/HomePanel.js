@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useState } from "react";
-import ProviderGeneralInformation from "components/MerchantDashboard/DashboardFeatures/MDHome/ProviderGeneralInformation";
+import MDHome from "components/MerchantDashboard/DashboardFeatures/MDHome/MDHome";
 import "../Panel.scss";
 
 function HomePanel(props) {
@@ -7,19 +7,19 @@ function HomePanel(props) {
     case "general":
       return (
         <div className="panel-content-wrapper">
-          <ProviderGeneralInformation />
+          <MDHome />
         </div>
       );
     case "my-restaurant":
       return (
         <Fragment>
-          <div className="panel-content-wrapper">abc</div>
+          <div className="panel-content-wrapper">Developing</div>
         </Fragment>
       );
     default:
       return (
         <div className="panel-container">
-          <div className="panel-center">ABC</div>
+          <div className="panel-center">Developing</div>
         </div>
       );
   }

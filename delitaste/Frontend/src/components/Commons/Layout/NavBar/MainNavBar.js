@@ -263,13 +263,14 @@ function MainNavBar({ user, history }) {
         openModal={cartModal}
         title={"Add Additional Options"}
         position="right"
-        cartWidth={400}
+        cartWidth={450}
         cartHeight={"320"}
         cartHeightAuto={true}
-        cartPositionTop={90}
+        cartPositionTop={0}
         cartPositionRight={0}
         useCartUI={true}
-        transparent={"0"}
+        transparentUnderNavbar={true}
+        transparent={"0.5"}
         closeModal={() => {
           setCartModal(false);
         }}

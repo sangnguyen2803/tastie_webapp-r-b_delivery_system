@@ -63,7 +63,7 @@ function OrderDetail(props) {
     fetchAllOrders(props.match.params.id);
   }, []);
   useEffect(() => {
-    const provider_id = user.providerId;
+    const provider_id = user.provider_id;
     socket.emit("provider-join-room", `provider-${provider_id}`);
     socket.on(
       "provider-received-order",
@@ -81,7 +81,7 @@ function OrderDetail(props) {
         });
       }
     );
-  }, [user.providerId]);
+  }, [user.provider_id]);
 
   const viewOrderDetail = (code) => {
     async function fetchOrderDetail(orderCode) {

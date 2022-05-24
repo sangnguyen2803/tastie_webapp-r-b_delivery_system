@@ -90,8 +90,8 @@ function ProductOverview(props) {
   const [searchTerm, setSearchTerm] = useState("");
   const { user, provider, getProductListAPI } = props;
   useEffect(async () => {
-    if (user.providerId !== -1 && user.providerId !== null) {
-      const result = await getProductListAPI(user.providerId);
+    if (user.provider_id !== -1 && user.provider_id !== null) {
+      const result = await getProductListAPI(user.provider_id);
     }
   }, []);
 

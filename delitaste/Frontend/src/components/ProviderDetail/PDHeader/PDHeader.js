@@ -127,7 +127,7 @@ function PDHeader(props) {
   }, []);
   useEffect(() => {
     async function fetchingDataAPI() {
-      const result = await props.getProviderByIdAPI(props.match.params?.id);
+      const result = await props.getProviderByIdAPI(props.match.params?.id, 1); //type = 1
       setProviderDetail(result?.data);
     }
     fetchingDataAPI();
@@ -216,7 +216,20 @@ function PDHeader(props) {
                 />
               </ButtonGroup>
             </div>
-            <div className="p-d-promotion">
+          </div>
+        </Fragment>
+      )}
+    </Fragment>
+  );
+}
+
+PDHeader.propTypes = {
+  getProviderByIdAPI: PropTypes.func.isRequired,
+};
+export default withRouter(connect(null, { getProviderByIdAPI })(PDHeader));
+
+/*
+<div className="p-d-promotion">
               <div className="p-d-promotion-container">
                 {promotions?.map((promotion) => (
                   <div className="promotion-items-wrapper">
@@ -289,14 +302,5 @@ function PDHeader(props) {
                 />
               </div>
             </div>
-          </div>
-        </Fragment>
-      )}
-    </Fragment>
-  );
-}
 
-PDHeader.propTypes = {
-  getProviderByIdAPI: PropTypes.func.isRequired,
-};
-export default withRouter(connect(null, { getProviderByIdAPI })(PDHeader));
+*/

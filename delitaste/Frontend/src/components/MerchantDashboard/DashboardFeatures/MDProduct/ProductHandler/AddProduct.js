@@ -59,8 +59,8 @@ function AddProduct(props) {
       try {
         let foodCategory = await props.getCategoryAPI("food");
         let mainFoodCategory = await props.getCategoryAPI("main-food");
-        if (user.providerId) {
-          var menuCategory = await props.getMenuCategoryAPI(user.providerId);
+        if (user.provider_id) {
+          var menuCategory = await props.getMenuCategoryAPI(user.provider_id);
         }
         setFoodCategory(foodCategory);
         setMainFoodCategory(mainFoodCategory);
@@ -83,7 +83,7 @@ function AddProduct(props) {
 
   const addProduct = async (values) => {
     const formData = {
-      provider_id: user.providerId,
+      provider_id: user.provider_id,
       product_name: values.productName,
       product_status: values.productStatus,
       description: values.description,
@@ -96,7 +96,7 @@ function AddProduct(props) {
       additionalOptions: additionalOption,
     };
     console.log(formData);
-    if (user.providerId !== -1 && user.providerId !== null) {
+    if (user.provider_id !== -1 && user.provider_id !== null) {
       const status = await props.addProductAPI(formData);
       if (status) console.log("Thanh cong");
       else console.log("That bai");

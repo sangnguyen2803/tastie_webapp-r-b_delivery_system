@@ -76,14 +76,14 @@ function OrderDetail(props) {
 
   const selectedPMStyle = {
     border: "1px solid #d6d6d6",
-    backgroundColor: "#f2f2f2",
+    backgroundColor: "#f5f5f5",
   };
   useEffect(() => {
     async function fetchingAddressBook() {
-      var addressBook = await getAddressBookAPI(1039129);
+      var addressBook = await getAddressBookAPI(props.match.params.uid);
       setDeliveryAddress(addressBook?.address[0]?.address);
-      let longitudeDF = addressBook?.address[0].longitude;
-      let latitudeDF = addressBook?.address[0].latitude;
+      let longitudeDF = addressBook?.address[0]?.longitude;
+      let latitudeDF = addressBook?.address[0]?.latitude;
       let providerIdDF = user.userCart?.provider_id;
       if (providerIdDF !== -1) {
         var deliveryFee = await getDeliveryFee(
@@ -107,7 +107,7 @@ function OrderDetail(props) {
       }));
     }
     fetchingAddressBook();
-  }, [user.userCart]);
+  }, []);
   const onChange = (newValue) => {
     setDeliveryOption(newValue);
   };
@@ -207,7 +207,7 @@ function OrderDetail(props) {
                 <FontAwesomeIcon className="oc-od-ab-icon" icon={faBook} />
                 Recent address:
               </span>
-              {addressBook?.map((a) => (
+              {user.location?.map((a) => (
                 <label className="hb-sb-type-wrapper radio" key={a.address}>
                   <input
                     className="oc-od-ab-selection"

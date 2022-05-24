@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import React, { Fragment, useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
 import {
   faHeart as faHeart2,
   faBars,
@@ -48,6 +47,10 @@ function PDBody({ products, upcomingProducts, user, ...rest }) {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "auto" });
   }, []);
+
+  useEffect(() => {
+    console.log(products);
+  }, [products]);
 
   const clearCartItem = (id) => {
     async function clearCartItem(id) {
@@ -130,43 +133,7 @@ function PDBody({ products, upcomingProducts, user, ...rest }) {
               </span>
             )}
           </div>
-          <div className={`pd-pl-title product-group-upcoming`}>Upcoming</div>
-          <div className="pd-pl-upcoming-product-group">
-            {upcomingProducts?.map((up) => (
-              <Fragment>
-                <div
-                  className="pd-pl-upcoming-product-item"
-                  onClick={() => {
-                    setShowUpcomingProductDetail(true);
-                    setSelectedUpcomingProductDetail(up);
-                  }}
-                >
-                  <div className="pd-pl-up-img-wrapper">
-                    <img
-                      className="pd-pl-up-product-img"
-                      src={up.product.product_image}
-                      alt="product_photo"
-                    />
-                  </div>
-                  <div
-                    className="pd-pl-up-tag-btn"
-                    style={{
-                      width: "auto",
-                      marginRight: 5,
-                      marginTop: 0,
-                      backgroundColor: "unset",
-                      alignSelf: "flex-end",
-                    }}
-                  >
-                    <Tag text="New" />
-                  </div>
-                  <div className="pd-pl-up-tag-btn">
-                    <span className="pd-pl-up-main-text">Coming soon</span>
-                  </div>
-                </div>
-              </Fragment>
-            ))}
-          </div>
+
           {products?.length !== 0 &&
             products.map((menu) => (
               <Fragment>
@@ -175,55 +142,127 @@ function PDBody({ products, upcomingProducts, user, ...rest }) {
                 >
                   {menu.menu_category_name}
                 </div>
-                <div className="pd-pl-product-group">
-                  {menu.products.map((product) => (
-                    <div
-                      className="pd-pl-product-item"
-                      onClick={() => {
-                        setShowProductDetail(true);
-                        setSelectedProductDetail(product);
-                      }}
-                      key={product.product_id}
-                    >
-                      <div className="pd-pl-img-wrapper">
-                        <img
-                          className="pd-pl-product-img"
-                          src={product.product_image}
-                          alt="product_photo"
-                        />
-                      </div>
-                      <div className="pd-pl-quantity-btn">
-                        {!user?.userCart?.cart?.filter(
-                          (item) =>
-                            item.product_id === parseInt(product.product_id)
-                        )[0]?.quantity ? (
-                          <FontAwesomeIcon
-                            icon={faPlus}
-                            className="inc-des-button"
-                            onClick={() => {
-                              setShowProductDetail(true);
-                              setSelectedProductDetail(product);
-                            }}
-                          />
-                        ) : (
-                          <span className="inc-des-button-2">
-                            {
-                              user.userCart?.cart.filter(
-                                (item) =>
-                                  item.product_id ===
-                                  parseInt(product.product_id)
-                              )[0]?.quantity
+                {menu.products.length > 3 ? (
+                  <div className="pd-pl-product-group">
+                    {menu.products.map((product) => (
+                      <div
+                        className="pd-pl-product-item"
+                        onClick={() => {
+                          setShowProductDetail(true);
+                          setSelectedProductDetail(product);
+                        }}
+                        key={product.product_id}
+                      >
+                        <div className="pd-pl-img-wrapper">
+                          <img
+                            className="pd-pl-product-img"
+                            src={
+                              product.product_image ||
+                              "https://www.lyon-ortho-clinic.com/files/cto_layout/img/placeholder/camera.jpg"
                             }
-                          </span>
-                        )}
+                            alt="product_photo"
+                          />
+                        </div>
+                        <div className="pd-pl-quantity-btn">
+                          {!user?.userCart?.cart?.filter(
+                            (item) =>
+                              item.product_id === parseInt(product.product_id)
+                          )[0]?.quantity ? (
+                            <FontAwesomeIcon
+                              icon={faPlus}
+                              className="inc-des-button"
+                              onClick={() => {
+                                setShowProductDetail(true);
+                                setSelectedProductDetail(product);
+                              }}
+                            />
+                          ) : (
+                            <span className="inc-des-button-2">
+                              {
+                                user.userCart?.cart.filter(
+                                  (item) =>
+                                    item.product_id ===
+                                    parseInt(product.product_id)
+                                )[0]?.quantity
+                              }
+                            </span>
+                          )}
+                        </div>
+                        <span className="pd-pl-text">
+                          {product.product_name}
+                        </span>
+                        <span className="pd-pl-sub-text">
+                          € {product.price?.toFixed(2)}
+                        </span>
                       </div>
-                      <span className="pd-pl-text">{product.product_name}</span>
-                      <span className="pd-pl-sub-text">
-                        € {product.price?.toFixed(2)}
-                      </span>
-                    </div>
-                  ))}
-                </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="pd-pl-product-group-2">
+                    {menu.products.map((product) => (
+                      <div
+                        className="pd-pl-product-item-2"
+                        onClick={() => {
+                          setShowProductDetail(true);
+                          setSelectedProductDetail(product);
+                        }}
+                        key={product.product_id}
+                      >
+                        <div className="pd-pl-img-wrapper">
+                          <img
+                            className="pd-pl-product-img"
+                            src={
+                              product.product_image ||
+                              "https://www.lyon-ortho-clinic.com/files/cto_layout/img/placeholder/camera.jpg"
+                            }
+                            alt="product_photo"
+                          />
+                        </div>
+                        <div className="pd-pl-content-wrapper">
+                          <span className="pd-pl-text">
+                            {product.product_name}
+                          </span>
+                          <span className="pd-pl-sub-text">
+                            € {product.price?.toFixed(2)}
+                          </span>
+                          <span
+                            className="pd-pl-sub-text"
+                            style={{ height: 70 }}
+                          >
+                            {product.description?.length > 5
+                              ? product.description
+                              : `Have you tried ${product.product_name} with the taste from this restaurant? If not, why don't you order now?`}
+                          </span>
+                          <div className="pd-pl-quantity-btn-horizontal">
+                            {!user?.userCart?.cart?.filter(
+                              (item) =>
+                                item.product_id === parseInt(product.product_id)
+                            )[0]?.quantity ? (
+                              <FontAwesomeIcon
+                                icon={faPlus}
+                                className="inc-des-button-horizontal"
+                                onClick={() => {
+                                  setShowProductDetail(true);
+                                  setSelectedProductDetail(product);
+                                }}
+                              />
+                            ) : (
+                              <span className="inc-des-button-2-horizontal">
+                                {
+                                  user.userCart?.cart.filter(
+                                    (item) =>
+                                      item.product_id ===
+                                      parseInt(product.product_id)
+                                  )[0]?.quantity
+                                }
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </Fragment>
             ))}
         </div>
@@ -324,6 +363,43 @@ const mapStateToProps = (state) => ({
 
 export default withRouter(connect(mapStateToProps, { clearCart })(PDBody));
 
+/*<div className={`pd-pl-title product-group-upcoming`}>Upcoming</div>
+ <div className="pd-pl-upcoming-product-group">
+            {upcomingProducts?.map((up) => (
+              <Fragment>
+                <div
+                  className="pd-pl-upcoming-product-item"
+                  onClick={() => {
+                    setShowUpcomingProductDetail(true);
+                    setSelectedUpcomingProductDetail(up);
+                  }}
+                >
+                  <div className="pd-pl-up-img-wrapper">
+                    <img
+                      className="pd-pl-up-product-img"
+                      src={up.product.product_image}
+                      alt="product_photo"
+                    />
+                  </div>
+                  <div
+                    className="pd-pl-up-tag-btn"
+                    style={{
+                      width: "auto",
+                      marginRight: 5,
+                      marginTop: 0,
+                      backgroundColor: "unset",
+                      alignSelf: "flex-end",
+                    }}
+                  >
+                    <Tag text="New" />
+                  </div>
+                  <div className="pd-pl-up-tag-btn">
+                    <span className="pd-pl-up-main-text">Coming soon</span>
+                  </div>
+                </div>
+              </Fragment>
+            ))}
+          </div> */
 /*
  {!isButtonExpanded ? (
                       <div className="pd-pl-quantity-btn">

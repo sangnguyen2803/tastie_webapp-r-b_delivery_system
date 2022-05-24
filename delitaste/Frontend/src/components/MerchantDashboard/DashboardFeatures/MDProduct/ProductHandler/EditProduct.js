@@ -78,7 +78,7 @@ function EditProduct(props) {
   const updateProduct = (values) => {
     const { user } = props;
     const formData = {
-      provider_id: user.providerId,
+      provider_id: user.provider_id,
       product_name: values.productName,
       product_status: values.productStatus,
       desciption: values.desciption,

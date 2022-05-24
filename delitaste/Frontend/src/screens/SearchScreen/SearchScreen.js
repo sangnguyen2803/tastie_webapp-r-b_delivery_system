@@ -8,14 +8,7 @@ import SearchResult from "components/SearchResult/SearchResult";
 function HomeScreen(props) {
   return (
     <Fragment>
-      {props.isLoader ? (
-        <SearchResult />
-      ) : (
-        <Fragment>
-          <SearchResult />
-          <Spinner visibility={true} />
-        </Fragment>
-      )}
+      <SearchResult />
     </Fragment>
   );
 }

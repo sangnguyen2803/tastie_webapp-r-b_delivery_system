@@ -25,6 +25,12 @@ function OrderHistory(props) {
   useEffect(() => {
     async function fetchOrderHistory(id) {
       const result = await getOrderHistoryAPI(id);
+      result.sort(function (a, b) {
+        return (
+          new Date(b.completed_at.split(", ")[1]) -
+          new Date(a.completed_at.split(", ")[1])
+        );
+      });
       setOrderHistory(result);
       setFilterOrderHistory(result);
     }
@@ -41,7 +47,10 @@ function OrderHistory(props) {
       setFilterOrderHistory(result);
     } else setFilterOrderHistory(orderHistory);
   };
-  useEffect(() => {}, [filterMode]);
+  const directToOrderTracking = (code, status) => {
+    if (status < 5) history.push(`/order-tracking/${code}`);
+    return;
+  };
   return (
     <Fragment>
       <div className="profile-ohis-container">
@@ -64,7 +73,7 @@ function OrderHistory(props) {
               "Completed",
               "Cancel",
             ].map((item, index) => (
-              <option value={index} label={item} />
+              <option key={index} value={index} label={item} />
             ))}
           </select>
           —<span className="p-ohis-b-gp-label">Date:</span>
@@ -95,13 +104,18 @@ function OrderHistory(props) {
         </div>
 
         <div className="p-ohis-body-wrapper">
-          {filterOrderHistory?.map((item) => (
+          {filterOrderHistory.map((item) => (
             <div className="p-ohis-item-wrapper" key={item.order_id}>
               <div className="p-ohis-item-head">
                 <span>#{item.order_code}</span>
                 <span>{item.completed_at}</span>
               </div>
-              <div className="p-ohis-item-body">
+              <div
+                className="p-ohis-item-body"
+                onClick={() =>
+                  directToOrderTracking(item.order_code, item.order_status_nb)
+                }
+              >
                 <img
                   className={`p-ohis-item-img ${
                     item.order_status_nb === 6 && "p-ohis-grey-scale"

@@ -20,7 +20,7 @@
 
 .p-ohis-body-wrapper {
     display: flex;
-    flex-direction: column-reverse;
+    flex-direction: column;
     width: calc(100% - 20px);
     justify-content: flex-start;
     align-items: center;
@@ -48,6 +48,7 @@
             align-items: center;
             font-size: 14px;
             color: rgb(140, 140, 140);
+            user-select: none;
         }
 
         .p-ohis-item-body {
@@ -58,6 +59,7 @@
             align-items: flex-start;
             height: auto;
             padding: 5px 0;
+            cursor: pointer;
         }
     }
 }

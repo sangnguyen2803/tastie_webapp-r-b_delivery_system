@@ -28,7 +28,7 @@ function OrderReview(props) {
     setOrderForm((prevState) => ({
       ...prevState,
       customer_id: uid,
-      tips: 0 + tip,
+      tips: tip || 0,
     }));
     var code = await submitOrderCheckoutAPI(orderForm);
     if (code && uid !== -1) {
@@ -74,7 +74,7 @@ function OrderReview(props) {
             style={tipOption === 1 ? tipOptionStyle : {}}
             onClick={() => {
               setTipOption(1);
-              subTotal && setTip(0);
+              setTip(0);
             }}
             className="oc-or-rb-option"
           >
@@ -85,7 +85,7 @@ function OrderReview(props) {
             style={tipOption === 2 ? tipOptionStyle : {}}
             onClick={() => {
               setTipOption(2);
-              subTotal && setTip(subTotal * 0.1);
+              setTip(subTotal * 0.1);
             }}
             className="oc-or-rb-option"
           >
@@ -96,7 +96,7 @@ function OrderReview(props) {
             style={tipOption === 3 ? tipOptionStyle : {}}
             onClick={() => {
               setTipOption(3);
-              subTotal && setTip(subTotal * 0.2);
+              setTip(subTotal * 0.2);
             }}
             className="oc-or-rb-option"
           >
@@ -107,7 +107,7 @@ function OrderReview(props) {
             style={tipOption === 4 ? tipOptionStyle : {}}
             onClick={() => {
               setTipOption(4);
-              subTotal && setTip(subTotal * 0.3);
+              setTip(subTotal * 0.3);
             }}
             className="oc-or-rb-option"
           >
@@ -154,8 +154,7 @@ function OrderReview(props) {
             Total
           </span>
           <span className="oc-or-sur-text" style={{ fontSize: 22 }}>
-            ${" "}
-            {(parseFloat(subTotal) + parseFloat(props.deliveryFee)).toFixed(2)}
+            $ {parseFloat(subTotal + tip + props.deliveryFee).toFixed(2)}
           </span>
         </div>{" "}
         <ButtonGroup float="center">

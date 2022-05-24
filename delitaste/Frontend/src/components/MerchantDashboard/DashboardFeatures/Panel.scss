@@ -341,10 +341,8 @@ td {
     }
 
     .menu-category-name {
-      margin-left: 10px;
       width: 180px;
-      font-size: 15px;
-      font-weight: bold;
+      font-size: 14px;
     }
   }
 }
@@ -375,7 +373,7 @@ td {
       flex-direction: row;
       flex-wrap: nowrap;
       align-items: center;
-      font-size: 14px;
+      font-size: 12px;
       border-bottom: 2px solid #e6e6e6;
       transition: 0.3s;
 
@@ -650,15 +648,15 @@ td {
     }
 
     .pending {
-      color: rgb(240, 144, 0);
+      color: rgb(255, 234, 0);
     }
 
     .picked-up {
-      color: rgb(255, 81, 0);
+      color: rgb(210, 0, 0);
     }
 
     .done {
-      color: rgb(0, 117, 53);
+      color: rgb(0, 173, 78);
     }
 
     .cancel {

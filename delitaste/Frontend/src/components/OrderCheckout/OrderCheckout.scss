@@ -1,5 +1,6 @@
 $desktop-panel-width: 500px;
 $desktop-left-panel-content: 70%;
+
 .order-checkout-container {
   margin-top: 90px;
   display: flex;
@@ -9,27 +10,31 @@ $desktop-left-panel-content: 70%;
   width: 100%;
   height: auto;
   color: black;
+
   .oc-order-detail {
     width: calc(100% - $desktop-panel-width);
     display: flex;
     flex-direction: row;
     justify-content: center;
-    align-items: center;height: auto;
+    align-items: center;
+    height: auto;
 
     .oc-od-container {
-      
+
       display: flex;
       width: $desktop-left-panel-content;
       padding-top: 15px;
       flex-direction: column;
       align-items: flex-start;
       justify-content: flex-start;
+
       .oc-od-main-text-head {
         font-size: 28px;
         font-weight: 700;
         user-select: none;
         cursor: pointer;
       }
+
       .oc-od-switcher-wrapper {
         width: 200px;
         height: 30px;
@@ -41,6 +46,7 @@ $desktop-left-panel-content: 70%;
         justify-content: flex-start;
         align-items: center;
       }
+
       .oc-od-address-option {
         display: flex;
         flex-direction: row;
@@ -49,16 +55,20 @@ $desktop-left-panel-content: 70%;
         height: 30px;
         margin: 0px 0;
         width: 100%;
+
         .oc-od-small-icon {
           margin-right: 5px;
           font-size: 14px;
           justify-self: flex-start;
           cursor: pointer;
         }
+
         .oc-od-address-text {
+
           margin: 0 5px;
           font-size: 14px;
           width: auto;
+          min-width: 90px;
         }
       }
     }
@@ -73,11 +83,13 @@ $desktop-left-panel-content: 70%;
     font-size: 14px;
     gap: 5px;
   }
+
   .oc-order-review {
     top: 90px;
     height: 670px;
     background-color: #f6f6f6;
-    position: -webkit-sticky; /* Safari & IE */
+    position: -webkit-sticky;
+    /* Safari & IE */
     position: sticky;
     width: $desktop-panel-width;
   }
@@ -95,6 +107,7 @@ $desktop-left-panel-content: 70%;
   background: #ffffff;
   border-right: none;
 }
+
 .oc-od-promotion-input-wrapper {
   width: 100%;
   display: flex;
@@ -102,6 +115,7 @@ $desktop-left-panel-content: 70%;
   justify-content: flex-start;
   align-items: center;
 }
+
 .oc-od-btn-edit {
   display: flex;
   flex-direction: row;
@@ -110,15 +124,17 @@ $desktop-left-panel-content: 70%;
   justify-content: center;
   gap: 5px;
   cursor: pointer;
+
   .oc-od-edit-text-underline {
     font-size: 14px;
     text-decoration: underline;
     text-underline-position: under;
     color: rgb(89, 0, 0);
     user-select: none;
-    
+
   }
 }
+
 .oc-od-popup-button {
   display: flex;
   flex-direction: row;
@@ -134,14 +150,16 @@ $desktop-left-panel-content: 70%;
   color: rgb(0, 0, 0);
   cursor: pointer;
 }
+
 .oc-od-input-promos {
   width: 200px;
-  
+
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   align-items: flex-start;
 }
+
 .oc-od-submit-button {
   display: flex;
   flex-direction: row;
@@ -154,6 +172,7 @@ $desktop-left-panel-content: 70%;
   color: rgb(0, 0, 0);
   cursor: pointer;
 }
+
 .oc-od-submit-button-2 {
   width: 80px;
   margin-left: 0px;

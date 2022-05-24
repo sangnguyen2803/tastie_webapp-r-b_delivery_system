@@ -1,10 +1,12 @@
 $logoColor: #aa0033;
+
 @mixin FlexCol($width, $flexWrap) {
   width: $width;
   display: flex;
   flex-wrap: $flexWrap;
   flex-direction: column;
 }
+
 @mixin FlexRow($width, $flexWrap) {
   width: $width;
   display: flex;
@@ -12,38 +14,113 @@ $logoColor: #aa0033;
   flex-direction: row;
 }
 
+//duplicate
+.pro-sb-header {
+  width: calc(100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 5px;
+}
+
+.pro-sb-profile-text-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  user-select: none;
+  font-size: 22px;
+  width: 320px;
+  height: 38px;
+  top: 122px;
+}
+
+.pro-sb-low-text {
+  text-indent: 30px;
+  font-size: 15px;
+  color: #808080;
+}
+
+.pro-sb-pt-main-text {
+  width: 100%;
+  font-size: 16px;
+  color: #000000;
+  text-align: center;
+}
+
+
+.pro-sb-pt-sub-text {
+  font-size: 11px;
+  color: rgb(0, 0, 0);
+  cursor: pointer;
+}
+
+.pro-sb-profile-img {
+  width: 280px;
+  height: 110px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+
+
+
+
 .sb-header-wrapper {
   @include FlexCol(100%, wrap);
-  height: 120px;
-  justify-content: center;
+  height: 170px;
+  justify-content: flex-start;
   align-items: center;
-  border-bottom: 2px solid rgb(235, 235, 235);
-  .sb-header-avatar {
-    width: 80px;
+
+  .sb-header-img-wrapper {
+    width: 280px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    height: 120px;
+
+    .sb-header-image {
+      width: 100%;
+      height: 100%;
+      border-radius: 10px;
+      display: block;
+      object-fit: cover;
+    }
   }
+
   .sb-header-text {
     color: black;
-    font-size: 13px;
+    font-size: 16px;
     font-weight: bold;
   }
 }
+
+.pro-sb-profile-image {
+  width: 60px;
+  height: 60px;
+  border-radius: 5px;
+  object-fit: cover;
+}
+
 .sb-wrapper {
-  border-right: 2px solid rgb(241, 241, 241);
   position: fixed;
-  background-color: #ffffff;
+  background-color: #FAFAFA;
   color: rgb(255, 255, 255);
   left: 0;
   width: inherit;
   height: 100%;
+
   .sb-head-wrapper {
     @include FlexRow(100%, nowrap);
     align-items: flex-start;
     justify-content: center;
     padding-top: 20px;
     padding-bottom: 50px;
+
     .brand-logo-image-login {
       height: 55px;
     }
+
     .login-form-title {
       font-family: "Patua One", cursive;
       font-size: 25px;
@@ -51,74 +128,63 @@ $logoColor: #aa0033;
       color: $logoColor;
     }
   }
+
   .sb-sub-feature-row {
     user-select: none;
-    color: rgb(56, 56, 56);
+    color: rgb(0, 0, 0);
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     align-items: center;
     width: 100%;
-    line-height: 30px;
+    padding-left: 58px;
+    height: 35px;
     text-decoration: none;
-    padding-left: 64px;
     box-sizing: border-box;
     transition: 0.1s;
     transition-property: background;
     font-size: 13px;
     cursor: pointer;
-    &:hover {
-      background-color: rgb(235, 235, 235);
-      color: rgb(136, 0, 0);
-      font-weight: bold;
-      .sb-icon {
-        color: rgb(153, 36, 0);
-      }
-      .sb-dropdown-icon {
-        color: rgb(153, 36, 0);
-      }
-    }
   }
+
   .sb-feature-row {
+    align-items: center;
     user-select: none;
-    color: rgb(56, 56, 56);
+    color: #101010;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    align-items: center;
     width: 100%;
-    line-height: 40px;
+    height: 45px;
     text-decoration: none;
-    padding-left: 20px;
     box-sizing: border-box;
     transition: 0.1s;
     transition-property: background;
-    font-size: 13px;
-    font-weight: bold;
-    &:hover {
-      background-color: rgb(230, 230, 230);
-      color: rgb(0, 0, 0);
+    font-size: 14px;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
 
-      .sb-icon {
-        color: rgb(153, 36, 0);
-      }
-      .sb-dropdown-icon {
-        color: rgb(153, 36, 0);
-      }
-    }
+
     .sb-icon {
-      color: rgb(75, 17, 0);
-      width: 10%;
-      font-size: 20px;
-      padding-right: 15px;
+      width: 18px;
+      margin-left: 30px;
+      font-size: 15px;
     }
+
     .sb-feature-text {
-      width: 70%;
+      min-width: 200px;
+      width: 210px;
+      font-size: 14px;
     }
+
     .sb-dropdown-icon {
+      color: #a9a9a9;
       width: 10%;
       font-size: 16px;
     }
+
   }
 }
 
@@ -128,6 +194,7 @@ $logoColor: #aa0033;
   .sb-header-wrapper {
     display: none !important;
   }
+
   .sb-feature-text,
   .sb-dropdown-icon,
   .sb-sub-feature-row {
@@ -137,7 +204,7 @@ $logoColor: #aa0033;
   .sb-wrapper {
     width: 50px;
     background-color: #490000;
-    
+
   }
 
   .sb-feature-row {
@@ -146,12 +213,15 @@ $logoColor: #aa0033;
     height: 50px;
     font-size: 50px !important;
     padding-left: 0 !important;
+
     &:hover {
       background-color: rgb(129, 35, 35) !important;
       color: rgb(0, 0, 0);
     }
+
     cursor: pointer;
   }
+
   .sb-icon {
     color: white !important;
     width: 100% !important;
@@ -159,5 +229,4 @@ $logoColor: #aa0033;
   }
 }
 
-@media only screen and (max-width: 1000px) and (min-width: 767px) {
-}
+@media only screen and (max-width: 1000px) and (min-width: 767px) {}

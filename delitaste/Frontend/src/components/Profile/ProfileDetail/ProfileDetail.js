@@ -17,7 +17,6 @@ import {
   faUndo,
   faLink,
   faSave,
-  faMap,
   faHome,
   faBuilding,
   faAddressBook,
@@ -29,6 +28,11 @@ import ReactMapGl, { Source, Layer, Marker, Popup } from "react-map-gl";
 import axios from "axios";
 import "./ProfileDetail.scss";
 import { faHouseUser, faMapMarkedAlt } from "@fortawesome/free-solid-svg-icons";
+import city from "assets/json_location/city";
+import {
+  addAddressAPI,
+  getAddressBookAPI,
+} from "store/actions/UserAction/UserAction";
 
 const initialValues1 = {
   firstname: "",
@@ -37,14 +41,18 @@ const initialValues1 = {
   gender: 1,
 };
 const initialValues2 = {
+  address: "",
+  longitude: "",
+  latitude: "",
   city: "",
   district: "",
   ward: "",
   road: "",
+  type: 1,
 };
 
 function ProfileDetail(props) {
-  const { user } = props;
+  const { user, addAddressAPI, getAddressBookAPI } = props;
   const [imageURL, setImageURL] = useState();
   const [showEditBI, setShowEditBI] = useState(true);
   const [showEditPI, setShowEditPI] = useState(false);
@@ -63,6 +71,27 @@ function ProfileDetail(props) {
     backgroundColor: "#f6f6f6",
   };
   const [addressType, setAddressType] = useState(1);
+  const [latitude, setLatitude] = useState(10.768685473523648);
+  const [longitude, setLongitude] = useState(106.68057155417674);
+  const [viewport, setViewport] = useState({
+    width: "calc(80% - 14px)",
+    height: "300px",
+    latitude: 10.768685473523648,
+    longitude: 106.68057155417674,
+    zoom: 16,
+  });
+  const [contact, setContact] = useState([]);
+  async function fetchAddressBook() {
+    var result = await getAddressBookAPI(user.profile.user_id);
+    setContact(result);
+  }
+  useEffect(() => {
+    fetchAddressBook();
+  }, [user.profile]);
+  const inputFile = useRef(null);
+  const uploadProfileImage = (e) => {
+    inputFile.current.click();
+  };
   const getFullAddress = (road, city_id, district_id, ward_id) => {
     const address = [];
     locations
@@ -83,20 +112,6 @@ function ProfileDetail(props) {
     if (road) address.unshift(road);
     return address.join(", ");
   };
-  const [latitude, setLatitude] = useState(10.768685473523648);
-  const [longitude, setLongitude] = useState(106.68057155417674);
-  const [viewport, setViewport] = useState({
-    width: "calc(80% - 14px)",
-    height: "300px",
-    latitude: 10.768685473523648,
-    longitude: 106.68057155417674,
-    zoom: 16,
-  });
-
-  const inputFile = useRef(null);
-  const uploadProfileImage = (e) => {
-    inputFile.current.click();
-  };
   const uploadFile = (e) => {
     let file = e.target.files[0];
   };
@@ -104,7 +119,29 @@ function ProfileDetail(props) {
     console.log(values);
   };
   const handleSubmitForm2 = async (values) => {
-    console.log(values);
+    const data = {
+      customer_id: user.profile.user_id,
+      address: getFullAddress(
+        values.road,
+        values.city,
+        values.district,
+        values.ward
+      ),
+      city: values.city,
+      longtitude: longitude,
+      latitude: latitude,
+      type: addressType,
+    };
+    console.log(data);
+    await addAddressAPI(data);
+    fetchAddressBook();
+    setShowValidateDialog(true);
+    setDialogContent({
+      ...dialogContent,
+      header: "Success",
+      text1: `Successfully adding a new address`,
+      text2: `Address "${data.address}" has been added to your address book`,
+    });
   };
 
   return (
@@ -381,11 +418,7 @@ function ProfileDetail(props) {
             );
           }}
         </Formik>
-        <Formik
-          initialValues={initialValues2}
-          validateOnChange={false}
-          onSubmit={(values) => handleSubmitForm2(values)}
-        >
+        <Formik initialValues={initialValues2} validateOnChange={false}>
           {(formikProps) => {
             const { values, errors, touched } = formikProps;
             const handleGeoCoding = (values) => {
@@ -395,7 +428,6 @@ function ProfileDetail(props) {
               const endpoint = `https://api.geoapify.com/v1/geocode/search?text=${address}&apiKey=6d74076cb237412e9abb06e88020a7a5`;
               async function fetchCoordinates(url) {
                 const result = await axios.get(url);
-                console.log(result);
                 if (result.data?.features?.length !== 0) {
                   setLongitude(
                     result.data.features[0]?.geometry?.coordinates[0]
@@ -467,7 +499,9 @@ function ProfileDetail(props) {
                               icon={faSave}
                             />
                           }
-                          onClick={() => {}}
+                          onClick={() => {
+                            handleSubmitForm2(values);
+                          }}
                         />
                       </div>
                     )}
@@ -476,6 +510,23 @@ function ProfileDetail(props) {
                   {showEditCI && (
                     <Fragment>
                       <div className="p-pd-general-profile-wrapper">
+                        {user.location.map((address) => (
+                          <div className="p-pd-general-profile-row ">
+                            <div className="p-pd-text-secondary">
+                              <FontAwesomeIcon
+                                className="p-pd-address-icon"
+                                icon={
+                                  address.type === 1
+                                    ? faHome
+                                    : address.type === 2
+                                    ? faBuilding
+                                    : faAddressBook
+                                }
+                              />
+                              <span>{address.address}</span>
+                            </div>
+                          </div>
+                        ))}
                         <div className="p-pd-general-profile-row ">
                           <span className="p-pd-b-gp-label">Location:</span>
                           <Field
@@ -557,7 +608,7 @@ function ProfileDetail(props) {
                           />
                         </div>
                         <div className="p-pd-general-profile-row">
-                          <span className="p-pd-b-gp-label">Address:</span>
+                          <span className="p-pd-b-gp-label">Type:</span>
                           <div
                             className="p-pd-a-item"
                             onClick={() => setAddressType(1)}
@@ -693,6 +744,8 @@ function ProfileDetail(props) {
 ProfileDetail.propTypes = {
   user: PropTypes.object.isRequired,
   product: PropTypes.object.isRequired,
+  addAddressAPI: PropTypes.func.isRequired,
+  getAddressBookAPI: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -700,4 +753,6 @@ const mapStateToProps = (state) => ({
   product: state.ProductReducer,
 });
 
-export default withRouter(connect(mapStateToProps, null)(ProfileDetail));
+export default withRouter(
+  connect(mapStateToProps, { addAddressAPI, getAddressBookAPI })(ProfileDetail)
+);

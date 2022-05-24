@@ -16,7 +16,7 @@ import {
   GET_PROFILE_SUCCESS,
   SET_LOADING,
   SIGN_OUT,
-  GET_ADDRESS_BOOK,
+  GET_CONTACT,
 } from "store/actions/types";
 
 //UPDATE UI
@@ -214,7 +214,7 @@ export const getUserProfileAPI = (accessToken) => async (dispatch) => {
         type: GET_PROFILE_SUCCESS,
         payload: {
           profile: res.data.profile,
-          providerId: res.data.provider_id,
+          provider_id: res.data.provider_id,
         },
       });
     }
@@ -227,13 +227,40 @@ export const getAddressBookAPI = (id) => async (dispatch) => {
   try {
     const endpoint = `/v1/api/tastie/checkout/get_contact/${id}`;
     const res = await axios.get(endpoint);
+    console.log(res.data);
     if (res.data?.status) {
       let phone = res.data.response.user_phone;
       let address = res.data.response.user_address;
+      dispatch({
+        type: GET_CONTACT,
+        payload: {
+          phone,
+          address,
+        },
+      });
       return { phone, address };
     }
   } catch (err) {
     return { phone: "", address: [] };
+  }
+};
+
+export const addAddressAPI = (data) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  const body = JSON.stringify(data);
+  try {
+    const endpoint = "/v1/api/tastie/add-customer-address";
+    const res = await axios.post(endpoint, body, config);
+    console.log(res.data);
+    if (res.data) {
+      console.log(res.data);
+    }
+  } catch (err) {
+    console.log(err);
   }
 };
 

@@ -15,6 +15,7 @@ import {
   faSeedling,
   faUtensils,
 } from "@fortawesome/fontawesome-free-solid";
+import AddressBookPanel from "components/Commons/Overlay/Popup/Panel/AddressBookPanel";
 import { faCandyCane, faCarrot } from "@fortawesome/free-solid-svg-icons";
 const HOME_RENDER = 1;
 const SEARCH_RENDER = 2;
@@ -28,6 +29,7 @@ function HomeBodySidebar(props) {
   const [showFunction3, setShowFunction3] = useState(true);
   const [showFunction4, setShowFunction4] = useState(true);
 
+  const [showAddressPanel, setShowAddressPanel] = useState(false);
   const dietary = [
     { id: 1, dietary_name: "Vegetarian", dietary_icon: faCarrot },
     { id: 2, dietary_name: "Vegan", dietary_icon: faSeedling },
@@ -72,7 +74,12 @@ function HomeBodySidebar(props) {
             <span className="address-book-picked">
               543, Nguyen Dinh Chieu, ward 10, district 3, Ho Chi Minh city
             </span>
-            <span className="address-book-button">Change</span>
+            <span
+              className="address-book-button"
+              onClick={() => setShowAddressPanel(true)}
+            >
+              Change
+            </span>
           </div>
         ) : (
           <></>
@@ -286,6 +293,10 @@ function HomeBodySidebar(props) {
           <></>
         )}
       </div>
+      <AddressBookPanel
+        visible={showAddressPanel}
+        setVisible={setShowAddressPanel}
+      />
     </Fragment>
   );
 }

@@ -35,8 +35,8 @@ function ProductForMenu(props) {
     const { product, user } = props;
     const status = await props.removeProductAPI(productId);
     if (status) {
-      if (user.providerId !== -1 && user.providerId !== null) {
-        const productList = await props.getProductListAPI(user.providerId);
+      if (user.provider_id !== -1 && user.provider_id !== null) {
+        const productList = await props.getProductListAPI(user.provider_id);
         console.log(productList);
         props.setShowHandlerPanel(0);
         props.setSelectedProduct([]);

@@ -21,7 +21,6 @@
     .p-pd-body-wrapper {
         width: 100%;
         display: flex;
-        display: flex;
         flex-direction: column;
         justify-content: flex-start;
         align-items: center;
@@ -285,4 +284,19 @@
 .p-pd-a-label-radio {
     width: auto;
     font-size: 13px;
+}
+
+.p-pd-text-secondary {
+    display: flex;
+    flex-direction: row;
+    font-size: 13px;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    gap: 10px;
+    user-select: none;
+
+    .p-pd-address-icon {
+        width: 15px;
+    }
 }

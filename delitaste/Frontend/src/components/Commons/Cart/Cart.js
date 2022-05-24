@@ -3,7 +3,7 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import Button from "components/Commons/Button/Button";
-import CartImage from "assets/cart.png";
+import CartImage from "assets/cart.svg";
 import "./Cart.scss";
 import { getCart, removeCartItem } from "store/actions/CartAction/CartAction";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -45,14 +45,17 @@ const Cart = (props) => {
     <Fragment>
       <div className="cart-content-wrapper">
         <div className="cart-header">
-          <div className="cart-title" style={{ fontSize: 14 }}>
+          <div className="cart-title" style={{ fontSize: 26 }}>
             {cartItemList?.provider_name !== -1
               ? cartItemList?.provider_name
               : ""}
           </div>
         </div>
         {!cartItemList?.cart ? (
-          <div className="cart-body" style={{ justifyContent: "center" }}>
+          <div
+            className="cart-body"
+            style={{ justifyContent: "center", height: "calc(100vh - 170px)" }}
+          >
             <img src={CartImage} alt="cart_image" className="cart-image" />
             <span className="cart-image-description">
               Add items from a restaurant or store to start a new cart
@@ -81,18 +84,28 @@ const Cart = (props) => {
                   <span className="cart-item-main-text">
                     {cart.product_name}
                   </span>
+                  <span
+                    className="cart-item-sub-text"
+                    style={{ alignSelf: "flex-start", fontSize: 12 }}
+                  >
+                    € {cart.product_price}
+                  </span>
                   {cart?.product_options?.map((option) => (
                     <Fragment>
-                      <span className="cart-item-option-text-1">{`${
-                        option.label
-                      } ${
-                        parseInt(option.price) === 0
-                          ? "(FREE)"
-                          : `(€ ${option.price})`
-                      }:`}</span>
-                      <span className="cart-item-option-text-2">
-                        • {`${option.value} `}
-                      </span>
+                      {option.label !== "?" && (
+                        <Fragment>
+                          <span className="cart-item-option-text-1">{`${
+                            option.label
+                          } ${
+                            parseInt(option.price) === 0
+                              ? "(FREE)"
+                              : `(€ ${option.price})`
+                          }:`}</span>
+                          <span className="cart-item-option-text-2">
+                            • {`${option.value} `}
+                          </span>
+                        </Fragment>
+                      )}
                     </Fragment>
                   ))}
                   {cart.note && (
@@ -117,14 +130,15 @@ const Cart = (props) => {
         )}
         {cartItemList?.cart && (
           <div className="cart-footer">
+            <div className="cart-footer-sub-text">Clear cart</div>
             <Button
               color={"white"}
-              bgColor={"#2c2c2c"}
+              bgColor={"#101010"}
               justifyContent={"center"}
               gap={"10px"}
-              width={180}
-              fontSize={13}
-              height={35}
+              width={"100%"}
+              fontSize={16}
+              height={45}
               label={`Go to checkout • € ${parseFloat(subTotal).toFixed(2)}`}
               onClick={() => {
                 props.history.push(`/order-checkout/${user.userCart?.user_id}`);

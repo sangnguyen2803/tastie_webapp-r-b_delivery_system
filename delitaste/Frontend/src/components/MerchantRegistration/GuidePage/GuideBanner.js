@@ -28,8 +28,8 @@ function GuideBanner(props) {
       props.history.push("/");
       return;
     }
-    if (user.providerId !== -1 && user.providerId !== null) {
-      props.history.push(`/merchant-registration/${user.providerId}/service`);
+    if (user.provider_id !== -1 && user.provider_id !== null) {
+      props.history.push(`/merchant-registration/${user.provider_id}/service`);
       return;
     }
     props.history.push("/merchant-sign-contract");

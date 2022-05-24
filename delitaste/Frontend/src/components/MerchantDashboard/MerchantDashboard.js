@@ -7,6 +7,7 @@ import MerchantBanner from "assets/merchant-form-banner.png";
 import ProductPanel from "components/MerchantDashboard/DashboardFeatures/MDProduct/ProductPanel";
 import OrderPanel from "components/MerchantDashboard/DashboardFeatures/MDOrder/OrderPanel";
 import HomePanel from "./DashboardFeatures/MDHome/HomePanel";
+import MarketingPanel from "components/MerchantDashboard/DashboardFeatures/MDMarketing/MarketingPanel";
 import withAuth from "components/HigherOrderComponents(HOC)/withAuth";
 const backgroundStyling = {
   background: `url(${MerchantBanner})`,
@@ -32,7 +33,6 @@ function MerchantDashboard(props) {
             <Route exact path={`${match.path}/order`} component={OrderPanel}>
               <Redirect to={`${match.path}/product/my-product`} />
             </Route>
-
             <Route
               exact
               path={`${match.path}/product`}
@@ -40,7 +40,6 @@ function MerchantDashboard(props) {
             >
               <Redirect to={`${match.path}/product/my-product`} />
             </Route>
-
             <Route exact path={`${match.path}`}>
               <Redirect to={`${match.path}/provider/my-restaurant`} />
             </Route>
@@ -49,6 +48,15 @@ function MerchantDashboard(props) {
             </Route>
             <Route exact path={`${match.path}/order`}>
               <Redirect to={`${match.path}/order/my-order`} />
+            </Route>
+            <Route exact path={`${match.path}/product`}>
+              <Redirect to={`${match.path}/product/my-product`} />
+            </Route>
+            <Route exact path={`${match.path}/revenue`}>
+              <Redirect to={`${match.path}/revenue/business-revenue`} />
+            </Route>
+            <Route exact path={`${match.path}/insights`}>
+              <Redirect to={`${match.path}/insights/business-insight`} />
             </Route>
 
             <Route
@@ -63,8 +71,13 @@ function MerchantDashboard(props) {
             />
             <Route
               exact
-              path={`${match.path}/provider/:name/:id`}
+              path={`${match.path}/provider/:name`}
               component={HomePanel}
+            />
+            <Route
+              exact
+              path={`${match.path}/marketing/:name/:id`}
+              component={MarketingPanel}
             />
           </Switch>
         </div>

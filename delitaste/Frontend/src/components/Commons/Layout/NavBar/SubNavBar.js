@@ -13,6 +13,7 @@ import CategoryDetail from "./CategoryDetail";
 import "./SubNavBar.scss";
 
 function SubNavBar(variant = true) {
+  const [showCategoryLevel2, setShowCategoryLevel2] = useState(false);
   const [categoryContent, setCategoryContent] = useState({
     content: "item",
     enable: false,
@@ -37,9 +38,12 @@ function SubNavBar(variant = true) {
             onMouseLeave={() => {
               setDropdownStatus(faChevronDown);
               setCategoryContent({ ...categoryContent, enable: false });
+              setShowCategoryLevel2(false);
             }}
           >
             <CategoryDetail
+              setShowCategoryLevel2={setShowCategoryLevel2}
+              showCategoryLevel2={showCategoryLevel2}
               categoryContent={categoryContent}
               setCategoryContent={setCategoryContent}
             />
@@ -53,17 +57,17 @@ function SubNavBar(variant = true) {
             </div>
           </div>
           <div className="nav-feature-1">
-            <div className="nav-category">
-              <div className="nav-text"> Today's Deals </div>
+            <div className="nav-category" style={{ width: 120 }}>
+              <div className="nav-text"> Today's Deals</div>
             </div>
-            <div className="nav-category">
-              <div className="nav-text"> Trendings </div>
+            <div className="nav-category" style={{ width: 120 }}>
+              <div className="nav-text"> Recommend</div>
             </div>
-            <div className="nav-category">
-              <div className="nav-text"> W-Cuisine </div>
+            <div className="nav-category" style={{ width: 120 }}>
+              <div className="nav-text"> Pick up </div>
             </div>
-            <div className="nav-category">
-              <div className="nav-text"> Pre-order </div>
+            <div className="nav-category" style={{ width: 120 }}>
+              <div className="nav-text"> Promotions </div>
             </div>
           </div>
         </div>

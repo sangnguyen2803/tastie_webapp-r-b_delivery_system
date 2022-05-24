@@ -4,7 +4,7 @@ import "components/MerchantDashboard/DashboardFeatures/Panel.scss";
 import "style/Common.scss";
 import "components/MerchantDashboard/DashboardFeatures/MDOrder/OrderHandler/OrderHandler.scss";
 import { Formik, ErrorMessage, Form, Field } from "formik";
-import CartImage from "assets/cart.png";
+import CartImage from "assets/cart.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPlus,

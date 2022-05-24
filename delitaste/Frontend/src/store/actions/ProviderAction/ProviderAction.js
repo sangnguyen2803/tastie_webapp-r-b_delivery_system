@@ -8,6 +8,7 @@ import {
   UPDATE_PRODUCT_DETAIL_INFO_FORM,
   UPDATE_BANK_INFO_FORM,
   GET_PROVIDER_DETAIL,
+  SET_DASHBOARD_PROVIDER,
 } from "store/actions/types";
 
 //Create provider
@@ -188,16 +189,30 @@ export const updateBankInfoFormAPI = (id, data) => async (dispatch) => {
   }
 };
 //get provider by id
-export const getProviderByIdAPI = (id) => async (dispatch) => {
+
+//type 1 : get provider for customer view - type 2 : get provider for provider dashboard view
+export const getProviderByIdAPI = (id, type) => async (dispatch) => {
+  if (!type) type = 1;
   try {
     const endpoint = `/v1/api/provider/dashboard/${id}/get-info`;
     const res = await axios.get(endpoint);
     if (res.data?.state) {
       if (!res.data.provider_info) return [];
-      dispatch({
-        type: GET_PROVIDER_DETAIL,
-        payload: { currentProvider: res.data.provider_info },
-      });
+      if (type === 1) {
+        dispatch({
+          type: GET_PROVIDER_DETAIL,
+          payload: { currentProvider: res.data.provider_info },
+        });
+      }
+      if (type === 2) {
+        dispatch({
+          type: SET_DASHBOARD_PROVIDER,
+          payload: {
+            provider: res.data.provider_info.data,
+            operation: res.data.provider_info.operation_time,
+          },
+        });
+      }
       return res.data.provider_info;
     }
   } catch (err) {

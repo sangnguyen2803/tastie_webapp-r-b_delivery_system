@@ -42,8 +42,8 @@ function ProductDetail(props) {
   // product handler panel - 0: add_product - 1: edit_product
   useEffect(() => {
     async function fetchingData() {
-      if (user.providerId !== -1 && user.providerId !== null) {
-        const productList = await getProductListAPI(user.providerId);
+      if (user.provider_id !== -1 && user.provider_id !== null) {
+        const productList = await getProductListAPI(user.provider_id);
         setItems(productList);
       }
     }

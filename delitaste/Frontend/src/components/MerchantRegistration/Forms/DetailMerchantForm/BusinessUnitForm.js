@@ -1,6 +1,6 @@
 import "./DetailMerchantForm.scss";
 import "style/Common.scss";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Fragment } from "react";
 import { Formik, ErrorMessage, Form, Field } from "formik";
 import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
@@ -16,7 +16,6 @@ import {
   updateBusinessUnitInfoFormAPI,
 } from "store/actions/ProviderAction/ProviderAction";
 import { setDialogBox } from "store/actions/UIComponentAction/DialogBoxAction";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAsterisk, faImage } from "@fortawesome/fontawesome-free-solid";
 import Switch from "react-switch";
@@ -28,6 +27,7 @@ const formHeaderText = {
   bodyText:
     "Make your business unit more accessible to the customers by providing as detailed information regarding your product as possible in the following format.",
 };
+
 const initialValues = {
   operating: {
     sunday: {
@@ -289,7 +289,7 @@ function BusinessUnitForm(props) {
                         {checkedMonday ? "Open" : "Closed"}
                       </span>
                       {checkedMonday === true ? (
-                        <>
+                        <Fragment>
                           <Field
                             className="form-text-field"
                             type="text"
@@ -306,7 +306,7 @@ function BusinessUnitForm(props) {
                             maxLength={50}
                             autoComplete="on"
                           />
-                        </>
+                        </Fragment>
                       ) : null}
                     </div>
 

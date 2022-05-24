@@ -1,10 +1,11 @@
 import {
-  CREATE_MERCHANT ,
+  CREATE_MERCHANT,
   UPDATE_SERVICE_INFO_FORM,
   UPDATE_REPRESENTATIVE_INFO_FORM,
   UPDATE_BUSINESS_UNIT_INFO_FORM,
   UPDATE_PRODUCT_DETAIL_INFO_FORM,
   UPDATE_BANK_INFO_FORM,
+  SET_DASHBOARD_PROVIDER,
 } from "store/actions/types";
 import {} from "store/actions/types";
 
@@ -18,11 +19,20 @@ const initialState = {
   currentForm: 0,
   merchantId: "",
   merchantPrefilledData: {},
+  provider: {},
+  operation: {},
 };
 
-export default function (state = initialState, action) {
+const ProviderReducer = (state = initialState, action) => {
   const { type, payload } = action;
   switch (type) {
+    case SET_DASHBOARD_PROVIDER:
+      return {
+        ...state,
+        ...payload,
+        provider: payload.provider,
+        operation: payload.operation,
+      };
     case CREATE_MERCHANT:
       return { ...state, ...payload };
     case UPDATE_SERVICE_INFO_FORM:
@@ -38,4 +48,6 @@ export default function (state = initialState, action) {
     default:
       return state;
   }
-}
+};
+
+export default ProviderReducer;

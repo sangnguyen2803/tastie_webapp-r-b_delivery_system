@@ -14,10 +14,12 @@
   width: 40%;
   height: auto;
 }
+
 .nav-category-item {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
+  align-items: center;
   justify-content: center;
   gap: 2%;
   width: 100px;
@@ -49,18 +51,22 @@
   cursor: pointer;
   gap: 2px;
 }
+
 .nav-element {
   text-decoration: none;
   color: #d9d9d9;
 }
+
 .nav-element:hover,
 .nav-element:active {
   color: #eab200;
 }
+
 .nav-icon {
   display: block;
   color: #fff;
 }
+
 /*
 @media screen and (max-width: 768px) {
    .nav-icon {
@@ -99,6 +105,7 @@
   text-decoration: none;
   text-align: center;
 }
+
 .nav-btn:hover {
   display: inline-flex;
   align-items: center;
@@ -125,8 +132,16 @@
 .nav-icon-prefix {
   margin-right: 5%;
 }
+
 .nav-icon-surfix {
+  color: #ffffff;
   margin-left: 5%;
+}
+
+.nav-icon-surfix-selected {
+  color: #c59700;
+  margin-left: 5%;
+  font-size: 18px;
 }
 
 .display-category {
@@ -142,6 +157,7 @@
   padding: 8px 5% 8px 5%;
   background: inherit;
 }
+
 .nav-category-surfix:hover {
   color: #c59700;
   width: 25%;
@@ -159,11 +175,9 @@
   justify-content: center;
   height: inherit;
   width: 100%;
+
 }
-.head-sub-nav-item:hover {
-  color: #c59700;
-  background-color: #270000e7;
-}
+
 
 .nav-category-main {
   color: #d9d9d9;
@@ -183,6 +197,7 @@
   flex-direction: row;
   align-items: flex-start;
 }
+
 .nav-category {
   color: #d9d9d9;
   display: flex;
@@ -197,6 +212,7 @@
   color: #c59700;
   background: inherit;
 }
+
 .nav-feature-1 {
   display: flex;
   flex-direction: row;
@@ -205,21 +221,26 @@
   align-content: center;
   margin-left: 2%;
 }
+
 /* Media screen query*/
 /* 0 -> 780 */
 @media all and (max-width: 767px) {
+
   .nav-wrapper,
   .nav-feature-1 {
     display: none !important;
   }
 }
+
 /* 781 -> 1366 */
 @media only screen and (max-width: 1200px) and (min-width: 767px) {
+
   .nav-wrapper-2,
   .nav-feature-2,
   .nav-feature-1 {
     display: none !important;
   }
+
   .nav-menu-prefix {
     font-size: 15px;
     color: #fff;
@@ -234,15 +255,19 @@
     width: 80%;
     gap: 2px;
   }
+
   .nav-menu-surfix {
     width: 100%;
   }
+
   .nav-category-main {
     width: 25% !important;
   }
 }
+
 /* 781 -> Fullscreen */
 @media screen and (min-width: 767px) {
+
   .nav-category-item-mobile,
   .nav-feature-2,
   .nav-wrapper-2 {

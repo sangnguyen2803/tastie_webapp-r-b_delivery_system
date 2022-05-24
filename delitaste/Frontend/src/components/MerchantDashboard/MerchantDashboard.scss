@@ -1,6 +1,7 @@
 .merchant-dashboard-container {
   margin-top: 0px;
 }
+
 .main-dashboard-wrapper {
   margin-top: 55px;
   display: flex;
@@ -8,11 +9,13 @@
   flex-wrap: nowrap;
   justify-content: flex-start;
   align-items: flex-start;
+
   .dashboard-side-bar {
-    width: 250px;
+    width: 320px;
   }
+
   .dashboard-panel {
-    width: calc(100% - 250px);
+    width: calc(100% - 320px);
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -25,6 +28,7 @@
   .dashboard-side-bar {
     width: 50px !important;
   }
+
   .dashboard-panel {
     width: calc(100% - 50px) !important;
   }

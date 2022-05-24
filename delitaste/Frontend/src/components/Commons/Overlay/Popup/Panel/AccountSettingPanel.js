@@ -37,7 +37,7 @@ const AccountSettingPanel = ({ user, userSignOut, history }) => {
                 ? `${user.profile.first_name} ${user.profile.last_name}`
                 : ""}
             </span>
-            <Link to="/profile" className="sub-panel-text-link">
+            <Link to={`/profile/edit`} className="sub-panel-text-link">
               Edit profile
             </Link>
           </div>
@@ -79,14 +79,18 @@ const AccountSettingPanel = ({ user, userSignOut, history }) => {
           <span className="account-service-title">Your Account</span>
           <div
             className="service-name"
-            onClick={() =>
-              history.push(`/profile/order-history/${user.profile.user_id}`)
-            }
+            onClick={() => history.push(`/profile/order-history`)}
           >
             Order History
           </div>
           <div
-            onClick={() => history.push(`/merchant-dashboard`)}
+            onClick={() => {
+              if (user.provider_id !== -1 && user.profile.user_id) {
+                history.push(`/merchant-dashboard/provider/general`);
+              } else {
+                history.replace(`/merchant-registration`);
+              }
+            }}
             className="service-name"
           >
             Merchant Dashboard

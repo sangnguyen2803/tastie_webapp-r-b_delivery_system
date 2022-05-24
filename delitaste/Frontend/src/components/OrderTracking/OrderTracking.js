@@ -49,6 +49,8 @@ function OrderTracking(props) {
   const [completedStatus, setCompletedStatus] = useState(false);
   const [cancelStatus, setCancelStatus] = useState(false);
 
+  const [orderItems, setOrderItems] = useState([]);
+  const [orderSummary, setOrderSummary] = useState([]);
   const [showOrderDetail, setShowOrderDetail] = useState(false);
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "auto" });
@@ -67,7 +69,6 @@ function OrderTracking(props) {
     setPickedStatus(4 <= currentStatus ? true : false);
     setCompletedStatus(5 <= currentStatus ? true : false);
     setCancelStatus(6 <= currentStatus ? true : false);
-
     setShowRatingShipper(currentStatus === 5 ? true : false);
   }, [currentStatus]);
 
@@ -135,6 +136,8 @@ function OrderTracking(props) {
       const result1 = await getAllProductFromOrderAPI(orderCode);
       const result2 = await getOrderStatusAPI(orderCode);
       Promise.all([result1, result2]).then((data) => {
+        setOrderItems(result1);
+        setOrderSummary(result2);
         if (data[0] && data[1]) {
           setOrderData((prev) => ({
             ...prev,
@@ -246,10 +249,15 @@ function OrderTracking(props) {
               <div className="or-s-sub-text">mins</div>
             </div>
             <div className="order-status-header">
-              <span className="or-s-main-text-header">Fresh Hamilton</span>
+              <span className="or-s-main-text-header">
+                {orderItems.merchant_name}
+              </span>
               <span className="or-s-sub-text-header">
-                Total: <span className="highlight-main-text">$ 24.60 </span> "(2
-                items)"
+                Total:{" "}
+                <span className="highlight-main-text">
+                  $ {orderSummary.subtotal?.toFixed(2)}{" "}
+                </span>{" "}
+                "(2 items)"
               </span>
               <span className="or-s-sub-text-header">
                 Delivery estimated:{" "}

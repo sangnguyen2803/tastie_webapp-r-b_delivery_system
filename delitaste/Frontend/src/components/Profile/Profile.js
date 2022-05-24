@@ -20,9 +20,7 @@ import ProfileSidebar from "./ProfileSidebar/ProfileSidebar";
 
 function Profile(props) {
   const { match, location, user } = props;
-  useEffect(() => {
-    console.log(location);
-  }, [location]);
+  useEffect(() => console.log(user), [user]);
   return (
     <Fragment>
       <NavBar fixed={true} hideBreadcrumb={true} />
@@ -33,7 +31,7 @@ function Profile(props) {
         <div className="profile-content-wrapper">
           <Switch>
             <Route exact path={match.path}>
-              <Redirect to={`${match.path}/edit`} />
+              <Redirect to={`/`} />
             </Route>
             <Route
               exact
@@ -57,7 +55,7 @@ function Profile(props) {
             />
             <Route
               exact
-              path={`${match.path}/order-history/:id`}
+              path={`${match.path}/order-history`}
               component={OrderHistory}
             />
           </Switch>
