@@ -58,10 +58,11 @@ function OrderDetail(props) {
       result.sort(function (a, b) {
         return new Date(b.update_at) - new Date(a.update_at);
       });
+      console.log(result);
       setOrderList(result);
     }
-    fetchAllOrders(props.match.params.id);
-  }, []);
+    if (user.provider_id !== -1) fetchAllOrders(user.provider_id);
+  }, [user.provider_id]);
   useEffect(() => {
     const provider_id = user.provider_id;
     socket.emit("provider-join-room", `provider-${provider_id}`);
@@ -70,7 +71,7 @@ function OrderDetail(props) {
       async (orderData, customerData, order_code) => {
         const result1 = await getAllProductFromOrderAPI(order_code);
         const result2 = await getOrderStatusAPI(order_code);
-        const result3 = await getAllOrderAPI(props.match.params.id);
+        const result3 = await getAllOrderAPI(user.provider_id);
         let temp = result3.filter((item) => item.order_code === order_code);
         let status = temp[0]["MAX(os.order_status_name)"];
         setStatusOnView(status);
@@ -84,10 +85,15 @@ function OrderDetail(props) {
   }, [user.provider_id]);
 
   const viewOrderDetail = (code) => {
+    console.log("hello1");
     async function fetchOrderDetail(orderCode) {
       const result1 = await getAllProductFromOrderAPI(orderCode);
       const result2 = await getOrderStatusAPI(orderCode);
+
       Promise.all([result1, result2]).then((data) => {
+        console.log(data[0]);
+        console.log(data[1]);
+        console.log("hello2");
         setOrderItems(data[0]);
         setOrderSummary(data[1]);
       });
@@ -191,7 +197,9 @@ function OrderDetail(props) {
                 </div>
                 <div className="o-order-time">{order.update_at}</div>
                 <div className="o-order-quantity">{order.payment_name}</div>
-                <div className="o-order-price">$ {order.total_amount}</div>
+                <div className="o-order-price">
+                  $ {order.total_amount.toFixed(2)}
+                </div>
                 {mapOrderStatusIcon(order["MAX(os.order_status_name)"])}
               </div>
             ))}

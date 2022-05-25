@@ -85,15 +85,25 @@ const ProductFilterTab = {
 };
 function ProductOverview(props) {
   const [currentTab, setCurrentTab] = useState(0);
-  const [products, setProducts] = useState(productList);
+  const [products, setProducts] = useState();
   const [searchResult, setSearchResult] = useState(productList);
   const [searchTerm, setSearchTerm] = useState("");
   const { user, provider, getProductListAPI } = props;
-  useEffect(async () => {
-    if (user.provider_id !== -1 && user.provider_id !== null) {
-      const result = await getProductListAPI(user.provider_id);
+  useEffect(() => {
+    async function fetchProductList(id) {
+      if (user.provider_id !== -1) {
+        const res = await getProductListAPI(id);
+        const temp = [];
+        for (let item in res) {
+          for (let x in res[item].products) {
+            temp.push(res[item].products[x]);
+          }
+        }
+        setProducts(temp);
+      }
     }
-  }, []);
+    fetchProductList(user.provider_id);
+  }, [user.provider_id]);
 
   const handleDragEnd = (e) => {
     if (!e.destination) return;
@@ -221,64 +231,48 @@ function ProductOverview(props) {
             selectItem={handleSelectTab}
           />
           <div className="product-table">
-            <DragDropContext onDragEnd={handleDragEnd}>
-              <table className="table table-wrapper">
-                <Droppable droppableId="droppable-1">
-                  {(provider) => (
-                    <tbody
-                      className="text-capitalize"
-                      ref={provider.innerRef}
-                      {...provider.droppableProps}
-                    >
-                      {searchResult?.map((product, index) => (
-                        <Draggable
-                          key={product.name}
-                          draggableId={product.name}
-                          index={index}
-                        >
-                          {(provider) => (
-                            <tr
-                              className="table-row-wrapper"
-                              {...provider.draggableProps}
-                              ref={provider.innerRef}
-                            >
-                              <td
-                                className="product-drag-icon"
-                                {...provider.dragHandleProps}
-                              >
-                                <svg width="24" height="24" viewBox="0 0 24 24">
-                                  <path
-                                    fill="currentColor"
-                                    d="M3,15H21V13H3V15M3,19H21V17H3V19M3,11H21V9H3V11M3,5V7H21V5H3Z"
-                                  />
-                                </svg>{" "}
-                              </td>
-                              <td className="product-img">
-                                <img
-                                  src={product.picture}
-                                  height={50}
-                                  width={50}
-                                />
-                              </td>
-                              <td className="product-name">
-                                {product.name || "—"}
-                              </td>
-                              <td className="field-hidden">
-                                {product.description || "—"}
-                              </td>
-                              <td>{product.category || "—"}</td>
-                              <td>{product.price || "—"}</td>
-                              <td>{product.lastUpdated || "—"}</td>
-                            </tr>
-                          )}
-                        </Draggable>
-                      ))}
-                      {provider.placeholder}
-                    </tbody>
-                  )}
-                </Droppable>
-              </table>
-            </DragDropContext>
+            <table className="table table-wrapper">
+              <div droppableId="droppable-1">
+                <tbody className="text-capitalize">
+                  {products?.map((product, index) => (
+                    <tr className="table-row-wrapper">
+                      <td className="product-img">
+                        <img
+                          src={product.product_image}
+                          height={50}
+                          width={50}
+                          alt=""
+                        />
+                      </td>
+                      <td
+                        className="product-name"
+                        style={{
+                          textAlign: "left",
+                          width: 200,
+                        }}
+                      >
+                        {product.product_name || "—"}
+                      </td>
+                      <td
+                        className="field-hidden"
+                        style={{
+                          textAlign: "left",
+                          width: 400,
+                        }}
+                      >
+                        {product.description || "—"}
+                      </td>
+
+                      <td style={{ width: 60 }}>
+                        $ {product?.price?.toFixed(2) || "—"}
+                      </td>
+                      <td>{product.update_at || "—"}</td>
+                      <td>Stock: {product.quantity || "—"}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </div>
+            </table>
           </div>
         </div>
       </div>

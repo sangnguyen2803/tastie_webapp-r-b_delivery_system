@@ -8,7 +8,7 @@ module.exports = function (app) {
   );
   app.use(
     createProxyMiddleware("/v1/api/provider", {
-      target: "http://localhost:3008/",
+      target: "http://157.230.243.92:3008/",
     })
   );
   app.use(

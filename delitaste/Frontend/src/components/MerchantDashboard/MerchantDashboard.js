@@ -61,12 +61,12 @@ function MerchantDashboard(props) {
 
             <Route
               exact
-              path={`${match.path}/order/:name/:id`}
+              path={`${match.path}/order/:name`}
               component={OrderPanel}
             />
             <Route
               exact
-              path={`${match.path}/product/:name/:id`}
+              path={`${match.path}/product/:name`}
               component={ProductPanel}
             />
             <Route
@@ -76,7 +76,7 @@ function MerchantDashboard(props) {
             />
             <Route
               exact
-              path={`${match.path}/marketing/:name/:id`}
+              path={`${match.path}/marketing/:name`}
               component={MarketingPanel}
             />
           </Switch>

@@ -20,7 +20,9 @@ import ProfileSidebar from "./ProfileSidebar/ProfileSidebar";
 
 function Profile(props) {
   const { match, location, user } = props;
-  useEffect(() => console.log(user), [user]);
+  useEffect(() => {
+    console.log(match);
+  }, [match]);
   return (
     <Fragment>
       <NavBar fixed={true} hideBreadcrumb={true} />

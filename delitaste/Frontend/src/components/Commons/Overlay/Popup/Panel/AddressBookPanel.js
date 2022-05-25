@@ -353,7 +353,7 @@ function AddressBookPanel(props) {
                       gap={"10px"}
                       width={120}
                       height={35}
-                      label={"UpdatButtone"}
+                      label={"Update"}
                     />
                   </ButtonGroup>
                 </Fragment>
