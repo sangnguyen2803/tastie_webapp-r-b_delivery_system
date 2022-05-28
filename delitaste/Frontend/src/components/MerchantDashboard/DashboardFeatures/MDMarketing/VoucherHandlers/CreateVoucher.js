@@ -17,13 +17,8 @@ import {
 } from "@fortawesome/fontawesome-free-solid";
 
 import ReactMapGl, { Source, Layer, Marker, Popup } from "react-map-gl";
-import axios from "axios";
 import { faMapMarkedAlt } from "@fortawesome/free-solid-svg-icons";
 import Modal from "components/Commons/Overlay/Popup/Modal/Modal";
-import {
-  addAddressAPI,
-  getAddressBookAPI,
-} from "store/actions/UserAction/UserAction";
 
 const initialValues = {
   //  provider_id: 1000001,
@@ -248,7 +243,6 @@ function CreateVoucher(props) {
 
 CreateVoucher.propTypes = {
   user: PropTypes.object.isRequired,
-  getAddressBookAPI: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({

@@ -16,6 +16,13 @@ function SearchResult(props) {
   const [query, setQuery] = useState("");
   const [type, setType] = useState("");
   useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
+  }, []);
+  useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
     var query = queryParams.get("q");
     var type = queryParams.get("type");

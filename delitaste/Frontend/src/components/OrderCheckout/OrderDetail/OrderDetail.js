@@ -159,7 +159,7 @@ function OrderDetail(props) {
             ) : (
               <input
                 className="oc-od-edit-address"
-                style={{ width: `${deliveryAddress.length * 7}px` }}
+                style={{ width: `${deliveryAddress?.length * 7}px` }}
                 value={deliveryAddress}
               />
             )}

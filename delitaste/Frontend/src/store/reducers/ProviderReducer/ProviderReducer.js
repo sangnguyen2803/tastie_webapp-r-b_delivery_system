@@ -6,6 +6,7 @@ import {
   UPDATE_PRODUCT_DETAIL_INFO_FORM,
   UPDATE_BANK_INFO_FORM,
   SET_DASHBOARD_PROVIDER,
+  SET_ORDER_LIST,
 } from "store/actions/types";
 import {} from "store/actions/types";
 
@@ -21,6 +22,7 @@ const initialState = {
   merchantPrefilledData: {},
   provider: {},
   operation: {},
+  orderList: [],
 };
 
 const ProviderReducer = (state = initialState, action) => {
@@ -32,6 +34,11 @@ const ProviderReducer = (state = initialState, action) => {
         ...payload,
         provider: payload.provider,
         operation: payload.operation,
+      };
+    case SET_ORDER_LIST:
+      return {
+        ...state,
+        ...payload,
       };
     case CREATE_MERCHANT:
       return { ...state, ...payload };

@@ -17,6 +17,7 @@ import {
   SET_LOADING,
   SIGN_OUT,
   GET_CONTACT,
+  SOCKET_CONNECTION,
 } from "store/actions/types";
 
 //UPDATE UI
@@ -263,6 +264,25 @@ export const addAddressAPI = (data) => async (dispatch) => {
     console.log(err);
   }
 };
+/* have not integrated yet*/
+export const updateAddressAPI = (data) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  const body = JSON.stringify(data);
+  try {
+    const endpoint = "/v1/api/tastie/update-customer-address";
+    const res = await axios.post(endpoint, body, config);
+    console.log(res.data);
+    if (res.data) {
+      console.log(res.data);
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
 
 export const getDeliveryFee = (id, longitude, latitude) => async (dispatch) => {
   const config = {
@@ -319,4 +339,11 @@ export const accountSignInAPI = (data) => async (dispatch) => {
     });
     return false;
   }
+};
+
+export const initSocket = () => (dispatch) => {
+  dispatch({
+    type: SOCKET_CONNECTION,
+    payload: {},
+  });
 };

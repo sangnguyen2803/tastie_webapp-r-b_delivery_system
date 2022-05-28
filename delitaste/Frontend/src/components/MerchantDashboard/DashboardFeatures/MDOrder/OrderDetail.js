@@ -2,11 +2,10 @@ import { Fragment, useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCheckCircle,
-  faClock,
-  faHourglassHalf,
-  faShippingFast,
+  faDotCircle,
   faTimesCircle,
 } from "@fortawesome/fontawesome-free-solid";
+import { css } from "@emotion/react";
 import orderListData from "components/MerchantDashboard/DashboardFeatures/MDOrder/data/orderListData";
 import "../Panel.scss";
 import ViewOrderDetail from "./OrderHandler/ViewOrderDetail";
@@ -20,9 +19,12 @@ import {
   getAllProductFromOrderAPI,
   getOrderStatusAPI,
 } from "store/actions/OrderAction/OrderAction";
+
+import Loader from "react-spinners/ScaleLoader";
 // let socket;
 
 function OrderDetail(props) {
+  const [loading, setLoading] = useState(false);
   const { user, getAllOrderAPI, getAllProductFromOrderAPI, getOrderStatusAPI } =
     props;
   const [statusOnView, setStatusOnView] = useState();
@@ -34,7 +36,13 @@ function OrderDetail(props) {
     customer: null,
     order_code: null,
   });
-
+  let [color, setColor] = useState("#910000");
+  const override = css`
+    display: block;
+    border-color: #910000;
+    font-size: 14px;
+    color: red;
+  `;
   const socket = io(`http://localhost:3015`);
 
   const filterOrderList = (type) => {
@@ -54,24 +62,33 @@ function OrderDetail(props) {
   }, [incomingOrder]);
   useEffect(() => {
     async function fetchAllOrders(id) {
-      const result = await getAllOrderAPI(id);
+      setLoading(false);
+      let limit = 200;
+      let offset = 1;
+      console.log(id);
+      const result = await getAllOrderAPI(id, limit, offset);
       result.sort(function (a, b) {
         return new Date(b.update_at) - new Date(a.update_at);
       });
-      console.log(result);
       setOrderList(result);
+      setLoading(true);
     }
-    if (user.provider_id !== -1) fetchAllOrders(user.provider_id);
+    if (user.provider_id !== -1) {
+      fetchAllOrders(user.provider_id);
+      return;
+    }
+    setLoading(true);
   }, [user.provider_id]);
   useEffect(() => {
-    const provider_id = user.provider_id;
-    socket.emit("provider-join-room", `provider-${provider_id}`);
+    socket.emit("provider-join-room", `provider-${user.provider_id}`);
     socket.on(
       "provider-received-order",
       async (orderData, customerData, order_code) => {
         const result1 = await getAllProductFromOrderAPI(order_code);
         const result2 = await getOrderStatusAPI(order_code);
-        const result3 = await getAllOrderAPI(user.provider_id);
+        let limit = 20;
+        let offset = 1;
+        const result3 = await getAllOrderAPI(user.provider_id, limit, offset);
         let temp = result3.filter((item) => item.order_code === order_code);
         let status = temp[0]["MAX(os.order_status_name)"];
         setStatusOnView(status);
@@ -103,45 +120,35 @@ function OrderDetail(props) {
 
   const mapOrderStatusIcon = (status) => {
     switch (status) {
-      case 3:
-        return (
-          <FontAwesomeIcon
-            className="o-order-icon pending"
-            icon={faHourglassHalf}
-          />
-        );
-      case 1:
-        return (
-          <FontAwesomeIcon className="o-order-icon inprogress" icon={faClock} />
-        );
-      case 2:
-        return (
-          <FontAwesomeIcon className="o-order-icon inprogress" icon={faClock} />
-        );
-      case 4:
-        return (
-          <FontAwesomeIcon
-            className="o-order-icon picked-up"
-            icon={faShippingFast}
-          />
-        );
       case 5:
         return (
-          <FontAwesomeIcon className="o-order-icon done" icon={faCheckCircle} />
+          <>
+            <FontAwesomeIcon
+              className="o-order-icon-history done"
+              icon={faCheckCircle}
+            />
+            <span className="order-status-text-green">Completed</span>
+          </>
         );
       case 6:
         return (
-          <FontAwesomeIcon
-            className="o-order-icon cancel"
-            icon={faTimesCircle}
-          />
+          <>
+            <FontAwesomeIcon
+              className="o-order-icon-history cancel"
+              icon={faTimesCircle}
+            />
+            <span className="order-status-text-red">Unable to delivery</span>
+          </>
         );
       default:
         return (
-          <FontAwesomeIcon
-            className="o-order-icon pick-up"
-            icon={faShippingFast}
-          />
+          <>
+            <FontAwesomeIcon
+              className="o-order-icon-history inprogress"
+              icon={faDotCircle}
+            />
+            <span className="order-status-text-blue">In progress</span>
+          </>
         );
     }
   };
@@ -164,46 +171,75 @@ function OrderDetail(props) {
                   bgcolor="#940000"
                   progress={`${orderList.length}`}
                   height="6px"
-                  length={100}
+                  length={200}
                 />
               </div>
             </div>
           </div>
           <div className="o-order-container">
             <div className="o-order-header-row">
+              <div className="o-order o-order-icon">Order status</div>
               <div className="o-order o-order-id">Order Id</div>
               <div className="o-order o-order-name">Customer name</div>
               <div className="o-order o-order-time">Submitted time</div>
               <div className="o-order o-order-quantity">Payment</div>
               <div className="o-order o-order-price">Total</div>
-              <div className="o-order o-order-icon">Order status</div>
             </div>
           </div>
-          <div className="o-order-container">
-            {orderList?.map((order) => (
-              <div
-                className="o-order-row"
-                onClick={() => viewOrderDetail(order.order_code)}
-                key={order.order_code}
-                style={
-                  orderSummary?.order_code === order?.order_code
-                    ? { backgroundColor: "#f3f3f3", transition: "0.3s" }
-                    : { backgroundColor: "white" }
-                }
-              >
-                <div className="o-order o-order-id">{order.order_code}</div>
-                <div className="o-order o-order-name">
-                  {`${order.user_first_name} ${order.user_last_name}`}
+          {loading ? (
+            <div className="o-order-container">
+              {orderList?.map((order) => (
+                <div
+                  className="o-order-row"
+                  onClick={() => viewOrderDetail(order.order_code)}
+                  key={order.order_code}
+                  style={
+                    orderSummary?.order_code === order?.order_code
+                      ? { backgroundColor: "#f3f3f3", transition: "0.3s" }
+                      : { backgroundColor: "white" }
+                  }
+                >
+                  {mapOrderStatusIcon(order["MAX(ods.order_status_name)"])}
+                  <div className="o-order o-order-id">{order.order_code}</div>
+                  <div className="o-order o-order-name">
+                    {`${order.user_first_name} ${order.user_last_name}`}
+                  </div>
+                  <div className="o-order-time">{order.update_at}</div>
+                  <div className="o-order-quantity">{order.payment_name}</div>
+                  <div className="o-order-price">
+                    $ {order.total_amount.toFixed(2)}
+                  </div>
                 </div>
-                <div className="o-order-time">{order.update_at}</div>
-                <div className="o-order-quantity">{order.payment_name}</div>
-                <div className="o-order-price">
-                  $ {order.total_amount.toFixed(2)}
-                </div>
-                {mapOrderStatusIcon(order["MAX(os.order_status_name)"])}
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          ) : (
+            <div
+              className="o-order-container"
+              style={{
+                height: 500,
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+                borderBottom: "2px solid #d8d8d8",
+                borderLeft: "2px solid #d8d8d8",
+                borderRight: "2px solid #d8d8d8",
+                gap: 10,
+              }}
+            >
+              <Loader
+                color={color}
+                loading={true}
+                css={override}
+                size={100}
+                margin={3}
+                speedMultiplier={0.8}
+              />
+              <span className="o-order-container-text">
+                Please wait for a while ...
+              </span>
+            </div>
+          )}
         </div>
         <div className="sub-detail-panel-wrapper" style={{ paddingTop: "0" }}>
           <ViewOrderDetail

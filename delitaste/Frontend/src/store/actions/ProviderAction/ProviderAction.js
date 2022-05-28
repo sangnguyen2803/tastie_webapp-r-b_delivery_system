@@ -9,6 +9,7 @@ import {
   UPDATE_BANK_INFO_FORM,
   GET_PROVIDER_DETAIL,
   SET_DASHBOARD_PROVIDER,
+  SET_ORDER_LIST,
 } from "store/actions/types";
 
 //Create provider
@@ -232,7 +233,7 @@ export const getScheduleTime = (id) => async (dispatch) => {
   }
 };
 
-export const getAllOrderAPI = (id) => async (dispatch) => {
+export const getAllOrderAPI = (id, limit, offset) => async (dispatch) => {
   const config = {
     headers: {
       "Content-Type": "application/json",
@@ -240,13 +241,20 @@ export const getAllOrderAPI = (id) => async (dispatch) => {
   };
   const body = JSON.stringify({
     provider_id: id,
-    limit: 20,
-    offset: 1,
+    limit: limit,
+    offset: offset,
   });
+  console.log(body);
   try {
     const endpoint = `/v1/api/provider/order/get-all-order`;
     const res = await axios.post(endpoint, body, config);
     if (res.data.status) {
+      dispatch({
+        type: SET_ORDER_LIST,
+        payload: {
+          orderList: res.data.response,
+        },
+      });
       return res.data.response;
     }
     return [];

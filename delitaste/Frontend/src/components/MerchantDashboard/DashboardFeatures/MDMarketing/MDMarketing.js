@@ -8,7 +8,7 @@ import Switch from "react-switch";
 import ButtonGroup from "components/Commons/Button/ButtonGroup/ButtonGroup";
 import Button from "components/Commons/Button/Button";
 import "./MDMarketing.scss";
-import { faSearch } from "@fortawesome/fontawesome-free-solid";
+import { faThumbsUp, faThumbsDown } from "@fortawesome/fontawesome-free-solid";
 import PropTypes from "prop-types";
 import Metric from "../Metric/Metric";
 import MDHeader from "components/MerchantDashboard/MDHeader/MDHeader";
@@ -207,6 +207,95 @@ function MDMarketing(props) {
                       }}
                     >
                       {voucher.quantity || "—"}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div className="mkt-section-title" style={{ marginTop: 20 }}>
+          <span className="mkt-section-text" style={{ fontWeight: 700 }}>
+            Subscribe Ecoupon
+          </span>
+        </div>
+        <div
+          className="product-table-container"
+          style={{ margin: "10px 0 30px 0" }}
+        >
+          <div className="product-table">
+            <table className="table table-wrapper">
+              <tbody className="text-capitalize">
+                <tr className="table-row-wrapper">
+                  <th>Ecoupon code</th>
+                  <th>Type</th>
+                  <th>Description</th>
+                  <th>Discount amount</th>
+                  <th>Subscription</th>
+                </tr>
+                {vouchers?.map((voucher, index) => (
+                  <tr className="table-row-wrapper" key={index}>
+                    <td
+                      className="product-name"
+                      style={{
+                        textAlign: "left",
+                        width: "20%",
+                      }}
+                    >
+                      {voucher.product_name || "—"}
+                    </td>
+                    <td
+                      className="field-hidden"
+                      style={{
+                        textAlign: "center",
+                        width: "10%",
+                      }}
+                    >
+                      {voucher.description || "—"}
+                    </td>
+                    <td
+                      className="field-hidden"
+                      style={{
+                        textAlign: "left",
+                        width: "35%",
+                      }}
+                    >
+                      {voucher.description || "—"}
+                    </td>
+                    <td
+                      style={{
+                        textAlign: "center",
+                        width: "20%",
+                      }}
+                    >
+                      $ {voucher?.price?.toFixed(2) || "—"}
+                    </td>
+
+                    <td
+                      style={{
+                        textAlign: "center",
+                        width: "15%",
+                      }}
+                    >
+                      <ButtonGroup
+                        float="center"
+                        mgTop={10}
+                        gap={12}
+                        mgBottom={5}
+                        width={100}
+                      >
+                        <Button
+                          color={"black"}
+                          bglight={true}
+                          border={"#5d5d5d 1.5px solid"}
+                          prefix={<FontAwesomeIcon icon={faThumbsUp} />}
+                          gap={"10px"}
+                          justifyContent={"center"}
+                          width={120}
+                          height={30}
+                          label="Subscribe"
+                        />
+                      </ButtonGroup>
                     </td>
                   </tr>
                 ))}

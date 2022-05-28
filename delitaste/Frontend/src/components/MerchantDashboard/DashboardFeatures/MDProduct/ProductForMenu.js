@@ -137,7 +137,7 @@ function ProductForMenu(props) {
                       {item.description}
                     </span>
                     <span className="menu-product-price">
-                      &#36; {item.price}
+                      &#36; {item.price?.toFixed(2)}
                     </span>
                     <div className="menu-product-price">
                       <FontAwesomeIcon

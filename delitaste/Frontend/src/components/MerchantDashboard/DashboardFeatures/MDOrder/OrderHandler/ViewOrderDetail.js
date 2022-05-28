@@ -6,13 +6,7 @@ import "components/MerchantDashboard/DashboardFeatures/MDOrder/OrderHandler/Orde
 import { Formik, ErrorMessage, Form, Field } from "formik";
 import CartImage from "assets/cart.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faPlus,
-  faSearch,
-  faStickyNote,
-  faSave,
-  faUndo,
-} from "@fortawesome/fontawesome-free-solid";
+import { faStickyNote } from "@fortawesome/fontawesome-free-solid";
 import Button from "components/Commons/Button/Button";
 import ButtonGroup from "components/Commons/Button/ButtonGroup/ButtonGroup";
 import Tag from "components/Commons/Tag/Tag";

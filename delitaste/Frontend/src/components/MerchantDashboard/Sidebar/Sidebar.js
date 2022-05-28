@@ -101,12 +101,12 @@ const sidebarFeatures = [
     id: 5,
     icon: faChartLine,
     name: "business-insight",
-    title: "Business Insights",
+    title: "Insights",
     subFeatures: [
       {
         id: 1,
         name: "business-insight",
-        title: "Statistics",
+        title: "Business Insight",
         link: "insights/business-insight",
       },
       // Orders trend is a line chart showing the performance of your show over time (real-time, yesterday, 7 days, 30 days)

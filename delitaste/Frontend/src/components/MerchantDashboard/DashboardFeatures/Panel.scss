@@ -377,7 +377,7 @@ td {
       flex-direction: row;
       flex-wrap: nowrap;
       align-items: center;
-      font-size: 12px;
+      font-size: 13px;
       border-bottom: 2px solid #e6e6e6;
       transition: 0.3s;
 
@@ -391,6 +391,7 @@ td {
         width: 12.5%;
 
         img {
+          object-fit: cover;
           height: 70px;
           width: 70px;
         }
@@ -542,8 +543,7 @@ td {
     justify-content: stretch;
     align-items: center;
     width: 100%;
-
-    font-size: 14px;
+    font-size: 13px;
 
     .o-order {
       text-align: center;
@@ -664,11 +664,15 @@ td {
     }
 
     .done {
-      color: rgb(0, 173, 78);
+      color: rgb(70, 159, 110);
     }
 
     .cancel {
-      color: rgb(175, 14, 14);
+      color: rgb(209, 61, 61);
+    }
+
+    .inprogress {
+      color: rgb(0, 174, 255);
     }
   }
 }

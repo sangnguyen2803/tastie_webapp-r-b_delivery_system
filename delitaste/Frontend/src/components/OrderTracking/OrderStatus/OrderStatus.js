@@ -37,16 +37,16 @@ function OrderStatus(props) {
   const [showShipperChat, setShowShipperChat] = useState(false);
   let [loading, setLoading] = useState(true);
   let [color, setColor] = useState("#910000");
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "auto" });
-  }, []);
+
   const override = css`
     display: block;
     border-color: #910000;
     font-size: 14px;
     color: red;
   `;
-
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "auto" });
+  }, []);
   const stepImage = [
     Step1Image,
     Step1Image,

@@ -110,7 +110,7 @@ function LoginForm(props) {
       <div className="login-form">
         <div className="login-form-wrapper">
           <div className="form-header">
-            <img className="brand-logo-image-login" src={Logo} />
+            <img className="brand-logo-image-login" alt="logo" src={Logo} />
             <span className="login-form-title">Tastie!</span>
           </div>
           <div
@@ -137,6 +137,11 @@ function LoginForm(props) {
               type="text"
               placeholder="Email or phone number"
               maxLength={50}
+              onKeyPress={(e) => {
+                if (e.key === "Enter") {
+                  handleSubmitForm();
+                }
+              }}
             />
             {loadClearTextInput("email")}
           </div>
@@ -153,6 +158,11 @@ function LoginForm(props) {
               }
               placeholder="Password"
               maxLength={50}
+              onKeyPress={(e) => {
+                if (e.key === "Enter") {
+                  handleSubmitForm();
+                }
+              }}
             />
             {loadPasswordVisibility()}
           </div>

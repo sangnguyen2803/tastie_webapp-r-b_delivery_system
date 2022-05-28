@@ -24,10 +24,11 @@ import {
   REMOVE_CART,
   INCREASE_PRODUCT,
   DESCREASE_PRODUCT,
+  SOCKET_CONNECTION,
 } from "store/actions/types";
-import axios from "axios";
 import storage from "redux-persist/lib/storage";
 import { persistReducer } from "redux-persist";
+import io from "socket.io-client";
 
 const persistConfig = {
   key: "user",
@@ -53,6 +54,7 @@ const initialState = {
     longitude: 0,
   },
   phone: null,
+  socket: null,
   location: [],
   userCart: {
     cart: [],
@@ -67,9 +69,14 @@ const initialState = {
 const UserReducer = (state = initialState, action) => {
   const { type, payload } = action;
   switch (type) {
+    case SOCKET_CONNECTION: {
+      return {
+        ...state,
+        socket: io(`http://localhost:3015`),
+      };
+    }
     case GET_CONTACT:
       return { ...state, phone: payload.phone, location: payload.address };
-
     case REGISTER_SUCCESS:
       localStorage.setItem("refreshToken", payload.refreshtoken);
       return {

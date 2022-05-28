@@ -9,6 +9,7 @@ import OrderPanel from "components/MerchantDashboard/DashboardFeatures/MDOrder/O
 import HomePanel from "./DashboardFeatures/MDHome/HomePanel";
 import MarketingPanel from "components/MerchantDashboard/DashboardFeatures/MDMarketing/MarketingPanel";
 import withAuth from "components/HigherOrderComponents(HOC)/withAuth";
+import BusinessInsightPanel from "./DashboardFeatures/MDBusinessInsight/BusinessInsightPanel";
 const backgroundStyling = {
   background: `url(${MerchantBanner})`,
   backgroundPosition: "center",
@@ -35,6 +36,13 @@ function MerchantDashboard(props) {
             </Route>
             <Route
               exact
+              path={`${match.path}/insights`}
+              component={BusinessInsightPanel}
+            >
+              <Redirect to={`${match.path}/insights/business-insight`} />
+            </Route>
+            <Route
+              exact
               path={`${match.path}/product`}
               component={ProductPanel}
             >
@@ -58,7 +66,6 @@ function MerchantDashboard(props) {
             <Route exact path={`${match.path}/insights`}>
               <Redirect to={`${match.path}/insights/business-insight`} />
             </Route>
-
             <Route
               exact
               path={`${match.path}/order/:name`}
@@ -78,6 +85,11 @@ function MerchantDashboard(props) {
               exact
               path={`${match.path}/marketing/:name`}
               component={MarketingPanel}
+            />{" "}
+            <Route
+              exact
+              path={`${match.path}/insights/:name`}
+              component={BusinessInsightPanel}
             />
           </Switch>
         </div>

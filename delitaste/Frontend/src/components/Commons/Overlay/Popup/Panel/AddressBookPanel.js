@@ -52,7 +52,7 @@ function AddressBookPanel(props) {
   });
   const [contact, setContact] = useState([]);
   async function fetchAddressBook() {
-    var result = await getAddressBookAPI(user.profile.user_id);
+    var result = await getAddressBookAPI(user?.profile?.user_id);
     setContact(result);
   }
   useEffect(() => {

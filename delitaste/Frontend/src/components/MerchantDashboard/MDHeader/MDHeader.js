@@ -27,9 +27,7 @@ function MDHeader(props) {
   }, []);
   useEffect(() => {
     async function fetchingDataAPI() {
-      console.log(props.user.provider_id);
       const result = await props.getProviderByIdAPI(props.user.provider_id, 2); //type = 2'
-      console.log(result);
       setProvider(result?.data);
       var today = new Date();
       const operation = result.operation_time[dayOfWeek[today.getDay()]];
