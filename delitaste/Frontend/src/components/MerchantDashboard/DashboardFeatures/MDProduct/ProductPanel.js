@@ -5,6 +5,7 @@ import ProductDetail from "components/MerchantDashboard/DashboardFeatures/MDProd
 import UpcomingProductDetail from "components/MerchantDashboard/DashboardFeatures/MDProduct/UpcomingProductDetail";
 import Tabs from "components/MerchantDashboard/DashboardFeatures/Tabs";
 import "../Panel.scss";
+import MenuCategoryDetail from "./MenuCategoryDetail";
 
 function ProductPanel(props) {
   const [currentTab, setCurrentTab] = useState(0);
@@ -28,7 +29,7 @@ function ProductPanel(props) {
       case 2:
         return <UpcomingProductDetail />;
       default:
-        return <h1>No project match</h1>;
+        return <MenuCategoryDetail />;
     }
   };
   switch (props.match.params.name) {

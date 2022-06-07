@@ -232,46 +232,44 @@ function ProductOverview(props) {
           />
           <div className="product-table">
             <table className="table table-wrapper">
-              <div droppableId="droppable-1">
-                <tbody className="text-capitalize">
-                  {products?.map((product, index) => (
-                    <tr className="table-row-wrapper">
-                      <td className="product-img">
-                        <img
-                          src={product.product_image}
-                          height={50}
-                          width={50}
-                          alt=""
-                        />
-                      </td>
-                      <td
-                        className="product-name"
-                        style={{
-                          textAlign: "left",
-                          width: 200,
-                        }}
-                      >
-                        {product.product_name || "—"}
-                      </td>
-                      <td
-                        className="field-hidden"
-                        style={{
-                          textAlign: "left",
-                          width: 400,
-                        }}
-                      >
-                        {product.description || "—"}
-                      </td>
+              <tbody className="text-capitalize">
+                {products?.map((product, index) => (
+                  <tr className="table-row-wrapper" key={index}>
+                    <td className="product-img">
+                      <img
+                        src={product.product_image}
+                        height={50}
+                        width={50}
+                        alt=""
+                      />
+                    </td>
+                    <td
+                      className="product-name"
+                      style={{
+                        textAlign: "left",
+                        width: 200,
+                      }}
+                    >
+                      {product.product_name || "—"}
+                    </td>
+                    <td
+                      className="field-hidden"
+                      style={{
+                        textAlign: "left",
+                        width: 400,
+                      }}
+                    >
+                      {product.description || "—"}
+                    </td>
 
-                      <td style={{ width: 60 }}>
-                        $ {product?.price?.toFixed(2) || "—"}
-                      </td>
-                      <td>{product.update_at || "—"}</td>
-                      <td>Stock: {product.quantity || "—"}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </div>
+                    <td style={{ width: 60 }}>
+                      $ {product?.price?.toFixed(2) || "—"}
+                    </td>
+                    <td>{product.update_at || "—"}</td>
+                    <td>Stock: {product.quantity || "—"}</td>
+                  </tr>
+                ))}
+              </tbody>
             </table>
           </div>
         </div>

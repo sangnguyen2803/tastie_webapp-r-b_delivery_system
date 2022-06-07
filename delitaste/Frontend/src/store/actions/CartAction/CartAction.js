@@ -86,7 +86,7 @@ export const getCart = (id) => async (dispatch) => {
       };
       dispatch({
         type: GET_CART,
-        payload: { userCart: initialCart},
+        payload: { userCart: initialCart },
       });
       return initialCart;
     }

@@ -218,9 +218,12 @@ export const getUserProfileAPI = (accessToken) => async (dispatch) => {
           provider_id: res.data.provider_id,
         },
       });
+      return res.data.profile.user_id;
     }
+    return -1;
   } catch (err) {
     console.log(err);
+    return -1;
   }
 };
 
@@ -228,7 +231,6 @@ export const getAddressBookAPI = (id) => async (dispatch) => {
   try {
     const endpoint = `/v1/api/tastie/checkout/get_contact/${id}`;
     const res = await axios.get(endpoint);
-    console.log(res.data);
     if (res.data?.status) {
       let phone = res.data.response.user_phone;
       let address = res.data.response.user_address;
@@ -332,7 +334,6 @@ export const accountSignInAPI = (data) => async (dispatch) => {
     };
   } catch (err) {
     const errs = err.response.data.errors;
-    console.log(err);
     dispatch({
       type: LOGIN_FAIL,
       payload: errs,

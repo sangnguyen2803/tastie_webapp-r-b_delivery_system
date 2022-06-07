@@ -8,6 +8,7 @@
   height: 65%;
   margin-left: 20px;
 }
+
 .search-type-dropdown-show {
   background-color: #f8f8f8;
   position: absolute;
@@ -18,28 +19,31 @@
   align-items: flex-start;
   height: auto;
   width: 100px;
-  
-  border:2px rgb(189, 138, 0) solid;
+  border: 2px rgb(189, 138, 0) solid;
   border-top: none;
   margin-left: 20px;
-  margin-top: 102px;
-  font-size: 13px;
+  margin-top: 92px;
+  font-size: 14px;
+
   .search-type-drop-down-text {
     width: 100%;
+    height: 25px;
     cursor: pointer;
+
     &:hover {
-      background-color: #D6D6D6;
+      background-color: #e1e1e1;
     }
 
   }
 }
+
 .search-bar-type {
   font-size: 10px;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
   align-items: center;
-  
+
   justify-content: center;
   border-top-left-radius: 30px;
   border-bottom-left-radius: 30px;
@@ -107,6 +111,7 @@
   background-color: #eab200;
   height: 100%;
 }
+
 //side bar
 
 .search-type-dropdown {
@@ -126,12 +131,14 @@
   font-weight: 500;
   font-size: 13px;
 }
+
 .btn-search-text {
   cursor: pointer;
   color: #ffffff;
   font-weight: 500;
   font-size: 13px;
 }
+
 .search-icon {
   margin-right: 5%;
   color: #ffffff;
@@ -142,22 +149,27 @@
     font-size: 12px !important;
     width: 98%;
   }
+
   .search-bar-type {
     display: none !important;
   }
+
   .search-bar-wrapper {
     width: 100% !important;
     margin-left: 10%;
   }
+
   .search-term {
     width: 100% !important;
     padding-left: 10%;
     border-radius: 2px;
     border: none;
   }
+
   .btn-search-text {
     display: none;
   }
+
   .btn-search-wrapper {
     width: 30%;
     border-radius: 5% !important;
@@ -171,6 +183,7 @@
   .btn-search-text {
     display: none !important;
   }
+
   .btn-search-wrapper {
     width: 10% !important;
   }
@@ -180,15 +193,18 @@
   .search-bar-type {
     display: none !important;
   }
+
   .search-bar-wrapper {
     width: 100% !important;
   }
+
   .search-term {
     width: 60% !important;
     padding-left: 5%;
     border-radius: 2px;
     border: none;
   }
+
   .btn-search-wrapper {
     border-radius: 5% !important;
     border: none;
@@ -197,4 +213,3 @@
     width: 15%;
   }
 }
-

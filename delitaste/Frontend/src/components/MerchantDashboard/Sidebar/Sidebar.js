@@ -140,7 +140,7 @@ function Sidebar(props) {
     }));
   };
 
-  const { match } = props;
+  const { match, user, provider } = props;
   const mappingDashboard = (destination) => {
     props.history.push(`${match.path}/${destination}`);
   };
@@ -148,14 +148,20 @@ function Sidebar(props) {
     <div className="sb-wrapper">
       <div className="u-pf-sb-header">
         <img
-          src={`https://cn-geo1.uber.com/image-proc/resize/eats/format=webp/width=550/height=440/quality=70/srcb64=aHR0cHM6Ly9kMXJhbHNvZ25qbmczNy5jbG91ZGZyb250Lm5ldC8yMGIyYjVhYi0yZGIwLTQ2ZTQtYWIxNC03MmJmYjExMWQ3YWEuanBlZw==`}
+          src={provider.provider.avatar}
           alt="provider_profile_image"
           className="pro-sb-profile-image"
         />
         <div className="u-pf-sb-profile-text-wrapper">
-          <span className="u-pf-sb-pt-main-text">The Dirty South</span>
-          <span className="u-pf-sb-pt-sub-text">150+ products</span>
-          <span className="u-pf-sb-pt-sub-text">27 orders</span>
+          <span className="u-pf-sb-pt-main-text">
+            {provider.provider.merchant_name}
+          </span>
+          <span className="u-pf-sb-pt-sub-text">
+            $ {provider.provider.price_range}
+          </span>
+          <span className="u-pf-sb-pt-sub-text">
+            {provider.provider.order_totals} orders
+          </span>
         </div>
       </div>
       {sidebarFeatures.map((feature) => (
@@ -214,6 +220,7 @@ Sidebar.propTypes = {
 
 const mapStateToProps = (state) => ({
   user: state.UserReducer,
+  provider: state.ProviderReducer,
 });
 
 export default withRouter(connect(mapStateToProps, null)(Sidebar));

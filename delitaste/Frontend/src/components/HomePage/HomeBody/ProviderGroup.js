@@ -4,6 +4,7 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { CustomButtonGroup } from "./CustomButtonGroup";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import LazyLoad from "react-lazyload";
 import {
   faCalendarPlus,
   faInfoCircle,
@@ -14,7 +15,7 @@ import { withRouter } from "react-router-dom";
 import { faHeart as faHeart2 } from "@fortawesome/fontawesome-free-solid";
 import { faHeart as faHeart1 } from "@fortawesome/fontawesome-free-regular";
 import { faGetPocket } from "@fortawesome/free-brands-svg-icons";
-import LazyLoad from "react-lazyload";
+
 import ProviderGroupSkeleton from "components/Skeleton/ProviderGroupSkeleton";
 const responsive = {
   desktop: {
@@ -51,7 +52,7 @@ function ProviderGroup({
     history.push(`/provider-detail/${id}`);
   };
   useEffect(() => {
-    if (providerList.length) setLoading(true);
+    if (providerList?.length) setLoading(true);
   }, [providerList]);
   return (
     <Fragment>

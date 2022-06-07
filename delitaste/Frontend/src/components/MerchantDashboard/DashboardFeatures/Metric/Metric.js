@@ -12,6 +12,7 @@ const Metric = ({
   children,
   left,
   right,
+  border,
   ...rest
 }) => {
   const metricStyle = {
@@ -22,16 +23,22 @@ const Metric = ({
     alignItems: "center",
     width: width || "20%",
     height: height || "120px",
-    backgroundColor: "rgb(248, 248, 248)",
+    backgroundColor: "#FCFCFC",
     cursor: "pointer",
     borderTop: "4px solid #940000",
     color: color || "black",
     fontSize: fontSize || "13px",
+    border: border || "unset",
   };
   const metricContentStyle = {
-    fontSize: 48,
+    margin: "20px 0",
+    fontSize: rest.numericFontSize || 50,
     fontWeight: 500,
-    color: "rgb(148, 0, 0)",
+    color: rest.textColor || "rgb(148, 0, 0)",
+  };
+  const descriptionStyle = {
+    width: "90%",
+    fontSize: 12,
   };
   return (
     <Fragment>
@@ -40,6 +47,7 @@ const Metric = ({
         <span style={metricContentStyle} className="metric-content">
           {rest.numeric_data}
         </span>
+        {rest.text && <span style={descriptionStyle}>{rest.text}</span>}
       </div>
     </Fragment>
   );

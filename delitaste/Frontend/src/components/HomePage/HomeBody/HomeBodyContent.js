@@ -13,7 +13,8 @@ import ProviderGroup from "components/HomePage/HomeBody/ProviderGroup";
 import ProviderShowAll from "components/HomePage/HomeBody/ProviderShowAll";
 import Button from "components/Commons/Button/Button";
 import ButtonGroup from "components/Commons/Button/ButtonGroup/ButtonGroup";
-
+import PickupProvider from "./PickupProvider";
+import CategoryGroup from "./CategoryGroup";
 const providerGroup = [
   {
     group_title: "In a rush?",
@@ -46,23 +47,25 @@ function HomeBodyContent(props) {
   const [group2, setGroup2] = useState([]);
   const [group3, setGroup3] = useState([]);
   const [group4, setGroup4] = useState([]);
+  const [group5, setGroup5] = useState([]);
   const [curLimit, setCurLimit] = useState(30);
   const [curOffset, setCurOffset] = useState(1);
   const [allProvider, setAllProvider] = useState([]);
   useEffect(() => {
     async function fetchingDataAPI() {
       const result1 = await getProviderGroup(1, glimit, goffset, lat, long);
+      setGroup1(result1);
       const result2 = await getProviderGroup(5, glimit, goffset, lat, long);
+      setGroup2(result2);
       const result3 = await getProviderGroup(6, glimit, goffset, lat, long);
+      setGroup3(result3);
       const result4 = await getProviderGroup(7, glimit, goffset, lat, long);
+      setGroup4(result4);
       const all = await getAllProvider(curLimit, curOffset, lat, long);
-      Promise.all([result1, result2, result3, result4, all]).then((values) => {
-        setGroup1(values[0]);
-        setGroup2(values[1]);
-        setGroup3(values[2]);
-        setGroup4(values[3]);
-        setAllProvider(values[4]);
-      });
+      setAllProvider(all);
+      const result5 = await getProviderGroup(5, 2, goffset, lat, long);
+      setGroup5(result5);
+      console.log(result2);
     }
     fetchingDataAPI();
   }, []);
@@ -86,7 +89,9 @@ function HomeBodyContent(props) {
               groupTitle={providerGroup[1].group_title}
               groupDescription={providerGroup[1].group_description}
               providerList={group2}
-            />
+            />{" "}
+            <PickupProvider providerList={group5} providerNearby={group2} />
+            <CategoryGroup groupTitle={"Explore by category"} />
             <ProviderGroup
               groupTitle={providerGroup[2].group_title}
               groupDescription={providerGroup[2].group_description}

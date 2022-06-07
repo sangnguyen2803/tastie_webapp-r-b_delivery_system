@@ -6,6 +6,7 @@ import { getCart } from "store/actions/CartAction/CartAction";
 import {
   getUserProfileAPI,
   setLoading,
+  getAddressBookAPI,
 } from "store/actions/UserAction/UserAction";
 import { setDialogBox } from "store/actions/UIComponentAction/DialogBoxAction";
 
@@ -14,6 +15,7 @@ export default function (WrappedComponent) {
     constructor(props) {
       super(props);
       this.state = {
+        userId: -1,
         isLoading: true,
         isAuth: false,
       };
@@ -25,12 +27,16 @@ export default function (WrappedComponent) {
         if (result?.isAuth && result?.accessToken) {
           this.setState({ isLoading: false });
           this.setState({ isAuth: true });
-          await this.props.getUserProfileAPI(result.accessToken);
-          if (this.props.user.profile.user_id)
-            await this.props.getCart(this.props.user.profile.user_id);
-          this.setState({ isLoading: false });
+          const id = await this.props.getUserProfileAPI(result.accessToken);
+          this.setState({ userId: id });
         }
         return;
+      }
+    }
+    componentDidUpdate(prevProps, prevState) {
+      if (prevState.userId !== this.state.userId && this.state.userId !== -1) {
+        this.props.getAddressBookAPI(this.state.userId);
+        this.props.getCart(this.state.userId);
       }
     }
     render() {
@@ -47,6 +53,7 @@ export default function (WrappedComponent) {
     user: PropTypes.object.isRequired,
     getAccessTokenAPI: PropTypes.func.isRequired,
     getUserProfileAPI: PropTypes.func.isRequired,
+    getAddressBookAPI: PropTypes.func.isRequired,
     getCart: PropTypes.func.isRequired,
     setLoading: PropTypes.func.isRequired,
     setDialogBox: PropTypes.func.isRequired,
@@ -58,6 +65,7 @@ export default function (WrappedComponent) {
   return connect(mapStateToProps, {
     getAccessTokenAPI,
     getUserProfileAPI,
+    getAddressBookAPI,
     getCart,
     setLoading,
     setDialogBox,

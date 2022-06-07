@@ -127,7 +127,11 @@ function PDHeader(props) {
   }, []);
   useEffect(() => {
     async function fetchingDataAPI() {
-      const result = await props.getProviderByIdAPI(props.match.params?.id, 1); //type = 1
+      const result = await props.getProviderByIdAPI(
+        props.match.params?.id,
+        1,
+        -1
+      ); //type = 1
       setProviderDetail(result?.data);
     }
     fetchingDataAPI();

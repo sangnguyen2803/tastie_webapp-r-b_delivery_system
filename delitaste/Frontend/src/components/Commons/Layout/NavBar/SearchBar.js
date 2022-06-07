@@ -54,15 +54,6 @@ function NavBar(props) {
           >
             Product
           </span>
-          <span
-            className="search-type-drop-down-text"
-            onClick={(e) => {
-              setShowDropdown(false);
-              setTypeSearch(3);
-            }}
-          >
-            Category
-          </span>
         </div>
       )}
 

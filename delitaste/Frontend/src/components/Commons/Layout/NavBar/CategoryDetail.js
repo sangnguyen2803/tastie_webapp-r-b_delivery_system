@@ -41,7 +41,7 @@ function CategoryDetail({
         <div className="category-display">
           <div className="left-category-dropdown">
             {Object.keys(categories).map((key, index) => (
-              <Fragment>
+              <Fragment key={index}>
                 <div
                   className="category-level-one"
                   onClick={() => {

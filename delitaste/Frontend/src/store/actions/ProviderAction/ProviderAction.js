@@ -10,6 +10,8 @@ import {
   GET_PROVIDER_DETAIL,
   SET_DASHBOARD_PROVIDER,
   SET_ORDER_LIST,
+  SET_TOP_PRODUCT_BY_SALES,
+  SET_TOP_PRODUCT_BY_UNIT,
 } from "store/actions/types";
 
 //Create provider
@@ -192,34 +194,44 @@ export const updateBankInfoFormAPI = (id, data) => async (dispatch) => {
 //get provider by id
 
 //type 1 : get provider for customer view - type 2 : get provider for provider dashboard view
-export const getProviderByIdAPI = (id, type) => async (dispatch) => {
-  if (!type) type = 1;
-  try {
-    const endpoint = `/v1/api/provider/dashboard/${id}/get-info`;
-    const res = await axios.get(endpoint);
-    if (res.data?.state) {
-      if (!res.data.provider_info) return [];
-      if (type === 1) {
-        dispatch({
-          type: GET_PROVIDER_DETAIL,
-          payload: { currentProvider: res.data.provider_info },
-        });
+export const getProviderByIdAPI =
+  (provider_id, type, user_id) => async (dispatch) => {
+    if (!type) type = 1;
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const body = JSON.stringify({
+      user_id: user_id || -1,
+      provider_id: provider_id,
+    });
+    try {
+      const endpoint = `/v1/api/provider/dashboard/get-info`;
+      const res = await axios.post(endpoint, body, config);
+      if (res.data?.state) {
+        if (!res.data.provider_info?.data) return [];
+        if (type === 1) {
+          dispatch({
+            type: GET_PROVIDER_DETAIL,
+            payload: { currentProvider: res.data.provider_info.data },
+          });
+        }
+        if (type === 2) {
+          dispatch({
+            type: SET_DASHBOARD_PROVIDER,
+            payload: {
+              provider: res.data.provider_info.data,
+              operation: res.data.provider_info.operation_time,
+            },
+          });
+        }
+        return res.data?.provider_info;
       }
-      if (type === 2) {
-        dispatch({
-          type: SET_DASHBOARD_PROVIDER,
-          payload: {
-            provider: res.data.provider_info.data,
-            operation: res.data.provider_info.operation_time,
-          },
-        });
-      }
-      return res.data.provider_info;
+    } catch (err) {
+      console.log(err.response.data?.errors);
     }
-  } catch (err) {
-    console.log(err.response.data.errors);
-  }
-};
+  };
 
 export const getScheduleTime = (id) => async (dispatch) => {
   try {
@@ -230,6 +242,59 @@ export const getScheduleTime = (id) => async (dispatch) => {
     }
   } catch (err) {
     console.log(err);
+  }
+};
+
+export const getAllPromotionAPI = (id) => async (dispatch) => {
+  id = 1000000;
+  try {
+    const endpoint = `/v1/api/provider/dashboard/get-all-promos/${id}`;
+    const res = await axios.get(endpoint);
+    if (res.data.status) {
+      return res.data.response;
+    }
+    return {};
+  } catch (err) {
+    console.log(err);
+    return {};
+  }
+};
+
+export const getAllEcouponAPI = (id) => async (dispatch) => {
+  id = 1000000;
+  try {
+    const endpoint = `/v1/api/provider/dashboard/get-all-ecoupon/${id}`;
+    const res = await axios.get(endpoint);
+    if (res.data.status) {
+      return res.data.response.ecoupon;
+    }
+    return {};
+  } catch (err) {
+    console.log(err);
+    return {};
+  }
+};
+
+export const addMenuCategoryAPI = (id, name) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  const body = JSON.stringify({
+    provider_id: id,
+    menu_name: name,
+  });
+  console.log(body);
+  try {
+    const endpoint = `/v1/api/provider/dashboard/menu-overview/add-menu-category`;
+    const res = await axios.post(endpoint, body, config);
+    if (res.data.status) {
+      return true;
+    }
+    return false;
+  } catch (err) {
+    return false;
   }
 };
 
@@ -244,7 +309,6 @@ export const getAllOrderAPI = (id, limit, offset) => async (dispatch) => {
     limit: limit,
     offset: offset,
   });
-  console.log(body);
   try {
     const endpoint = `/v1/api/provider/order/get-all-order`;
     const res = await axios.post(endpoint, body, config);
@@ -259,7 +323,149 @@ export const getAllOrderAPI = (id, limit, offset) => async (dispatch) => {
     }
     return [];
   } catch (err) {
-    console.log(err);
     return [];
+  }
+};
+
+export const getProviderTopProductByUnitAPI =
+  (id, start_month, end_month, year) => async (dispatch) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const body = JSON.stringify({
+      provider_id: id,
+      start_month,
+      end_month,
+      year,
+    });
+    try {
+      const endpoint = `/v1/api/provider/dashboard/get-top-product-by-unit-by-provider`;
+      const res = await axios.post(endpoint, body, config);
+      if (res.data.status) {
+        dispatch({
+          type: SET_TOP_PRODUCT_BY_UNIT,
+          payload: {
+            topByUnit: res.data.list_product,
+          },
+        });
+        return res.data.list_product;
+      }
+      return [];
+    } catch (err) {
+      console.log(err);
+      return [];
+    }
+  };
+
+export const getProviderTopProductBySalesAPI =
+  (id, start_month, end_month, year) => async (dispatch) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const body = JSON.stringify({
+      provider_id: id,
+      start_month,
+      end_month,
+      year,
+    });
+    try {
+      const endpoint = `/v1/api/provider/dashboard/get-top-product-by-sales-by-provider`;
+      const res = await axios.post(endpoint, body, config);
+      if (res.data.status) {
+        dispatch({
+          type: SET_TOP_PRODUCT_BY_SALES,
+          payload: {
+            topBySales: res.data.list_product,
+          },
+        });
+        return res.data.list_product;
+      }
+      return [];
+    } catch (err) {
+      console.log(err);
+      return [];
+    }
+  };
+
+export const getProviderRevenueByTime =
+  (id, start_month, end_month, year) => async (dispatch) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const body = JSON.stringify({
+      provider_id: id,
+      start_month,
+      end_month,
+      year,
+    });
+    try {
+      const endpoint = `/v1/api/provider/dashboard/get-provider-revenue-by-time`;
+      const res = await axios.post(endpoint, body, config);
+      if (res.data.status) {
+        return res.data.total_revenue;
+      }
+      return 0;
+    } catch (err) {
+      console.log(err);
+      return 0;
+    }
+  };
+
+export const getProviderOrderByTime =
+  (id, start_month, end_month, year) => async (dispatch) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const body = JSON.stringify({
+      provider_id: id,
+      start_month,
+      end_month,
+      year,
+    });
+    try {
+      const endpoint = `/v1/api/provider/dashboard/get-provider-number-order-by-time`;
+      const res = await axios.post(endpoint, body, config);
+      if (res.data.status) {
+        return res.data.number_order;
+      }
+      return 0;
+    } catch (err) {
+      console.log(err);
+      return 0;
+    }
+  };
+
+export const updateProviderDetailAPI = (id, data) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  const body = JSON.stringify({
+    provider_status: data.status,
+    day: "Monday",
+    open_time: "09:15:00",
+    close_time: "20:30:00",
+    estimated_cooking_time: data.ect,
+    update_at: data.update_at,
+  });
+  try {
+    const endpoint = `/v1/api/provider/dashboard/${id}/update-provider`;
+    const res = await axios.post(endpoint, body, config);
+    if (res.data.status) {
+      return true;
+    }
+    return false;
+  } catch (err) {
+    console.log(err);
+    return false;
   }
 };

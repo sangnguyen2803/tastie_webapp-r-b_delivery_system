@@ -45,7 +45,8 @@ function MainNavBar({ user, history }) {
       <div className="main-nav-menu-prefix">
         <div className="main-nav-prefix-container">
           <div className="nav-logo-wrapper" onClick={() => history.push("/")}>
-            <img height={35} alt="Logo" src={Logo} />
+            <img className="nav-logo" alt="Logo" src={Logo} />
+            <span className="nav-logo-title">Tastie!</span>
           </div>
           <div className="nav-wrapper-2">
             <div className="nav-menu-prefix-2">

@@ -175,12 +175,13 @@
 
 table {
   width: 100%;
+  border-collapse: collapse;
 }
 
 th {
   font-weight: normal !important;
-  background-color: rgb(148, 0, 0);
-  color: white;
+  background-color: #EEEEEE;
+  color: rgb(0, 0, 0);
   height: 30px;
   font-size: 14px;
   align-self: flex-start;

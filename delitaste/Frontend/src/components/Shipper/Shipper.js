@@ -12,9 +12,20 @@ import CartImage from "assets/cart.svg";
 import { ShipperLocation } from "assets/dummy/ShipperLocations";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartArrowDown } from "@fortawesome/fontawesome-free-solid";
+import Avatar from "assets/avatar.jpg";
+const shipper = {
+  name: "Terry Harrison",
+  license_plate: "64B1 - 03663",
+  rating: 5,
+  profile_image:
+    "https://pyxis.nymag.com/v1/imgs/231/dd4/b1d43dd12227a68877644b36e1b6c9850e-13-zayn-malik.rsquare.w330.jpg",
+};
 
 function Shipper(props) {
   const socket = io("http://localhost:3015");
+  const [messages, setMessages] = useState([]);
+  const [message, setMessage] = useState("");
+  const [orderCode, setOrderCode] = useState("");
   const [orderData, setOrderData] = useState({});
   const [shipperConfirmBox, setShipperConfirmBox] = useState(false);
   useEffect(() => {
@@ -46,10 +57,23 @@ function Shipper(props) {
       socket.disconnect();
     };
   }, []);
-  useEffect(() => {
-    console.log(orderData);
-  }, [orderData]);
+  const sendMessage = (text) => {
+    if (text !== "") {
+      setMessages((prev) => [...prev, text]);
+      setMessage("");
+    }
+  };
 
+  useEffect(() => {
+    socket.emit("join-room", orderCode);
+    socket.on("receive-customer-inbox", (message) => {
+      console.log(messages);
+      setMessages((prev) => [
+        ...prev,
+        { sender: "customer", message: message.message },
+      ]);
+    });
+  }, [orderCode]);
   const shipperAcceptOrder = async (orderData) => {
     socket.emit(
       "shipper-accepted-order",
@@ -58,6 +82,7 @@ function Shipper(props) {
       orderData.provider,
       orderData.order.order_code
     );
+    setOrderCode(orderData.order.order_code);
     try {
       await axios.post(`/v1/api/tastie/order/update_order_status`, {
         order_code: orderData.order.order_code,
@@ -70,8 +95,7 @@ function Shipper(props) {
     }
     setShipperConfirmBox(false);
   };
-
-  const shipperDeclineOrder = (orderData) => {
+  const shipperDeclineOrder = async (orderData) => {
     socket.emit(
       "shipper-decline-order",
       orderData.order,
@@ -81,7 +105,6 @@ function Shipper(props) {
     );
     setShipperConfirmBox(false);
   };
-
   const shipperOnTheWay = async () => {
     socket.emit("On-the-way", orderData.order.order_code);
     try {
@@ -168,7 +191,7 @@ function Shipper(props) {
             </div>
           ) : (
             <Fragment>
-              <div className="shipper-utility-row">
+              <div className="shipper-utility-row" style={{ height: "200px" }}>
                 <div
                   className="cart-body"
                   style={{ justifyContent: "center", width: "100%" }}
@@ -233,6 +256,43 @@ function Shipper(props) {
                 onClick={() => shipperFinishOrder()}
               />
             </ButtonGroup>
+          </div>
+          <div className="or-st-ship-conversation">
+            {messages?.map((item, index) => (
+              <div key={index} className={`or-st-chat-item-${item.sender}`}>
+                <img
+                  className="or-st-chat-avatar"
+                  src={
+                    item.sender === "shipper" ? shipper.profile_image : Avatar
+                  }
+                  alt="shipper_image"
+                />
+                <span className="or-st-chat-item-content">{item.message}</span>
+              </div>
+            ))}
+          </div>
+          <div className="or-st-ship-chat-bar">
+            <input
+              className="or-st-chat-content"
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              name="chat"
+            />
+            <div
+              className="or-st-chat-submit"
+              onClick={() => {
+                if (message !== "") {
+                  setMessages((prev) => [
+                    ...prev,
+                    { sender: "shipper", message: message },
+                  ]);
+                  socket.emit("shipper-inbox", message, orderCode);
+                  setMessage("");
+                }
+              }}
+            >
+              Send
+            </div>
           </div>
         </div>
       </div>

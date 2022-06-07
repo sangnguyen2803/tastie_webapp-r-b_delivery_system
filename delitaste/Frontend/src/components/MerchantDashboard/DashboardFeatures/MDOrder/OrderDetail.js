@@ -44,7 +44,6 @@ function OrderDetail(props) {
     color: red;
   `;
   const socket = io(`http://localhost:3015`);
-
   const filterOrderList = (type) => {
     const filteredOrderList = orderListData.filter(
       (order) => order.order_status === type
@@ -63,9 +62,8 @@ function OrderDetail(props) {
   useEffect(() => {
     async function fetchAllOrders(id) {
       setLoading(false);
-      let limit = 200;
+      let limit = 50;
       let offset = 1;
-      console.log(id);
       const result = await getAllOrderAPI(id, limit, offset);
       result.sort(function (a, b) {
         return new Date(b.update_at) - new Date(a.update_at);
@@ -79,6 +77,7 @@ function OrderDetail(props) {
     }
     setLoading(true);
   }, [user.provider_id]);
+
   useEffect(() => {
     socket.emit("provider-join-room", `provider-${user.provider_id}`);
     socket.on(
@@ -89,10 +88,9 @@ function OrderDetail(props) {
         let limit = 20;
         let offset = 1;
         const result3 = await getAllOrderAPI(user.provider_id, limit, offset);
-        let temp = result3.filter((item) => item.order_code === order_code);
-        let status = temp[0]["MAX(os.order_status_name)"];
-        setStatusOnView(status);
+        console.log(result3);
         Promise.all([result1, result2, result3]).then((data) => {
+          console.log(data[0], data[1]);
           setOrderItems(data[0]);
           setOrderSummary(data[1]);
           setOrderList(data[2]);
@@ -102,15 +100,11 @@ function OrderDetail(props) {
   }, [user.provider_id]);
 
   const viewOrderDetail = (code) => {
-    console.log("hello1");
     async function fetchOrderDetail(orderCode) {
       const result1 = await getAllProductFromOrderAPI(orderCode);
       const result2 = await getOrderStatusAPI(orderCode);
 
       Promise.all([result1, result2]).then((data) => {
-        console.log(data[0]);
-        console.log(data[1]);
-        console.log("hello2");
         setOrderItems(data[0]);
         setOrderSummary(data[1]);
       });

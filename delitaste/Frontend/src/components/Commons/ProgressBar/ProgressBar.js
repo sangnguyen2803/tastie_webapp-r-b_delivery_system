@@ -1,6 +1,6 @@
 import React from "react";
 
-const ProgressBar = ({ bgcolor, progress, height, length }) => {
+const ProgressBar = ({ bgcolor, progress, height, length, ...rest }) => {
   const Parentdiv = {
     height: height,
     backgroundColor: "white",
@@ -20,14 +20,16 @@ const ProgressBar = ({ bgcolor, progress, height, length }) => {
 
   const progresstext = {
     marginLeft: 0,
-    fontSize: "13px",
+    fontSize: "12px",
     color: "black",
     fontWeight: 500,
   };
 
   return (
     <>
-      <span style={progresstext}>{`${progress}/${length}`}</span>
+      <span style={progresstext}>
+        {`${progress}/${length} `} {rest.text}
+      </span>
       <div style={Parentdiv}>
         <div style={Childdiv}></div>
       </div>

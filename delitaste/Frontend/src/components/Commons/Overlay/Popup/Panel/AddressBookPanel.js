@@ -145,8 +145,8 @@ function AddressBookPanel(props) {
               <Form className="p-pd-content-wrapper">
                 <Fragment>
                   <div className="p-pd-general-profile-wrapper">
-                    {user.location.map((address) => (
-                      <div className="p-pd-general-profile-row">
+                    {user.location.map((address, index) => (
+                      <div className="p-pd-general-profile-row" key={index}>
                         <div className="p-pd-text-secondary">
                           <FontAwesomeIcon
                             className="p-pd-address-icon"

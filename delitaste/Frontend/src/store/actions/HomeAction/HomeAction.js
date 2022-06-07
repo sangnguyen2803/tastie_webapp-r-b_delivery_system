@@ -8,6 +8,7 @@ export const getProviderGroup =
       },
     };
     const body = JSON.stringify({
+      user_id: -1,
       group_provider_id: group_id,
       limit: limit,
       offset: offset,

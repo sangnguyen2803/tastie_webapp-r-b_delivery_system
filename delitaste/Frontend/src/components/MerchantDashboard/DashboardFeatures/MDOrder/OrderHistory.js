@@ -2,6 +2,7 @@ import { Fragment, useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { css } from "@emotion/react";
 import {
+  faCalendarPlus,
   faCheckCircle,
   faClock,
   faDotCircle,
@@ -110,6 +111,8 @@ function OrderHistory(props) {
         >
           Order History
         </div>
+        
+        
         <div className="ohis-order-filter-wrapper">
           <div className="ohis-switcher-wrapper">
             <SwitchSelector

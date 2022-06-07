@@ -10,6 +10,7 @@ export const getOrderHistoryAPI = (id) => async (dispatch) => {
     if (res.data) return res.data.response;
     return {};
   } catch (err) {
+    console.log(err);
     return {};
   }
 };
@@ -23,7 +24,6 @@ export const submitOrderCheckoutAPI = (data) => async (dispatch) => {
   data.total = data.subtotal + data.tips;
   const body = JSON.stringify(data);
   var orderCode = "";
-  console.log(data);
   try {
     const endpoint = "/v1/api/tastie/order/submit-order-info-delivery";
     const res = await axios.post(endpoint, body, config);

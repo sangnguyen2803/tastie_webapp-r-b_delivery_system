@@ -33,6 +33,8 @@ const shipper = {
 };
 
 function OrderStatus(props) {
+  const [message, setMessage] = useState("");
+  const [messages, setMessages] = useState([]);
   const { status } = props;
   const [showShipperChat, setShowShipperChat] = useState(false);
   let [loading, setLoading] = useState(true);
@@ -121,7 +123,13 @@ function OrderStatus(props) {
             </div>
           )}
           {showShipperChat ? (
-            <ChatBox shipper={shipper} />
+            <ChatBox
+              shipper={shipper}
+              message={message}
+              setMessage={setMessage}
+              messages={messages}
+              setMessages={setMessages}
+            />
           ) : (
             <Fragment>
               <span className="or-st-pre-body">

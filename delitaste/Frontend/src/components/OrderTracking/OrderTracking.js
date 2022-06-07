@@ -91,7 +91,7 @@ function OrderTracking(props) {
         {
           name: orderData.merchant_name,
           address: "135B Tran Hung Dao, Cau Ong Lanh, District 1",
-          provider_id: 1000091,
+          provider_id: 1000027,
           location: {
             latitude: 10.770426270078108,
             longitude: 106.69433674255707,
@@ -141,6 +141,7 @@ function OrderTracking(props) {
         if (data[0] && data[1]) {
           setOrderData((prev) => ({
             ...prev,
+            provider_id: data[0].provider_id,
             merchant_name: data[0].merchant_name,
             items: data[0].items,
             num_items: data[0].num_items,

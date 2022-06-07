@@ -65,7 +65,7 @@ function HomeHeader(props) {
     },
     {
       category_id: 11,
-      category_name: "Sushi",
+      category_name: "Sandwich",
       category_photo:
         "https://d4p17acsd5wyj.cloudfront.net/shortcuts/cuisines/sushi.png",
     },
@@ -85,7 +85,11 @@ function HomeHeader(props) {
               className="homeheader-category-item"
               key={category.category_id}
             >
-              <img className="hh-item-photo" src={category.category_photo} />
+              <img
+                className="hh-item-photo"
+                src={category.category_photo}
+                alt={"category_image"}
+              />
               <span className="hh-item-text">{category.category_name}</span>
             </div>
           ))}

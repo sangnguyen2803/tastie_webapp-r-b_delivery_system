@@ -3,28 +3,44 @@ import axios from "axios";
 import { GET_PRODUCT_LIST } from "store/actions/types";
 
 //Search
-export const searchAPI = (query, type, long, lat) => async (dispatch) => {
-  const config = {
-    headers: {
-      "Content-Type": "application/json",
-    },
+export const searchAPI =
+  (query, type, long, lat, category_id) => async (dispatch) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    const body = JSON.stringify(
+      type === 3
+        ? {
+            q: query,
+            type: 3,
+            longitude: long,
+            latitude: lat,
+            category_infor: {
+              category_type: "2",
+              category_id: category_id,
+            },
+          }
+        : {
+            q: query,
+            type,
+            longitude: long,
+            latitude: lat,
+          }
+    );
+    try {
+      const endpoint = "/v1/api/tastie/search";
+      const res = await axios.post(endpoint, body, config);
+      console.log(res.data);
+      if (res.data?.status) return res.data.data;
+      return {};
+    } catch (err) {
+      console.log(err);
+      return {};
+    }
   };
-  const body = JSON.stringify({
-    q: query,
-    type,
-    longitude: long,
-    latitude: lat,
-  });
-  try {
-    const endpoint = "/v1/api/tastie/search";
-    const res = await axios.post(endpoint, body, config);
-    if (res.data?.status) return res.data.data;
-    return {};
-  } catch (err) {
-    console.log(err);
-    return {};
-  }
-};
 
 //Get product list
 export const getProductListAPI = (providerId) => async (dispatch) => {

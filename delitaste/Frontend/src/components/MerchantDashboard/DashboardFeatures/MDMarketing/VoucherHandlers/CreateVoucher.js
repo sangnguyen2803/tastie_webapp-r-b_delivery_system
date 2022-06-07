@@ -19,7 +19,20 @@ import {
 import ReactMapGl, { Source, Layer, Marker, Popup } from "react-map-gl";
 import { faMapMarkedAlt } from "@fortawesome/free-solid-svg-icons";
 import Modal from "components/Commons/Overlay/Popup/Modal/Modal";
+import SwitchSelector from "react-switch-selector";
 
+const optionSwitcher = [
+  {
+    label: "Store promotion",
+    value: 0,
+    selectedBackgroundColor: "#b90009",
+  },
+  {
+    label: "Product promotion",
+    value: 1,
+    selectedBackgroundColor: "#b90009",
+  },
+];
 const initialValues = {
   //  provider_id: 1000001,
   promotion_code: "",
@@ -36,14 +49,22 @@ const initialValues = {
   delivery_mode: 1,
 };
 const selectedTypeStyle = {
-  backgroundColor: "#690000",
+  backgroundColor: "#610000",
   border: "1px solid #500000",
   color: "white",
 };
 function CreateVoucher(props) {
-  const [type, setType] = useState(1);
+  const [promotionOption, setPromotionOption] = useState(false);
+  const initialSelectedIndex = optionSwitcher.findIndex(
+    ({ value }) => value === 0
+  );
+  const onChange = (newValue) => {
+    setPromotionOption(newValue);
+  };
   const handleSubmitForm = (values) => {
     console.log(values);
+    if (promotionOption === 1) console.log("submit product");
+    console.log("submit store");
   };
   return (
     <Fragment>
@@ -52,7 +73,7 @@ function CreateVoucher(props) {
         closeModal={() => {
           props.setVisible(false);
         }}
-        title={"Create voucher"}
+        title={"Create promotion"}
         width={50}
         height={650}
         padding="5px 50px"
@@ -73,37 +94,23 @@ function CreateVoucher(props) {
                     }}
                   >
                     <span className="modal-input-label">Type:</span>
-                    <div className="voucher-type-box-wrapper">
-                      <div
-                        className="voucher-type-box"
-                        style={type === 1 ? selectedTypeStyle : {}}
-                        onClick={() => setType(1)}
-                      >
-                        <FontAwesomeIcon
-                          icon={faStore}
-                          style={{ fontSize: 16 }}
-                        />
-                        <span className="voucher-type-box-text">
-                          Store voucher
-                        </span>
-                      </div>
-                      <div
-                        className="voucher-type-box"
-                        style={type === 2 ? selectedTypeStyle : {}}
-                        onClick={() => setType(2)}
-                      >
-                        <FontAwesomeIcon
-                          icon={faShoppingBasket}
-                          style={{ fontSize: 16 }}
-                        />
-                        <span className="voucher-type-box-text">
-                          Product voucher
-                        </span>
-                      </div>
+                    <div
+                      className="voucher-type-box-wrapper"
+                      style={{ width: 280 }}
+                    >
+                      <SwitchSelector
+                        onChange={onChange}
+                        options={optionSwitcher}
+                        initialSelectedIndex={initialSelectedIndex}
+                        backgroundColor={"#E6E6E6"}
+                        fontColor={"#2C2C2C"}
+                        selectedFontColor={"#E6E6E6"}
+                        fontSize={13}
+                        wrapperBorderRadius={0}
+                        optionBorderRadius={0}
+                        width={80}
+                      />
                     </div>
-                  </div>
-                  <div className="voucher-form-header">
-                    {type === 1 ? "Store voucher" : "Product voucher"}
                   </div>
                   <div className="modal-input-row">
                     <span className="modal-input-label">Voucher name:</span>
@@ -114,7 +121,7 @@ function CreateVoucher(props) {
                       placeholder={"Voucher name"}
                     />
                   </div>
-                  {type === 1 && (
+                  {promotionOption !== 1 && (
                     <div className="modal-input-row">
                       <span className="modal-input-label">Voucher code:</span>
                       <Field
@@ -153,7 +160,7 @@ function CreateVoucher(props) {
                     />
                   </div>
 
-                  {type === 1 && (
+                  {promotionOption !== 1 && (
                     <Fragment>
                       <div className="modal-input-row">
                         <span className="modal-input-label">
@@ -204,7 +211,7 @@ function CreateVoucher(props) {
                   </div>
                   <div
                     className="modal-input-row"
-                    style={type !== 1 ? { marginBottom: 190 } : {}}
+                    style={promotionOption === 1 ? { marginBottom: 190 } : {}}
                   >
                     <span className="modal-input-label">Description</span>
                     <Field

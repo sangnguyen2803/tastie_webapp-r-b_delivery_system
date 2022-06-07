@@ -25,7 +25,7 @@ function OrderHistory(props) {
   useEffect(() => {
     async function fetchOrderHistory(id) {
       const result = await getOrderHistoryAPI(id);
-      result.sort(function (a, b) {
+      result?.sort(function (a, b) {
         return (
           new Date(b.completed_at.split(", ")[1]) -
           new Date(a.completed_at.split(", ")[1])
@@ -34,11 +34,11 @@ function OrderHistory(props) {
       setOrderHistory(result);
       setFilterOrderHistory(result);
     }
-    fetchOrderHistory(match.params.id);
+    fetchOrderHistory(user.profile?.user_id);
     return function cleanup() {
       setOrderHistory([]);
     };
-  }, []);
+  }, [user.profile?.user_id]);
   const filterItems = (status) => {
     if (parseInt(status) !== 0) {
       const result = orderHistory.filter(
@@ -104,7 +104,7 @@ function OrderHistory(props) {
         </div>
 
         <div className="p-ohis-body-wrapper">
-          {filterOrderHistory.map((item) => (
+          {filterOrderHistory?.map((item) => (
             <div className="p-ohis-item-wrapper" key={item.order_id}>
               <div className="p-ohis-item-head">
                 <span>#{item.order_code}</span>

@@ -17,6 +17,7 @@ function ViewOrderDetail({ orderSummary, orderItems, orderStatus, socket }) {
     // accepted the order then send the message to the room of customer (the room's name is order_code)
     socket.emit("provider-confirmed", orderSummary.order_code);
     try {
+      console.log(orderSummary.order_code);
       const res = await axios.post("/v1/api/tastie/order/update_order_status", {
         order_code: orderSummary?.order_code,
         status: 3, // confirmed
@@ -49,7 +50,7 @@ function ViewOrderDetail({ orderSummary, orderItems, orderStatus, socket }) {
                         {product.product_name}
                       </div>
                       <div className="od-product-detail-price">
-                        $ {product.price.toFixed(2)}
+                        $ {product.price?.toFixed(2)}
                       </div>
                     </div>
                     {product.item_additional_options ? (

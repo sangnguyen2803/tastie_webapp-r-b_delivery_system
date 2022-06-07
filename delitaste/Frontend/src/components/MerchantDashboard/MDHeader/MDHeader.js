@@ -8,6 +8,7 @@ import PropTypes from "prop-types";
 import { getProviderByIdAPI } from "store/actions/ProviderAction/ProviderAction";
 import "./MDHeader.scss";
 import { faMapMarkedAlt } from "@fortawesome/free-solid-svg-icons";
+import ReactMapGl, { Source, Layer, Marker, Popup } from "react-map-gl";
 
 const dayOfWeek = [
   "sunday",
@@ -22,18 +23,23 @@ const dayOfWeek = [
 function MDHeader(props) {
   const [provider, setProvider] = useState();
   const [operationDescription, setOperationDescription] = useState("");
+
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "auto" });
   }, []);
   useEffect(() => {
     async function fetchingDataAPI() {
-      const result = await props.getProviderByIdAPI(props.user.provider_id, 2); //type = 2'
+      const result = await props.getProviderByIdAPI(
+        props.user.provider_id,
+        2,
+        -1
+      ); //type = 2'
       setProvider(result?.data);
       var today = new Date();
-      const operation = result.operation_time[dayOfWeek[today.getDay()]];
-      if (!operation.is_day_off) {
+      const operation = result?.operation_time[dayOfWeek[today.getDay()]];
+      if (!operation?.is_day_off) {
         setOperationDescription(
-          `Open until ${operation.close_time?.slice(0, 5)} PM`
+          `Open until ${operation?.close_time?.slice(0, 5)} PM`
         );
       } else {
         setOperationDescription(`Service is not available today`);
@@ -62,10 +68,13 @@ function MDHeader(props) {
               277, Nguyen Van Cu, ward Nguyen Cu Trinh, district 5, Ho Chi Minh
               city
             </span>
-
-            {!provider.description && (
-              <span className="md-head-sub-text-medium md-head-description">{`${provider.merchant_name} began chickens and burgers and selling them to restaurants and his neighbors out of a small kitchen at the corner of Hudson and North Moore St. in Tribeca. Today, NYC’s beloved restaurant and pie shop celebrates 27 years of classic, made from scratch American cooking.`}</span>
-            )}
+            <span
+              className="md-head-sub-text-medium"
+              style={{ margin: "5px 0" }}
+            >
+              <FontAwesomeIcon icon={faPhone} className="md-text-icon" />
+              033-790-7047
+            </span>
             <span className="md-head-sub-text-large">
               {[...Array(provider.rating || 5)].map((e, index) => (
                 <FontAwesomeIcon
@@ -85,17 +94,31 @@ function MDHeader(props) {
               ))}{" "}
               {`${provider.rating || "5.0"} (${
                 provider.total_review || " 10 ratings "
-              }) • Cooking time: ${provider.estimated_cooking_time} mins`}
+              })`}
             </span>
-            <span className="md-head-sub-text-medium">
-              <FontAwesomeIcon icon={faPhone} className="md-text-icon" />
-              {provider.hotline}
+            <span
+              className="md-head-sub-text-medium"
+              style={{ color: "#101010" }}
+            >
+              Cooking time: {provider.estimated_cooking_time} mins
             </span>
             <span
               className="md-head-sub-text-large"
-              style={{ fontWeight: 700, color: "#101010" }}
+              style={{ color: "#101010" }}
             >
               {operationDescription}
+            </span>
+            <span
+              className="md-head-sub-text-medium"
+              style={{
+                color: "#810000",
+                fontWeight: 700,
+                cursor: "pointer",
+                userSelect: "none",
+              }}
+              onClick={() => props.setMapView(true)}
+            >
+              Show on map
             </span>
           </div>
         </div>
