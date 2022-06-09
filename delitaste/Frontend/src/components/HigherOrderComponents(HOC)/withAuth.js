@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import axios from "axios";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getAccessTokenAPI } from "store/actions/UserAction/AuthAction";
@@ -7,6 +8,7 @@ import {
   getUserProfileAPI,
   setLoading,
   getAddressBookAPI,
+  setCurrentLocation,
 } from "store/actions/UserAction/UserAction";
 import { setDialogBox } from "store/actions/UIComponentAction/DialogBoxAction";
 
@@ -20,6 +22,7 @@ export default function (WrappedComponent) {
         isAuth: false,
       };
     }
+
     async componentDidMount() {
       const refreshToken = localStorage.getItem("refreshToken");
       if (refreshToken) {
@@ -33,7 +36,7 @@ export default function (WrappedComponent) {
         return;
       }
     }
-    componentDidUpdate(prevProps, prevState) {
+    async componentDidUpdate(prevProps, prevState) {
       if (prevState.userId !== this.state.userId && this.state.userId !== -1) {
         this.props.getAddressBookAPI(this.state.userId);
         this.props.getCart(this.state.userId);
@@ -54,6 +57,7 @@ export default function (WrappedComponent) {
     getAccessTokenAPI: PropTypes.func.isRequired,
     getUserProfileAPI: PropTypes.func.isRequired,
     getAddressBookAPI: PropTypes.func.isRequired,
+    setCurrentLocation: PropTypes.func.isRequired,
     getCart: PropTypes.func.isRequired,
     setLoading: PropTypes.func.isRequired,
     setDialogBox: PropTypes.func.isRequired,
@@ -66,6 +70,7 @@ export default function (WrappedComponent) {
     getAccessTokenAPI,
     getUserProfileAPI,
     getAddressBookAPI,
+    setCurrentLocation,
     getCart,
     setLoading,
     setDialogBox,

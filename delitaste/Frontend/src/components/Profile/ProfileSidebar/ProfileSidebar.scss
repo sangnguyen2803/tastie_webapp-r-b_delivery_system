@@ -52,6 +52,10 @@ $sidebar-width: 320px;
 }
 
 .u-pf-sb-pt-main-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 180px;
     font-size: 14px;
     color: #000000;
 }

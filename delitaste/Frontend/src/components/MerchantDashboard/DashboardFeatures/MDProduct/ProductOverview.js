@@ -26,7 +26,6 @@ const productList = [
   {
     id: 1,
     name: "Menu BBQ Cheese & Bacon",
-
     price: "2.50$",
     category: "Fast food",
     productStatus: 3,
@@ -85,8 +84,8 @@ const ProductFilterTab = {
 };
 function ProductOverview(props) {
   const [currentTab, setCurrentTab] = useState(0);
-  const [products, setProducts] = useState();
-  const [searchResult, setSearchResult] = useState(productList);
+  const [products, setProducts] = useState([]);
+  const [searchResult, setSearchResult] = useState();
   const [searchTerm, setSearchTerm] = useState("");
   const { user, provider, getProductListAPI } = props;
   useEffect(() => {
@@ -100,6 +99,7 @@ function ProductOverview(props) {
           }
         }
         setProducts(temp);
+        setSearchResult(temp);
       }
     }
     fetchProductList(user.provider_id);
@@ -114,30 +114,35 @@ function ProductOverview(props) {
   };
   const filterSearchResult = (searchTerm) => {
     setCurrentTab(4);
-    let result = productList;
-    if (searchTerm.length !== 0)
-      result = productList.filter((item) => item.name.includes(searchTerm));
-    else setCurrentTab(0);
-    setSearchResult(result);
+    let result = [];
+    if (searchTerm.length !== 0) {
+      result = searchResult.filter((item) =>
+        item.product_name.includes(searchTerm)
+      );
+      setSearchResult(result);
+    } else {
+      setCurrentTab(0);
+      setSearchResult(products);
+    }
   };
   const handleSelectTab = (value) => {
     setCurrentTab(value);
     let result = {};
     switch (value) {
       case 0:
-        result = productList;
+        result = products;
         break;
       case 1:
-        result = productList.filter((item) => item.productStatus === 1);
+        result = products.filter((item) => item.product_status === 1);
         break;
       case 2:
-        result = productList.filter((item) => item.productStatus === 2);
+        result = products.filter((item) => item.product_status === 2);
         break;
       case 3:
-        result = productList.filter((item) => item.productStatus === 3);
+        result = products.filter((item) => item.product_status === 3);
         break;
       default:
-        result = productList;
+        result = products;
     }
     setSearchResult(result);
   };
@@ -150,17 +155,17 @@ function ProductOverview(props) {
         <div className="product-list-info-row">
           <div className="product-list-info">
             <div className="product-stock-quantity">
-              {productList.length} Products
+              {products?.length} Products
             </div>
             <div className="product-stock-quantity-description">
-              Upload {`${100 - productList.length}`} more products.
+              Upload {`${200 - products?.length}`} more products.
             </div>
             <div className="product-progress-bar">
               <ProgressBar
                 bgcolor="#940000"
-                progress={`${productList.length}`}
+                progress={`${products.length}`}
                 height="6px"
-                length={100}
+                length={200}
               />
             </div>
           </div>
@@ -233,8 +238,12 @@ function ProductOverview(props) {
           <div className="product-table">
             <table className="table table-wrapper">
               <tbody className="text-capitalize">
-                {products?.map((product, index) => (
-                  <tr className="table-row-wrapper" key={index}>
+                {searchResult?.map((product, index) => (
+                  <tr
+                    className="table-row-wrapper"
+                    style={{ cursor: "pointer" }}
+                    key={index}
+                  >
                     <td className="product-img">
                       <img
                         src={product.product_image}

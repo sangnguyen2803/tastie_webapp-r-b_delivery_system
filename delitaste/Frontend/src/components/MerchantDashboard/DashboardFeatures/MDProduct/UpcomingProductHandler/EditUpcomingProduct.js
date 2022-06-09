@@ -12,7 +12,7 @@ import {
   faExchangeAlt,
   faImage,
 } from "@fortawesome/fontawesome-free-solid";
-import "./ProductHandler.scss";
+import "../ProductHandler/ProductHandler.scss";
 import "components/MerchantDashboard/DashboardFeatures/Panel.scss";
 import "style/Common.scss";
 
@@ -27,7 +27,7 @@ import AddAdditionalOption from "components/MerchantDashboard/DashboardFeatures/
 import UpdateAdditionalOption from "components/MerchantDashboard/DashboardFeatures/MDProduct/ProductHandler/UpdateAdditionalOption";
 import { getProductListAPI } from "store/actions/ProductAction/ProductAction";
 
-function EditProduct(props) {
+function EditUpcomingProduct(props) {
   const [showFoodCategory, setShowFoodCategory] = useState(false);
   const [showMainFoodCategory, setShowMainFoodCategory] = useState(false);
   const [showMenuCategory, setShowMenuCategory] = useState(false);
@@ -468,7 +468,7 @@ function EditProduct(props) {
   );
 }
 
-EditProduct.propTypes = {
+EditUpcomingProduct.propTypes = {
   user: PropTypes.object.isRequired,
   provider: PropTypes.object.isRequired,
   getCategoryAPI: PropTypes.func.isRequired,
@@ -484,5 +484,5 @@ export default withRouter(
   connect(mapStateToProps, {
     getCategoryAPI,
     getProductListAPI,
-  })(EditProduct)
+  })(EditUpcomingProduct)
 );

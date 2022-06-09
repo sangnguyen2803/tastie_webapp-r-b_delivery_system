@@ -24,6 +24,7 @@ import {
   REMOVE_CART,
   INCREASE_PRODUCT,
   DESCREASE_PRODUCT,
+  SET_CURRENT_LOCATION,
   SOCKET_CONNECTION,
 } from "store/actions/types";
 import storage from "redux-persist/lib/storage";
@@ -49,6 +50,7 @@ const initialState = {
   refreshToken: localStorage.getItem("refreshToken"),
   verifiedEmailToken: localStorage.getItem("verified_email_token"),
   currentAddress: {
+    loading: false,
     address: "",
     latitude: 0,
     longitude: 0,
@@ -158,6 +160,10 @@ const UserReducer = (state = initialState, action) => {
     case GET_CART:
       return { ...state, ...payload };
     case CLEAR_CART:
+      return { ...state, ...payload };
+    case SET_CURRENT_LOCATION:
+      localStorage.setItem("current_lat", payload.currentAddress.latitude);
+      localStorage.setItem("current_long", payload.currentAddress.longitude);
       return { ...state, ...payload };
     case REMOVE_CART:
       let copy = { ...state };

@@ -47,16 +47,29 @@ function CategorySelector(props) {
         <span className="category-selection-title">{props.title}</span>
         <div className="option-container">
           {categoryList.map((category) => (
-            <div className="option-row" key={category.category_id}>
+            <div
+              className="option-row"
+              key={
+                props.menu ? category.menu_category_id : category.category_id
+              }
+            >
               <Checkbox
                 checked={
-                  props.selectedCategory.indexOf(category.category_id) !== -1
+                  props.selectedCategory.indexOf(
+                    props.menu
+                      ? category.menu_category_id
+                      : category.category_id
+                  ) !== -1
                     ? true
                     : false
                 }
                 disabled={
                   props.selectedCategory.length < props.required ||
-                  props.selectedCategory.indexOf(category.category_id) !== -1
+                  props.selectedCategory.indexOf(
+                    props.menu
+                      ? category.menu_category_id
+                      : category.category_id
+                  ) !== -1
                     ? false
                     : true
                 }
@@ -79,12 +92,16 @@ function CategorySelector(props) {
                   if (value) {
                     props.setSelectedCategory([
                       ...props.selectedCategory,
-                      category.category_id,
+                      props.menu
+                        ? category.menu_category_id
+                        : category.category_id,
                     ]);
                     return;
                   } else {
                     let index = props.selectedCategory.indexOf(
-                      category.category_id
+                      props.menu
+                        ? category.menu_category_id
+                        : category.category_id
                     );
                     if (index != -1) {
                       var array = [...props.selectedCategory];
@@ -105,7 +122,11 @@ function CategorySelector(props) {
                   marginLeft: 15,
                   userSelect: "none",
                 }}
-                label={category.category_name}
+                label={
+                  props.menu
+                    ? category.menu_category_name
+                    : category.category_name
+                }
               />
             </div>
           ))}

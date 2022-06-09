@@ -9,6 +9,7 @@ import {
   SET_ORDER_LIST,
   SET_TOP_PRODUCT_BY_SALES,
   SET_TOP_PRODUCT_BY_UNIT,
+  SET_CURRENT_ORDER_LIST,
 } from "store/actions/types";
 import {} from "store/actions/types";
 
@@ -26,6 +27,7 @@ const initialState = {
     longitude: 106.68057155417674,
     latitude: 10.768685473523648,
   },
+  currentOrderList: [],
   operation: [],
   orderList: [],
   topBySales: [],
@@ -35,6 +37,11 @@ const initialState = {
 const ProviderReducer = (state = initialState, action) => {
   const { type, payload } = action;
   switch (type) {
+    case SET_CURRENT_ORDER_LIST:
+      return {
+        ...state,
+        ...payload,
+      };
     case SET_DASHBOARD_PROVIDER:
       return {
         ...state,

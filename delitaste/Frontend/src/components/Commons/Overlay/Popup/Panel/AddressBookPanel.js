@@ -11,6 +11,9 @@ import {
   faHome,
   faBuilding,
   faAddressBook,
+  faDotCircle,
+  faUndo,
+  faPowerOff,
 } from "@fortawesome/fontawesome-free-solid";
 
 import ReactMapGl, { Source, Layer, Marker, Popup } from "react-map-gl";
@@ -18,6 +21,7 @@ import axios from "axios";
 import { faMapMarkedAlt } from "@fortawesome/free-solid-svg-icons";
 import Modal from "components/Commons/Overlay/Popup/Modal/Modal";
 import {
+  setCurrentLocation,
   addAddressAPI,
   getAddressBookAPI,
 } from "store/actions/UserAction/UserAction";
@@ -48,11 +52,12 @@ function AddressBookPanel(props) {
     height: "200px",
     latitude: 10.768685473523648,
     longitude: 106.68057155417674,
-    zoom: 16,
+    zoom: 12,
   });
   const [contact, setContact] = useState([]);
   async function fetchAddressBook() {
     var result = await getAddressBookAPI(user?.profile?.user_id);
+    console.log(result);
     setContact(result);
   }
   useEffect(() => {
@@ -81,7 +86,6 @@ function AddressBookPanel(props) {
   const handleGeoCoding = (values) => {
     const { road, city, district, ward } = values;
     const address = getFullAddress(road, city, district, ward);
-
     if (!address) return;
     const endpoint = `https://api.geoapify.com/v1/geocode/search?text=${address}&apiKey=6d74076cb237412e9abb06e88020a7a5`;
     async function fetchCoordinates(url) {
@@ -116,6 +120,22 @@ function AddressBookPanel(props) {
         <Formik initialValues={initialValues2} validateOnChange={false}>
           {(formikProps) => {
             const { values, errors, touched } = formikProps;
+            const getPosition = () => {
+              return new Promise((res, rej) => {
+                navigator.geolocation.getCurrentPosition(res, rej);
+              });
+            };
+            const relocating = async (values) => {
+              var position = await getPosition();
+              const { latitude, longitude } = position.coords;
+              const endpoint = `https://api.geoapify.com/v1/geocode/reverse?lat=${latitude}&lon=${longitude}&apiKey=6d74076cb237412e9abb06e88020a7a5`;
+              let res = await axios.get(endpoint);
+              var address = "";
+              if (res.data) {
+                address = res.data?.features[0]?.properties?.formatted || "";
+              }
+              props.setCurrentLocation(latitude, longitude, address);
+            };
             const handleGeoCoding = (values) => {
               const { road, city, district, ward } = values;
               const address = getFullAddress(road, city, district, ward);
@@ -145,6 +165,15 @@ function AddressBookPanel(props) {
               <Form className="p-pd-content-wrapper">
                 <Fragment>
                   <div className="p-pd-general-profile-wrapper">
+                    <div className="p-pd-general-profile-row">
+                      <div className="p-pd-text-secondary">
+                        <FontAwesomeIcon
+                          className="p-pd-address-icon"
+                          icon={faDotCircle}
+                        />
+                        <span>{user.currentAddress.address}</span>
+                      </div>
+                    </div>
                     {user.location.map((address, index) => (
                       <div className="p-pd-general-profile-row" key={index}>
                         <div className="p-pd-text-secondary">
@@ -321,6 +350,25 @@ function AddressBookPanel(props) {
                           handleGeoCoding(values);
                         }}
                       />
+                      <Button
+                        width={120}
+                        height={25}
+                        fontSize={12}
+                        color={"black"}
+                        marginTop={20}
+                        gap={10}
+                        bglight={true}
+                        border={"#5d5d5d 1.5px solid"}
+                        justifyContent={"center"}
+                        label="Relocating"
+                        prefix={
+                          <FontAwesomeIcon
+                            className="button-icon"
+                            icon={faPowerOff}
+                          />
+                        }
+                        onClick={() => relocating()}
+                      />
                     </ButtonGroup>
                     <div className="p-pd-general-profile-row">
                       <ReactMapGl
@@ -369,11 +417,14 @@ function AddressBookPanel(props) {
 AddressBookPanel.propTypes = {
   user: PropTypes.object.isRequired,
   getAddressBookAPI: PropTypes.func.isRequired,
+  setCurrentLocation: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   user: state.UserReducer,
 });
 export default withRouter(
-  connect(mapStateToProps, { getAddressBookAPI })(AddressBookPanel)
+  connect(mapStateToProps, { getAddressBookAPI, setCurrentLocation })(
+    AddressBookPanel
+  )
 );

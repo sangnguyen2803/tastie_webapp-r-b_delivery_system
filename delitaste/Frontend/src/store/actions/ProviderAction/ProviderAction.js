@@ -10,6 +10,7 @@ import {
   GET_PROVIDER_DETAIL,
   SET_DASHBOARD_PROVIDER,
   SET_ORDER_LIST,
+  SET_CURRENT_ORDER_LIST,
   SET_TOP_PRODUCT_BY_SALES,
   SET_TOP_PRODUCT_BY_UNIT,
 } from "store/actions/types";
@@ -28,7 +29,6 @@ export const createMerchantAPI = (id) => async (dispatch) => {
     registered_at,
     provider_update_at,
   });
-  console.log(body);
   try {
     const endpoint = "/v1/api/provider/sign-contract";
     const res = await axios.post(endpoint, body, config);

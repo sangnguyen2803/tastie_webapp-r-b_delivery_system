@@ -20,6 +20,7 @@ import {
   faHome,
   faBuilding,
   faAddressBook,
+  faDotCircle,
 } from "@fortawesome/fontawesome-free-solid";
 import ButtonGroup from "components/Commons/Button/ButtonGroup/ButtonGroup";
 import Button from "components/Commons/Button/Button";
@@ -510,6 +511,15 @@ function ProfileDetail(props) {
                   {showEditCI && (
                     <Fragment>
                       <div className="p-pd-general-profile-wrapper">
+                        <div className="p-pd-general-profile-row">
+                          <div className="p-pd-text-secondary">
+                            <FontAwesomeIcon
+                              className="p-pd-address-icon"
+                              icon={faDotCircle}
+                            />
+                            <span>{user.currentAddress.address}</span>
+                          </div>
+                        </div>
                         {user.location.map((address) => (
                           <div className="p-pd-general-profile-row ">
                             <div className="p-pd-text-secondary">

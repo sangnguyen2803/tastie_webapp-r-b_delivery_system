@@ -48,10 +48,6 @@ function PDBody({ products, upcomingProducts, user, ...rest }) {
     window.scrollTo({ top: 0, behavior: "auto" });
   }, []);
 
-  useEffect(() => {
-    console.log(products);
-  }, [products]);
-
   const clearCartItem = (id) => {
     async function clearCartItem(id) {
       await rest.clearCart(
@@ -91,8 +87,8 @@ function PDBody({ products, upcomingProducts, user, ...rest }) {
               Upcoming
             </span>
             {products?.length !== 0 &&
-              products.map((product) => (
-                <Fragment>
+              products.map((product, index) => (
+                <Fragment key={index}>
                   <span
                     className={`pd-sb-menu-item ${
                       selectedMenu === product.menu_category_id
@@ -135,8 +131,8 @@ function PDBody({ products, upcomingProducts, user, ...rest }) {
           </div>
 
           {products?.length !== 0 &&
-            products.map((menu) => (
-              <Fragment>
+            products.map((menu, index) => (
+              <Fragment key={index}>
                 <div
                   className={`pd-pl-title product-group-${menu.menu_category_id}`}
                 >

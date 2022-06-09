@@ -44,9 +44,12 @@ const Metric = ({
     <Fragment>
       <div className="metric-wrapper" onClick={onClick} style={metricStyle}>
         {children}
-        <span style={metricContentStyle} className="metric-content">
-          {rest.numeric_data}
-        </span>
+        {rest.numeric_data && (
+          <span style={metricContentStyle} className="metric-content">
+            {rest.numeric_data}
+          </span>
+        )}
+
         {rest.text && <span style={descriptionStyle}>{rest.text}</span>}
       </div>
     </Fragment>

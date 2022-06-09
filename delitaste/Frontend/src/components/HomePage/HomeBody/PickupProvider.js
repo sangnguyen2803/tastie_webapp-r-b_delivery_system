@@ -16,7 +16,14 @@ import { faGetPocket } from "@fortawesome/free-brands-svg-icons";
 import Button from "components/Commons/Button/Button";
 import ButtonGroup from "components/Commons/Button/ButtonGroup/ButtonGroup";
 import Modal from "components/Commons/Overlay/Popup/Modal/Modal";
-import ReactMapGl, { Source, Layer, Marker, Popup } from "react-map-gl";
+import ReactMapGl, {
+  Source,
+  Layer,
+  Marker,
+  Popup,
+  NavigationControl,
+  FullscreenControl,
+} from "react-map-gl";
 import { faMapMarkedAlt } from "@fortawesome/free-solid-svg-icons";
 
 const responsive = {
@@ -37,16 +44,25 @@ const responsive = {
   },
 };
 function PickupProvider(props) {
+  const { history } = props;
+  const [showPopup, setShowPopup] = useState(false);
+  const [selectedProvider, setSelectedProvider] = useState({});
   const { providerList, providerNearby } = props;
   const openTime = "23:00:00";
   const closeTime = "22:00:00";
   const [currentTime, setCurrentTime] = useState(
     new Date().toLocaleTimeString()
   );
+  const handleOnClickProvider = (e, id) => {
+    e.stopPropagation();
+    history.push(`/provider-detail/${id}`);
+  };
   //map
   const [mapView, setMapView] = useState(false);
+  const [popupLatitude, setPopupLatitude] = useState(10.773031146281017);
+  const [popupLongitude, setPopupLongitude] = useState(106.7060806090524);
   const [viewport, setViewport] = useState({
-    height: "400px",
+    height: "550px",
     zoom: 14,
   });
   return (
@@ -112,8 +128,8 @@ function PickupProvider(props) {
             itemClass="carousel-item-padding-40-px"
             customTransition={"transform 500ms ease-in-out"}
           >
-            {providerList?.map((item) => (
-              <Fragment>
+            {providerList?.map((item, index) => (
+              <Fragment key={index}>
                 <LazyLoad
                   style={{
                     display: "flex",
@@ -198,7 +214,7 @@ function PickupProvider(props) {
       </div>
       <Modal
         openModal={mapView}
-        title={"Restaurant Location"}
+        title={"Pick-up restaurant location"}
         width={80}
         height={650}
         transparent={0.2}
@@ -209,27 +225,17 @@ function PickupProvider(props) {
         <ReactMapGl
           transitionDuration={1000}
           {...viewport}
-          latitude={10.773031146281017}
-          longitude={106.7060806090524}
+          latitude={props.currentLatitude}
+          longitude={props.currentLongitude}
           width={"100%"}
           onViewportChange={(viewport) => setViewport(viewport)}
           mapStyle="mapbox://styles/mapbox/streets-v11"
           mapboxApiAccessToken="pk.eyJ1IjoiaG9hbmduYW0yNDMiLCJhIjoiY2t1dHJxdjdlMHg5ZDJwbnlpcmo0a2NnMiJ9.DUrlIOzvO6-kWt-VCKZW1g"
         >
-          {providerNearby.map((item, index) => (
-            <Marker
-              key={index}
-              latitude={parseFloat(item.latitude)}
-              longitude={parseFloat(item.longitude)}
-              offsetLeft={-20}
-              offsetTop={-30}
-            >
-              <FontAwesomeIcon className="provider-marker" icon={faUtensils} />
-            </Marker>
-          ))}
+          <FullscreenControl />
           <Marker
-            latitude={10.773031146281017}
-            longitude={106.7060806090524}
+            latitude={props.currentLatitude}
+            longitude={props.currentLongitude}
             offsetLeft={-20}
             offsetTop={-30}
           >
@@ -239,6 +245,104 @@ function PickupProvider(props) {
               src="https://xuonginthanhpho.com/wp-content/uploads/2020/03/map-marker-icon.png"
             />
           </Marker>
+          {providerNearby.map((item, index) => (
+            <Marker
+              key={index}
+              latitude={parseFloat(item.latitude)}
+              longitude={parseFloat(item.longitude)}
+              offsetLeft={-20}
+              offsetTop={-30}
+            >
+              <FontAwesomeIcon
+                className="provider-marker"
+                icon={faUtensils}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setSelectedProvider(item);
+                  setPopupLatitude(parseFloat(item.latitude));
+                  setPopupLongitude(parseFloat(item.longitude));
+                  setShowPopup(true);
+                }}
+              />
+            </Marker>
+          ))}
+          {showPopup && (
+            <Popup
+              latitude={popupLatitude}
+              longitude={popupLongitude}
+              anchor="top"
+              onClose={() => setShowPopup(false)}
+            >
+              <div
+                key={selectedProvider.provider_id}
+                onClick={(e) =>
+                  handleOnClickProvider(e, selectedProvider.provider_id)
+                }
+              >
+                <div
+                  className="provider-card-container"
+                  style={{
+                    backgroundImage: `url(${selectedProvider.profile_pic})`,
+                    backgroundPosition: "center",
+                    backgroundRepeat: "no-repeat",
+                    backgroundSize: "cover",
+                  }}
+                >
+                  <div className="provider-interaction-wrapper">
+                    <FontAwesomeIcon
+                      className="icon-for-liking"
+                      style={{ zIndex: 1, marginTop: 5 }}
+                      icon={faHeart1}
+                    />
+                    {!selectedProvider.tag_name && (
+                      <div className="provider-card-tag">
+                        {selectedProvider.tag_name ||
+                          "3 orders until €5 reward"}
+                      </div>
+                    )}
+                  </div>
+                  {currentTime < closeTime && currentTime > openTime ? (
+                    <figcaption className="figcaption-wrapper">
+                      <div className="btn-schedule-wrapper">
+                        <FontAwesomeIcon
+                          icon={faCalendarPlus}
+                          className="icon-btn"
+                        />
+                        <span>Schedule order</span>
+                      </div>
+                      <span className="a1-description">
+                        Opens Saturday 2:15 PM
+                      </span>
+                    </figcaption>
+                  ) : (
+                    <Fragment></Fragment>
+                  )}{" "}
+                </div>
+                <div className="product-info-wrapper">
+                  <span className="p-info-main-text">
+                    {selectedProvider.provider_name}
+                  </span>
+                  <div className="p-info-rating">
+                    {selectedProvider.rating || "5.0"}
+                  </div>
+                </div>
+                <div className="product-sub-info-wrapper">
+                  <FontAwesomeIcon
+                    icon={faGetPocket}
+                    className="sub-info-icon"
+                  />
+                  &nbsp;•&nbsp;
+                  <span className="p-sub-info-main-text">
+                    {selectedProvider.price_range}
+                  </span>
+                  &nbsp;•&nbsp;
+                  <div className="p-sub-info-cooking-time">
+                    {selectedProvider.estimated_cooking_time || "30-45 mins"}
+                  </div>
+                </div>
+              </div>
+            </Popup>
+          )}
         </ReactMapGl>
       </Modal>
     </Fragment>

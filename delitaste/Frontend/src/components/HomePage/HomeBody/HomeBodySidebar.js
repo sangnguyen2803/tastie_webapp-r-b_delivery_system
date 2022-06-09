@@ -23,12 +23,10 @@ function HomeBodySidebar(props) {
   const { type, totalResult, query } = props;
   const [checkedOption1, setCheckedOption1] = useState(false);
   const [checkedOption2, setCheckedOption2] = useState(false);
-
   const [showFunction1, setShowFunction1] = useState(true);
   const [showFunction2, setShowFunction2] = useState(true);
   const [showFunction3, setShowFunction3] = useState(true);
   const [showFunction4, setShowFunction4] = useState(true);
-
   const [showAddressPanel, setShowAddressPanel] = useState(false);
   const dietary = [
     { id: 1, dietary_name: "Vegetarian", dietary_icon: faCarrot },
@@ -72,7 +70,8 @@ function HomeBodySidebar(props) {
               icon={faAddressBook}
             />
             <span className="address-book-picked">
-              543, Nguyen Dinh Chieu, ward 10, district 3, Ho Chi Minh city
+              {props.user?.currentAddress?.address ||
+                "Please wait for a while..."}
             </span>
             <span
               className="address-book-button"

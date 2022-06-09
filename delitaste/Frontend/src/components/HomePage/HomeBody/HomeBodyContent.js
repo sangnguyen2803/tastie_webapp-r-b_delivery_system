@@ -39,10 +39,9 @@ const providerGroup = [
 ];
 const glimit = 20;
 const goffset = 1;
-const long = 106.68250448518744;
-const lat = 10.763019107348029;
+
 function HomeBodyContent(props) {
-  const { getProviderGroup, getAllProvider } = props;
+  const { user, getProviderGroup, getAllProvider } = props;
   const [group1, setGroup1] = useState([]);
   const [group2, setGroup2] = useState([]);
   const [group3, setGroup3] = useState([]);
@@ -52,28 +51,38 @@ function HomeBodyContent(props) {
   const [curOffset, setCurOffset] = useState(1);
   const [allProvider, setAllProvider] = useState([]);
   useEffect(() => {
-    async function fetchingDataAPI() {
-      const result1 = await getProviderGroup(1, glimit, goffset, lat, long);
+    async function fetchingDataAPI(la, lo) {
+      const result1 = await getProviderGroup(1, glimit, goffset, la, lo);
       setGroup1(result1);
-      const result2 = await getProviderGroup(5, glimit, goffset, lat, long);
+      const result2 = await getProviderGroup(5, glimit, goffset, la, lo);
       setGroup2(result2);
-      const result3 = await getProviderGroup(6, glimit, goffset, lat, long);
+      const result3 = await getProviderGroup(6, glimit, goffset, la, lo);
       setGroup3(result3);
-      const result4 = await getProviderGroup(7, glimit, goffset, lat, long);
+      const result4 = await getProviderGroup(7, glimit, goffset, la, lo);
       setGroup4(result4);
-      const all = await getAllProvider(curLimit, curOffset, lat, long);
+      const all = await getAllProvider(curLimit, curOffset, la, lo);
       setAllProvider(all);
-      const result5 = await getProviderGroup(5, 2, goffset, lat, long);
+      const result5 = await getProviderGroup(5, 2, goffset, la, lo);
       setGroup5(result5);
-      console.log(result2);
     }
-    fetchingDataAPI();
-  }, []);
+    if (user.currentAddress.loading)
+      fetchingDataAPI(
+        user.currentAddress.latitude,
+        user.currentAddress.longitude
+      );
+  }, [user.currentAddress.loading]);
 
   const fetchMoreProvider = async () => {
-    const result = await getAllProvider(curLimit, curOffset, lat, long);
-    const newList = allProvider.concat(result);
-    setAllProvider(newList);
+    if (user.currentAddress.loading) {
+      const result = await getAllProvider(
+        curLimit,
+        curOffset,
+        user.currentAddress.latitude,
+        user.currentAddress.longitude
+      );
+      const newList = allProvider.concat(result);
+      setAllProvider(newList);
+    }
   };
   return (
     <Fragment>
@@ -90,7 +99,16 @@ function HomeBodyContent(props) {
               groupDescription={providerGroup[1].group_description}
               providerList={group2}
             />{" "}
-            <PickupProvider providerList={group5} providerNearby={group2} />
+            <PickupProvider
+              providerList={group5}
+              providerNearby={group1}
+              currentLatitude={
+                user.currentAddress.latitude || 10.773031146281017
+              }
+              currentLongitude={
+                user.currentAddress.longitude || 106.7060806090524
+              }
+            />
             <CategoryGroup groupTitle={"Explore by category"} />
             <ProviderGroup
               groupTitle={providerGroup[2].group_title}

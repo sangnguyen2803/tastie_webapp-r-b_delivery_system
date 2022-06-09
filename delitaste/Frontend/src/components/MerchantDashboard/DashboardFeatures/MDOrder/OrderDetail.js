@@ -21,12 +21,18 @@ import {
 } from "store/actions/OrderAction/OrderAction";
 
 import Loader from "react-spinners/ScaleLoader";
+import ProviderList from "components/HomePage/MainContent/ProviderList/ProviderList";
 // let socket;
 
 function OrderDetail(props) {
   const [loading, setLoading] = useState(false);
-  const { user, getAllOrderAPI, getAllProductFromOrderAPI, getOrderStatusAPI } =
-    props;
+  const {
+    user,
+    provider,
+    getAllOrderAPI,
+    getAllProductFromOrderAPI,
+    getOrderStatusAPI,
+  } = props;
   const [statusOnView, setStatusOnView] = useState();
   const [orderList, setOrderList] = useState([]);
   const [orderSummary, setOrderSummary] = useState(orderList[0]);
@@ -54,24 +60,17 @@ function OrderDetail(props) {
     filterOrderList(props.type);
   }, [props.type]);
 
-  useEffect(() => {
-    if (incomingOrder.order_code) {
-      console.log(incomingOrder);
-    }
-  }, [incomingOrder]);
+  //fetch order list for the first time
   useEffect(() => {
     async function fetchAllOrders(id) {
       setLoading(false);
-      let limit = 50;
+      let limit = 200;
       let offset = 1;
       const result = await getAllOrderAPI(id, limit, offset);
-      result.sort(function (a, b) {
-        return new Date(b.update_at) - new Date(a.update_at);
-      });
-      setOrderList(result);
       setLoading(true);
     }
-    if (user.provider_id !== -1) {
+    //fetch new order list when order in store is empty
+    if (user.provider_id !== -1 && provider.orderList.length === 0) {
       fetchAllOrders(user.provider_id);
       return;
     }
@@ -83,14 +82,15 @@ function OrderDetail(props) {
     socket.on(
       "provider-received-order",
       async (orderData, customerData, order_code) => {
+        console.log("orderData:", orderData);
+        console.log("customerData:", customerData);
+        console.log("order code", order_code);
         const result1 = await getAllProductFromOrderAPI(order_code);
         const result2 = await getOrderStatusAPI(order_code);
         let limit = 20;
         let offset = 1;
         const result3 = await getAllOrderAPI(user.provider_id, limit, offset);
-        console.log(result3);
         Promise.all([result1, result2, result3]).then((data) => {
-          console.log(data[0], data[1]);
           setOrderItems(data[0]);
           setOrderSummary(data[1]);
           setOrderList(data[2]);
@@ -165,7 +165,7 @@ function OrderDetail(props) {
                   bgcolor="#940000"
                   progress={`${orderList.length}`}
                   height="6px"
-                  length={200}
+                  length={5000}
                 />
               </div>
             </div>
@@ -182,7 +182,7 @@ function OrderDetail(props) {
           </div>
           {loading ? (
             <div className="o-order-container">
-              {orderList?.map((order) => (
+              {provider.orderList?.map((order) => (
                 <div
                   className="o-order-row"
                   onClick={() => viewOrderDetail(order.order_code)}
@@ -193,7 +193,7 @@ function OrderDetail(props) {
                       : { backgroundColor: "white" }
                   }
                 >
-                  {mapOrderStatusIcon(order["MAX(ods.order_status_name)"])}
+                  {mapOrderStatusIcon(order["MAX(os.order_status_name)"])}
                   <div className="o-order o-order-id">{order.order_code}</div>
                   <div className="o-order o-order-name">
                     {`${order.user_first_name} ${order.user_last_name}`}
@@ -250,6 +250,7 @@ function OrderDetail(props) {
 
 OrderDetail.propTypes = {
   user: PropTypes.object.isRequired,
+  provider: PropTypes.object.isRequired,
   getAllOrderAPI: PropTypes.func.isRequired,
   getAllProductFromOrderAPI: PropTypes.func.isRequired,
   getOrderStatusAPI: PropTypes.func.isRequired,
@@ -257,6 +258,7 @@ OrderDetail.propTypes = {
 
 const mapStateToProps = (state) => ({
   user: state.UserReducer,
+  provider: state.ProviderReducer,
 });
 
 export default withRouter(

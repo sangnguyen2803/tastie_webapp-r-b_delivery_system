@@ -283,7 +283,7 @@ td {
 .main-detail-panel-wrapper {
   width: calc(100% - 348px);
   padding-top: 20px;
-  height: 2500px;
+  height: auto;
   background-color: rgb(255, 255, 255);
   border-left: 2px solid #eeeeee;
   border-right: 2px solid #eeeeee;
@@ -430,6 +430,9 @@ td {
 }
 
 .upcoming-product-table-wrapper {
+  max-height: 355px;
+  height: 355px;
+  overflow: scroll;
   width: 100%;
   font-size: 13px;
   display: flex;
@@ -455,8 +458,8 @@ td {
 
     .upcoming-product-img img {
       align-self: center;
-      width: 90px;
-      height: 90px;
+      width: 60px;
+      height: 60px;
       object-fit: cover;
     }
   }

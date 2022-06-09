@@ -18,6 +18,7 @@ import {
   SIGN_OUT,
   GET_CONTACT,
   SOCKET_CONNECTION,
+  SET_CURRENT_LOCATION,
 } from "store/actions/types";
 
 //UPDATE UI
@@ -341,6 +342,21 @@ export const accountSignInAPI = (data) => async (dispatch) => {
     return false;
   }
 };
+
+export const setCurrentLocation =
+  (latitude, longitude, address) => (dispatch) => {
+    dispatch({
+      type: SET_CURRENT_LOCATION,
+      payload: {
+        currentAddress: {
+          loading: true,
+          address,
+          latitude,
+          longitude,
+        },
+      },
+    });
+  };
 
 export const initSocket = () => (dispatch) => {
   dispatch({

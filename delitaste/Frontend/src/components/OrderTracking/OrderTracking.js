@@ -347,6 +347,8 @@ function OrderTracking(props) {
             </div>
           </div>
           <OTOrderDetail
+            orderItems={orderItems}
+            orderSummary={orderSummary}
             showOrderDetail={showOrderDetail}
             setShowOrderDetail={setShowOrderDetail}
           />

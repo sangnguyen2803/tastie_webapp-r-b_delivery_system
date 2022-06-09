@@ -38,12 +38,10 @@ const DummyData = {
     },
   ],
   options: {
+    colors: ["#E11A22", "#F8A825"],
     chart: {
       height: 350,
       type: "line",
-    },
-    stroke: {
-      width: [0, 4],
     },
     title: {
       text: "Sales/Order Sources",

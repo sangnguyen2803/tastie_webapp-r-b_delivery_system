@@ -10,10 +10,8 @@ import {
   faUtensils,
   faChartLine,
   faDollarSign,
-  faHome,
   faCaretDown,
   faCaretUp,
-  faCaretRight,
   faStore,
   faBullhorn,
 } from "@fortawesome/fontawesome-free-solid";

@@ -4,7 +4,7 @@ import { GET_PRODUCT_LIST } from "store/actions/types";
 
 //Search
 export const searchAPI =
-  (query, type, long, lat, category_id) => async (dispatch) => {
+  (id, query, type, long, lat, category_id) => async (dispatch) => {
     const config = {
       headers: {
         "Content-Type": "application/json",
@@ -14,6 +14,7 @@ export const searchAPI =
     const body = JSON.stringify(
       type === 3
         ? {
+            user_id: id,
             q: query,
             type: 3,
             longitude: long,
@@ -24,6 +25,7 @@ export const searchAPI =
             },
           }
         : {
+            user_id: id,
             q: query,
             type,
             longitude: long,
@@ -133,5 +135,19 @@ export const getMenuCategoryAPI = (id) => async (dispatch) => {
     return [];
   } catch (err) {
     console.log(err);
+  }
+};
+
+export const getUpcomingProductAPI = (id) => async (dispatch) => {
+  try {
+    const endpoint = `/v1/api/provider/dashboard/get-up-coming-product/${id}`;
+    const res = await axios.get(endpoint);
+    if (res.data) {
+      return res.data.response;
+    }
+    return [];
+  } catch (err) {
+    console.log(err);
+    return [];
   }
 };
