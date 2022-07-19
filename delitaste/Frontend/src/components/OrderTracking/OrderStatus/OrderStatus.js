@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, Fragment } from "react";
 import withAuth from "components/HigherOrderComponents(HOC)/withAuth";
 import { withRouter } from "react-router-dom";
-import { connect } from "react-redux";
+import { connect, Provider } from "react-redux";
 import { css } from "@emotion/react";
 import Loader from "react-spinners/BeatLoader";
 import PropTypes from "prop-types";
@@ -33,6 +33,7 @@ const shipper = {
 };
 
 function OrderStatus(props) {
+  const { user } = props;
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const { status } = props;
@@ -129,6 +130,7 @@ function OrderStatus(props) {
               setMessage={setMessage}
               messages={messages}
               setMessages={setMessages}
+              socket={user.socket}
             />
           ) : (
             <Fragment>

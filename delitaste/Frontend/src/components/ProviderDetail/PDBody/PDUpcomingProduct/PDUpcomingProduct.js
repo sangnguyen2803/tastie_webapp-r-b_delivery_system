@@ -10,11 +10,21 @@ import "../PDProductDetail/PDProductDetail.scss";
 import { addToCart } from "store/actions/CartAction/CartAction";
 
 function PDUpcomingProduct(props) {
+  const [choice, setChoice] = useState("");
   const [heightViewPort, setHeightViewPort] = useState(180);
   const [showSurveyNote, setShowSurveyNote] = useState(false);
   const [isViewPortExpanded, setIsViewPortExpanded] = useState(false);
   const { upcomingProduct } = props;
   const heightForExpansion = 50;
+  const submitSurvey = async (item) => {
+    const data = {
+      upcoming_product_id: item.upcoming_product_id,
+      question: item.question,
+      start_at: "2022-02-02",
+      expire_at: "2022-04-02",
+      choice: "abc",
+    };
+  };
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "auto" });
   }, []);
@@ -23,7 +33,7 @@ function PDUpcomingProduct(props) {
       <div className="pd-pr-d-header" style={{ height: `${heightViewPort}px` }}>
         <img
           className="pd-pr-d-image"
-          src={upcomingProduct.product.product_image}
+          src={upcomingProduct.product_image}
           alt="product_photo"
         />
         <div
@@ -50,64 +60,48 @@ function PDUpcomingProduct(props) {
             : `${350 - heightForExpansion}px`,
         }}
       >
-        <div className="pd-pr-d-main-text">
-          {upcomingProduct.product.product_name}
-        </div>
+        <div className="pd-pr-d-main-text">{upcomingProduct?.product_name}</div>
         <div className="pd-pr-d-sub-text">
           <span style={{ fontSize: 15, fontWeight: 700 }}>
-            ${upcomingProduct.product.estimated_price}{" "}
+            $ {upcomingProduct?.estimated_price?.toFixed(2)}{" "}
           </span>
           {" • "}
           <span style={{ fontSize: 12 }}>
-            {upcomingProduct.product.description}
+            {upcomingProduct.product_description}
           </span>
         </div>
         <div className="pd-pr-d-sub-text">
           <span style={{ fontSize: 13, fontWeight: 700, fontStyle: "italic" }}>
-            Will be released at {upcomingProduct.product.release_date}
+            Will be released soon
           </span>
         </div>
         <div className="option-box-wrapper-survey">
           <div className="option-question">
             <div className="option-box-title-wrapper-1">
               <span className="option-box-title-main-survey">
-                {upcomingProduct.survey.question}
+                {upcomingProduct.question}
               </span>
             </div>
           </div>
           <div
             className="homebody-sb-radio-detail-wrapper"
-            style={{ height: isViewPortExpanded ? 240 : 270 }}
+            style={{ height: isViewPortExpanded ? 200 : 235 }}
           >
-            {upcomingProduct.survey.choices.map((item, index) => (
+            {upcomingProduct?.choice?.map((item, index) => (
               <div className="option-answer ">
                 <label className="hb-sb-type-wrapper radio">
                   <input
                     type="radio"
-                    value={item}
+                    value={item.content}
+                    onChange={(e) => setChoice(e.target.value)}
                     name="survey"
-                    onClick={() => {
-                      index === upcomingProduct.survey.choices.length - 1
-                        ? setShowSurveyNote(true)
-                        : setShowSurveyNote(false);
-                    }}
                   />
                   <span className="hb-sb-label-radio option-box-radio-label">
-                    {item}
+                    {item.content}
                   </span>
                 </label>
               </div>
             ))}
-            {showSurveyNote && (
-              <div className="pd-text-area-wrapper">
-                <textarea
-                  style={{ height: isViewPortExpanded ? 30 : 50 }}
-                  className="pd-textarea-survey"
-                  name="description"
-                  placeholder="Type your survey answer here"
-                />
-              </div>
-            )}
           </div>
         </div>
         <ButtonGroup width={100} float={"center"} mgBottom={10}>
@@ -120,6 +114,7 @@ function PDUpcomingProduct(props) {
             fontSize={13}
             height={35}
             label={`Submit`}
+            onClick={() => submitSurvey(upcomingProduct)}
           />
         </ButtonGroup>
       </div>

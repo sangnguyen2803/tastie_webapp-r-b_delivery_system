@@ -134,8 +134,13 @@ const categories = [
   ],
 ];
 
-function CategoryGroup({ groupTitle, groupDescription }) {
+function CategoryGroup({ groupTitle, groupDescription, ...rest }) {
   const [loading, setLoading] = useState(true);
+  const executeSearch = (id, type) => {
+    rest.history.push(
+      `/search?query=${""}&type=3&category-type=${type}&category-id=${id}`
+    );
+  };
   return (
     <Fragment>
       <div className="home-product-row-container">
@@ -165,7 +170,12 @@ function CategoryGroup({ groupTitle, groupDescription }) {
             >
               {categories?.map((category, index) => (
                 <div className="category-group-wrapper" key={index}>
-                  <div className="category-group-item">
+                  <div
+                    className="category-group-item"
+                    onClick={() =>
+                      executeSearch(category[0].category_id, category[0].type)
+                    }
+                  >
                     <LazyLoad
                       style={{
                         display: "flex",
@@ -184,7 +194,12 @@ function CategoryGroup({ groupTitle, groupDescription }) {
                       {category[0].category_name}
                     </span>
                   </div>
-                  <div className="category-group-item">
+                  <div
+                    className="category-group-item"
+                    onClick={() =>
+                      executeSearch(category[1].category_id, category[1].type)
+                    }
+                  >
                     <LazyLoad>
                       <img
                         className="category-group-item-image"

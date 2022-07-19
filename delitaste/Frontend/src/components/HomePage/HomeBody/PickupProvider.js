@@ -8,6 +8,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import LazyLoad from "react-lazyload";
 import { faHeart as faHeart1 } from "@fortawesome/fontawesome-free-regular";
 import {
+  faHeart as faHeart2,
+  faThumbsUp,
+} from "@fortawesome/fontawesome-free-solid";
+import {
   faCalendarPlus,
   faInfoCircle,
   faUtensils,
@@ -68,7 +72,7 @@ function PickupProvider(props) {
   return (
     <Fragment>
       <div
-        className="home-product-row-container"
+        className="home-product-row-container provider-on-map"
         style={{
           backgroundImage: `url(https://d4p17acsd5wyj.cloudfront.net/eatsfeed/pickup-homefeed-carousel/pickupcarousel_desktopweb.svg)`,
           backgroundPosition: "center",
@@ -157,7 +161,7 @@ function PickupProvider(props) {
                       <FontAwesomeIcon
                         className="icon-for-liking"
                         style={{ zIndex: 1, marginTop: 5 }}
-                        icon={faHeart1}
+                        icon={faHeart2}
                       />
                       {!item.tag_name && (
                         <div className="provider-card-tag">
@@ -198,12 +202,16 @@ function PickupProvider(props) {
                       />
                       &nbsp;•&nbsp;
                       <span className="p-sub-info-main-text">
-                        {item.price_range}
+                        $ {item.price_range}
                       </span>
                       &nbsp;•&nbsp;
                       <div className="p-sub-info-cooking-time">
-                        {item.estimated_cooking_time || "30-45 mins"}
+                        {item.mean_estimated_cooking_time || "30 mins"}
                       </div>
+                      &nbsp;•&nbsp;
+                      <span className="p-sub-info-main-text">
+                        {(item.distance / 1000).toFixed(2)} km
+                      </span>
                     </div>
                   </div>
                 </LazyLoad>
@@ -255,7 +263,12 @@ function PickupProvider(props) {
             >
               <FontAwesomeIcon
                 className="provider-marker"
-                icon={faUtensils}
+                icon={item.isFavorite ? faHeart2 : faUtensils}
+                style={
+                  item.isFavorite
+                    ? { background: "#bd0000", padding: " 7px 7px" }
+                    : {}
+                }
                 onClick={(e) => {
                   e.stopPropagation();
                   setSelectedProvider(item);
@@ -333,12 +346,16 @@ function PickupProvider(props) {
                   />
                   &nbsp;•&nbsp;
                   <span className="p-sub-info-main-text">
-                    {selectedProvider.price_range}
+                    $ {selectedProvider.price_range}
                   </span>
                   &nbsp;•&nbsp;
                   <div className="p-sub-info-cooking-time">
-                    {selectedProvider.estimated_cooking_time || "30-45 mins"}
+                    {selectedProvider.mean_estimated_cooking_time || "30 mins"}
                   </div>
+                  &nbsp;•&nbsp;
+                  <span className="p-sub-info-main-text">
+                    {(selectedProvider.distance / 1000).toFixed(2)} km
+                  </span>
                 </div>
               </div>
             </Popup>

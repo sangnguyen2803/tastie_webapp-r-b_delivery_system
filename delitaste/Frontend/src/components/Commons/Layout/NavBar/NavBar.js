@@ -21,7 +21,7 @@ function NavBar(props) {
               }
         }
       >
-        <MainNavBar />
+        <MainNavBar hideSubNavbar={props.hideSubNavbar} />
         {!props.merchant ? <SubNavBar variant={true} /> : <></>}
         {!hideBreadcrumb ? (
           <div className="nav-bread-crumbs">

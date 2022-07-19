@@ -64,7 +64,9 @@ $desktop-left-panel-content: 70%;
         }
 
         .oc-od-address-text {
-
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
           margin: 0 5px;
           font-size: 14px;
           width: auto;

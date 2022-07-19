@@ -6,6 +6,7 @@ import UpcomingProductDetail from "components/MerchantDashboard/DashboardFeature
 import Tabs from "components/MerchantDashboard/DashboardFeatures/Tabs";
 import "../Panel.scss";
 import MenuCategoryDetail from "./MenuCategoryDetail";
+import MDHeader from "components/MerchantDashboard/MDHeader/MDHeader";
 
 function ProductPanel(props) {
   const [currentTab, setCurrentTab] = useState(0);
@@ -36,6 +37,7 @@ function ProductPanel(props) {
     case "my-product":
       return (
         <Fragment>
+          <MDHeader visible={false} />
           <div className="panel-content-wrapper">
             <Tabs
               tabs={TabList.tab1}

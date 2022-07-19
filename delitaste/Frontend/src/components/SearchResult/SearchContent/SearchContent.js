@@ -22,12 +22,14 @@ function SearchContent(props) {
   const [allProvider, setAllProvider] = useState([]);
   useEffect(() => {
     async function fetchingSearchAPI() {
-      const searchResult = await searchAPI(
+      var searchResult = await searchAPI(
         props.user.profile.user_id || -1,
         query,
         type,
         long,
-        lat
+        lat,
+        props.categoryId || "",
+        props.categoryType || ""
       );
       if (searchResult) {
         setAllProvider(searchResult.items);

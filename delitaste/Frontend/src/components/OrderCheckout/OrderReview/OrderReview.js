@@ -18,6 +18,8 @@ function OrderReview(props) {
     setOrderForm,
     submitOrderCheckoutAPI,
     submitOrderItemAPI,
+    deliveryOption,
+    setDeliveryOption,
   } = props;
   const [subTotal, setSubTotal] = useState();
   const [tip, setTip] = useState(0);
@@ -57,7 +59,12 @@ function OrderReview(props) {
           style={{ paddingBottom: "10px", borderBottom: "2px solid #D6D6D6" }}
         >
           <span className="oc-or-pre-text">Delivery fee</span>
-          <span className="oc-or-sur-text">
+          <span
+            className="oc-or-sur-text"
+            style={
+              deliveryOption === 1 ? { textDecorationLine: "line-through" } : {}
+            }
+          >
             {(props.deliveryFee && `$${props.deliveryFee?.toFixed(2)}`) ||
               "$ 0.00"}
           </span>
@@ -142,34 +149,60 @@ function OrderReview(props) {
         </div>
         <div
           className="oc-or-main-text"
-          style={{ paddingBottom: "10px", borderBottom: "2px solid #D6D6D6" }}
+          style={{
+            paddingBottom: "10px",
+            borderBottom: "2px solid #D6D6D6",
+          }}
         >
-          <span className="oc-or-pre-text">Tip</span>
-          <span className="oc-or-sur-text">
-            + ${parseFloat(tip)?.toFixed(2)}
+          <span className="oc-or-pre-text">
+            {deliveryOption === 1 ? "Service Tip" : "Shipper Tip"}
           </span>
-        </div>{" "}
+          <span className="oc-or-sur-text">
+            + ${tip !== "" ? parseFloat(tip)?.toFixed(2) : "0.00"}
+          </span>
+        </div>
         <div className="oc-or-main-text">
           <span className="oc-or-pre-text" style={{ fontSize: 22 }}>
             Total
           </span>
           <span className="oc-or-sur-text" style={{ fontSize: 22 }}>
-            $ {parseFloat(subTotal + tip + props.deliveryFee).toFixed(2)}
+            ${" "}
+            {parseFloat(
+              subTotal +
+                (tip !== "" ? parseFloat(tip) : 0.0) +
+                (deliveryOption === 0 ? props.deliveryFee : 0.0)
+            ).toFixed(2)}
           </span>
         </div>{" "}
-        <ButtonGroup float="center">
-          <Button
-            color={"white"}
-            bgColor={"#2c2c2c"}
-            justifyContent={"center"}
-            gap={"10px"}
-            width={120}
-            fontSize={15}
-            height={35}
-            label={"Place Order"}
-            onClick={() => submitOrderForm()}
-          />
-        </ButtonGroup>
+        {deliveryOption === 0 ? (
+          <ButtonGroup float="center">
+            <Button
+              color={"white"}
+              bgColor={"#2c2c2c"}
+              justifyContent={"center"}
+              gap={"10px"}
+              width={120}
+              fontSize={15}
+              height={35}
+              label={"Place Order"}
+              onClick={() => submitOrderForm()}
+            />
+          </ButtonGroup>
+        ) : (
+          <ButtonGroup float="center">
+            <Button
+              color={"white"}
+              bgColor={"#2c2c2c"}
+              justifyContent={"center"}
+              gap={"10px"}
+              width={120}
+              fontSize={15}
+              height={35}
+              label={"Pick up"}
+              onClick={() => submitOrderForm()}
+            />
+          </ButtonGroup>
+        )}
       </div>
     </Fragment>
   );

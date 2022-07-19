@@ -6,23 +6,13 @@ import ToolBar from "../Commons/Layout/Toolbar/Toolbar";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Button from "components/Commons/Button/Button";
-import ButtonGroup from "components/Commons/Button/ButtonGroup/ButtonGroup";
-import {
-  faClock,
-  faHeart as faHeart2,
-  faMapMarkerAlt,
-  faStar,
-  faCalendarPlus,
-  faComment,
-} from "@fortawesome/fontawesome-free-solid";
-import { faHeart as faHeart1 } from "@fortawesome/fontawesome-free-regular";
-import Background from "assets/home_banner.png";
+import { getUpcomingProductAPI } from "store/actions/ProductAction/ProductAction";
 import "./ProviderDetail.scss";
 import PDHeader from "components/ProviderDetail/PDHeader/PDHeader";
 import PDBody from "components/ProviderDetail/PDBody/PDBody";
 import { getProductListAPI } from "store/actions/ProductAction/ProductAction";
+import { getCustomerReviewAPI } from "store/actions/ProviderAction/ProviderAction";
+
 function ProviderDetail(props) {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "auto" });
@@ -97,14 +87,35 @@ function ProviderDetail(props) {
     },
   ];
   const [items, setItems] = useState([]);
+  const [reviews, setReviews] = useState([]);
+  const [upcomingItems, setUpcomingItems] = useState([]);
   useEffect(() => {
     async function fetchingDataAPI() {
       const productList = await props.getProductListAPI(props.match.params?.id);
-      setItems([...productList]);
+      console.log(productList);
+      if (productList) setItems([...productList]);
+      const upcomingProductList = await props.getUpcomingProductAPI(
+        props.match.params?.id
+      );
+      if (upcomingProductList) setUpcomingItems(upcomingProductList);
     }
     fetchingDataAPI();
     return () => {
       setItems([]);
+      setUpcomingItems([]);
+    };
+  }, []);
+
+  useEffect(() => {
+    async function fetchingReviews() {
+      const reviewList = await props.getCustomerReviewAPI(
+        props.match.params?.id
+      );
+      if (reviewList) setReviews(reviewList);
+    }
+    fetchingReviews();
+    return () => {
+      setReviews([]);
     };
   }, []);
 
@@ -115,8 +126,9 @@ function ProviderDetail(props) {
         <PDHeader />
         <PDBody
           products={items}
-          upcomingProducts={upcomingProduct}
+          upcomingProducts={upcomingItems}
           setProducts={setItems}
+          customerReviews={reviews}
         />
       </div>
       <Footer />
@@ -129,6 +141,8 @@ ProviderDetail.propTypes = {
   user: PropTypes.object.isRequired,
   product: PropTypes.object.isRequired,
   getProductListAPI: PropTypes.func.isRequired,
+  getCustomerReviewAPI: PropTypes.func.isRequired,
+  getUpcomingProductAPI: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -137,5 +151,11 @@ const mapStateToProps = (state) => ({
 });
 
 export default withRouter(
-  withAuth(connect(mapStateToProps, { getProductListAPI })(ProviderDetail))
+  withAuth(
+    connect(mapStateToProps, {
+      getProductListAPI,
+      getCustomerReviewAPI,
+      getUpcomingProductAPI,
+    })(ProviderDetail)
+  )
 );

@@ -26,8 +26,12 @@ import MerchantDashboardScreen from "./MerchantDashboardScreen/MerchantDashboard
 import OrderCheckoutScreen from "./OrderCheckoutScreen/OrderCheckoutScreen";
 import OrderTrackingScreen from "./OrderTrackingScreen/OrderTrackingScreen";
 import SearchScreen from "./SearchScreen/SearchScreen";
-import { setCurrentLocation } from "store/actions/UserAction/UserAction";
 import ShipperScreen from "./ShipperScreen/ShipperScreen";
+import {
+  setCurrentLocation,
+  getUserNotification,
+} from "store/actions/UserAction/UserAction";
+import { getProviderNotification } from "store/actions/ProviderAction/ProviderAction";
 const history = createBrowserHistory();
 
 function RootScreen(props) {
@@ -40,7 +44,7 @@ function RootScreen(props) {
     async function getUserLocation() {
       var position = await getPosition();
       const { latitude, longitude } = position.coords;
-      const endpoint = `https://api.geoapify.com/v1/geocode/reverse?lat=${latitude}&lon=${longitude}&apiKey=6d74076cb237412e9abb06e88020a7a5`;
+      const endpoint = `https://api.geoapify.com/v1/geocode/reverse?lat=${latitude}&lon=${longitude}&apiKey=05e76b96155e447ba0391d645ce81d27`;
       let res = await axios.get(endpoint);
       var address = "";
       if (res.data) {
@@ -50,6 +54,22 @@ function RootScreen(props) {
     }
     getUserLocation();
   }, []);
+  useEffect(() => {
+    async function getNotification(role, uid, pid) {
+      if (role === 2) {
+        await props.getProviderNotification(pid);
+        return;
+      }
+      await props.getUserNotification(uid);
+      return;
+    }
+    if (props.user?.profile?.length !== 0 && props.user?.profile?.role)
+      getNotification(
+        props.user.profile.role,
+        props.user.profile.user_id,
+        props.user.provider_id
+      );
+  }, [props.user?.profile?.role]);
   return (
     <Fragment>
       <Router history={history}>
@@ -137,10 +157,16 @@ RootScreen.propTypes = {
   user: PropTypes.object.isRequired,
   product: PropTypes.object.isRequired,
   setCurrentLocation: PropTypes.func.isRequired,
+  getUserNotification: PropTypes.func.isRequired,
+  getProviderNotification: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   user: state.UserReducer,
   product: state.ProductReducer,
 });
-export default connect(mapStateToProps, { setCurrentLocation })(RootScreen);
+export default connect(mapStateToProps, {
+  setCurrentLocation,
+  getProviderNotification,
+  getUserNotification,
+})(RootScreen);

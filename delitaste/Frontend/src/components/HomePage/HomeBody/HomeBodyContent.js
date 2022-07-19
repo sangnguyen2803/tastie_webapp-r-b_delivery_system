@@ -52,17 +52,58 @@ function HomeBodyContent(props) {
   const [allProvider, setAllProvider] = useState([]);
   useEffect(() => {
     async function fetchingDataAPI(la, lo) {
-      const result1 = await getProviderGroup(1, glimit, goffset, la, lo);
+      const result1 = await getProviderGroup(
+        1,
+        glimit,
+        goffset,
+        la,
+        lo,
+        user.profile?.user_id
+      );
       setGroup1(result1);
-      const result2 = await getProviderGroup(5, glimit, goffset, la, lo);
+      const result2 = await getProviderGroup(
+        5,
+        glimit,
+        goffset,
+        la,
+        lo,
+        user.profile?.user_id
+      );
       setGroup2(result2);
-      const result3 = await getProviderGroup(6, glimit, goffset, la, lo);
+      const result3 = await getProviderGroup(
+        6,
+        glimit,
+        goffset,
+        la,
+        lo,
+        user.profile?.user_id
+      );
       setGroup3(result3);
-      const result4 = await getProviderGroup(7, glimit, goffset, la, lo);
+      const result4 = await getProviderGroup(
+        7,
+        glimit,
+        goffset,
+        la,
+        lo,
+        user.profile?.user_id
+      );
       setGroup4(result4);
-      const all = await getAllProvider(curLimit, curOffset, la, lo);
+      const all = await getAllProvider(
+        curLimit,
+        curOffset,
+        la,
+        lo,
+        user.profile?.user_id
+      );
       setAllProvider(all);
-      const result5 = await getProviderGroup(5, 2, goffset, la, lo);
+      const result5 = await getProviderGroup(
+        5,
+        2,
+        goffset,
+        la,
+        lo,
+        user.profile?.user_id
+      );
       setGroup5(result5);
     }
     if (user.currentAddress.loading)
@@ -78,7 +119,8 @@ function HomeBodyContent(props) {
         curLimit,
         curOffset,
         user.currentAddress.latitude,
-        user.currentAddress.longitude
+        user.currentAddress.longitude,
+        user.profile.user_id
       );
       const newList = allProvider.concat(result);
       setAllProvider(newList);
@@ -93,15 +135,18 @@ function HomeBodyContent(props) {
               groupTitle={providerGroup[0].group_title}
               groupDescription={providerGroup[0].group_description}
               providerList={group1}
+              setProviderList={setGroup1}
             />
             <ProviderGroup
               groupTitle={providerGroup[1].group_title}
               groupDescription={providerGroup[1].group_description}
               providerList={group2}
+              setProviderList={setGroup2}
             />{" "}
             <PickupProvider
               providerList={group5}
-              providerNearby={group1}
+              setProviderList={setGroup5}
+              providerNearby={allProvider}
               currentLatitude={
                 user.currentAddress.latitude || 10.773031146281017
               }
@@ -114,11 +159,13 @@ function HomeBodyContent(props) {
               groupTitle={providerGroup[2].group_title}
               groupDescription={providerGroup[2].group_description}
               providerList={group3}
+              setProviderList={setGroup3}
             />
             <ProviderGroup
               groupTitle={providerGroup[3].group_title}
               groupDescription={providerGroup[3].group_description}
               providerList={group4}
+              setProviderList={setGroup4}
             />
           </Fragment>
         )}

@@ -48,7 +48,7 @@ function MDHome(props) {
         className="panel-detail-wrapper"
         style={{ height: "auto", marginTop: "0px" }}
       >
-        <MDHeader setMapView={setMapView} />
+        <MDHeader visible={true} setMapView={setMapView} />
 
         {provider.operation.length !== 0 && (
           <Formik

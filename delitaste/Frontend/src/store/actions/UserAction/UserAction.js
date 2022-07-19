@@ -17,8 +17,9 @@ import {
   SET_LOADING,
   SIGN_OUT,
   GET_CONTACT,
-  SOCKET_CONNECTION,
   SET_CURRENT_LOCATION,
+  GET_NOTIFICATION,
+  SET_NOTIFICATION_SOCKET,
 } from "store/actions/types";
 
 //UPDATE UI
@@ -126,11 +127,10 @@ export const accountRegistrationAPI = (formData) => async (dispatch) => {
   try {
     const endpoint = "/v1/api/auth/sign-up";
     const res = await axios.post(endpoint, body, config);
-    console.log(res);
     if (res.data.registerState) {
       dispatch({
         type: REGISTER_SUCCESS,
-        payload: { formData: res.data },
+        payload: res.data,
       });
     } else {
       dispatch({
@@ -179,6 +179,7 @@ export const checkEmailVerificationCodeAPI = (data) => async (dispatch) => {
   try {
     const endpoint = "/v1/api/auth/verify-code-with-email";
     const res = await axios.post(endpoint, body, config);
+    console.log(res);
     if (res.data.status) {
       dispatch({
         type: SET_EMAIL_VERIFICATION_STATUS,
@@ -301,7 +302,7 @@ export const getDeliveryFee = (id, longitude, latitude) => async (dispatch) => {
   try {
     const endpoint = "/v1/api/tastie/tastie/delivery-fee-to-checkout";
     const res = await axios.post(endpoint, body, config);
-    if (res.data) return res.data.delivery_fee;
+    if (res.data) return res.data.delivery_fee / 23000;
     return 0;
   } catch (err) {
     console.log(err);
@@ -358,9 +359,97 @@ export const setCurrentLocation =
     });
   };
 
-export const initSocket = () => (dispatch) => {
+export const addFavoriteProvider = (uid, pid) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  const body = JSON.stringify({
+    user_id: uid,
+    provider_id: pid,
+  });
+  try {
+    const endpoint = "/v1/api/tastie/add-to-favorite";
+    const res = await axios.post(endpoint, body, config);
+    if (res.data.status) return true;
+    return false;
+  } catch (err) {
+    const errs = err.response.data.errors;
+    console.log(errs);
+    return false;
+  }
+};
+
+export const removeFavoriteProvider = (uid, pid) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  const body = JSON.stringify({
+    user_id: uid,
+    provider_id: pid,
+  });
+  try {
+    const endpoint = "/v1/api/tastie/remove-from-favorite";
+    const res = await axios.post(endpoint, body, config);
+    if (res.data.status) return true;
+    return false;
+  } catch (err) {
+    const errs = err.response.data.errors;
+    console.log(errs);
+    return false;
+  }
+};
+
+export const getFavoriteProvider =
+  (uid, latitude, longitude) => async (dispatch) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const body = JSON.stringify({
+      user_id: uid,
+      latitude: String(latitude),
+      longitude: String(longitude),
+    });
+    console.log(body);
+    try {
+      const endpoint = "/v1/api/tastie/home/get-list-provider-favorite";
+      const res = await axios.post(endpoint, body, config);
+      console.log(res.data);
+      if (res.data.status) return res.data.response;
+      return [];
+    } catch (err) {
+      const errs = err.response.data.errors;
+      console.log(errs);
+      return [];
+    }
+  };
+
+export const getUserNotification = (uid) => async (dispatch) => {
+  try {
+    const endpoint = `/v1/api/tastie/order/get-all-notification/${uid}`;
+    const res = await axios.get(endpoint);
+    if (res.data?.status) {
+      dispatch({
+        type: GET_NOTIFICATION,
+        payload: {
+          notifications: res.data.response,
+        },
+      });
+      return res.data.response;
+    }
+  } catch (err) {
+    return [];
+  }
+};
+
+export const setNotificationSocket = (notification) => (dispatch) => {
   dispatch({
-    type: SOCKET_CONNECTION,
-    payload: {},
+    type: SET_NOTIFICATION_SOCKET,
+    payload: { notification: notification },
   });
 };

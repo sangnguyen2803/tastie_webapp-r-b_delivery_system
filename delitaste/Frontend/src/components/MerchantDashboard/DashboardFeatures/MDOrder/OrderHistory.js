@@ -2,14 +2,11 @@ import { Fragment, useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { css } from "@emotion/react";
 import {
-  faCalendarPlus,
   faCheckCircle,
-  faClock,
   faDotCircle,
-  faHourglassHalf,
-  faShippingFast,
   faTimesCircle,
 } from "@fortawesome/fontawesome-free-solid";
+import MDHeader from "components/MerchantDashboard/MDHeader/MDHeader";
 import orderListData from "components/MerchantDashboard/DashboardFeatures/MDOrder/data/orderListData";
 import "../Panel.scss";
 import ViewOrderDetail from "./OrderHandler/ViewOrderDetail";
@@ -104,6 +101,7 @@ function OrderHistory(props) {
 
   return (
     <Fragment>
+      <MDHeader visible={false} />
       <div className="panel-detail-wrapper panel-no-mg-top">
         <div
           className="mkt-section-title"
@@ -111,8 +109,7 @@ function OrderHistory(props) {
         >
           Order History
         </div>
-        
-        
+
         <div className="ohis-order-filter-wrapper">
           <div className="ohis-switcher-wrapper">
             <SwitchSelector
@@ -172,7 +169,7 @@ function OrderHistory(props) {
                     : { backgroundColor: "white" }
                 }
               >
-                {mapOrderStatusIcon(order["MAX(ods.order_status_name)"])}
+                {mapOrderStatusIcon(order.status)}
                 <div
                   className="o-order"
                   style={{ width: "30%", textAlign: "left" }}
@@ -188,7 +185,7 @@ function OrderHistory(props) {
                 <div className="o-order-time">{order.update_at}</div>
                 <div className="o-order-time">{order.payment_name}</div>
                 <div className="o-order-price">
-                  $ {order.subtotal.toFixed(2)}
+                  $ {order.subtotal?.toFixed(2)}
                 </div>
               </div>
             ))}

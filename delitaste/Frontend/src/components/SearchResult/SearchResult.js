@@ -15,6 +15,9 @@ function SearchResult(props) {
   const [totalResult, setTotalResult] = useState();
   const [query, setQuery] = useState("");
   const [type, setType] = useState("");
+
+  const [categoryId, setCategoryId] = useState();
+  const [categoryType, setCategoryType] = useState();
   useEffect(() => {
     window.scrollTo({
       top: 0,
@@ -26,6 +29,13 @@ function SearchResult(props) {
     const queryParams = new URLSearchParams(location.search);
     var query = queryParams.get("q");
     var type = queryParams.get("type");
+    if (type === "3") {
+      console.log(queryParams);
+      var category_id = queryParams.get("category-id");
+      var category_type = queryParams.get("category-type");
+      setCategoryId(category_id);
+      setCategoryType(category_type);
+    }
     setQuery(query);
     setType(type);
   }, [location]);
@@ -44,6 +54,8 @@ function SearchResult(props) {
             setCurrentSortMode={setCurrentSortMode}
           />
           <SearchContent
+            categoryId={categoryId}
+            categoryType={categoryType}
             query={query}
             setQuery={setQuery}
             type={type}

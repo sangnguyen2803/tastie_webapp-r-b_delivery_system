@@ -11,7 +11,7 @@ import {
   faChevronUp,
   faCartPlus,
 } from "@fortawesome/fontawesome-free-solid";
-
+import moment from "moment";
 import Modal from "components/Commons/Overlay/Popup/Modal/Modal";
 import Tag from "components/Commons/Tag/Tag";
 import DialogBox from "components/Commons/Overlay/DialogBox/DialogBox";
@@ -19,14 +19,25 @@ import Button from "components/Commons/Button/Button";
 import ButtonGroup from "components/Commons/Button/ButtonGroup/ButtonGroup";
 import PDProductDetail from "components/ProviderDetail/PDBody/PDProductDetail/PDProductDetail";
 import PDUpcomingProduct from "components/ProviderDetail/PDBody/PDUpcomingProduct/PDUpcomingProduct";
-
 import { clearCart } from "store/actions/CartAction/CartAction";
 import { scroller } from "react-scroll";
-
+import { faStar } from "@fortawesome/fontawesome-free-solid";
+import Avatar from "assets/avatar.jpg";
 import "../ProviderDetail.scss";
-import { propTypes } from "react-map-gl-geocoder";
 
-function PDBody({ products, upcomingProducts, user, ...rest }) {
+function PDBody({
+  products,
+  upcomingProducts,
+  customerReviews,
+  getUpcomingProductAPI,
+  user,
+  ...rest
+}) {
+  const getDifference = (date1, date2) => {
+    var a = moment([date1.getFullYear(), date1.getMonth(), date1.getDate()]);
+    var b = moment([date2.getFullYear(), date2.getMonth(), date2.getDate()]);
+    return a.from(b);
+  };
   const [showProductDetail, setShowProductDetail] = useState(false);
   const [selectedMenu, setSelectedMenu] = useState(-1);
   const [showUpcomingProductDetail, setShowUpcomingProductDetail] =
@@ -36,6 +47,7 @@ function PDBody({ products, upcomingProducts, user, ...rest }) {
     useState();
   const [showCustomerReview, setShowCustomerReview] = useState(false);
   const [showRemoveCartDialog, setShowRemoveCartDialog] = useState(false);
+
   const scrollToSection = (sectionName) => {
     scroller.scrollTo(sectionName, {
       duration: 800,
@@ -75,17 +87,19 @@ function PDBody({ products, upcomingProducts, user, ...rest }) {
             <span>Menu</span>
           </span>
           <div className="pd-sb-menu-category">
-            <span
-              className={`pd-sb-menu-item  ${
-                selectedMenu === -1 ? "selected-menu" : ""
-              }`}
-              onClick={() => {
-                setSelectedMenu(-1);
-                scrollToSection(`product-group-upcoming`);
-              }}
-            >
-              Upcoming
-            </span>
+            {upcomingProducts.length !== 0 && (
+              <span
+                className={`pd-sb-menu-item  ${
+                  selectedMenu === -1 ? "selected-menu" : ""
+                }`}
+                onClick={() => {
+                  setSelectedMenu(-1);
+                  scrollToSection(`product-group-upcoming`);
+                }}
+              >
+                Upcoming
+              </span>
+            )}
             {products?.length !== 0 &&
               products.map((product, index) => (
                 <Fragment key={index}>
@@ -111,7 +125,16 @@ function PDBody({ products, upcomingProducts, user, ...rest }) {
         <div className="pd-pl-product-list">
           <div className="pd-pl-feedback-container">
             <div className="pd-pl-title-wrapper">
-              <div className="pd-fb-counter">35</div>
+              <div
+                className="pd-fb-counter"
+                style={{
+                  padding: `3px ${
+                    customerReviews.length < 10 ? "10px" : "0px"
+                  }`,
+                }}
+              >
+                {customerReviews?.length}
+              </div>
               <span className="pd-pl-title">Customer Review</span>
               <FontAwesomeIcon
                 icon={!showCustomerReview ? faChevronDown : faChevronUp}
@@ -122,14 +145,115 @@ function PDBody({ products, upcomingProducts, user, ...rest }) {
               />{" "}
             </div>
             {showCustomerReview ? (
-              <Fragment></Fragment>
+              <div className="customer-review-container">
+                {customerReviews?.map((review) => (
+                  <div className="customer-review-wrapper">
+                    <img
+                      src={
+                        "https://cdn2.iconfinder.com/data/icons/flatfaces-everyday-people-square/128/beard_male_man_face_avatar-512.png"
+                      }
+                      alt="avatar"
+                      className="cr-customer-avatar"
+                      width={50}
+                      height={50}
+                    />
+                    <div className="cr-content-container">
+                      <div className="cr-text-wrapper">
+                        <span className="cr-main-text-wrapper">
+                          {review.customer_info?.username}
+                        </span>
+                        <span className="cr-sub-text-wrapper">
+                          {[...Array(review.stars || 5)].map((e, index) => (
+                            <FontAwesomeIcon
+                              key={index}
+                              icon={faStar}
+                              className="md-text-icon"
+                              style={{
+                                color: "rgb(255, 221, 0)",
+                                fontSize: 16,
+                              }}
+                            />
+                          ))}
+                          {[...Array(5 - (review.stars || 5))].map(
+                            (e, index) => (
+                              <FontAwesomeIcon
+                                key={index}
+                                icon={faStar}
+                                className="md-text-icon"
+                                style={{
+                                  color: "rgb(200, 200, 200)",
+                                  fontSize: 16,
+                                }}
+                              />
+                            )
+                          )}
+                          {`(${review.stars?.toFixed(1)} / 5.0)`}
+                        </span>
+                        <span className="cr-sub-text-wrapper">
+                          {getDifference(
+                            new Date(review.create_at.split("T")[0]),
+                            new Date()
+                          )}
+                        </span>
+                      </div>
+                      <span className="cr-comment">{review.content}</span>
+                      {review.image && (
+                        <img
+                          className="cr-image-review"
+                          src={review?.image}
+                          alt="image_review"
+                        />
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
             ) : (
               <span className="pd-fb-sub-text">
-                35 customer reviews for this restaurant
+                {customerReviews?.length} customer reviews for this restaurant
               </span>
             )}
           </div>
+          {upcomingProducts.length !== 0 && (
+            <div className={`pd-pl-title product-group-upcoming`}>Upcoming</div>
+          )}
 
+          <div className="pd-pl-upcoming-product-group">
+            {upcomingProducts?.map((up) => (
+              <Fragment>
+                <div
+                  className="pd-pl-upcoming-product-item"
+                  onClick={() => {
+                    setShowUpcomingProductDetail(true);
+                    setSelectedUpcomingProductDetail(up);
+                  }}
+                >
+                  <div className="pd-pl-up-img-wrapper">
+                    <img
+                      className="pd-pl-up-product-img"
+                      src={up.product_image}
+                      alt="product_photo"
+                    />
+                  </div>
+                  <div
+                    className="pd-pl-up-tag-btn"
+                    style={{
+                      width: "auto",
+                      marginRight: 5,
+                      marginTop: 0,
+                      backgroundColor: "unset",
+                      alignSelf: "flex-end",
+                    }}
+                  >
+                    <Tag text="New" />
+                  </div>
+                  <div className="pd-pl-up-tag-btn">
+                    <span className="pd-pl-up-main-text">Coming soon</span>
+                  </div>
+                </div>
+              </Fragment>
+            ))}
+          </div>
           {products?.length !== 0 &&
             products.map((menu, index) => (
               <Fragment key={index}>
@@ -359,43 +483,6 @@ const mapStateToProps = (state) => ({
 
 export default withRouter(connect(mapStateToProps, { clearCart })(PDBody));
 
-/*<div className={`pd-pl-title product-group-upcoming`}>Upcoming</div>
- <div className="pd-pl-upcoming-product-group">
-            {upcomingProducts?.map((up) => (
-              <Fragment>
-                <div
-                  className="pd-pl-upcoming-product-item"
-                  onClick={() => {
-                    setShowUpcomingProductDetail(true);
-                    setSelectedUpcomingProductDetail(up);
-                  }}
-                >
-                  <div className="pd-pl-up-img-wrapper">
-                    <img
-                      className="pd-pl-up-product-img"
-                      src={up.product.product_image}
-                      alt="product_photo"
-                    />
-                  </div>
-                  <div
-                    className="pd-pl-up-tag-btn"
-                    style={{
-                      width: "auto",
-                      marginRight: 5,
-                      marginTop: 0,
-                      backgroundColor: "unset",
-                      alignSelf: "flex-end",
-                    }}
-                  >
-                    <Tag text="New" />
-                  </div>
-                  <div className="pd-pl-up-tag-btn">
-                    <span className="pd-pl-up-main-text">Coming soon</span>
-                  </div>
-                </div>
-              </Fragment>
-            ))}
-          </div> */
 /*
  {!isButtonExpanded ? (
                       <div className="pd-pl-quantity-btn">

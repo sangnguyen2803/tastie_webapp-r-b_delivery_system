@@ -10,7 +10,10 @@ import { faStar } from "@fortawesome/fontawesome-free-solid";
 import Button from "components/Commons/Button/Button";
 import ButtonGroup from "components/Commons/Button/ButtonGroup/ButtonGroup";
 import ReactStars from "react-rating-stars-component";
-
+import {
+  ratingOrderAPI,
+  ratingShipperAPI,
+} from "store/actions/OrderAction/OrderAction";
 const shipper = {
   name: "Terry Harrison",
   license_plate: "64B1 - 03663",
@@ -20,7 +23,8 @@ const shipper = {
 };
 
 function RateShipper(props) {
-  const [rating, setRating] = useState(0);
+  const { orderSummary } = props;
+  const [rating, setRating] = useState(5);
   const [ratingTitle, setRatingTitle] = useState();
   const [comment, setComment] = useState("");
   const [selectedRating, setSelectedRating] = useState(0);
@@ -34,7 +38,18 @@ function RateShipper(props) {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "auto" });
   }, []);
-  useEffect(() => {}, []);
+  const handleSubmitRating = async () => {
+    const data = {
+      order_id: orderSummary.order_id,
+      create_at: new Date().toISOString().split("T")[0],
+      content: comment,
+      stars: rating,
+    };
+    const status = await props.ratingShipperAPI(data);
+    if (status) {
+      props.setVisible(false);
+    }
+  };
 
   return (
     <Fragment>
@@ -65,7 +80,7 @@ function RateShipper(props) {
               <span className="rshi-fb-main-text-medium">
                 Sincerely sorry for this bad experience.
                 <br />
-                Please share your problem for us to fix this problem.
+                Please report your problems and include evidences to us.
               </span>
               <div className="rshi-fb-compliments">
                 {[
@@ -78,6 +93,7 @@ function RateShipper(props) {
                   <div
                     className="rshi-fb-compliment-tag"
                     onClick={() => {
+                      setComment((prev) => prev + "[" + item + "] ");
                       if (selectedTags.includes(item)) {
                         let copy = [...selectedTags];
                         copy.splice(copy.indexOf(item), 1); // remove item
@@ -116,6 +132,7 @@ function RateShipper(props) {
                   <div
                     className="rshi-fb-compliment-tag"
                     onClick={() => {
+                      setComment((prev) => prev + "[" + item + "] ");
                       if (selectedTags.includes(item)) {
                         let copy = [...selectedTags];
                         copy.splice(copy.indexOf(item), 1); // remove item
@@ -143,6 +160,7 @@ function RateShipper(props) {
               <textarea
                 className="rshi-fb-text-area"
                 name="comment"
+                value={comment}
                 placeholder="Share review about taste, package or each item"
                 onChange={(e) => setComment(e.target.value)}
               />
@@ -158,6 +176,7 @@ function RateShipper(props) {
               width={120}
               fontSize={14}
               height={35}
+              onClick={() => handleSubmitRating()}
               label={`Submit`}
             />
           </ButtonGroup>
@@ -170,6 +189,8 @@ function RateShipper(props) {
 RateShipper.propTypes = {
   user: PropTypes.object.isRequired,
   product: PropTypes.object.isRequired,
+  ratingOrderAPI: PropTypes.func.isRequired,
+  ratingShipperAPI: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -178,5 +199,10 @@ const mapStateToProps = (state) => ({
 });
 
 export default withRouter(
-  withAuth(connect(mapStateToProps, null)(RateShipper))
+  withAuth(
+    connect(mapStateToProps, {
+      ratingOrderAPI,
+      ratingShipperAPI,
+    })(RateShipper)
+  )
 );

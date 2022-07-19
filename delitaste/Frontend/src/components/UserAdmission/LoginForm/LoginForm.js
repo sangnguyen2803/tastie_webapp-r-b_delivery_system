@@ -3,6 +3,10 @@ import { Link } from "react-router-dom";
 import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+//components
+import Button from "components/Commons/Button/Button";
+import ButtonGroup from "components/Commons/Button/ButtonGroup/ButtonGroup";
+import DialogBox from "components/Commons/Overlay/DialogBox/DialogBox";
 
 //assets
 import Logo from "assets/logo.png";
@@ -24,10 +28,16 @@ import "style/Common.scss";
 import "./LoginForm.scss";
 import { accountSignInAPI } from "store/actions/UserAction/UserAction";
 import { setDialogBox } from "store/actions/UIComponentAction/DialogBoxAction";
-
+/*<img className="brand-logo-image-login" alt="logo" src={Logo} />*/
 function LoginForm(props) {
   const { t, i18n } = useTranslation("translation", {
     keyPrefix: "userAdmission.signIn",
+  });
+  const [showValidateDialog, setShowValidateDialog] = useState(false);
+  const [dialogContent, setDialogContent] = useState({
+    header: "",
+    text1: "",
+    text2: "",
   });
   const [functionalIcon, setFunctionalIcon] = useState({
     enableRemoveText: false,
@@ -50,13 +60,19 @@ function LoginForm(props) {
       )
     )
       formData["phone"] = userLoginInfo.email;
-
+    console.log("hello");
     const result = await props.accountSignInAPI(formData);
     if (result.state) {
       props.history.push("/");
       return;
     }
-    if (result.msg) props.setDialogBox(result.msg, "Login Fail", 800);
+    setShowValidateDialog(true);
+    setDialogContent({
+      ...dialogContent,
+      header: "Unable to sign in",
+      text1: `Fail to sign in`,
+      text2: `The email or password you entered did not match our records. Please double-check and try again.`,
+    });
   };
 
   const updateUserLoginInfo = (e) =>
@@ -110,8 +126,9 @@ function LoginForm(props) {
       <div className="login-form">
         <div className="login-form-wrapper">
           <div className="form-header">
-            <img className="brand-logo-image-login" alt="logo" src={Logo} />
-            <span className="login-form-title">Tastie!</span>
+            <span className="login-form-title" style={{ fontSize: 50 }}>
+              Tastie!
+            </span>
           </div>
           <div
             className="login-input-wrapper"
@@ -215,7 +232,37 @@ function LoginForm(props) {
             </Link>
           </div>
         </div>
-      </div>
+      </div>{" "}
+      <DialogBox
+        visibility={showValidateDialog}
+        headerText={dialogContent.header}
+        close={() => setShowValidateDialog(false)}
+      >
+        <div className="dialog-detail-wrapper">
+          <div className="dialogbox-content">
+            <span className="dialogbox-content-detail-main">
+              {dialogContent.text1}
+            </span>
+            <span className="dialogbox-content-detail-sub">
+              {dialogContent.text2}
+            </span>
+          </div>
+          <div className="dialogbox-action">
+            <ButtonGroup gap={5} mgRight={5}>
+              <Button
+                color={"white"}
+                bgColor={"#800000"}
+                justifyContent={"center"}
+                gap={"10px"}
+                width={80}
+                height={30}
+                label={"OK"}
+                onClick={() => setShowValidateDialog(false)}
+              />
+            </ButtonGroup>
+          </div>
+        </div>
+      </DialogBox>
     </div>
   );
 }

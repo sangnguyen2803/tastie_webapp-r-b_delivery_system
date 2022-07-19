@@ -20,9 +20,11 @@ import ProgressBar from "components/Commons/ProgressBar/ProgressBar";
 import Tabs from "components/MerchantDashboard/DashboardFeatures/Tabs";
 import Modal from "components/Commons/Overlay/Popup/Modal/Modal";
 import CreateVoucher from "./VoucherHandlers/CreateVoucher";
+import UpdatePromotion from "./VoucherHandlers/UpdatePromotion";
 import {
   getAllPromotionAPI,
   getAllEcouponAPI,
+  subscribeEcouponAPI,
 } from "store/actions/ProviderAction/ProviderAction";
 import { validateDateBetweenTwoDates } from "utils/DateUtils";
 
@@ -43,11 +45,13 @@ function MDMarketing(props) {
   const { user, provider, getAllPromotionAPI, getAllEcouponAPI } = props;
   const [currentTab, setCurrentTab] = useState(0);
   const [showCreateVoucher, setShowCreateVoucher] = useState(false);
-
+  const [promotionType, setPromotionType] = useState(0);
+  const [selectedPromotion, setSelectedPromotion] = useState({});
+  const [showUpdatePromotion, setShowUpdatePromotion] = useState(false);
   const [voucher, setVoucher] = useState([]);
   const [discount, setDiscount] = useState([]);
   const [ecoupon, setEcoupon] = useState([]);
-
+  const [registeredEcoupon, setRegisteredEcoupon] = useState([]);
   useEffect(() => {
     async function fetchPromotion(id) {
       const res1 = await getAllPromotionAPI(id);
@@ -57,11 +61,26 @@ function MDMarketing(props) {
         setDiscount(res1.discount);
       }
       if (res2) {
-        setEcoupon(res2);
+        setEcoupon(res2.ecoupon);
+        setRegisteredEcoupon(res2.ecoupon_registered);
       }
     }
     fetchPromotion(user.provider_id);
   }, [user.provider_id]);
+
+  const subscribeEcoupon = async (id) => {
+    if (user.provider_id) {
+      var status = await props.subscribeEcouponAPI(id, user.provider_id);
+      if (status) {
+        const res = await getAllEcouponAPI(user.provider_id);
+        if (res) {
+          setEcoupon(res.ecoupon);
+          setRegisteredEcoupon(res.ecoupon_registered);
+        }
+        return;
+      }
+    }
+  };
 
   const handleSelectTab = (value) => {};
   return (
@@ -70,7 +89,7 @@ function MDMarketing(props) {
         className="panel-detail-wrapper"
         style={{ height: "auto", marginTop: "0px" }}
       >
-        <MDHeader />
+        <MDHeader visible={true} />
         <div
           className="mkt-section-title"
           style={{ marginTop: 20, fontWeight: 700 }}
@@ -211,7 +230,16 @@ function MDMarketing(props) {
                   <th>Status</th>
                 </tr>
                 {voucher?.map((item, index) => (
-                  <tr className="table-row-wrapper" key={item.promotion_id}>
+                  <tr
+                    className="table-row-wrapper"
+                    key={item.promotion_id}
+                    style={{ cursor: "pointer" }}
+                    onClick={() => {
+                      setPromotionType(0);
+                      setSelectedPromotion(item);
+                      setShowUpdatePromotion(true);
+                    }}
+                  >
                     <td
                       className="product-name"
                       style={{
@@ -310,7 +338,16 @@ function MDMarketing(props) {
                   <th>Status</th>
                 </tr>
                 {discount?.map((item, index) => (
-                  <tr className="table-row-wrapper" key={index}>
+                  <tr
+                    className="table-row-wrapper"
+                    key={index}
+                    style={{ cursor: "pointer" }}
+                    onClick={() => {
+                      setPromotionType(1);
+                      setSelectedPromotion(item);
+                      setShowUpdatePromotion(true);
+                    }}
+                  >
                     <td
                       className="product-name"
                       style={{
@@ -413,6 +450,102 @@ function MDMarketing(props) {
                   <th>Status</th>
                   <th>Subscription</th>
                 </tr>
+                {registeredEcoupon?.map((item, index) => (
+                  <tr className="table-row-wrapper" key={index}>
+                    <td
+                      className="product-name"
+                      style={{
+                        textAlign: "left",
+                        width: "15%",
+                      }}
+                    >
+                      {item.ecoupon_code}
+                    </td>
+                    <td
+                      className="field-hidden"
+                      style={{
+                        textAlign: "center",
+                        width: "25%",
+                      }}
+                    >
+                      {item.ecoupon_description || "—"}
+                    </td>
+                    <td
+                      style={{
+                        textAlign: "center",
+                        width: "10%",
+                      }}
+                    >
+                      {item.delivery_mode || "—"}
+                    </td>
+                    <td
+                      style={{
+                        textAlign: "center",
+                        width: "10%",
+                      }}
+                    >
+                      {`$ ${item.ecoupon_value?.toFixed(2)}` || "—"}
+                    </td>
+                    <td
+                      style={{
+                        textAlign: "center",
+                        width: "10%",
+                      }}
+                    >
+                      {new Date(item.start_date).toLocaleDateString() || "—"}
+                    </td>
+
+                    <td
+                      style={{
+                        textAlign: "center",
+                        width: "10%",
+                      }}
+                    >
+                      {new Date(item.expire_date).toLocaleDateString() || "—"}
+                    </td>
+
+                    <td
+                      style={{
+                        textAlign: "center",
+                        width: "10%",
+                      }}
+                    >
+                      {validateDateBetweenTwoDates(
+                        new Date(item.start_date),
+                        new Date(item.expire_date),
+                        new Date()
+                      ) === true
+                        ? "Available"
+                        : "Expired"}
+                    </td>
+
+                    <td
+                      style={{
+                        textAlign: "center",
+                        width: "20%",
+                      }}
+                    >
+                      <ButtonGroup
+                        float="center"
+                        mgTop={10}
+                        gap={12}
+                        mgBottom={5}
+                        width={100}
+                      >
+                        <Button
+                          color={"black"}
+                          bglight={true}
+                          border={"#5d5d5d 1.5px solid"}
+                          gap={"10px"}
+                          justifyContent={"center"}
+                          width={100}
+                          height={30}
+                          label="Unsubscribe"
+                        />
+                      </ButtonGroup>
+                    </td>
+                  </tr>
+                ))}
                 {ecoupon?.map((item, index) => (
                   <tr className="table-row-wrapper" key={index}>
                     <td
@@ -499,17 +632,12 @@ function MDMarketing(props) {
                           color={"black"}
                           bglight={true}
                           border={"#5d5d5d 1.5px solid"}
-                          prefix={
-                            <FontAwesomeIcon
-                              icon={faCalendarPlus}
-                              style={{ fontSize: 16 }}
-                            />
-                          }
                           gap={"10px"}
                           justifyContent={"center"}
                           width={100}
                           height={30}
                           label="Subscribe"
+                          onClick={() => subscribeEcoupon(item.ecoupon_id)}
                         />
                       </ButtonGroup>
                     </td>
@@ -524,6 +652,12 @@ function MDMarketing(props) {
         visible={showCreateVoucher}
         setVisible={setShowCreateVoucher}
       />
+      <UpdatePromotion
+        promotionType={promotionType}
+        selectedPromotion={selectedPromotion}
+        visible={showUpdatePromotion}
+        setVisible={setShowUpdatePromotion}
+      />
     </Fragment>
   );
 }
@@ -533,6 +667,7 @@ MDMarketing.propTypes = {
   provider: PropTypes.object.isRequired,
   getAllPromotionAPI: PropTypes.func.isRequired,
   getAllEcouponAPI: PropTypes.func.isRequired,
+  subscribeEcouponAPI: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -541,7 +676,9 @@ const mapStateToProps = (state) => ({
 });
 
 export default withRouter(
-  connect(mapStateToProps, { getAllPromotionAPI, getAllEcouponAPI })(
-    MDMarketing
-  )
+  connect(mapStateToProps, {
+    getAllPromotionAPI,
+    getAllEcouponAPI,
+    subscribeEcouponAPI,
+  })(MDMarketing)
 );

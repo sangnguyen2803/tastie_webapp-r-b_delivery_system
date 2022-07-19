@@ -10,9 +10,11 @@ import {
   GET_PROVIDER_DETAIL,
   SET_DASHBOARD_PROVIDER,
   SET_ORDER_LIST,
-  SET_CURRENT_ORDER_LIST,
   SET_TOP_PRODUCT_BY_SALES,
   SET_TOP_PRODUCT_BY_UNIT,
+  GET_NOTIFICATION,
+  ADD_ORDER_TO_ORDER_LIST,
+  SET_TOP_CATEGORY_BY_UNIT,
 } from "store/actions/types";
 
 //Create provider
@@ -31,6 +33,7 @@ export const createMerchantAPI = (id) => async (dispatch) => {
   });
   try {
     const endpoint = "/v1/api/provider/sign-contract";
+    console.log(body);
     const res = await axios.post(endpoint, body, config);
     if (res?.data.state) {
       dispatch({
@@ -122,6 +125,7 @@ export const updateBusinessUnitInfoFormAPI = (id, data) => async (dispatch) => {
       "Content-Type": "application/json",
     },
   };
+
   const body = JSON.stringify(data);
   try {
     const endpoint = `/v1/api/provider/register/${id}/detail-info`;
@@ -245,8 +249,135 @@ export const getScheduleTime = (id) => async (dispatch) => {
   }
 };
 
+export const addDiscountAPI = (data) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  const body = JSON.stringify(data);
+  try {
+    const endpoint = "/v1/api/provider/dashboard/add-discount";
+    const res = await axios.post(endpoint, body, config);
+    console.log(res.data);
+    if (res.data?.status) {
+      return true;
+    }
+    return false;
+  } catch (err) {
+    console.log(err.response.data?.errors);
+    return false;
+  }
+};
+
+export const updateDiscountAPI = (data) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  const body = JSON.stringify(data);
+  try {
+    const endpoint = "/v1/api/provider/dashboard/update-discount";
+    const res = await axios.post(endpoint, body, config);
+    console.log(res.data);
+    if (res.data?.status) {
+      return true;
+    }
+    return false;
+  } catch (err) {
+    console.log(err.response.data?.errors);
+    return false;
+  }
+};
+
+export const getPromotionClaims = (id) => async (dispatch) => {
+  try {
+    const endpoint = `/v1/api/provider/dashboard/get-voucher-claims/${id}`;
+    const res = await axios.get(endpoint);
+    if (res.data) {
+      return res.data.count;
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+export const getPromotionCosts = (id) => async (dispatch) => {
+  try {
+    const endpoint = `/v1/api/provider/dashboard/get-voucher-costs/${id}`;
+    const res = await axios.get(endpoint);
+    if (res.data) {
+      return res.data.total_cost;
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const applyDiscountProviderAPI = (pid, did) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  const body = JSON.stringify({
+    discount_id: did,
+    product_id: pid,
+  });
+  try {
+    const endpoint = "/v1/api/provider/dashboard/apply-discount-to-product";
+    const res = await axios.post(endpoint, body, config);
+    if (res.data?.status) {
+      return true;
+    }
+    return false;
+  } catch (err) {
+    console.log(err.response.data?.errors);
+    return false;
+  }
+};
+
+export const addPromotionAPI = (data) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  const body = JSON.stringify(data);
+  try {
+    const endpoint = "/v1/api/tastie/provider/add-promotion";
+    const res = await axios.post(endpoint, body, config);
+    if (res.data?.status) {
+      return true;
+    }
+    return false;
+  } catch (err) {
+    console.log(err.response.data?.errors);
+    return false;
+  }
+};
+
+export const updatePromotionAPI = (data) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  const body = JSON.stringify(data);
+  try {
+    const endpoint = "/v1/api/tastie/provider/update-promotion";
+    const res = await axios.post(endpoint, body, config);
+    if (res.data?.status) {
+      return true;
+    }
+    return false;
+  } catch (err) {
+    console.log(err.response.data?.errors);
+    return false;
+  }
+};
+
 export const getAllPromotionAPI = (id) => async (dispatch) => {
-  id = 1000000;
   try {
     const endpoint = `/v1/api/provider/dashboard/get-all-promos/${id}`;
     const res = await axios.get(endpoint);
@@ -261,17 +392,38 @@ export const getAllPromotionAPI = (id) => async (dispatch) => {
 };
 
 export const getAllEcouponAPI = (id) => async (dispatch) => {
-  id = 1000000;
   try {
     const endpoint = `/v1/api/provider/dashboard/get-all-ecoupon/${id}`;
     const res = await axios.get(endpoint);
     if (res.data.status) {
-      return res.data.response.ecoupon;
+      return res.data.response;
     }
     return {};
   } catch (err) {
     console.log(err);
     return {};
+  }
+};
+
+export const subscribeEcouponAPI = (eid, pid) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  const body = JSON.stringify({
+    ecoupon_id: eid,
+    provider_id: pid,
+  });
+  try {
+    const endpoint = `/v1/api/provider/dashboard/register-ecoupon`;
+    const res = await axios.post(endpoint, body, config);
+    if (res.data.status) {
+      return true;
+    }
+    return false;
+  } catch (err) {
+    return false;
   }
 };
 
@@ -313,10 +465,23 @@ export const getAllOrderAPI = (id, limit, offset) => async (dispatch) => {
     const endpoint = `/v1/api/provider/order/get-all-order`;
     const res = await axios.post(endpoint, body, config);
     if (res.data.status) {
+      let orders = res.data.response.map((item) => {
+        return {
+          order_id: item.order_id,
+          order_code: item.order_code,
+          total_amount: item.total_amount,
+          status: item["MAX(os.order_status_name)"],
+          user_first_name: item.user_first_name,
+          user_last_name: item.user_last_name,
+          update_at: item.update_at,
+          payment_name: item.payment_name,
+          subtotal: item.subtotal,
+        };
+      });
       dispatch({
         type: SET_ORDER_LIST,
         payload: {
-          orderList: res.data.response,
+          orderList: orders,
         },
       });
       return res.data.response;
@@ -348,6 +513,38 @@ export const getProviderTopProductByUnitAPI =
           type: SET_TOP_PRODUCT_BY_UNIT,
           payload: {
             topByUnit: res.data.list_product,
+          },
+        });
+        return res.data.list_product;
+      }
+      return [];
+    } catch (err) {
+      console.log(err);
+      return [];
+    }
+  };
+
+export const getProviderTopCategoryByUnitAPI =
+  (id, start_month, end_month, year) => async (dispatch) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const body = JSON.stringify({
+      provider_id: id,
+      start_month,
+      end_month,
+      year,
+    });
+    try {
+      const endpoint = `/v1/api/provider/dashboard/get-top-category-by-unit-by-provider`;
+      const res = await axios.post(endpoint, body, config);
+      if (res.data.status) {
+        dispatch({
+          type: SET_TOP_CATEGORY_BY_UNIT,
+          payload: {
+            topCategory: res.data.response,
           },
         });
         return res.data.list_product;
@@ -398,19 +595,31 @@ export const getProviderRevenueByTime =
         "Content-Type": "application/json",
       },
     };
-    const body = JSON.stringify({
-      provider_id: id,
-      start_month,
-      end_month,
-      year,
-    });
+    const result = [];
     try {
       const endpoint = `/v1/api/provider/dashboard/get-provider-revenue-by-time`;
-      const res = await axios.post(endpoint, body, config);
-      if (res.data.status) {
-        return res.data.total_revenue;
+      let month = new Date().getMonth();
+      let count = 12;
+      let body = {};
+      while (count > 0) {
+        if (month + 1 === 0) {
+          year -= 1;
+          month += 12;
+        }
+        start_month = month + 1;
+        end_month = month + 1;
+        body = JSON.stringify({
+          provider_id: id,
+          start_month,
+          end_month,
+          year,
+        });
+        const res = await axios.post(endpoint, body, config);
+        if (res.data.status) result.unshift(res.data.total_revenue);
+        month -= 1;
+        count -= 1;
       }
-      return 0;
+      return result;
     } catch (err) {
       console.log(err);
       return 0;
@@ -424,19 +633,32 @@ export const getProviderOrderByTime =
         "Content-Type": "application/json",
       },
     };
-    const body = JSON.stringify({
-      provider_id: id,
-      start_month,
-      end_month,
-      year,
-    });
+    const result = [];
     try {
       const endpoint = `/v1/api/provider/dashboard/get-provider-number-order-by-time`;
-      const res = await axios.post(endpoint, body, config);
-      if (res.data.status) {
-        return res.data.number_order;
+      let month = new Date().getMonth();
+      let count = 12;
+      let body = {};
+      while (count > 0) {
+        if (month + 1 === 0) {
+          year -= 1;
+          month += 12;
+        }
+        start_month = month + 1;
+        end_month = month + 1;
+        body = JSON.stringify({
+          provider_id: id,
+          start_month,
+          end_month,
+          year,
+        });
+        const res = await axios.post(endpoint, body, config);
+        if (res.data.status) result.unshift(res.data.number_order);
+        month -= 1;
+        count -= 1;
       }
-      return 0;
+      console.log(result);
+      return result;
     } catch (err) {
       console.log(err);
       return 0;
@@ -459,6 +681,65 @@ export const updateProviderDetailAPI = (id, data) => async (dispatch) => {
   });
   try {
     const endpoint = `/v1/api/provider/dashboard/${id}/update-provider`;
+    const res = await axios.post(endpoint, body, config);
+    if (res.data.status) {
+      return true;
+    }
+    return false;
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
+export const getProviderNotification = (pid) => async (dispatch) => {
+  try {
+    const endpoint = `/v1/api/tastie/order/get-all-notification-to-provider/${pid}`;
+    const res = await axios.get(endpoint);
+    if (res.data?.status) {
+      dispatch({
+        type: GET_NOTIFICATION,
+        payload: {
+          notifications: res.data.response,
+        },
+      });
+      return res.data.response;
+    }
+  } catch (err) {
+    return [];
+  }
+};
+
+export const appendOrderList = (order) => (dispatch) => {
+  dispatch({
+    type: ADD_ORDER_TO_ORDER_LIST,
+    payload: {
+      order: order,
+    },
+  });
+};
+
+export const getCustomerReviewAPI = (pid) => async (dispatch) => {
+  try {
+    const endpoint = `/v1/api/tastie/store/customer_review/${pid}`;
+    const res = await axios.get(endpoint);
+    if (res.data?.status) {
+      return res.data.response;
+    }
+  } catch (err) {
+    return [];
+  }
+};
+
+export const submitSurveyUpcomingProductAPI = (data) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  const body = JSON.stringify(data);
+  try {
+    const endpoint = `/v1/api/provider/dashboard/add-survey-question`;
     const res = await axios.post(endpoint, body, config);
     if (res.data.status) {
       return true;

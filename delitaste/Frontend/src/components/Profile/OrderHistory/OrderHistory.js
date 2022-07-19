@@ -25,14 +25,17 @@ function OrderHistory(props) {
   useEffect(() => {
     async function fetchOrderHistory(id) {
       const result = await getOrderHistoryAPI(id);
-      result?.sort(function (a, b) {
-        return (
-          new Date(b.completed_at.split(", ")[1]) -
-          new Date(a.completed_at.split(", ")[1])
-        );
-      });
-      setOrderHistory(result);
-      setFilterOrderHistory(result);
+      console.log(result);
+      if (result) {
+        result.sort(function (a, b) {
+          return (
+            new Date(b.completed_at.split(", ")[1]) -
+            new Date(a.completed_at.split(", ")[1])
+          );
+        });
+        setOrderHistory(result);
+        setFilterOrderHistory(result);
+      }
     }
     fetchOrderHistory(user.profile?.user_id);
     return function cleanup() {
@@ -48,7 +51,7 @@ function OrderHistory(props) {
     } else setFilterOrderHistory(orderHistory);
   };
   const directToOrderTracking = (code, status) => {
-    if (status < 5) history.push(`/order-tracking/${code}`);
+    if (status <= 5) history.push(`/order-tracking/${code}`);
     return;
   };
   return (

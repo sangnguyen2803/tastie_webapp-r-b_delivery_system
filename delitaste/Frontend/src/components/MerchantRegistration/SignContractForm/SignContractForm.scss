@@ -9,6 +9,7 @@ $boxBorderRadius: 5px;
   flex-wrap: $flexWrap;
   flex-direction: column;
 }
+
 @mixin FlexRow($width, $flexWrap) {
   width: $width;
   display: flex;
@@ -23,9 +24,11 @@ h2 {
   line-height: 0.1em;
   margin: 10px 0 20px;
 }
+
 .sign-contract-form {
   padding-bottom: 20px;
 }
+
 .sign-contract-form-containter {
   display: flex;
   flex-direction: column;
@@ -33,6 +36,7 @@ h2 {
   justify-content: flex-start;
   height: 1100px;
 }
+
 .contract-form-wrapper {
   background-color: #f1f1f1 !important;
   font-family: "Poppins", sans-serif;
@@ -42,8 +46,10 @@ h2 {
   align-items: center;
   justify-content: flex-start;
 }
+
 .contract-form {
   margin-top: 20px;
+  margin-bottom: 20px;
   background-color: #fafafa;
   width: 65%;
   display: flex;
@@ -54,12 +60,14 @@ h2 {
   border-radius: 5px;
   padding-top: 5px;
   box-shadow: rgb(0 0 0 / 10%) 0px 1px 2px 0px;
+
   .form-banner-wrapper {
     background: #f4f4f4;
     display: flex;
     flex-direction: column-reverse;
     align-items: center;
     width: 100%;
+
     img {
       margin-top: 0.5%;
       width: 99%;
@@ -68,6 +76,7 @@ h2 {
     }
   }
 }
+
 .contract-header-title {
   font-family: "Poppins", sans-serif;
   background: rgba(146, 0, 0, 0.9);
@@ -83,24 +92,29 @@ h2 {
   text-indent: 20px;
   clip-path: polygon(0 0, 92% 0, 100% 100%, 0% 100%);
 }
+
 .contract-header-text {
   font-size: 15px;
   align-self: flex-start;
   margin: 10px 0% 0% 8%;
 }
+
 .contract-header-sub-text {
   font-size: 13px;
   align-self: flex-start;
   margin: 0% 8% 0.5% 8%;
 }
+
 .contract-pdf-viewer {
   width: 85%;
   height: 650px;
   border-radius: 5px;
   border: 1px rgb(102, 102, 102) solid;
 }
+
 .contract-agree-check {
-  -webkit-appearance: none; /*hides the default checkbox*/
+  -webkit-appearance: none;
+  /*hides the default checkbox*/
   height: 30px;
   width: 30px;
   top: 20px;
@@ -122,6 +136,7 @@ h2 {
 .contract-agree-check:before {
   content: " ";
 }
+
 .contract-agree-check:checked:before {
   font-size: 18px;
   content: "✔";
@@ -141,6 +156,7 @@ h2 {
   width: 85%;
   height: auto;
 }
+
 .contract-agree-check-wrapper {
   width: 10%;
   display: flex;
@@ -148,6 +164,7 @@ h2 {
   align-items: center;
   justify-content: center;
 }
+
 .contract-agree-description {
   font-size: 13px;
   width: 90%;
@@ -156,6 +173,7 @@ h2 {
   justify-content: center;
   align-items: center;
 }
+
 .form-header-wrapper {
   display: flex;
   flex-direction: row;
@@ -165,6 +183,7 @@ h2 {
   margin-top: 10px;
   gap: 10px;
 }
+
 .btn-sign-contract-wrapper {
   margin: 2% 0 2% 0;
   display: flex;
@@ -220,32 +239,40 @@ h2 {
 
 //responsive design
 @media all and (max-width: 767px) {
+
   .contract-form,
   .contract-header-title {
     width: 95% !important;
   }
+
   .form-banner-wrapper img {
     height: 120px;
   }
+
   h2 {
     display: none !important;
   }
+
   .contract-pdf-viewer {
     margin-top: 20px;
     height: 300px;
   }
+
   .contract-agree-description {
     width: 85%;
     height: 280px;
   }
+
   .contract-agree-section {
     justify-content: space-between;
     height: 280px !important;
   }
+
   .btn-sign-contract-wrapper {
     width: 100%;
     gap: 150px;
   }
+
   .btn-sign-contract-back,
   .btn-sign-contract-next {
     width: 100px;
@@ -257,14 +284,17 @@ h2 {
 }
 
 @media only screen and (max-width: 1200px) and (min-width: 767px) {
+
   .contract-form,
   .contract-header-title {
     width: 90% !important;
   }
+
   .btn-sign-contract-wrapper {
     width: 100%;
     gap: 200px;
   }
+
   .btn-sign-contract-back,
   .btn-sign-contract-next {
     width: 100px;

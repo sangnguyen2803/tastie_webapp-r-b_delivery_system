@@ -3,7 +3,7 @@ import { Fragment, useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight, faGlasses } from "@fortawesome/fontawesome-free-solid";
 import Button from "components/Commons/Button/Button";
-
+import { scroller } from "react-scroll";
 function HomeBanner(props) {
   const homeBanner = [
     {
@@ -26,6 +26,14 @@ function HomeBanner(props) {
       banner_link: "",
     },
   ];
+  const scrollToSection = (sectionName) => {
+    scroller.scrollTo(sectionName, {
+      duration: 800,
+      delay: 0,
+      smooth: "easeInOutQuart",
+      offset: -100,
+    });
+  };
   return (
     <Fragment>
       <div className="homebody-container">
@@ -47,6 +55,9 @@ function HomeBanner(props) {
                   style={{ color: "white" }}
                 />
               }
+              onClick={() => {
+                scrollToSection(`provider-on-map`);
+              }}
             />
             <span className="hb-sub-text-italic">
               You got 3 discounts at the moments,{" "}

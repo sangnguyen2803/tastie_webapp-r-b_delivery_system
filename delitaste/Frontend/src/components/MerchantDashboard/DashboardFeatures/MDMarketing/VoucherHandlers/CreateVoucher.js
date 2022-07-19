@@ -20,17 +20,21 @@ import ReactMapGl, { Source, Layer, Marker, Popup } from "react-map-gl";
 import { faMapMarkedAlt } from "@fortawesome/free-solid-svg-icons";
 import Modal from "components/Commons/Overlay/Popup/Modal/Modal";
 import SwitchSelector from "react-switch-selector";
+import {
+  addDiscountAPI,
+  addPromotionAPI,
+} from "store/actions/ProviderAction/ProviderAction";
 
 const optionSwitcher = [
   {
     label: "Store promotion",
     value: 0,
-    selectedBackgroundColor: "#b90009",
+    selectedBackgroundColor: "rgb(148, 0, 0);",
   },
   {
     label: "Product promotion",
     value: 1,
-    selectedBackgroundColor: "#b90009",
+    selectedBackgroundColor: "rgb(148, 0, 0);",
   },
 ];
 const initialValues = {
@@ -39,7 +43,7 @@ const initialValues = {
   promotion_name: "",
   start_at: new Date(),
   expire_at: new Date(),
-  promotion_value: "0.00",
+  promotion_value: 0,
   min_order_value: "2.00",
   max_discount_value: "50.00",
   payment_method_id: 1,
@@ -61,10 +65,40 @@ function CreateVoucher(props) {
   const onChange = (newValue) => {
     setPromotionOption(newValue);
   };
-  const handleSubmitForm = (values) => {
-    console.log(values);
-    if (promotionOption === 1) console.log("submit product");
-    console.log("submit store");
+  const handleSubmitForm = async (values) => {
+    if (promotionOption === 1) {
+      const data = {
+        provider_id: props.user?.provider_id,
+        discount_name: values.promotion_name,
+        discount_value: parseFloat(values.promotion_value),
+        discount_description: values.promotion_description,
+        start_at: values.start_at,
+        expire_at: values.expire_at,
+      };
+      const status = await props.addDiscountAPI(data);
+      if (status) props.setVisible(false);
+      return;
+    }
+    const data = {
+      provider_id: props.user?.provider_id,
+      promotion_code: values.promotion_code,
+      promotion_name: values.promotion_name,
+      promotion_value: parseFloat(values.promotion_value),
+      promotion_description: values.promotion_description,
+      min_order_value: values.min_order_value,
+      max_discount_value: values.max_discount_value,
+      start_at: values.start_at,
+      expire_at: values.expire_at,
+      payment_method_id: values.payment_method_id,
+      limited_offer: parseInt(values.limited_offer),
+      weekly_usage_limit_per_user: parseInt(values.weekly_usage_limit),
+      delivery_mode: parseInt(values.delivery_mode),
+      update_at: new Date(),
+    };
+    const status = await props.addPromotionAPI(data);
+    console.log(status);
+    if (status) props.setVisible(false);
+    return;
   };
   return (
     <Fragment>
@@ -250,9 +284,13 @@ function CreateVoucher(props) {
 
 CreateVoucher.propTypes = {
   user: PropTypes.object.isRequired,
+  addDiscountAPI: PropTypes.func.isRequired,
+  addPromotionAPI: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   user: state.UserReducer,
 });
-export default withRouter(connect(mapStateToProps, null)(CreateVoucher));
+export default withRouter(
+  connect(mapStateToProps, { addDiscountAPI, addPromotionAPI })(CreateVoucher)
+);

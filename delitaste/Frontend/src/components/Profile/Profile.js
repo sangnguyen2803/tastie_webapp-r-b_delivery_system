@@ -17,12 +17,10 @@ import ProfileDetail from "components/Profile/ProfileDetail/ProfileDetail";
 import MyAccount from "./AccountSetting/AccountSetting";
 import OrderHistory from "./OrderHistory/OrderHistory";
 import ProfileSidebar from "./ProfileSidebar/ProfileSidebar";
+import Favorites from "./Favorites/Favorites";
 
 function Profile(props) {
   const { match, location, user } = props;
-  useEffect(() => {
-    console.log(match);
-  }, [match]);
   return (
     <Fragment>
       <NavBar fixed={true} hideBreadcrumb={true} />
@@ -54,6 +52,11 @@ function Profile(props) {
               exact
               path={`${match.path}/promotion`}
               component={OrderHistory}
+            />
+            <Route
+              exact
+              path={`${match.path}/favorites`}
+              component={Favorites}
             />
             <Route
               exact

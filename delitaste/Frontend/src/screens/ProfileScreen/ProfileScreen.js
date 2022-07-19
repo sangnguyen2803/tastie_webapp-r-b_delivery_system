@@ -15,8 +15,8 @@ function ProfileScreen(props) {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     async function fetchAccessToken(token) {
-      const res = await props.getAccessTokenAPI(refreshToken);
-      return res.isAuth;
+      const res = await props.getAccessTokenAPI(token);
+      return res?.isAuth;
     }
     const refreshToken = localStorage.getItem("refreshToken");
     if (refreshToken !== null) {

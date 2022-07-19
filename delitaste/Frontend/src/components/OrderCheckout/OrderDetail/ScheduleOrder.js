@@ -26,7 +26,6 @@ function ScheduleOrder(props) {
 
   const submitScheduleTime = () => {
     var pickedDay = new Date(scheduleDate);
-
     var current = new Date();
     const sameDate = pickedDay.getDate() === current.getDate();
     if (sameDate) {
@@ -43,8 +42,6 @@ function ScheduleOrder(props) {
         return;
       }
     } else setErrorMessage("");
-    console.log(pickedDay);
-    console.log(pickedDay.getDate());
     const scheduleOnFormat = `${pickedDay.getFullYear()}-${pickedDay.getMonth()}-${pickedDay.getDate()} ${scheduleTime?.replace(
       /\s/g,
       ""

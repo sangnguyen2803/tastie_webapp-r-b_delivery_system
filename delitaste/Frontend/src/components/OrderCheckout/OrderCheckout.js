@@ -28,12 +28,23 @@ function OrderCheckout(props) {
     tips: 0,
     total: 0,
   });
+  const [deliveryOption, setDeliveryOption] = useState(0);
   const [deliveryFee, setDeliveryFee] = useState(0); //(1)
   const [orderItem, setOrderItem] = useState([]);
+  const [arrivalCoordinates, setArrivalCoordinates] = useState([
+    106.68060027236189, 10.75909421616193,
+  ]);
+  const [departureCoordinates, setDepartureCoordinates] = useState([
+    106.68057155417674, 10.768685473523648,
+  ]);
   useEffect(() => {
     async function fetchingCart(id) {
       const cart = await getCart(id);
       setOrderItem(cart);
+      setArrivalCoordinates([
+        parseFloat(cart.longitude),
+        parseFloat(cart.latitude),
+      ]);
     }
     if (user.isUserAuthenticated) {
       fetchingCart(props.match.params.uid || user.profile.user_id);
@@ -51,12 +62,20 @@ function OrderCheckout(props) {
           setOrderForm={setOrderForm}
           deliveryFee={deliveryFee}
           setDeliveryFee={setDeliveryFee}
+          departureCoordinates={departureCoordinates}
+          setDepartureCoordinates={setDepartureCoordinates}
+          arrivalCoordinates={arrivalCoordinates}
+          setArrivalCoordinates={setArrivalCoordinates}
+          deliveryOption={deliveryOption}
+          setDeliveryOption={setDeliveryOption}
         />
         <OrderReview
           orderForm={orderForm}
           setOrderForm={setOrderForm}
           deliveryFee={deliveryFee}
           setDeliveryFee={setDeliveryFee}
+          deliveryOption={deliveryOption}
+          setDeliveryOption={setDeliveryOption}
         />
       </div>
       <Footer />

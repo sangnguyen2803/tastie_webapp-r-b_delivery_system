@@ -167,6 +167,7 @@
 }
 
 .product-table-container {
+  margin-bottom: 20px;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -655,12 +656,12 @@ td {
       margin-left: 20px;
     }
 
-    .inprogress {
-      color: rgb(0, 174, 255);
+    .pending {
+      color: #00a2cf;
     }
 
-    .pending {
-      color: rgb(255, 234, 0);
+    .inprogress {
+      color: #FFC043;
     }
 
     .picked-up {
@@ -673,10 +674,6 @@ td {
 
     .cancel {
       color: rgb(209, 61, 61);
-    }
-
-    .inprogress {
-      color: rgb(0, 174, 255);
     }
   }
 }

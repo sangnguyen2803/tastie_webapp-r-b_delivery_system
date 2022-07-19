@@ -1,14 +1,14 @@
 import axios from "axios";
 //UPDATE UI
 export const getProviderGroup =
-  (group_id, limit, offset, latitude, longitude) => async (dispatch) => {
+  (group_id, limit, offset, latitude, longitude, uid) => async (dispatch) => {
     const config = {
       headers: {
         "Content-Type": "application/json",
       },
     };
     const body = JSON.stringify({
-      user_id: -1,
+      user_id: uid || -1,
       group_provider_id: group_id,
       limit: limit,
       offset: offset,
@@ -29,13 +29,14 @@ export const getProviderGroup =
   };
 
 export const getAllProvider =
-  (limit, offset, latitude, longitude) => async (dispatch) => {
+  (limit, offset, latitude, longitude, uid) => async (dispatch) => {
     const config = {
       headers: {
         "Content-Type": "application/json",
       },
     };
     const body = JSON.stringify({
+      user_id: uid || -1,
       limit: limit,
       offset: offset,
       latitude: latitude,

@@ -1,5 +1,7 @@
 import { Fragment, useState, useEffect } from "react";
-
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { withRouter } from "react-router-dom";
 import "components/MerchantDashboard/DashboardFeatures/Panel.scss";
 import "style/Common.scss";
 import "components/MerchantDashboard/DashboardFeatures/MDOrder/OrderHandler/OrderHandler.scss";
@@ -9,24 +11,37 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStickyNote } from "@fortawesome/fontawesome-free-solid";
 import Button from "components/Commons/Button/Button";
 import ButtonGroup from "components/Commons/Button/ButtonGroup/ButtonGroup";
-import Tag from "components/Commons/Tag/Tag";
 import axios from "axios";
+import { appendOrderList } from "store/actions/ProviderAction/ProviderAction";
 
-function ViewOrderDetail({ orderSummary, orderItems, orderStatus, socket }) {
+function ViewOrderDetail({ orderSummary, orderItems, socket, ...rest }) {
+  const [orderStatus, setOrderStatus] = useState(rest.orderStatus);
   const AcceptOrder = async () => {
-    // accepted the order then send the message to the room of customer (the room's name is order_code)
+    const order = {
+      order_id: orderSummary.order_id,
+      order_code: orderSummary.order_code,
+      total_amount: orderSummary.subtotal,
+      status: 3,
+      user_first_name: "Sang",
+      user_last_name: "Nguyen",
+      update_at: new Date().toISOString(),
+      payment_name: orderSummary.payment_name,
+      subtotal: orderSummary.subtotal + orderItems.delivery_fee,
+    };
+    rest.appendOrderList(order);
     socket.emit("provider-confirmed", orderSummary.order_code);
     try {
-      console.log(orderSummary.order_code);
       const res = await axios.post("/v1/api/tastie/order/update_order_status", {
-        order_code: orderSummary?.order_code,
+        order_code: orderSummary.order_code,
         status: 3, // confirmed
         shipper_id: null, // edit actual shiper_id here
         update_at: "2022-04-21 20:11:11",
       });
+      setOrderStatus(3);
     } catch (error) {
       console.error("Cannot update order status", error);
     }
+    return;
   };
 
   return orderSummary ? (
@@ -96,7 +111,7 @@ function ViewOrderDetail({ orderSummary, orderItems, orderStatus, socket }) {
           <div className="od-footer-row">
             <div className="od-footer-title">Subtotal</div>
             <div className="od-footer-sub-title">
-              $ {orderSummary.subtotal.toFixed(2)}
+              $ {orderSummary.subtotal?.toFixed(2)}
             </div>
           </div>
           <div className="od-footer-row">
@@ -110,13 +125,13 @@ function ViewOrderDetail({ orderSummary, orderItems, orderStatus, socket }) {
               className="od-footer-sub-title"
               style={{ fontSize: "12px", color: "rgb(156, 156, 156)" }}
             >
-              $ {orderSummary.delivery_fee.toFixed(2)}
+              $ {orderSummary.delivery_fee?.toFixed(2)}
             </div>
           </div>
           <div className="od-footer-row">
             <div className="od-footer-title">Total</div>
             <div className="od-footer-sub-title">
-              $ {orderSummary.subtotal.toFixed(2)}
+              $ {orderSummary.subtotal?.toFixed(2)}
             </div>
           </div>
         </div>
@@ -163,5 +178,14 @@ function ViewOrderDetail({ orderSummary, orderItems, orderStatus, socket }) {
     </Fragment>
   );
 }
+ViewOrderDetail.propTypes = {
+  appendOrderList: PropTypes.func.isRequired,
+};
+const mapStateToProps = (state) => ({
+  user: state.UserReducer,
+  provider: state.ProviderReducer,
+});
 
-export default ViewOrderDetail;
+export default withRouter(
+  connect(mapStateToProps, { appendOrderList })(ViewOrderDetail)
+);

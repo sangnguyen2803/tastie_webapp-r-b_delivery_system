@@ -29,9 +29,9 @@ function SlideShow({ images = [], interval = 8000 }) {
     setThumnails(images);
     setContentSlideInfo({
       ...contentSlideInfo,
-      title: "PEPPERONI PIZZA",
+      title: "Tastie Delivery",
       content:
-        "Pepperoni Pizza has everything you want—a great crust, gooey cheese, and tons of pepperoni. The secret to great pepperoni flavor? Hide extra under the cheese! Who needs delivery?",
+        "Tasite is an order and delivery management platform that instantly connects customers with your storefront. Built on the power of Tastie's network, we help merchants grow sales, reach more customers, and build their online brand.",
     });
     setCurrentSlideStyle({
       backgroundImage: "url('" + images[currentSlide] + "')",
@@ -68,7 +68,7 @@ function SlideShow({ images = [], interval = 8000 }) {
         <section className="slideshow">
           <span className="slide-name">
             <FontAwesomeIcon className="slide-name-icon" icon={faStar} />
-            New features
+            Tastie Delivery
           </span>
           <div className="slide-holder">
             <section className="slide current-slide">
@@ -93,7 +93,7 @@ function SlideShow({ images = [], interval = 8000 }) {
             <div className="slide-content">{contentSlideInfo.content}</div>
             <button className="btn-order">
               <FontAwesomeIcon className="icon-order" icon={faPhone} />
-              Order now
+              Explore now
             </button>
           </div>
         </section>

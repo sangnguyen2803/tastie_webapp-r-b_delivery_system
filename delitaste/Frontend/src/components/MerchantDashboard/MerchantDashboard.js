@@ -21,7 +21,12 @@ function MerchantDashboard(props) {
   useEffect(() => {});
   return (
     <div className="merchant-dashboard-container">
-      <NavBar hideBreadcrumb={true} merchant={true} fixed={true} />
+      <NavBar
+        hideBreadcrumb={true}
+        hideSubNavbar={true}
+        merchant={true}
+        fixed={true}
+      />
       <div className="main-dashboard-wrapper">
         <div className="dashboard-side-bar">
           <Sidebar />

@@ -48,7 +48,7 @@ function MDHeader(props) {
     if (props.user.provider_id !== -1) fetchingDataAPI();
   }, [props.user?.provider_id]);
 
-  return (
+  return props.visible ? (
     <Fragment>
       {provider && (
         <div className="md-pro-gen-head-container">
@@ -124,6 +124,8 @@ function MDHeader(props) {
         </div>
       )}
     </Fragment>
+  ) : (
+    <Fragment></Fragment>
   );
 }
 

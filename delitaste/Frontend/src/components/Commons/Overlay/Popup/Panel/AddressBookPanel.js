@@ -87,7 +87,7 @@ function AddressBookPanel(props) {
     const { road, city, district, ward } = values;
     const address = getFullAddress(road, city, district, ward);
     if (!address) return;
-    const endpoint = `https://api.geoapify.com/v1/geocode/search?text=${address}&apiKey=6d74076cb237412e9abb06e88020a7a5`;
+    const endpoint = `https://api.geoapify.com/v1/geocode/search?text=${address}&apiKey=05e76b96155e447ba0391d645ce81d27`;
     async function fetchCoordinates(url) {
       const result = await axios.get(url);
       if (result.data?.features?.length !== 0) {
@@ -128,7 +128,7 @@ function AddressBookPanel(props) {
             const relocating = async (values) => {
               var position = await getPosition();
               const { latitude, longitude } = position.coords;
-              const endpoint = `https://api.geoapify.com/v1/geocode/reverse?lat=${latitude}&lon=${longitude}&apiKey=6d74076cb237412e9abb06e88020a7a5`;
+              const endpoint = `https://api.geoapify.com/v1/geocode/reverse?lat=${latitude}&lon=${longitude}&apiKey=05e76b96155e447ba0391d645ce81d27`;
               let res = await axios.get(endpoint);
               var address = "";
               if (res.data) {
@@ -140,7 +140,7 @@ function AddressBookPanel(props) {
               const { road, city, district, ward } = values;
               const address = getFullAddress(road, city, district, ward);
               if (!address) return;
-              const endpoint = `https://api.geoapify.com/v1/geocode/search?text=${address}&apiKey=6d74076cb237412e9abb06e88020a7a5`;
+              const endpoint = `https://api.geoapify.com/v1/geocode/search?text=${address}&apiKey=05e76b96155e447ba0391d645ce81d27`;
               async function fetchCoordinates(url) {
                 const result = await axios.get(url);
                 if (result.data?.features?.length !== 0) {

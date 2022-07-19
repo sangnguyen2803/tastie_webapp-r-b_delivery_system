@@ -15,8 +15,15 @@ import { withRouter } from "react-router-dom";
 import { faHeart as faHeart2 } from "@fortawesome/fontawesome-free-solid";
 import { faHeart as faHeart1 } from "@fortawesome/fontawesome-free-regular";
 import { faGetPocket } from "@fortawesome/free-brands-svg-icons";
-
+// skeleton
 import ProviderGroupSkeleton from "components/Skeleton/ProviderGroupSkeleton";
+// favorite
+import {
+  addFavoriteProvider,
+  removeFavoriteProvider,
+} from "store/actions/UserAction/UserAction";
+import { propTypes } from "react-map-gl-geocoder";
+
 const responsive = {
   desktop: {
     breakpoint: { max: 3000, min: 1024 },
@@ -39,7 +46,9 @@ function ProviderGroup({
   groupTitle,
   groupDescription,
   providerList,
+  setProviderList,
   history,
+  ...rest
 }) {
   const [loading, setLoading] = useState(false);
   const openTime = "23:00:00";
@@ -47,6 +56,35 @@ function ProviderGroup({
   const [currentTime, setCurrentTime] = useState(
     new Date().toLocaleTimeString()
   );
+  const changeFavorite = async (isFavorite, pid, e) => {
+    e.stopPropagation();
+    if (rest.user.profile?.user_id === -1 || !pid) return;
+    if (isFavorite === true) {
+      let status = await rest.removeFavoriteProvider(
+        rest.user.profile.user_id,
+        pid
+      );
+      setProviderList((prevState) =>
+        prevState.map((item) =>
+          item.provider_id === pid ? { ...item, isFavorite: false } : item
+        )
+      );
+      console.log(providerList);
+      if (status) console.log("successfully removed from favorite list");
+      return;
+    }
+    let status = await rest.addFavoriteProvider(rest.user.profile.user_id, pid);
+    if (status) {
+      console.log("successfully added to favorite list");
+      console.log(providerList);
+      setProviderList((prevState) =>
+        prevState.map((item) =>
+          item.provider_id === pid ? { ...item, isFavorite: true } : item
+        )
+      );
+      return;
+    }
+  };
   const handleOnClickProvider = (e, id) => {
     e.stopPropagation();
     history.push(`/provider-detail/${id}`);
@@ -54,6 +92,7 @@ function ProviderGroup({
   useEffect(() => {
     if (providerList?.length) setLoading(true);
   }, [providerList]);
+
   return (
     <Fragment>
       <div className="home-product-row-container">
@@ -104,8 +143,14 @@ function ProviderGroup({
                       <div className="provider-interaction-wrapper">
                         <FontAwesomeIcon
                           className="icon-for-liking"
-                          style={{ zIndex: 1, marginTop: 5 }}
-                          icon={faHeart1}
+                          style={{
+                            zIndex: 1,
+                            marginTop: 5,
+                          }}
+                          onClick={(e) =>
+                            changeFavorite(item.isFavorite, item.provider_id, e)
+                          }
+                          icon={item.isFavorite ? faHeart2 : faHeart1}
                         />
                         {!item.tag_name && (
                           <div className="provider-card-tag">
@@ -145,12 +190,16 @@ function ProviderGroup({
                     />
                     &nbsp;•&nbsp;
                     <span className="p-sub-info-main-text">
-                      {item.price_range}
+                      $ {item.price_range}
                     </span>
                     &nbsp;•&nbsp;
                     <div className="p-sub-info-cooking-time">
-                      {item.estimated_cooking_time || "30-45 mins"}
+                      {`${item.estimated_cooking_time} mins` || "30-45 mins"}
                     </div>
+                    &nbsp;•&nbsp;
+                    <span className="p-sub-info-main-text">
+                      {(item.distance / 1000).toFixed(2)} km
+                    </span>
                   </div>
                 </div>
               ))}
@@ -164,4 +213,20 @@ function ProviderGroup({
   );
 }
 
-export default withRouter(ProviderGroup);
+ProviderGroup.propTypes = {
+  user: PropTypes.object.isRequired,
+  product: PropTypes.object.isRequired,
+  addFavoriteProvider: PropTypes.func.isRequired,
+  removeFavoriteProvider: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  user: state.UserReducer,
+  product: state.ProductReducer,
+});
+
+export default withRouter(
+  connect(mapStateToProps, { addFavoriteProvider, removeFavoriteProvider })(
+    ProviderGroup
+  )
+);

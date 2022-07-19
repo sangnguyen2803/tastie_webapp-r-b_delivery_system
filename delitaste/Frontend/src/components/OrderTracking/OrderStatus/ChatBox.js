@@ -8,8 +8,7 @@ import Avatar from "assets/avatar.jpg";
 import io from "socket.io-client";
 
 function ChatBox(props) {
-  let socket = io(`http://localhost:3015`);
-  const { message, setMessage, messages, setMessages } = props;
+  const { message, setMessage, messages, setMessages, socket } = props;
   const { shipper } = props;
   const { order_code } = props.match.params;
   const scrollRef = useRef();

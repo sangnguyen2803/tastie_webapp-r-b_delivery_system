@@ -9,11 +9,14 @@ import ButtonGroup from "components/Commons/Button/ButtonGroup/ButtonGroup";
 import io from "socket.io-client";
 import axios from "axios";
 import CartImage from "assets/cart.svg";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 import { ShipperLocation } from "assets/dummy/ShipperLocations";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartArrowDown } from "@fortawesome/fontawesome-free-solid";
 import Avatar from "assets/avatar.jpg";
-const shipper = {
+import { addNotificationAPI } from "store/actions/OrderAction/OrderAction";
+const shipper_info = {
   name: "Terry Harrison",
   license_plate: "64B1 - 03663",
   rating: 5,
@@ -22,14 +25,14 @@ const shipper = {
 };
 
 function Shipper(props) {
-  const socket = io("http://localhost:3015");
+  const { shipper } = props;
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState("");
   const [orderCode, setOrderCode] = useState("");
   const [orderData, setOrderData] = useState({});
   const [shipperConfirmBox, setShipperConfirmBox] = useState(false);
   useEffect(() => {
-    socket.on(
+    shipper.socket.on(
       "shipper-received-order",
       (order, customer, provider, order_code) => {
         setOrderData({
@@ -41,6 +44,7 @@ function Shipper(props) {
             provider_id: provider.provider_id,
           },
           customer: {
+            user_id: customer.user_id,
             name: customer.name,
             phone: customer.phone,
             address: customer.address,
@@ -54,7 +58,7 @@ function Shipper(props) {
       }
     );
     return () => {
-      socket.disconnect();
+      shipper.socket.disconnect();
     };
   }, []);
   const sendMessage = (text) => {
@@ -65,8 +69,8 @@ function Shipper(props) {
   };
 
   useEffect(() => {
-    socket.emit("join-room", orderCode);
-    socket.on("receive-customer-inbox", (message) => {
+    shipper.socket.emit("join-room", orderCode);
+    shipper.socket.on("receive-customer-inbox", (message) => {
       console.log(messages);
       setMessages((prev) => [
         ...prev,
@@ -74,13 +78,50 @@ function Shipper(props) {
       ]);
     });
   }, [orderCode]);
+
+  async function addNotification(data) {
+    const notification_id = await props.addNotificationAPI(data);
+    return notification_id;
+  }
+
   const shipperAcceptOrder = async (orderData) => {
-    socket.emit(
+    //user_notification
+    const user_notification_form = {
+      user_id: orderData.customer.user_id,
+      provider_id: null,
+      role: 1,
+      subject: shipper_info.name,
+      content: ` is taking care of your order ${orderData.order.order_code} at ${orderData.provider.name}.`, //notification content
+      order_code: orderData.order.order_code,
+      read_status: false,
+      type: 1,
+    };
+    const user_notification_id = await addNotification(user_notification_form);
+    user_notification_form.id = user_notification_id;
+    //provider_notification
+    const provider_notification_form = {
+      user_id: null,
+      provider_id: orderData.provider.provider_id,
+      role: 2,
+      subject: `A new order ${orderData.order.order_code}`,
+      content: ` has been submitted to your restaurant. Check it out now.`, //notification content
+      order_code: orderData.order.order_code,
+      read_status: false,
+      type: 2,
+    };
+    const provider_notification_id = await addNotification(
+      provider_notification_form
+    );
+    provider_notification_form.id = provider_notification_id;
+
+    shipper.socket.emit(
       "shipper-accepted-order",
       orderData.order,
       orderData.customer,
       orderData.provider,
-      orderData.order.order_code
+      orderData.order.order_code,
+      user_notification_form,
+      provider_notification_form
     );
     setOrderCode(orderData.order.order_code);
     try {
@@ -96,7 +137,7 @@ function Shipper(props) {
     setShipperConfirmBox(false);
   };
   const shipperDeclineOrder = async (orderData) => {
-    socket.emit(
+    shipper.socket.emit(
       "shipper-decline-order",
       orderData.order,
       orderData.customer,
@@ -106,7 +147,7 @@ function Shipper(props) {
     setShipperConfirmBox(false);
   };
   const shipperOnTheWay = async () => {
-    socket.emit("On-the-way", orderData.order.order_code);
+    shipper.socket.emit("On-the-way", orderData.order.order_code);
     try {
       await axios.post(`/v1/api/tastie/order/update_order_status`, {
         order_code: orderData.order.order_code,
@@ -119,7 +160,7 @@ function Shipper(props) {
     }
   };
   const shipperFinishOrder = async () => {
-    socket.emit(
+    shipper.socket.emit(
       "Shipper-arrived",
       "The shipper has arrived at your place",
       orderData.order.order_code
@@ -286,7 +327,7 @@ function Shipper(props) {
                     ...prev,
                     { sender: "shipper", message: message },
                   ]);
-                  socket.emit("shipper-inbox", message, orderCode);
+                  shipper.socket.emit("shipper-inbox", message, orderCode);
                   setMessage("");
                 }
               }}
@@ -302,4 +343,17 @@ function Shipper(props) {
   );
 }
 
-export default withRouter(Shipper);
+Shipper.propTypes = {
+  user: PropTypes.object.isRequired,
+  shipper: PropTypes.object.isRequired,
+  addNotificationAPI: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  user: state.UserReducer,
+  shipper: state.ShipperReducer,
+});
+
+export default withRouter(
+  connect(mapStateToProps, { addNotificationAPI })(Shipper)
+);

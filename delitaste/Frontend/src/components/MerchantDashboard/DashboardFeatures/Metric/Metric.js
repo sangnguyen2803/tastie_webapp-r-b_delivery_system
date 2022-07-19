@@ -49,7 +49,6 @@ const Metric = ({
             {rest.numeric_data}
           </span>
         )}
-
         {rest.text && <span style={descriptionStyle}>{rest.text}</span>}
       </div>
     </Fragment>

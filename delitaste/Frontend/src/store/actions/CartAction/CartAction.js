@@ -80,6 +80,8 @@ export const getCart = (id) => async (dispatch) => {
         provider_id: parseInt(res.data.response.providerID),
         user_id: id,
         provider_name: res.data.response.providerName,
+        longitude: res.data.response.longitude,
+        latitude: res.data.response.latitude,
         date: "",
         status: 1,
         cart: cartItems,

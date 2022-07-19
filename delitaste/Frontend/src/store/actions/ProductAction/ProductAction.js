@@ -4,7 +4,8 @@ import { GET_PRODUCT_LIST } from "store/actions/types";
 
 //Search
 export const searchAPI =
-  (id, query, type, long, lat, category_id) => async (dispatch) => {
+  (id, query, type, long, lat, category_id, category_type) =>
+  async (dispatch) => {
     const config = {
       headers: {
         "Content-Type": "application/json",
@@ -12,15 +13,15 @@ export const searchAPI =
     };
 
     const body = JSON.stringify(
-      type === 3
+      type === "3"
         ? {
             user_id: id,
-            q: query,
-            type: 3,
+            q: "",
+            type: "3",
             longitude: long,
             latitude: lat,
             category_infor: {
-              category_type: "2",
+              category_type: category_type,
               category_id: category_id,
             },
           }
@@ -32,6 +33,7 @@ export const searchAPI =
             latitude: lat,
           }
     );
+    console.log(body);
     try {
       const endpoint = "/v1/api/tastie/search";
       const res = await axios.post(endpoint, body, config);

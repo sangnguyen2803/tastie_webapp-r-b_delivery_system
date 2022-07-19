@@ -27,8 +27,62 @@ import LanguageSettingPanel from "components/Commons/Overlay/Popup/Panel/Languag
 import AccountSettingPanel from "components/Commons/Overlay/Popup/Panel/AccountSettingPanel";
 import NotificationPanel from "components/Commons/Overlay/Popup/Panel/NotificationPanel";
 import Cart from "components/Commons/Cart/Cart";
+import { propTypes } from "react-map-gl-geocoder";
 
-function MainNavBar({ user, history }) {
+const notificationList = [
+  {
+    user_id: 1039129,
+    role: 1, //to check whether a notification belongs to user or provider
+    content: "Your order #483I1P655085433 has been submitted",
+    create_at: "2022-06-12T00:00:00.000+00:00", //to display datetime that a notification was sent
+    order_code: "483I1P7-6537131032665508",
+    read_status: false,
+    type: 1,
+  },
+  {
+    user_id: 1039129,
+    role: 1, //to check whether a notification belongs to user or provider
+    content: "Your has just received a promotion from The Dirty South",
+    create_at: "2022-06-07T00:00:00.000+00:00", //to display datetime that a notification was sent
+    order_code: "483I1P7-6537131032665508",
+    read_status: true,
+    type: 3,
+  },
+  {
+    user_id: 1039129,
+    role: 1, //to check whether a notification belongs to user or provider
+    content: "The Dirty South has confirmed your order #483I1P655085433",
+    create_at: "2022-06-05T00:00:00.000+00:00", //to display datetime that a notification was sent
+    order_code: "483I1P7-6537131032665508",
+    read_status: false,
+    type: 2,
+  },
+  {
+    user_id: 1039129,
+    role: 1, //to check whether a notification belongs to user or provider
+    content: "Alex Buham has sent you a message you",
+    create_at: "2022-04-05T00:00:00.000+00:00", //to display datetime that a notification was sent
+    order_code: "483I1P7-6537131032665508",
+    read_status: false,
+    type: 4,
+  },
+  {
+    user_id: 1039129,
+    role: 1, //to check whether a notification belongs to user or provider
+    content: "Alex Buham has sent you a message you",
+    create_at: "2021-04-05T00:00:00.000+00:00", //to display datetime that a notification was sent
+    order_code: "483I1P7-6537131032665508",
+    read_status: true,
+    type: 4,
+  },
+];
+/*
+<div className="nav-logo-wrapper" onClick={() => history.push("/")}>
+            <img className="nav-logo" alt="Logo" src={Logo} />
+            <span className="nav-logo-title">Tastie!</span>
+          </div>
+*/
+function MainNavBar({ user, history, ...rest }) {
   const [accountPanel, setAccountPanel] = useState(false);
   const [languagePanel, setLanguagePanel] = useState(false);
   const [notificationPanel, setNotificationPanel] = useState(false);
@@ -45,8 +99,7 @@ function MainNavBar({ user, history }) {
       <div className="main-nav-menu-prefix">
         <div className="main-nav-prefix-container">
           <div className="nav-logo-wrapper" onClick={() => history.push("/")}>
-            <img className="nav-logo" alt="Logo" src={Logo} />
-            <span className="nav-logo-title">Tastie!</span>
+            <img height={30} alt="Logo" src={Logo} />
           </div>
           <div className="nav-wrapper-2">
             <div className="nav-menu-prefix-2">
@@ -66,11 +119,9 @@ function MainNavBar({ user, history }) {
             className="nav-language-container"
             onMouseEnter={() => {
               setLanguagePanel((prev) => !prev);
-              setNotificationPanel(false);
             }}
             onMouseLeave={() => {
               setLanguagePanel((prev) => !prev);
-              setNotificationPanel(false);
             }}
           >
             <div className="nav-language-icon-wrapper">
@@ -101,11 +152,9 @@ function MainNavBar({ user, history }) {
             className="nav-gadget-container"
             onMouseEnter={() => {
               setAccountPanel((prev) => !prev);
-              setNotificationPanel(false);
             }}
             onMouseLeave={() => {
               setAccountPanel((prev) => !prev);
-              setNotificationPanel(false);
             }}
           >
             <div className="nav-gadget-icon-wrapper">
@@ -149,26 +198,18 @@ function MainNavBar({ user, history }) {
           {user.isUserAuthenticated ? (
             <div
               className="nav-notification-container"
-              onClick={() => setNotificationPanel((prev) => !prev)}
+              onClick={() => {
+                setNotificationPanel((prev) => !prev);
+              }}
             >
               <div className="nav-notification-icon-wrapper">
                 <FontAwesomeIcon className="nav-icon" icon={faBell} />
-                {notificationPanel ? (
-                  <NavFlyout
-                    width={"250px"}
-                    height={"500px"}
-                    margin={"0 0 0 -100px"}
-                    onClick={() => setNotificationPanel((prev) => !prev)}
-                  >
-                    <NotificationPanel />
-                  </NavFlyout>
-                ) : (
-                  <></>
-                )}
               </div>
 
               <div className="nav-notification-text-wrapper">
-                <div className="nav-notification-number">10</div>
+                <div className="nav-notification-number">
+                  {user.notifications.filter((d) => !d.read_status).length}
+                </div>
               </div>
             </div>
           ) : (
@@ -259,6 +300,7 @@ function MainNavBar({ user, history }) {
         <></>
       )}
       <Modal
+        distanceFromTop={rest.hideSubNavbar ? "-35px" : 0}
         cartQuantity={user.userCart?.cart?.length}
         openModal={cartModal}
         title={"Add Additional Options"}
@@ -270,12 +312,35 @@ function MainNavBar({ user, history }) {
         cartPositionRight={0}
         useCartUI={true}
         transparentUnderNavbar={true}
-        transparent={"0.5"}
+        transparent={"0.3"}
+        showCartTitle={true}
         closeModal={() => {
           setCartModal(false);
         }}
       >
         <Cart />
+      </Modal>
+      <Modal
+        distanceFromTop={rest.hideSubNavbar ? "-35px" : 0}
+        cartQuantity={user.userCart?.cart?.length}
+        hideCloseButton={true}
+        openModal={notificationPanel}
+        title={"Add Additional Options"}
+        position="right"
+        cartWidth={420}
+        cartHeight={"1200"}
+        cartHeightAuto={false}
+        cartPositionTop={0}
+        cartPositionRight={0}
+        useCartUI={true}
+        transparentUnderNavbar={true}
+        transparent={"0.3"}
+        showCartTitle={false}
+        closeModal={() => {
+          setNotificationPanel(false);
+        }}
+      >
+        <NotificationPanel notifications={notificationList} />
       </Modal>
     </>
   );

@@ -52,5 +52,5 @@ export default function (WrappedComponent) {
 
   return connect(mapStateToProps, {
     getAccessTokenAPI,
-  })(Authentication);
+  })(ProviderAuthentication);
 }

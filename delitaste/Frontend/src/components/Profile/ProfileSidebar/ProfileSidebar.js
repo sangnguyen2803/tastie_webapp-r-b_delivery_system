@@ -68,9 +68,11 @@ function ProfileSidebar(props) {
         <div
           className="u-pf-sb-row"
           style={
-            location.pathname === "/profile/favorite" ? sidebarItemSelected : {}
+            location.pathname === "/profile/favorites"
+              ? sidebarItemSelected
+              : {}
           }
-          onClick={() => history.push(`/profile/favorite`)}
+          onClick={() => history.push(`/profile/favorites`)}
         >
           <FontAwesomeIcon className="u-pf-sb-row-icon" icon={faHeart} />
           <span>Favorites</span>
@@ -94,9 +96,7 @@ function ProfileSidebar(props) {
               ? sidebarItemSelected
               : {}
           }
-          onClick={() =>
-            history.push(`/profile/order-history/${user.profile.user_id}`)
-          }
+          onClick={() => history.push(`/profile/order-history`)}
         >
           <FontAwesomeIcon className="u-pf-sb-row-icon" icon={faScroll} />
           <span>Order History</span>

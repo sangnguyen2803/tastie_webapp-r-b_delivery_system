@@ -8,15 +8,16 @@ import Metric from "../Metric/Metric";
 import ProgressBar from "components/Commons/ProgressBar/ProgressBar";
 import ButtonGroup from "components/Commons/Button/ButtonGroup/ButtonGroup";
 import Button from "components/Commons/Button/Button";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import {
   getProviderTopProductBySalesAPI,
   getProviderTopProductByUnitAPI,
+  getProviderTopCategoryByUnitAPI,
   getProviderRevenueByTime,
   getProviderOrderByTime,
 } from "store/actions/ProviderAction/ProviderAction";
 import Tabs from "../Tabs";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCalendarPlus,
   faPlus,
@@ -24,56 +25,68 @@ import {
 } from "@fortawesome/fontawesome-free-solid";
 import Chart from "react-apexcharts";
 
+const monthLabel = [
+  "",
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+];
+const xAxisLabel = [];
+const today = new Date();
+let month = today.getMonth() + 1;
+let year = today.getFullYear();
+let count = 12;
+while (count > 0) {
+  if (month === 0) {
+    year -= 1;
+    month += 12;
+  }
+  xAxisLabel.unshift(year + "-" + monthLabel[month]);
+  month -= 1;
+  count -= 1;
+}
 const DummyData = {
-  series: [
-    {
-      name: "Sales",
-      type: "column",
-      data: [440, 505, 414, 671, 227, 413, 201, 352, 752, 320, 257, 160],
-    },
-    {
-      name: "Order",
-      type: "column",
-      data: [23, 42, 35, 27, 43, 22, 17, 31, 22, 22, 12, 16],
-    },
-  ],
   options: {
     colors: ["#E11A22", "#F8A825"],
     chart: {
       height: 350,
       type: "line",
+      fontFamily: "Poppins, sans-serif",
     },
     title: {
-      text: "Sales/Order Sources",
+      text: "Store monthly revenue by number of orders",
     },
     dataLabels: {
       enabled: true,
       enabledOnSeries: [1],
     },
-    labels: [
-      "01 Jan 2001",
-      "02 Jan 2001",
-      "03 Jan 2001",
-      "04 Jan 2001",
-      "05 Jan 2001",
-      "06 Jan 2001",
-      "07 Jan 2001",
-      "08 Jan 2001",
-      "09 Jan 2001",
-      "10 Jan 2001",
-      "11 Jan 2001",
-      "12 Jan 2001",
-    ],
-    xaxis: {
-      type: "datetime",
-    },
+    labels: xAxisLabel,
     yaxis: [
       {
+        labels: {
+          formatter: function (val) {
+            return val?.toFixed(2);
+          },
+        },
         title: {
           text: "Sales",
         },
       },
       {
+        labels: {
+          formatter: function (val) {
+            return val?.toFixed(0);
+          },
+        },
         opposite: true,
         title: {
           text: "Order",
@@ -94,6 +107,7 @@ function MDBusinessInsight(props) {
     provider,
     getProviderTopProductBySalesAPI,
     getProviderTopProductByUnitAPI,
+    getProviderTopCategoryByUnitAPI,
     getProviderRevenueByTime,
     getProviderOrderByTime,
   } = props;
@@ -101,25 +115,52 @@ function MDBusinessInsight(props) {
   const handleSelectTab = (value) => {
     setCurrentTab(value);
   };
-  const [revenueByTime, setRevenueByTime] = useState(0);
-  const [orderByTime, setOrderByTime] = useState(0);
+  const [series, setSeries] = useState([
+    {
+      name: "Revenue",
+      type: "column",
+      data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    },
+    {
+      name: "Order",
+      type: "column",
+      data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    },
+  ]);
+  const [revenueByTime, setRevenueByTime] = useState([]);
+  const [orderByTime, setOrderByTime] = useState([]);
   useEffect(() => {
     async function fetchStatisticsData(id) {
-      const result1 = await getProviderTopProductBySalesAPI(id, 1, 6, 2022);
-      const result2 = await getProviderTopProductByUnitAPI(id, 1, 6, 2022);
       const revenue = await getProviderRevenueByTime(id, 1, 6, 2022);
       setRevenueByTime(revenue);
       const order = await getProviderOrderByTime(id, 1, 6, 2022);
       setOrderByTime(order);
+      setSeries([
+        {
+          name: "Revenue",
+          type: "column",
+          data: revenue,
+        },
+        {
+          name: "Order",
+          type: "column",
+          data: order,
+        },
+      ]);
+      const result1 = await getProviderTopProductBySalesAPI(id, 1, 6, 2022);
+      const result2 = await getProviderTopProductByUnitAPI(id, 1, 6, 2022);
+      const result3 = await getProviderTopCategoryByUnitAPI(id, 1, 6, 2022);
     }
     if (user.provider_id !== -1) fetchStatisticsData(user.provider_id);
   }, [user.provider_id]);
+
   return (
     <Fragment>
       <div
         className="panel-detail-wrapper"
         style={{ height: "auto", marginTop: "0px" }}
       >
+        <MDHeader visible={false} />
         <div className="panel-detail-title">Business Insights</div>
         <div
           className="mkt-section-title"
@@ -138,23 +179,39 @@ function MDBusinessInsight(props) {
             }}
           >
             <div className="product-stock-quantity">Sales Overview</div>
+            {revenueByTime.length !== 0 && (
+              <div className="product-stock-quantity-description">
+                Your profit has been{" "}
+                <b>
+                  {revenueByTime[11] < revenueByTime[10]
+                    ? "descreased "
+                    : "increased "}
+                </b>
+                <b>
+                  {((revenueByTime[11] / revenueByTime[10]) * 100).toFixed(2)}%
+                </b>{" "}
+                comparing to last month data.
+              </div>
+            )}
             <div className="product-stock-quantity-description">
-              Your profit has increased 1.4% comparing to last 6-month result.
+              Sales: {revenueByTime?.reduce((a, b) => a + b, 0) || "0.00"}
             </div>
             <div className="product-stock-quantity-description">
-              Sales: 235,354 USD
-            </div>
-            <div className="product-stock-quantity-description">
-              Total Order: "3,246"
+              Total Order: {orderByTime?.reduce((a, b) => a + b, 0) || "0 "}{" "}
+              orders
             </div>
           </div>
           <Metric
-            text={"abc"}
+            text={`Revenue demonstrates the total amount your store has received from ${
+              xAxisLabel[0]
+            } to ${xAxisLabel[xAxisLabel.length - 1]}`}
             width={"100%"}
             height={180}
             radius={5}
             textColor={"black"}
-            numeric_data={`USD ${revenueByTime?.toFixed(2)}`}
+            numeric_data={`$ ${revenueByTime
+              ?.reduce((a, b) => a + b, 0)
+              ?.toFixed(2)}`}
             numericFontSize={30}
             border={"2px solid #eeeeee"}
           >
@@ -167,12 +224,15 @@ function MDBusinessInsight(props) {
             </span>
           </Metric>
           <Metric
-            text={"abc"}
+            subText={`Average: `}
+            text={`Order by time demonstrates the total number of orders your store has received from ${
+              xAxisLabel[0]
+            } to ${xAxisLabel[xAxisLabel.length - 1]}`}
             width={"100%"}
             height={180}
             radius={5}
             textColor={"black"}
-            numeric_data={orderByTime}
+            numeric_data={`${orderByTime?.reduce((a, b) => a + b, 0)}`}
             numericFontSize={30}
             border={"2px solid #eeeeee"}
           >
@@ -185,15 +245,19 @@ function MDBusinessInsight(props) {
             </span>
           </Metric>
           <Metric
-            text={"abc"}
+            text={"The revenue amount per order."}
             width={"100%"}
             height={180}
             radius={5}
             textColor={"black"}
-            numeric_data={`USD ${
-              revenueByTime && orderByTime
-                ? (revenueByTime / orderByTime).toFixed(2)
-                : 0
+            numeric_data={`$ ${
+              revenueByTime?.reduce((a, b) => a + b, 0) &&
+              orderByTime?.reduce((a, b) => a + b, 0)
+                ? (
+                    revenueByTime?.reduce((a, b) => a + b, 0) /
+                    orderByTime?.reduce((a, b) => a + b, 0)
+                  ).toFixed(2)
+                : "0.00"
             }`}
             numericFontSize={30}
             border={"2px solid #eeeeee"}
@@ -216,7 +280,7 @@ function MDBusinessInsight(props) {
 
         <Chart
           options={DummyData.options}
-          series={DummyData.series}
+          series={series}
           type="bar"
           width="1100"
           height="320"
@@ -247,68 +311,74 @@ function MDBusinessInsight(props) {
                   <th>By Sales</th>
                 </tr>
                 {currentTab === 0
-                  ? provider?.topBySales?.map((item, index) => (
-                      <tr className="table-row-wrapper" key={item.promotion_id}>
-                        <td
-                          className="product-name"
-                          style={{
-                            textAlign: "left",
-                            width: "20%",
-                          }}
-                        >
-                          #{index}
-                        </td>
-                        <td
-                          className="field-hidden"
-                          style={{
-                            textAlign: "left",
-                            width: "60%",
-                          }}
-                        >
-                          {item.product_name || "—"}
-                        </td>
-                        <td
-                          className="field-hidden"
-                          style={{
-                            textAlign: "center",
-                            width: "20%",
-                          }}
-                        >
-                          $ {item.total_sales?.toFixed(2) || "—"}
-                        </td>
-                      </tr>
-                    ))
-                  : provider?.topByUnit?.map((item, index) => (
-                      <tr className="table-row-wrapper" key={item.promotion_id}>
-                        <td
-                          className="product-name"
-                          style={{
-                            textAlign: "left",
-                            width: "20%",
-                          }}
-                        >
-                          #{index}
-                        </td>
-                        <td
-                          className="field-hidden"
-                          style={{
-                            textAlign: "left",
-                            width: "60%",
-                          }}
-                        >
-                          {item.product_name || "—"}
-                        </td>
-                        <td
-                          className="field-hidden"
-                          style={{
-                            textAlign: "center",
-                            width: "20%",
-                          }}
-                        >
-                          {item.total_quantity || "—"}
-                        </td>
-                      </tr>
-                    ))}
+                  ? provider?.topBySales?.map(
+                      (item, index) =>
+                        index < 10 && (
+                          <tr className="table-row-wrapper" key={index}>
+                            <td
+                              className="product-name"
+                              style={{
+                                textAlign: "left",
+                                width: "20%",
+                              }}
+                            >
+                              #{index + 1}
+                            </td>
+                            <td
+                              className="field-hidden"
+                              style={{
+                                textAlign: "left",
+                                width: "60%",
+                              }}
+                            >
+                              {item.product_name || "—"}
+                            </td>
+                            <td
+                              className="field-hidden"
+                              style={{
+                                textAlign: "center",
+                                width: "20%",
+                              }}
+                            >
+                              $ {item.total_sales?.toFixed(2) || "—"}
+                            </td>
+                          </tr>
+                        )
+                    )
+                  : provider?.topByUnit?.map(
+                      (item, index) =>
+                        index < 10 && (
+                          <tr className="table-row-wrapper" key={index}>
+                            <td
+                              className="product-name"
+                              style={{
+                                textAlign: "left",
+                                width: "20%",
+                              }}
+                            >
+                              #{index + 1}
+                            </td>
+                            <td
+                              className="field-hidden"
+                              style={{
+                                textAlign: "left",
+                                width: "60%",
+                              }}
+                            >
+                              {item.product_name || "—"}
+                            </td>
+                            <td
+                              className="field-hidden"
+                              style={{
+                                textAlign: "center",
+                                width: "20%",
+                              }}
+                            >
+                              {item.total_quantity || "—"}
+                            </td>
+                          </tr>
+                        )
+                    )}
               </tbody>
             </table>
           </div>
@@ -318,6 +388,63 @@ function MDBusinessInsight(props) {
           style={{ marginTop: 30, fontWeight: 700 }}
         >
           Category Ranking
+        </div>
+        <div className="product-table-container">
+          <div className="product-table">
+            <table className="table table-wrapper">
+              <tbody className="text-capitalize">
+                <tr className="table-row-wrapper">
+                  <th>Ranking</th>
+                  <th>Product name</th>
+                  <th>Category name</th>
+                  <th>By Units</th>
+                </tr>
+                {props.provider?.topCategory?.map(
+                  (item, index) =>
+                    index < 5 && (
+                      <tr className="table-row-wrapper" key={index}>
+                        <td
+                          className="product-name"
+                          style={{
+                            textAlign: "left",
+                            width: "20%",
+                          }}
+                        >
+                          #{index + 1}
+                        </td>
+                        <td
+                          className="field-hidden"
+                          style={{
+                            textAlign: "left",
+                            width: "50%",
+                          }}
+                        >
+                          {item.product_name || "—"}
+                        </td>
+                        <td
+                          className="field-hidden"
+                          style={{
+                            textAlign: "left",
+                            width: "20%",
+                          }}
+                        >
+                          {item.food_category_name || "—"}
+                        </td>
+                        <td
+                          className="field-hidden"
+                          style={{
+                            textAlign: "center",
+                            width: "10%",
+                          }}
+                        >
+                          $ {item.total_quantity || "—"}
+                        </td>
+                      </tr>
+                    )
+                )}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </Fragment>
@@ -329,6 +456,7 @@ MDBusinessInsight.propTypes = {
   provider: PropTypes.object.isRequired,
   getProviderTopProductBySalesAPI: PropTypes.func.isRequired,
   getProviderTopProductByUnitAPI: PropTypes.func.isRequired,
+  getProviderTopCategoryByUnitAPI: PropTypes.func.isRequired,
   getProviderRevenueByTime: PropTypes.func.isRequired,
   getProviderOrderByTime: PropTypes.func.isRequired,
 };
@@ -342,6 +470,7 @@ export default withRouter(
   connect(mapStateToProps, {
     getProviderTopProductBySalesAPI,
     getProviderTopProductByUnitAPI,
+    getProviderTopCategoryByUnitAPI,
     getProviderRevenueByTime,
     getProviderOrderByTime,
   })(MDBusinessInsight)

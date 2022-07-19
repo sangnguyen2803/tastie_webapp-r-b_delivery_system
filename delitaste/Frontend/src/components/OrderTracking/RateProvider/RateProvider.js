@@ -3,24 +3,18 @@ import withAuth from "components/HigherOrderComponents(HOC)/withAuth";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import "./RateShipper.scss";
+import "../RateShipper/RateShipper.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/fontawesome-free-solid";
 
 import Button from "components/Commons/Button/Button";
 import ButtonGroup from "components/Commons/Button/ButtonGroup/ButtonGroup";
 import ReactStars from "react-rating-stars-component";
-
-const shipper = {
-  name: "Terry Harrison",
-  license_plate: "64B1 - 03663",
-  rating: 5,
-  profile_image:
-    "https://pyxis.nymag.com/v1/imgs/231/dd4/b1d43dd12227a68877644b36e1b6c9850e-13-zayn-malik.rsquare.w330.jpg",
-};
+import { ratingOrderAPI } from "store/actions/OrderAction/OrderAction";
 
 function RateProvider(props) {
-  const [rating, setRating] = useState(0);
+  const { orderSummary } = props;
+  const [rating, setRating] = useState(5);
   const [ratingTitle, setRatingTitle] = useState();
   const [comment, setComment] = useState("");
   const [selectedRating, setSelectedRating] = useState(0);
@@ -30,23 +24,29 @@ function RateProvider(props) {
     setRatingTitle(level[newRating - 1]);
     setRating(newRating);
   };
+
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "auto" });
   }, []);
-  useEffect(() => {}, []);
+  const handleSubmitRating = async () => {
+    const data = {
+      order_id: orderSummary.order_id,
+      create_at: new Date().toISOString().split("T")[0],
+      content: comment,
+      stars: rating,
+      image: "",
+    };
+    console.log(data);
+    const status = await props.ratingOrderAPI(data);
+    if (status) {
+      props.setVisible(false);
+    }
+  };
 
   return (
     <Fragment>
       <div className="rate-shipper-feedback-container">
         <div className="rshi-fb-wrapper">
-          <img
-            className="rshi-fb-image"
-            src={shipper.profile_image}
-            alt="shipper_profile_image"
-          />
-          <span className="rshi-fb-main-text">
-            How was {shipper.name}'s service?
-          </span>
           <div className="rsh-fb-rating">
             <ReactStars
               count={5}
@@ -64,19 +64,20 @@ function RateProvider(props) {
               <span className="rshi-fb-main-text-medium">
                 Sincerely sorry for this bad experience.
                 <br />
-                Please share your problem for us to fix this problem.
+                Please report your problems and include evidences to us.
               </span>
               <div className="rshi-fb-compliments">
                 {[
-                  "Bad behavior",
-                  "Improper uniform",
-                  "Wrong dish",
-                  "Late delivery",
-                  "Insupportive",
+                  "Too salty",
+                  "Too sweet",
+                  "Disgusting",
+                  "The food is getting cold",
+                  "Very bad",
                 ].map((item, index) => (
                   <div
                     className="rshi-fb-compliment-tag"
                     onClick={() => {
+                      setComment((prev) => prev + "[" + item + "] ");
                       if (selectedTags.includes(item)) {
                         let copy = [...selectedTags];
                         copy.splice(copy.indexOf(item), 1); // remove item
@@ -106,15 +107,16 @@ function RateProvider(props) {
               </span>
               <div className="rshi-fb-compliments">
                 {[
-                  "Friendly!",
-                  "Careful package handling",
-                  "Proper uniform",
-                  "Fast delivery",
-                  "Supportive",
+                  "Yummy!",
+                  "Affordable",
+                  "Good packaging",
+                  "Filling",
+                  "Good food appearance",
                 ].map((item, index) => (
                   <div
                     className="rshi-fb-compliment-tag"
                     onClick={() => {
+                      setComment((prev) => prev + "[" + item + "] ");
                       if (selectedTags.includes(item)) {
                         let copy = [...selectedTags];
                         copy.splice(copy.indexOf(item), 1); // remove item
@@ -142,11 +144,20 @@ function RateProvider(props) {
               <textarea
                 className="rshi-fb-text-area"
                 name="comment"
+                value={comment}
                 placeholder="Share review about taste, package or each item"
                 onChange={(e) => setComment(e.target.value)}
               />
             </div>
             <span className="rshi-fb-word-counter">{comment.length}/150</span>
+          </div>
+          <div className="homebody-sb-radio-detail-wrapper">
+            <label className="hb-sb-type-wrapper radio">
+              <input type="radio" name="sortType" value={1} />
+              <span className="hb-sb-label-radio">
+                Make my rating and review anonymous
+              </span>
+            </label>
           </div>
           <ButtonGroup float="flex-start" mgTop={10} mgBottom={0}>
             <Button
@@ -157,7 +168,8 @@ function RateProvider(props) {
               width={120}
               fontSize={14}
               height={35}
-              label={`Delivery detail`}
+              onClick={() => handleSubmitRating()}
+              label={`Submit`}
             />
           </ButtonGroup>
         </div>
@@ -169,6 +181,7 @@ function RateProvider(props) {
 RateProvider.propTypes = {
   user: PropTypes.object.isRequired,
   product: PropTypes.object.isRequired,
+  ratingOrderAPI: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -177,5 +190,9 @@ const mapStateToProps = (state) => ({
 });
 
 export default withRouter(
-  withAuth(connect(mapStateToProps, null)(RateProvider))
+  withAuth(
+    connect(mapStateToProps, {
+      ratingOrderAPI,
+    })(RateProvider)
+  )
 );

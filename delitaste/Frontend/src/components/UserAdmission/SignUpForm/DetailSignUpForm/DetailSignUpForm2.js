@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
-import Fragment from "react";
+import axios from "axios";
 //scss
 import "./DetailSignUpForm.scss";
 import "style/Common.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Button from "components/Commons/Button/Button";
+import ButtonGroup from "components/Commons/Button/ButtonGroup/ButtonGroup";
 import {
   faPencilAlt,
   faTrashAlt,
@@ -11,6 +13,9 @@ import {
   faMapMarkerAlt,
   faUpload,
   faChevronRight,
+  faAddressBook,
+  faBuilding,
+  faHome,
 } from "@fortawesome/fontawesome-free-solid";
 import DefaultAvatar from "../../../../assets/default-avatar.png";
 import CurrentAvatar from "../../../../assets/avatar.png";
@@ -28,57 +33,44 @@ function DetailSignUpForm2(props) {
     value: "",
   });
   const inputFile = useRef(null);
-  const [address, setAddress] = useState("");
   const [showMapDialog, setShowMapDialog] = useState(false);
   const [avatarState, setAvatarState] = useState("upload");
   const [avatarIconState, setAvatarIconState] = useState(faUpload);
-  useEffect(() => {
-    setAddress("");
-    const cityAddress = cities.filter(
-      (city) => city.code === selectedCode.cityCode
-    );
-    const districtAddress = districts.filter(
-      (district) => district.code === selectedCode.districtCode
-    );
-    selectedCode.value = selectedCode.value.replace(
-      /[^a-zA-Z0-9/ áàạảãăắằẳẵặâấầẩẫậóòỏõọôốồổỗộơớờợởỡúùủũụưứừửữựéèẻẽẹêểếềệễĐđíìỉĩị']/g,
-      ""
-    );
-    setAddress(
-      (selectedCode.value ? `${selectedCode.value}, ` : "") +
-        (selectedCode.districtCode
-          ? `${districtAddress[0].name}${
-              districtAddress[0].type === "huyen" ||
-              districtAddress[0].type === "quan"
-                ? " district, "
-                : " city, "
-            }`
-          : "") +
-        (selectedCode.cityCode
-          ? `${cityAddress[0].name}${
-              cityAddress[0].type === "tinh" ? " province, " : " city, "
-            }`
-          : "") +
-        "Viet Nam"
-    );
-  }, [selectedCode]);
 
-  const updateDetailAddress = (e) => {
-    setSelectedCode({ ...selectedCode, value: e.target.value });
-  };
-  const openSelectMapDialog = () => {
-    {
-      setShowMapDialog((prev) => !prev);
-    }
-  };
   const onButtonClick = () => {
-    // `current` points to the mounted file input element
     inputFile.current.click();
     setUserProfilePic(CurrentAvatar);
     setAvatarIconState(faPencilAlt);
     setAvatarState("edit");
   };
+  const getPosition = () => {
+    return new Promise((res, rej) => {
+      navigator.geolocation.getCurrentPosition(res, rej);
+    });
+  };
 
+  const selectedAddressType = {
+    border: "1px solid #101010",
+    backgroundColor: "#f6f6f6",
+    width: 105,
+  };
+  const [addressType, setAddressType] = useState(1);
+  const [address, setAddress] = useState("");
+  const [latitude, setLatitude] = useState();
+  const [longitude, setLongitude] = useState();
+  const relocating = async (values) => {
+    var position = await getPosition();
+    const { latitude, longitude } = position.coords;
+    const endpoint = `https://api.geoapify.com/v1/geocode/reverse?lat=${latitude}&lon=${longitude}&apiKey=05e76b96155e447ba0391d645ce81d27`;
+    let res = await axios.get(endpoint);
+    var address = "";
+    if (res.data) {
+      address = res.data?.features[0]?.properties?.formatted || "";
+    }
+    setLatitude(latitude);
+    setLongitude(longitude);
+    setAddress(address);
+  };
   return (
     <>
       <div className="detail-profile-wrapper">
@@ -96,7 +88,7 @@ function DetailSignUpForm2(props) {
                 alt="profile_pic"
               />
             </div>
-            <button
+            <div
               disabled={avatarState === "edit"}
               onClick={onButtonClick}
               className="form-icon-edit"
@@ -117,8 +109,8 @@ function DetailSignUpForm2(props) {
                 ref={inputFile}
                 style={{ display: "none" }}
               />
-            </button>
-            <button
+            </div>
+            <div
               disabled={avatarState === "edit"}
               onClick={onButtonClick}
               className="form-icon-delete"
@@ -131,10 +123,10 @@ function DetailSignUpForm2(props) {
                 }}
                 icon={faTrashAlt}
               />
-            </button>
+            </div>
           </div>
         </div>
-        <div className="gender-wrapper">
+        <div className="gender-wrapper" style={{ margin: "20px 0" }}>
           <div className="label-sign-up form-label">Gender</div>
           <div className="gender-detail-wrapper">
             <label className="gender-type-wrapper">
@@ -160,93 +152,71 @@ function DetailSignUpForm2(props) {
             name="birthday"
           />
         </div>
+        <ButtonGroup mgLeft={100} mgTop={10} mgBottom={10}>
+          <Button
+            width={170}
+            height={30}
+            fontSize={13}
+            color={"black"}
+            marginTop={20}
+            bglight={true}
+            border={"#5d5d5d 1.5px solid"}
+            justifyContent={"center"}
+            label="Enable Geolocation"
+            prefix={
+              <FontAwesomeIcon className="button-icon" icon={faMapMarkerAlt} />
+            }
+            onClick={() => relocating()}
+          />
+        </ButtonGroup>
         <div className="address-wrapper">
           <div className="label-sign-up form-label">Address</div>
+
           <div className="dynamic-address-detail-wrapper">
             <input
               className="sign-up-address form-text-field"
               value={address}
               type="text"
-              disabled
               id="address"
               name="address"
-            />
-            <FontAwesomeIcon
-              onClick={openSelectMapDialog}
-              className="form-icon-map"
-              icon={faMapMarkerAlt}
+              disabled={true}
             />
           </div>
         </div>
-        <div className="address-detail-wrapper">
-          <div className="address-input-detail-wrapper">
-            <div className="address-detail-sign-up form-label">Country</div>
-            <select
-              defaultValue="Viet Nam"
-              className="sign-up-detail-address form-text-field"
-            >
-              <option value="" disabled hidden>
-                Select a country...
-              </option>
-              <option>Việt Nam</option>
-            </select>
+        <ButtonGroup mgTop={10} mgBottom={10} mgLeft={100} gap={5}>
+          <div
+            className="p-pd-a-item address-type-style"
+            onClick={() => setAddressType(1)}
+            style={addressType === 1 ? selectedAddressType : { width: 105 }}
+          >
+            <div className="p-pd-a-image-wrapper">
+              <FontAwesomeIcon icon={faHome} className="p-pd-a-icon" />
+            </div>
+            <span className="p-pd-a-label-radio">House</span>
           </div>
-          <div className="address-input-detail-wrapper">
-            <div className="address-detail-sign-up form-label">City</div>
-            <select
-              onChange={(e) => {
-                setSelectedCode({
-                  ...selectedCode,
-                  cityCode: e.target.value,
-                  districtCode: "",
-                });
-              }}
-              className="sign-up-detail-address form-text-field"
-            >
-              <option value="" disabled hidden>
-                Select a city...
-              </option>
-              {cities.map((city) => (
-                <option key={city.code} value={city.code}>
-                  {city.name}
-                </option>
-              ))}
-            </select>
+          <div
+            className="p-pd-a-item"
+            onClick={() => setAddressType(2)}
+            style={
+              addressType === 2 ? selectedAddressType : { width: 105, gap: 5 }
+            }
+          >
+            <div className="p-pd-a-image-wrapper">
+              <FontAwesomeIcon icon={faBuilding} className="p-pd-a-icon" />
+            </div>
+            <span className="p-pd-a-label-radio">Workplace</span>
           </div>
-          <div className="address-input-detail-wrapper">
-            <div className="address-detail-sign-up form-label">District</div>
-
-            <select
-              onChange={(e) =>
-                setSelectedCode({
-                  ...selectedCode,
-                  districtCode: e.target.value,
-                })
-              }
-              className="sign-up-detail-address form-text-field"
-            >
-              <option value="" disabled hidden>
-                Select a district...
-              </option>
-              {districts
-                .filter((item) => item.parent_code === selectedCode.cityCode)
-                .map((district) => (
-                  <option key={district.code} value={district.code}>
-                    {district.name}
-                  </option>
-                ))}
-            </select>
+          <div
+            className="p-pd-a-item"
+            onClick={() => setAddressType(3)}
+            style={addressType === 3 ? selectedAddressType : { width: 105 }}
+          >
+            <div className="p-pd-a-image-wrapper">
+              <FontAwesomeIcon icon={faAddressBook} className="p-pd-a-icon" />
+            </div>
+            <span className="p-pd-a-label-radio">Other</span>
           </div>
-          <div className="address-input-detail-wrapper">
-            <div className="address-detail-sign-up form-label">Road/Ward</div>
-            <input
-              placeholder="Type your address..."
-              onChange={(e) => updateDetailAddress(e)}
-              className="sign-up-detail-address-input form-text-field"
-              type="text"
-            />
-          </div>
-        </div>
+        </ButtonGroup>
       </div>
       <div className="button-group">
         <button className="btn-skip-form btn-size">

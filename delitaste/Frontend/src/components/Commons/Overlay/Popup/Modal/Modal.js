@@ -53,6 +53,7 @@ const Modal = ({ openModal, closeModal, ...rest }) => {
   const ModalOutterBackgroundStyle = {
     marginTop: rest.transparentUnderNavbar ? 90 : 0,
     background: `rgba(0, 0, 0, ${rest.transparent || 0.8})`,
+    top: rest.distanceFromTop,
   };
   const HeaderStyle = {
     backgroundColor: rest.headerColor ? rest.headerColor : "",
@@ -63,7 +64,6 @@ const Modal = ({ openModal, closeModal, ...rest }) => {
     width: `${rest.cartWidth}px`,
     height: rest.cartHeightAuto ? "auto" : `${rest.cartHeight}px`,
     top: `${rest.cartPositionTop}px`,
-
     left: "unset",
     right: `${
       rest.cartPositionRight +
@@ -99,16 +99,22 @@ const Modal = ({ openModal, closeModal, ...rest }) => {
         style={ModalOutterBackgroundStyle}
       >
         <div className="modal-container" style={CartContainerStyle} ref={ref}>
-          <div className="modal-cart-header-wrapper">
-            <FontAwesomeIcon
-              className="modal-cart-header-icon"
-              onClick={closeModal}
-              icon={faTimes}
-            />
-            <div className="modal-cart-header-title">
-              <span>Cart items • {rest.cartQuantity || 0} item</span>
-            </div>
-          </div>
+          {!rest.hideCloseButton && (
+            <Fragment>
+              <div className="modal-cart-header-wrapper">
+                <FontAwesomeIcon
+                  className="modal-cart-header-icon"
+                  onClick={closeModal}
+                  icon={faTimes}
+                />
+                {rest.showCartTitle && (
+                  <div className="modal-cart-header-title">
+                    <span>Cart items • {rest.cartQuantity || 0} item</span>
+                  </div>
+                )}
+              </div>
+            </Fragment>
+          )}
           <div className="modal-content" style={ModalInnerStyle}>
             {rest.children}
           </div>

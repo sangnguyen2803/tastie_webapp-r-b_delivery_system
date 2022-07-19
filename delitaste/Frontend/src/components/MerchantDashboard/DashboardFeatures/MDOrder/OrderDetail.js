@@ -1,16 +1,20 @@
 import { Fragment, useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  faArrowCircleRight,
   faCheckCircle,
+  faCircleNotch,
+  faCommentDots,
   faDotCircle,
+  faEllipsisH,
   faTimesCircle,
+  faUtensils,
 } from "@fortawesome/fontawesome-free-solid";
 import { css } from "@emotion/react";
 import orderListData from "components/MerchantDashboard/DashboardFeatures/MDOrder/data/orderListData";
 import "../Panel.scss";
 import ViewOrderDetail from "./OrderHandler/ViewOrderDetail";
 import ProgressBar from "components/Commons/ProgressBar/ProgressBar";
-import io from "socket.io-client";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
@@ -19,9 +23,10 @@ import {
   getAllProductFromOrderAPI,
   getOrderStatusAPI,
 } from "store/actions/OrderAction/OrderAction";
-
+import MDHeader from "components/MerchantDashboard/MDHeader/MDHeader";
 import Loader from "react-spinners/ScaleLoader";
 import ProviderList from "components/HomePage/MainContent/ProviderList/ProviderList";
+import { faEllipsisV } from "@fortawesome/free-solid-svg-icons";
 // let socket;
 
 function OrderDetail(props) {
@@ -49,7 +54,6 @@ function OrderDetail(props) {
     font-size: 14px;
     color: red;
   `;
-  const socket = io(`http://localhost:3015`);
   const filterOrderList = (type) => {
     const filteredOrderList = orderListData.filter(
       (order) => order.order_status === type
@@ -64,13 +68,13 @@ function OrderDetail(props) {
   useEffect(() => {
     async function fetchAllOrders(id) {
       setLoading(false);
-      let limit = 200;
+      let limit = 50;
       let offset = 1;
       const result = await getAllOrderAPI(id, limit, offset);
       setLoading(true);
     }
     //fetch new order list when order in store is empty
-    if (user.provider_id !== -1 && provider.orderList.length === 0) {
+    if (user.provider_id !== -1 && !provider.orderList.length) {
       fetchAllOrders(user.provider_id);
       return;
     }
@@ -78,8 +82,8 @@ function OrderDetail(props) {
   }, [user.provider_id]);
 
   useEffect(() => {
-    socket.emit("provider-join-room", `provider-${user.provider_id}`);
-    socket.on(
+    provider.socket.emit("join-room", `provider-${user.provider_id}`);
+    provider.socket.on(
       "provider-received-order",
       async (orderData, customerData, order_code) => {
         console.log("orderData:", orderData);
@@ -114,6 +118,16 @@ function OrderDetail(props) {
 
   const mapOrderStatusIcon = (status) => {
     switch (status) {
+      case 3:
+        return (
+          <>
+            <FontAwesomeIcon
+              className="o-order-icon-history inprogress"
+              icon={faDotCircle}
+            />
+            <span className="order-status-text-blue">Processing</span>
+          </>
+        );
       case 5:
         return (
           <>
@@ -131,17 +145,17 @@ function OrderDetail(props) {
               className="o-order-icon-history cancel"
               icon={faTimesCircle}
             />
-            <span className="order-status-text-red">Unable to delivery</span>
+            <span className="order-status-text-red">Cancel</span>
           </>
         );
       default:
         return (
           <>
             <FontAwesomeIcon
-              className="o-order-icon-history inprogress"
-              icon={faDotCircle}
+              className="o-order-icon-history pending"
+              icon={faCircleNotch}
             />
-            <span className="order-status-text-blue">In progress</span>
+            <span className="order-status-text-yellow">Awaiting</span>
           </>
         );
     }
@@ -151,21 +165,22 @@ function OrderDetail(props) {
     <Fragment>
       <div className="double-panel-container">
         <div className="main-detail-panel-wrapper">
+          <MDHeader visible={false} />
           <div className="panel-detail-title">Your orders</div>
           <div className="product-list-info-row">
             <div className="product-list-info">
               <div className="product-stock-quantity">
-                {orderList.length} Orders
+                {provider.orderList.length} Orders
               </div>
               <div className="product-stock-quantity-description">
-                {props.type} orders: {orderList.length}
+                {props.type} orders: {provider.orderList.length}
               </div>
               <div className="product-progress-bar">
                 <ProgressBar
                   bgcolor="#940000"
-                  progress={`${orderList.length}`}
+                  progress={`${provider.orderList.length}`}
                   height="6px"
-                  length={5000}
+                  length={50}
                 />
               </div>
             </div>
@@ -185,15 +200,18 @@ function OrderDetail(props) {
               {provider.orderList?.map((order) => (
                 <div
                   className="o-order-row"
-                  onClick={() => viewOrderDetail(order.order_code)}
+                  onClick={() => {
+                    setStatusOnView(order.status);
+                    viewOrderDetail(order.order_code);
+                  }}
                   key={order.order_code}
                   style={
                     orderSummary?.order_code === order?.order_code
-                      ? { backgroundColor: "#f3f3f3", transition: "0.3s" }
+                      ? { backgroundColor: "#f3f3f3" }
                       : { backgroundColor: "white" }
                   }
                 >
-                  {mapOrderStatusIcon(order["MAX(os.order_status_name)"])}
+                  {mapOrderStatusIcon(order.status)}
                   <div className="o-order o-order-id">{order.order_code}</div>
                   <div className="o-order o-order-name">
                     {`${order.user_first_name} ${order.user_last_name}`}
@@ -201,7 +219,7 @@ function OrderDetail(props) {
                   <div className="o-order-time">{order.update_at}</div>
                   <div className="o-order-quantity">{order.payment_name}</div>
                   <div className="o-order-price">
-                    $ {order.total_amount.toFixed(2)}
+                    $ {order.total_amount?.toFixed(2)}
                   </div>
                 </div>
               ))}
@@ -240,7 +258,7 @@ function OrderDetail(props) {
             orderItems={orderItems}
             orderSummary={orderSummary}
             orderStatus={statusOnView}
-            socket={socket}
+            socket={provider.socket}
           />
         </div>
       </div>

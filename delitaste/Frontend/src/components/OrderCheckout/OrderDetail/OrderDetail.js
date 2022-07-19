@@ -5,15 +5,18 @@ import PropTypes from "prop-types";
 import Modal from "components/Commons/Overlay/Popup/Modal/Modal";
 import PDProductDetail from "components/ProviderDetail/PDBody/PDProductDetail/PDProductDetail";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import ReactMapGl, { Source, Layer, Marker, Popup } from "react-map-gl";
+import { useCallback } from "react";
 import {
   faBook,
-  faClock,
+  faCircle,
   faCreditCard,
   faMoneyBillAlt,
   faPencilAlt,
   faPhone,
   faSearch,
   faTimes,
+  faUtensils,
 } from "@fortawesome/fontawesome-free-solid";
 import { faMapMarkedAlt } from "@fortawesome/free-solid-svg-icons";
 import "./OrderDetail.scss";
@@ -26,25 +29,31 @@ import {
   getDeliveryFee,
 } from "store/actions/UserAction/UserAction";
 import { getProductListAPI } from "store/actions/ProductAction/ProductAction";
-
 import SwitchSelector from "react-switch-selector";
 import ScheduleOrder from "./ScheduleOrder";
-
+import axios from "axios";
 const optionSwitcher = [
   {
     label: "Delivery",
     value: 0,
-    selectedBackgroundColor: "#b90009",
+    selectedBackgroundColor: "#890009",
   },
   {
     label: "Pickup",
     value: 1,
-    selectedBackgroundColor: "#b90009",
+    selectedBackgroundColor: "#890009",
   },
 ];
 
 function OrderDetail(props) {
-  const [deliveryOption, setDeliveryOption] = useState(false);
+  const {
+    arrivalCoordinates,
+    setArrivalCoordinate,
+    departureCoordinates,
+    setDepartureCoordinates,
+    deliveryOption,
+    setDeliveryOption,
+  } = props;
   const initialSelectedIndex = optionSwitcher.findIndex(
     ({ value }) => value === 0
   );
@@ -59,7 +68,9 @@ function OrderDetail(props) {
   const [showScheduleTable, setShowScheduleTable] = useState(false);
   const [showRemoveCartDialog, setShowRemoveCartDialog] = useState(false);
   const [selectedProductDetail, setSelectedProductDetail] = useState();
-
+  const [location, setLocation] = useState([
+    106.68057155417674, 10.768685473523648,
+  ]);
   useEffect(() => {
     setOrderForm((prevState) => ({
       ...prevState,
@@ -78,39 +89,87 @@ function OrderDetail(props) {
     border: "1px solid #d6d6d6",
     backgroundColor: "#f5f5f5",
   };
+
+  useEffect(() => {
+    setLocation([user.currentAddress.longitude, user.currentAddress.latitude]);
+    setDeliveryAddress(user.currentAddress.address);
+    setOrderForm((prevState) => ({
+      ...prevState,
+      delivery_address: user.currentAddress.address,
+    }));
+  }, [user.currentAddress]);
+
   useEffect(() => {
     async function fetchingAddressBook() {
       var addressBook = await getAddressBookAPI(props.match.params.uid);
-      setDeliveryAddress(addressBook?.address[0]?.address);
-      let longitudeDF = addressBook?.address[0]?.longitude;
-      let latitudeDF = addressBook?.address[0]?.latitude;
-      let providerIdDF = user.userCart?.provider_id;
-      if (providerIdDF !== -1) {
-        var deliveryFee = await getDeliveryFee(
-          providerIdDF,
-          longitudeDF,
-          latitudeDF
-        );
-        setOrderForm((prevState) => ({
-          ...prevState,
-          delivery_fee: deliveryFee,
-        }));
-        props.setDeliveryFee(deliveryFee);
-      }
       setAddressBook(addressBook.address);
       setCurrentPhone(addressBook.phone);
       setOrderForm((prevState) => ({
         ...prevState,
         customer_phone: addressBook.phone,
-        delivery_address: addressBook?.address[0]?.address,
         delivery_mode: !deliveryOption ? 1 : 2,
       }));
     }
     fetchingAddressBook();
   }, []);
+
+  useEffect(() => {
+    async function fetchDeliveryFee() {
+      let latitudeDF = location[1];
+      let longitudeDF = location[0];
+      let providerIdDF = user.userCart?.provider_id;
+      var deliveryFee = await getDeliveryFee(
+        providerIdDF,
+        longitudeDF,
+        latitudeDF
+      );
+      setOrderForm((prevState) => ({
+        ...prevState,
+        delivery_fee: deliveryFee,
+      }));
+      props.setDeliveryFee(deliveryFee);
+    }
+    if (user.userCart.provider_id !== -1) fetchDeliveryFee();
+  }, [location, user.userCart.provider_id]);
+
   const onChange = (newValue) => {
-    setDeliveryOption(newValue);
+    setDeliveryOption(parseInt(newValue));
+  }; //map
+  useEffect(() => {
+    console.log(location);
+  }, [location]);
+  const [routes, setRoutes] = useState([]);
+  const [viewport, setViewport] = useState({
+    width: "100%",
+    height: "300px",
+    latitude: 10.768685473523648,
+    longitude: 106.68057155417674,
+    zoom: 14,
+  });
+  const dataOne = {
+    type: "Feature",
+    properties: {},
+    geometry: {
+      type: "LineString",
+      coordinates: routes,
+    },
   };
+  useEffect(() => {
+    async function fetchingRoutesAndDirections() {
+      const endpoint = `https://api.mapbox.com/directions/v5/mapbox/driving/${location[0]},${location[1]};${arrivalCoordinates[0]},${arrivalCoordinates[1]}?geometries=geojson&access_token=pk.eyJ1IjoiaG9hbmduYW0yNDMiLCJhIjoiY2t1dHJxdjdlMHg5ZDJwbnlpcmo0a2NnMiJ9.DUrlIOzvO6-kWt-VCKZW1g`;
+      const res = await axios.get(endpoint);
+      const points = res.data.routes[0].geometry.coordinates;
+      setViewport({
+        ...viewport,
+        latitude: (location[1] + arrivalCoordinates[1]) / 2,
+        longitude: (location[0] + arrivalCoordinates[0]) / 2,
+      });
+      points.unshift(location);
+      points.push(arrivalCoordinates);
+      setRoutes(points);
+    }
+    fetchingRoutesAndDirections();
+  }, [arrivalCoordinates, location]);
   return (
     <Fragment>
       <div className="oc-order-detail">
@@ -139,89 +198,177 @@ function OrderDetail(props) {
               width={80}
             />
           </div>
-          <div className="oc-od-address-option">
-            <FontAwesomeIcon className="oc-od-small-icon" icon={faPhone} />
-            <div className="oc-od-address-text" style={{ fontWeight: 700 }}>
-              Phone Number :
-            </div>
-            <div className="oc-od-address-text">{currentPhone}</div>
-          </div>
-          <div className="oc-od-address-option">
-            <FontAwesomeIcon
-              className="oc-od-small-icon"
-              icon={faMapMarkedAlt}
-            />
-            <div className="oc-od-address-text" style={{ fontWeight: 700 }}>
-              Delivery To :
-            </div>
-            {!enableAddressEdit ? (
-              <div className="oc-od-address-text">{deliveryAddress}</div>
-            ) : (
-              <input
-                className="oc-od-edit-address"
-                style={{ width: `${deliveryAddress?.length * 7}px` }}
-                value={deliveryAddress}
-              />
-            )}
-            {enableAddressEdit && (
-              <div
-                className="oc-od-btn-cancel-address"
-                onClick={() => {
-                  setEnableAddressEdit((prev) => !prev);
-                  setDeliveryAddress(addressBook[0]?.address);
-                  setOrderForm((prevState) => ({
-                    ...prevState,
-                    delivery_address: deliveryAddress,
-                  }));
-                }}
+          {deliveryOption === 1 && (
+            <ReactMapGl
+              {...viewport}
+              mapStyle="mapbox://styles/mapbox/streets-v11"
+              onViewportChange={(viewport) => setViewport(viewport)}
+              mapboxApiAccessToken="pk.eyJ1IjoiaG9hbmduYW0yNDMiLCJhIjoiY2t1dHJxdjdlMHg5ZDJwbnlpcmo0a2NnMiJ9.DUrlIOzvO6-kWt-VCKZW1g"
+            >
+              <Source id="polylineLayer" type="geojson" data={dataOne}>
+                <Layer
+                  id="lineLayer"
+                  type="line"
+                  source="my-data"
+                  layout={{
+                    "line-join": "round",
+                    "line-cap": "round",
+                  }}
+                  paint={{
+                    "line-color": "rgba(3, 170, 238, 0.5)",
+                    "line-width": 10,
+                  }}
+                />
+              </Source>
+              <Marker
+                latitude={location[1]}
+                longitude={location[0]}
+                offsetLeft={-20}
+                offsetTop={-30}
               >
-                Cancel
-              </div>
-            )}
-            {!enableAddressEdit ? (
-              <div
-                className="oc-od-btn-edit"
-                onClick={() => setEnableAddressEdit((prev) => !prev)}
+                <FontAwesomeIcon
+                  className="provider-marker"
+                  icon={faCircle}
+                  style={{
+                    background: "black",
+                    color: "white",
+                    padding: " 8px 8px",
+                  }}
+                />
+              </Marker>
+              <Marker
+                alt="marker"
+                latitude={arrivalCoordinates[1]}
+                longitude={arrivalCoordinates[0]}
+                offsetLeft={-20}
+                offsetTop={-30}
               >
-                <FontAwesomeIcon icon={faPencilAlt} />
-                <span className="oc-od-edit-text-underline">Edit</span>
+                <FontAwesomeIcon
+                  className="provider-marker"
+                  icon={faUtensils}
+                  style={{
+                    background: "black",
+                    color: "white",
+                    padding: " 7px 8pxư",
+                  }}
+                />
+              </Marker>
+            </ReactMapGl>
+          )}
+          {deliveryOption === 0 && (
+            <Fragment>
+              <div className="oc-od-address-option">
+                <FontAwesomeIcon className="oc-od-small-icon" icon={faPhone} />
+                <div className="oc-od-address-text" style={{ fontWeight: 700 }}>
+                  Phone Number :
+                </div>
+                <div className="oc-od-address-text">{currentPhone}</div>
               </div>
-            ) : (
-              <div
-                className="oc-od-btn-submit-address"
-                onClick={() => {
-                  setEnableAddressEdit((prev) => !prev);
-                  setOrderForm((prevState) => ({
-                    ...prevState,
-                    delivery_address: deliveryAddress,
-                  }));
-                }}
-              >
-                Confirm
-              </div>
-            )}
-          </div>
-          {enableAddressEdit && (
-            <div className="oc-od-address-book">
-              <span className="oc-od-ab-text">
-                <FontAwesomeIcon className="oc-od-ab-icon" icon={faBook} />
-                Recent address:
-              </span>
-              {user.location?.map((a) => (
-                <label className="hb-sb-type-wrapper radio" key={a.address}>
+              <div className="oc-od-address-option">
+                <FontAwesomeIcon
+                  className="oc-od-small-icon"
+                  icon={faMapMarkedAlt}
+                />
+                <div className="oc-od-address-text" style={{ fontWeight: 700 }}>
+                  Delivery To :
+                </div>
+                {!enableAddressEdit ? (
+                  <div className="oc-od-address-text">{deliveryAddress}</div>
+                ) : (
                   <input
-                    className="oc-od-ab-selection"
-                    type="radio"
-                    name="addressBook"
-                    value={a.address}
-                    onChange={() => setDeliveryAddress(a.address)}
+                    className="oc-od-edit-address"
+                    style={{ width: `${deliveryAddress?.length * 7}px` }}
+                    value={deliveryAddress}
                   />
-                  <span className="hb-sb-label-radio option-box-radio-label">
-                    {a.address}
+                )}
+                {enableAddressEdit && (
+                  <div
+                    className="oc-od-btn-cancel-address"
+                    onClick={() => {
+                      setEnableAddressEdit((prev) => !prev);
+                      setDeliveryAddress(addressBook[0]?.address);
+                      setOrderForm((prevState) => ({
+                        ...prevState,
+                        delivery_address: deliveryAddress,
+                      }));
+                    }}
+                  >
+                    Cancel
+                  </div>
+                )}
+                {!enableAddressEdit ? (
+                  <div
+                    className="oc-od-btn-edit"
+                    onClick={() => setEnableAddressEdit((prev) => !prev)}
+                  >
+                    <FontAwesomeIcon icon={faPencilAlt} />
+                    <span className="oc-od-edit-text-underline">Edit</span>
+                  </div>
+                ) : (
+                  <div
+                    className="oc-od-btn-submit-address"
+                    onClick={() => {
+                      setEnableAddressEdit((prev) => !prev);
+                      setOrderForm((prevState) => ({
+                        ...prevState,
+                        delivery_address: deliveryAddress,
+                      }));
+                    }}
+                  >
+                    Confirm
+                  </div>
+                )}
+              </div>
+              {enableAddressEdit && (
+                <div className="oc-od-address-book">
+                  <span className="oc-od-ab-text">
+                    <FontAwesomeIcon className="oc-od-ab-icon" icon={faBook} />
+                    Recent address:
                   </span>
-                </label>
-              ))}
-            </div>
+                  <label className="hb-sb-type-wrapper radio">
+                    <input
+                      className="oc-od-ab-selection"
+                      type="radio"
+                      name="addressBook"
+                      checked={user.currentAddress?.address === deliveryAddress}
+                      value={user.currentAddress?.address}
+                      defaultChecked={true}
+                      onChange={() => {
+                        setDeliveryAddress(user.currentAddress?.address);
+                        setLocation([
+                          parseFloat(user.currentAddress?.longitude),
+                          parseFloat(user.currentAddress?.latitude),
+                        ]);
+                      }}
+                    />
+                    <span className="hb-sb-label-radio option-box-radio-label">
+                      {user.currentAddress?.address}
+                    </span>
+                  </label>
+                  {user.location?.map((a, index) => (
+                    <label className="hb-sb-type-wrapper radio" key={index}>
+                      <input
+                        className="oc-od-ab-selection"
+                        type="radio"
+                        name="addressBook"
+                        value={a.address}
+                        checked={a.address === deliveryAddress}
+                        onChange={() => {
+                          setDeliveryAddress(a.address);
+                          setLocation([
+                            parseFloat(a.longitude),
+                            parseFloat(a.latitude),
+                          ]);
+                        }}
+                      />
+                      <span className="hb-sb-label-radio option-box-radio-label">
+                        {a.address}
+                      </span>
+                    </label>
+                  ))}
+                </div>
+              )}
+            </Fragment>
           )}
 
           <div className="oc-od-address-option">
@@ -397,6 +544,7 @@ function OrderDetail(props) {
 
                     <img
                       className="oc-od-item-img"
+                      style={{ objectFit: "cover" }}
                       src={order.product_image}
                       alt={"product_img"}
                     />
@@ -412,8 +560,8 @@ function OrderDetail(props) {
                           Special instruction: {order.note}
                         </span>
                       )}
-                      {order?.product_options?.map((option) => (
-                        <div className="oc-od-mt-ao-wrapper">
+                      {order?.product_options?.map((option, index) => (
+                        <div className="oc-od-mt-ao-wrapper" key={index}>
                           <span className="oc-od-cart-note">{`+ ${
                             option.option_name
                           } ${

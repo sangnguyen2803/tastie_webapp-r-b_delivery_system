@@ -9,14 +9,12 @@ import "./AccountSettingPanel.scss";
 import "style/Common.scss";
 import { useTranslation } from "react-i18next";
 import { userSignOut } from "store/actions/UserAction/UserAction";
+import { propTypes } from "react-map-gl-geocoder";
 
 const AccountSettingPanel = ({ user, userSignOut, history }) => {
   const { i18n } = useTranslation();
   const handleSignOut = () => {
     userSignOut();
-    history.push("/sign-in");
-  };
-  const handleSignIn = () => {
     history.push("/sign-in");
   };
   const handleSignUp = () => {
@@ -45,7 +43,7 @@ const AccountSettingPanel = ({ user, userSignOut, history }) => {
       ) : (
         <Fragment>
           <div
-            onClick={handleSignIn}
+            onClick={() => history.replace("sign-in")}
             className="btn-panel btn-account-panel-position"
           >
             Sign in
@@ -78,6 +76,12 @@ const AccountSettingPanel = ({ user, userSignOut, history }) => {
         <div className="account-services">
           <span className="account-service-title">Your Account</span>
           <div
+            onClick={() => history.push("/profile/favorites")}
+            className="service-name"
+          >
+            Favorites
+          </div>
+          <div
             className="service-name"
             onClick={() => history.push(`/profile/order-history`)}
           >
@@ -101,12 +105,12 @@ const AccountSettingPanel = ({ user, userSignOut, history }) => {
           >
             Merchant Registration
           </div>
-          <Link to="/merchant-registration" className="service-name">
-            E-Coupons & Vouchers
-          </Link>
-          <Link to="/merchant-registration" className="service-name">
+          <div
+            onClick={() => history.push("/profile/account-settings")}
+            className="service-name"
+          >
             Change Password
-          </Link>
+          </div>
         </div>
       </div>
       {user.isUserAuthenticated ? (

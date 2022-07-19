@@ -1,8 +1,9 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faDollarSign, faTrashAlt } from "@fortawesome/fontawesome-free-solid";
+import { faPercentage, faTrashAlt } from "@fortawesome/fontawesome-free-solid";
 import React from "react";
 import { Fragment, useState, useEffect } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import Modal from "components/Commons/Overlay/Popup/Modal/Modal";
 import {
   removeProductAPI,
   getProductListAPI,
@@ -14,6 +15,7 @@ import PropTypes from "prop-types";
 import DialogBox from "components/Commons/Overlay/DialogBox/DialogBox";
 import ButtonGroup from "components/Commons/Button/ButtonGroup/ButtonGroup";
 import Button from "components/Commons/Button/Button";
+import { applyDiscountProviderAPI } from "store/actions/ProviderAction/ProviderAction";
 import "style/Common.scss";
 
 const getListStyle = (isDraggingOver) => ({
@@ -21,14 +23,26 @@ const getListStyle = (isDraggingOver) => ({
 });
 
 function ProductForMenu(props) {
+  const { selectedProduct, discounts } = props;
+  const [productInDiscount, setProductInDiscount] = useState({});
+  const [selectedDiscount, setSelectedDiscount] = useState(
+    discounts[0]?.discount_id
+  );
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const [showDiscount, setShowDiscount] = useState(false);
   const [productIdForDelete, setProductIdForDelete] = useState(-1);
-  const { selectedProduct } = props;
-
   const showDialogForDelete = (e, productId) => {
     e.stopPropagation();
     setProductIdForDelete(productId);
     setShowDeleteDialog(true);
+  };
+  const applyDiscount = async (productId, discountId) => {
+    console.log(productId, discountId);
+    const res = await props.applyDiscountProviderAPI(productId, discountId);
+    console.log(res);
+    if (res) {
+      setShowDiscount(false);
+    }
   };
   const removeProduct = async (productId) => {
     if (productId === -1 || !productId) return;
@@ -128,7 +142,7 @@ function ProductForMenu(props) {
                     {...provided.dragHandleProps}
                   >
                     <div className="menu-product-img">
-                      <img src={item.product_image} />
+                      <img alt="product_image" src={item.product_image} />
                     </div>
                     <span className="menu-product-name">
                       {item.product_name}
@@ -144,6 +158,15 @@ function ProductForMenu(props) {
                         className="button-icon"
                         icon={faTrashAlt}
                         onClick={(e) => showDialogForDelete(e, item.product_id)}
+                        style={{ marginRight: "10px" }}
+                      />
+                      <FontAwesomeIcon
+                        className="button-icon"
+                        icon={faPercentage}
+                        onClick={() => {
+                          setProductInDiscount(item);
+                          setShowDiscount(true);
+                        }}
                       />
                     </div>
                   </div>
@@ -153,6 +176,98 @@ function ProductForMenu(props) {
             </Draggable>
           ))}
           {provided.placeholder}
+          <Modal
+            openModal={showDiscount}
+            title={"Pick-up restaurant location"}
+            width={30}
+            height={450}
+            heightAuto={true}
+            transparent={0.2}
+            closeModal={() => {
+              setShowDiscount(false);
+            }}
+          >
+            <Fragment>
+              <span className="menu-product-name">
+                Product name: {productInDiscount.product_name}
+              </span>
+              <div className="product-table">
+                <table className="table table-wrapper">
+                  <tbody className="text-capitalize">
+                    <tr className="table-row-wrapper">
+                      <th
+                        style={{ backgroundColor: "#790000", color: "white" }}
+                      >
+                        Discount name
+                      </th>
+                      <th
+                        style={{ backgroundColor: "#790000", color: "white" }}
+                      >
+                        Value
+                      </th>
+                      <th
+                        style={{ backgroundColor: "#790000", color: "white" }}
+                      >
+                        Remaining
+                      </th>
+                      <th
+                        style={{ backgroundColor: "#790000", color: "white" }}
+                      >
+                        Expire at
+                      </th>
+                    </tr>
+                    {discounts?.map((d, index) => (
+                      <tr
+                        className="table-row-wrapper"
+                        style={
+                          selectedDiscount === d.discount_id
+                            ? {
+                                backgroundColor: "#F5F5F5",
+                                cursor: "pointer",
+                                fontWeight: 700,
+                              }
+                            : { cursor: "pointer" }
+                        }
+                        onClick={() => {
+                          setSelectedDiscount(d.discount_id);
+                        }}
+                        key={index}
+                      >
+                        <td>{d.discount_name}</td>
+                        <td>{d.discount_value?.toFixed(1) * 100}%</td>
+                        <td>{d.limited_offer || "—"}</td>
+                        <td
+                          style={{
+                            textAlign: "center",
+                            width: "30%",
+                          }}
+                        >
+                          {new Date(d.expire_at).toLocaleDateString() || "—"}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <ButtonGroup width={100} mgTop={10} float="center" mgBottom={15}>
+                <Button
+                  color={"white"}
+                  bgColor={"#101010"}
+                  justifyContent={"center"}
+                  gap={"10px"}
+                  width={120}
+                  height={35}
+                  label={"Apply Discount"}
+                  onClick={() =>
+                    applyDiscount(
+                      productInDiscount.product_id,
+                      selectedDiscount
+                    )
+                  }
+                />
+              </ButtonGroup>
+            </Fragment>
+          </Modal>
         </div>
       )}
     </Droppable>
@@ -162,6 +277,7 @@ function ProductForMenu(props) {
 ProductForMenu.propTypes = {
   removeProductAPI: PropTypes.func.isRequired,
   getProductListAPI: PropTypes.func.isRequired,
+  applyDiscountProviderAPI: PropTypes.func.isRequired,
   setDialogBox: PropTypes.func.isRequired,
 };
 
@@ -174,6 +290,7 @@ export default withRouter(
   connect(mapStateToProps, {
     removeProductAPI,
     getProductListAPI,
+    applyDiscountProviderAPI,
     setDialogBox,
   })(ProductForMenu)
 );

@@ -15,13 +15,14 @@ import Modal from "components/Commons/Overlay/Popup/Modal/Modal";
 import io from "socket.io-client";
 import axios from "axios";
 import RateShipper from "./RateShipper/RateShipper";
+import { addNotificationAPI } from "store/actions/OrderAction/OrderAction";
 import {
   getAllProductFromOrderAPI,
   getOrderStatusAPI,
 } from "store/actions/OrderAction/OrderAction";
+import RateProvider from "./RateProvider/RateProvider";
 
 function OrderTracking(props) {
-  let socket;
   const { user, getAllProductFromOrderAPI, getOrderStatusAPI, match } = props;
   const [viewport, setViewport] = useState({
     width: "100%",
@@ -41,6 +42,8 @@ function OrderTracking(props) {
   const { order_code } = props.match.params;
   const [showPopup, setShowPopup] = useState(false);
   const [showRatingShipper, setShowRatingShipper] = useState(false);
+  const [showRatingProvider, setShowRatingProvider] = useState(false);
+
   const [currentStatus, setCurrentStatus] = useState(1);
   const [submittedStatus, setSubmittedStatus] = useState(true);
   const [assignedStatus, setAssignedStatus] = useState(false);
@@ -48,10 +51,10 @@ function OrderTracking(props) {
   const [pickedStatus, setPickedStatus] = useState(false);
   const [completedStatus, setCompletedStatus] = useState(false);
   const [cancelStatus, setCancelStatus] = useState(false);
-
   const [orderItems, setOrderItems] = useState([]);
   const [orderSummary, setOrderSummary] = useState([]);
   const [showOrderDetail, setShowOrderDetail] = useState(false);
+
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "auto" });
   }, []);
@@ -74,15 +77,15 @@ function OrderTracking(props) {
 
   useEffect(() => {
     if (currentStatus === 1 && orderData.items.length !== 0) {
-      socket = io(`http://localhost:3015`);
-      socket.emit("join-room", order_code);
-      socket.emit(
+      user.socket.emit("join-room", order_code);
+      user.socket.emit(
         "customer-submit-order",
         orderData.items,
         {
+          user_id: user.profile.user_id,
           name: user.profile.first_name + " " + user.profile.last_name,
           phone: user.profile.phone,
-          address: "344, Lý Thái Tổ, W2, D2, Ho Chi Minh city",
+          address: user.currentAddress.address,
           location: {
             latitude: 10.799635410926035,
             longitude: 106.6735069727208,
@@ -91,7 +94,7 @@ function OrderTracking(props) {
         {
           name: orderData.merchant_name,
           address: "135B Tran Hung Dao, Cau Ong Lanh, District 1",
-          provider_id: 1000027,
+          provider_id: orderItems.provider_id,
           location: {
             latitude: 10.770426270078108,
             longitude: 106.69433674255707,
@@ -103,30 +106,29 @@ function OrderTracking(props) {
   }, [orderData, currentStatus]);
 
   useEffect(() => {
-    socket = io(`http://localhost:3015`);
-    socket.emit("join-room", order_code);
+    user.socket.emit("join-room", order_code);
     //order status 2
-    socket.on("order-accepted", (message) => {
+    user.socket.on("order-accepted", (message) => {
       setAssignedStatus(true);
       setCurrentStatus(2);
     });
     //order status 3
-    socket.on("order-confirmed-from-provider", () => {
+    user.socket.on("order-confirmed-from-provider", () => {
       setConfirmedStatus(true);
       setCurrentStatus(3);
     });
     //order status 4
-    socket.on("shipper-on-the-way", (message) => {
+    user.socket.on("shipper-on-the-way", (message) => {
       setPickedStatus(true);
       setCurrentStatus(4);
     });
     //order status 5
-    socket.on("shipper-has-arrived", (message) => {
+    user.socket.on("shipper-has-arrived", (message) => {
       setPickedStatus(true);
       setCurrentStatus(5);
     });
     return () => {
-      socket.disconnect();
+      user.socket.disconnect();
     };
   }, []);
 
@@ -136,6 +138,8 @@ function OrderTracking(props) {
       const result1 = await getAllProductFromOrderAPI(orderCode);
       const result2 = await getOrderStatusAPI(orderCode);
       Promise.all([result1, result2]).then((data) => {
+        console.log(result1);
+        console.log(result2);
         setOrderItems(result1);
         setOrderSummary(result2);
         if (data[0] && data[1]) {
@@ -251,12 +255,12 @@ function OrderTracking(props) {
             </div>
             <div className="order-status-header">
               <span className="or-s-main-text-header">
-                {orderItems.merchant_name}
+                {orderItems?.merchant_name}
               </span>
               <span className="or-s-sub-text-header">
                 Total:{" "}
                 <span className="highlight-main-text">
-                  $ {orderSummary.subtotal?.toFixed(2)}{" "}
+                  $ {orderSummary?.subtotal?.toFixed(2)}{" "}
                 </span>{" "}
                 "(2 items)"
               </span>
@@ -365,6 +369,7 @@ function OrderTracking(props) {
         openModal={showRatingShipper}
         closeModal={() => {
           setShowRatingShipper(false);
+          setShowRatingProvider(true);
         }}
         transparent={0.5}
         title={"Rate Shipper"}
@@ -373,7 +378,27 @@ function OrderTracking(props) {
         padding="0% 0%"
         hideHeader={true}
       >
-        <RateShipper />
+        <RateShipper
+          setVisible={setShowRatingShipper}
+          orderSummary={orderSummary}
+        />
+      </Modal>
+      <Modal
+        openModal={showRatingProvider}
+        closeModal={() => {
+          setShowRatingProvider(false);
+        }}
+        transparent={0.5}
+        title={"Rate Order"}
+        width={40}
+        height={500}
+        padding="0% 0%"
+        hideHeader={true}
+      >
+        <RateProvider
+          setVisible={setShowRatingProvider}
+          orderSummary={orderSummary}
+        />
       </Modal>
     </Fragment>
   );
@@ -384,6 +409,7 @@ OrderTracking.propTypes = {
   product: PropTypes.object.isRequired,
   getAllProductFromOrderAPI: PropTypes.func.isRequired,
   getOrderStatusAPI: PropTypes.func.isRequired,
+  addNotificationAPI: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -393,8 +419,10 @@ const mapStateToProps = (state) => ({
 
 export default withRouter(
   withAuth(
-    connect(mapStateToProps, { getAllProductFromOrderAPI, getOrderStatusAPI })(
-      OrderTracking
-    )
+    connect(mapStateToProps, {
+      getAllProductFromOrderAPI,
+      getOrderStatusAPI,
+      addNotificationAPI,
+    })(OrderTracking)
   )
 );

@@ -15,6 +15,9 @@ import {
   SIGN_OUT,
   GET_PROVIDER_DETAIL,
   GET_CONTACT,
+  GET_NOTIFICATION,
+  SET_READ_STATUS,
+  SET_NOTIFICATION_SOCKET,
 } from "store/actions/types";
 import {
   GET_CART,
@@ -25,7 +28,6 @@ import {
   INCREASE_PRODUCT,
   DESCREASE_PRODUCT,
   SET_CURRENT_LOCATION,
-  SOCKET_CONNECTION,
 } from "store/actions/types";
 import storage from "redux-persist/lib/storage";
 import { persistReducer } from "redux-persist";
@@ -56,8 +58,9 @@ const initialState = {
     longitude: 0,
   },
   phone: null,
-  socket: null,
   location: [],
+  notifications: [],
+  socket: io(`http://157.230.243.92:3015`),
   userCart: {
     cart: [],
     date: "",
@@ -71,12 +74,13 @@ const initialState = {
 const UserReducer = (state = initialState, action) => {
   const { type, payload } = action;
   switch (type) {
-    case SOCKET_CONNECTION: {
+    case SET_NOTIFICATION_SOCKET:
+      let prevNotification = { ...state };
+      prevNotification.notifications.unshift(payload.notification);
       return {
         ...state,
-        socket: io(`http://localhost:3015`),
+        ...prevNotification,
       };
-    }
     case GET_CONTACT:
       return { ...state, phone: payload.phone, location: payload.address };
     case REGISTER_SUCCESS:
@@ -258,6 +262,19 @@ const UserReducer = (state = initialState, action) => {
         },
       };
     }
+    case SET_READ_STATUS:
+      let temp = { ...state };
+      let updatePosition = temp.notifications.findIndex(
+        (element) => element.id === payload.notification_id
+      );
+      console.log(updatePosition);
+      temp.notifications[updatePosition].read_status = true;
+      return {
+        ...state,
+        ...temp,
+      };
+    case GET_NOTIFICATION:
+      return { ...state, ...payload };
     default:
       return state;
   }

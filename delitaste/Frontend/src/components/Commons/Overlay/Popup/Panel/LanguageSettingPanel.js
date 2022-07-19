@@ -26,8 +26,7 @@ const LanguageSettingPanel = (props) => {
       <div className="language-panel">
         <div className="panel-title">Language Settings:</div>
         <span className="panel-description">
-          Select the language you prefer for browsing, shopping, and
-          communications.
+          Select the language right below to change current web context.
         </span>
         <div className="language-select-container">
           <div className="language-select panel-label">Language:</div>

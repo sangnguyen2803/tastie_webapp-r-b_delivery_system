@@ -59,21 +59,21 @@ function HomeHeader(props) {
     },
     {
       category_id: 10,
-      category_name: "Sushi",
+      category_name: "American",
       category_photo:
-        "https://d4p17acsd5wyj.cloudfront.net/shortcuts/cuisines/sushi.png",
+        "https://d4p17acsd5wyj.cloudfront.net/shortcuts/cuisines/american.png",
     },
     {
       category_id: 11,
       category_name: "Sandwich",
       category_photo:
-        "https://d4p17acsd5wyj.cloudfront.net/shortcuts/cuisines/sushi.png",
+        "https://d4p17acsd5wyj.cloudfront.net/shortcuts/cuisines/sandwich.png",
     },
     {
       category_id: 12,
-      category_name: "Sushi",
+      category_name: "Healthy",
       category_photo:
-        "https://d4p17acsd5wyj.cloudfront.net/shortcuts/cuisines/sushi.png",
+        "https://duyt4h9nfnj50.cloudfront.net/new_search_home_eats_icon/Healthy_BrowseHome@3x.png",
     },
   ];
   return (

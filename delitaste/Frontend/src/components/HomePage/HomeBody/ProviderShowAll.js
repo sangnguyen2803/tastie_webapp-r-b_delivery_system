@@ -46,8 +46,8 @@ function ProviderShowAll({ providerList, history }) {
     <Fragment>
       <div className="home-product-row-container">
         <div className="apro-home-product-slider-all">
-          {providerList?.map((item) => (
-            <div className="apro-home-product-container" key={item.provider_id}>
+          {providerList?.map((item, index) => (
+            <div className="apro-home-product-container" key={index}>
               <LazyLoad height={200} style={{ width: "100%" }}>
                 <div
                   className="apro-provider-card-container"
@@ -63,7 +63,7 @@ function ProviderShowAll({ providerList, history }) {
                     <FontAwesomeIcon
                       className="icon-for-liking"
                       style={{ zIndex: 1, marginTop: 5 }}
-                      icon={faHeart1}
+                      icon={item.isFavorite ? faHeart2 : faHeart1}
                     />
                   </div>
                   {currentTime < closeTime && currentTime > openTime ? (
@@ -90,14 +90,23 @@ function ProviderShowAll({ providerList, history }) {
                 </span>
                 <div className="apro-p-info-rating">{item.rating || "5.0"}</div>
               </div>
-              <div className="product-sub-info-wrapper">
+              <div
+                className="product-sub-info-wrapper"
+                style={{ width: "100%" }}
+              >
                 <FontAwesomeIcon icon={faGetPocket} className="sub-info-icon" />
                 &nbsp;•&nbsp;
-                <span className="p-sub-info-main-text">{item.price_range}</span>
+                <span className="p-sub-info-main-text">
+                  $ {item.price_range}
+                </span>
                 &nbsp;•&nbsp;
                 <div className="p-sub-info-cooking-time">
-                  {item.mean_estimated_cooking_time || "30-45 mins"}
+                  {item.mean_estimated_cooking_time || "30 mins"}
                 </div>
+                &nbsp;•&nbsp;
+                <span className="p-sub-info-main-text">
+                  {(item.distance / 1000).toFixed(2)} km
+                </span>
               </div>
             </div>
           ))}

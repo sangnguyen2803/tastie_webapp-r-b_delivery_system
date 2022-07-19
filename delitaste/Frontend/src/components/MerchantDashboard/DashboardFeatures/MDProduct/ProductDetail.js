@@ -4,18 +4,8 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faFileExcel,
-  faPlus,
-  faSave,
-  faUndo,
-} from "@fortawesome/fontawesome-free-solid";
+import { faPlus } from "@fortawesome/fontawesome-free-solid";
 import Button from "components/Commons/Button/Button";
-import Metric from "../Metric/Metric";
-import Picture1 from "assets/FoodImg/picture2.jpg";
-import Picture2 from "assets/FoodImg/picture1.jpg";
-import Picture3 from "assets/FoodImg/picture3.jpg";
-import Picture4 from "assets/FoodImg/picture4.jpg";
 import Picture5 from "assets/FoodImg/picture5.jpg";
 import Picture6 from "assets/FoodImg/picture6.jpg";
 import Picture7 from "assets/FoodImg/picture7.jpg";
@@ -24,22 +14,29 @@ import Picture9 from "assets/FoodImg/picture9.jpg";
 import Picture10 from "assets/FoodImg/picture10.jpg";
 import Picture11 from "assets/FoodImg/picture11.jpg";
 import Picture12 from "assets/FoodImg/picture12.jpg";
-import ProgressBar from "components/Commons/ProgressBar/ProgressBar";
-import Tabs from "../Tabs";
 import AddProduct from "./ProductHandler/AddProduct";
 import EditProduct from "./ProductHandler/EditProduct";
 import ProductForMenu from "components/MerchantDashboard/DashboardFeatures/MDProduct/ProductForMenu";
 import { getProductListAPI } from "store/actions/ProductAction/ProductAction";
-
+import { getAllPromotionAPI } from "store/actions/ProviderAction/ProviderAction";
 import "../Panel.scss";
 
 function ProductDetail(props) {
   const { user, product, getProductListAPI } = props;
+  const [discountList, setDiscountList] = useState([]);
   const [items, setItems] = useState(product.productList || []);
   const [showHandlerPanel, setShowHandlerPanel] = useState(0);
   const [selectedProduct, setSelectedProduct] = useState([]);
   const [productForEdit, setProductForEdit] = useState();
   // product handler panel - 0: add_product - 1: edit_product
+  useEffect(() => {
+    async function fetchPromotion(id) {
+      const promotion = await props.getAllPromotionAPI(id);
+      if (promotion) setDiscountList(promotion.discount);
+    }
+    if (user.provider_id !== -1) fetchPromotion(user.provider_id);
+  }, [user.provider_id]);
+
   useEffect(() => {
     async function fetchingData() {
       if (user.provider_id !== -1 && user.provider_id !== null) {
@@ -193,6 +190,7 @@ function ProductDetail(props) {
                                 selectedProduct={selectedProduct}
                                 setSelectedProduct={setSelectedProduct}
                                 setProductForEdit={setProductForEdit}
+                                discounts={discountList}
                                 subItems={item.products}
                                 type={item.menu_category_id}
                               />
@@ -228,6 +226,7 @@ ProductDetail.propTypes = {
   user: PropTypes.object.isRequired,
   product: PropTypes.object.isRequired,
   getProductListAPI: PropTypes.func.isRequired,
+  getAllPromotionAPI: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -236,7 +235,9 @@ const mapStateToProps = (state) => ({
 });
 
 export default withRouter(
-  connect(mapStateToProps, { getProductListAPI })(ProductDetail)
+  connect(mapStateToProps, { getProductListAPI, getAllPromotionAPI })(
+    ProductDetail
+  )
 );
 
 const data = [
