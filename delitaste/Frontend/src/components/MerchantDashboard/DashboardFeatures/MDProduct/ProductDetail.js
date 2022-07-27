@@ -28,6 +28,16 @@ function ProductDetail(props) {
   const [showHandlerPanel, setShowHandlerPanel] = useState(0);
   const [selectedProduct, setSelectedProduct] = useState([]);
   const [productForEdit, setProductForEdit] = useState();
+  const [menuCategory, setMenuCategory] = useState();
+  useEffect(() => {
+    async function fetchMenuCategory(id) {
+      if (id !== -1) {
+        var result = await getProductListAPI(id);
+        setMenuCategory(result);
+      }
+    }
+    fetchMenuCategory(user.provider_id);
+  }, [user.provider_id]);
   // product handler panel - 0: add_product - 1: edit_product
   useEffect(() => {
     async function fetchPromotion(id) {
@@ -209,7 +219,7 @@ function ProductDetail(props) {
         </div>
         <div className="sub-detail-panel-wrapper">
           {showHandlerPanel === 0 ? (
-            <AddProduct />
+            <AddProduct menuCategory={menuCategory} />
           ) : (
             <EditProduct
               productForEdit={productForEdit}

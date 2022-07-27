@@ -15,6 +15,7 @@ import {
   GET_NOTIFICATION,
   ADD_ORDER_TO_ORDER_LIST,
   SET_TOP_CATEGORY_BY_UNIT,
+  UPDATE_ORDER_IN_ORDER_LIST,
 } from "store/actions/types";
 
 //Create provider
@@ -128,8 +129,10 @@ export const updateBusinessUnitInfoFormAPI = (id, data) => async (dispatch) => {
 
   const body = JSON.stringify(data);
   try {
+    console.log("here", body);
     const endpoint = `/v1/api/provider/register/${id}/detail-info`;
     const res = await axios.post(endpoint, body, config);
+    console.log(res);
     if (res.data?.state) {
       dispatch({
         type: UPDATE_BUSINESS_UNIT_INFO_FORM,
@@ -155,6 +158,7 @@ export const updateProductDetailInfoFormAPI =
     try {
       const endpoint = `/v1/api/provider/register/${id}/menu-photo`;
       const res = await axios.post(endpoint, body, config);
+      console.log(res);
       if (res.data?.state) {
         dispatch({
           type: UPDATE_PRODUCT_DETAIL_INFO_FORM,
@@ -178,10 +182,13 @@ export const updateBankInfoFormAPI = (id, data) => async (dispatch) => {
   };
   //update user_role to merchant account
   data.user_role = 2;
+  data.update_at = new Date().toISOString().split("T")[0];
   const body = JSON.stringify(data);
   try {
+    console.log(body);
     const endpoint = `/v1/api/provider/register/${id}/bank-info`;
     const res = await axios.post(endpoint, body, config);
+    console.log(res);
     if (res.data?.state) {
       dispatch({
         type: UPDATE_BANK_INFO_FORM,
@@ -313,7 +320,6 @@ export const getPromotionCosts = (id) => async (dispatch) => {
     console.log(err);
   }
 };
-
 export const applyDiscountProviderAPI = (pid, did) => async (dispatch) => {
   const config = {
     headers: {
@@ -718,6 +724,14 @@ export const appendOrderList = (order) => (dispatch) => {
     },
   });
 };
+export const updateOrderList = (order) => (dispatch) => {
+  dispatch({
+    type: UPDATE_ORDER_IN_ORDER_LIST,
+    payload: {
+      order: order,
+    },
+  });
+};
 
 export const getCustomerReviewAPI = (pid) => async (dispatch) => {
   try {
@@ -728,25 +742,5 @@ export const getCustomerReviewAPI = (pid) => async (dispatch) => {
     }
   } catch (err) {
     return [];
-  }
-};
-
-export const submitSurveyUpcomingProductAPI = (data) => async (dispatch) => {
-  const config = {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  };
-  const body = JSON.stringify(data);
-  try {
-    const endpoint = `/v1/api/provider/dashboard/add-survey-question`;
-    const res = await axios.post(endpoint, body, config);
-    if (res.data.status) {
-      return true;
-    }
-    return false;
-  } catch (err) {
-    console.log(err);
-    return false;
   }
 };

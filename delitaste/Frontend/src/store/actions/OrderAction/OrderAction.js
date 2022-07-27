@@ -73,6 +73,30 @@ export const submitOrderCheckoutAPI = (data) => async (dispatch) => {
   }
 };
 
+export const submitOrderPickupCheckoutAPI = (data) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  data.total = data.subtotal + data.tips;
+  data.delivery_fee = 0;
+  const body = JSON.stringify(data);
+  var orderCode = "";
+  try {
+    console.log(body);
+    const endpoint = "/v1/api/tastie/order/submit-order-info-pickup";
+    const res = await axios.post(endpoint, body, config);
+    if (res.data?.status) {
+      return res.data.order_code;
+    }
+    return orderCode;
+  } catch (err) {
+    console.log(err);
+    return orderCode;
+  }
+};
+
 export const submitOrderItemAPI = (id, code) => async (dispatch) => {
   const config = {
     headers: {
@@ -107,6 +131,46 @@ export const submitOrderItemAPI = (id, code) => async (dispatch) => {
   }
 };
 
+export const getPromotionAmountAPI = (code, subtotal) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  const body = JSON.stringify({ code: code, sub_total: subtotal });
+  try {
+    const endpoint = "/v1/api/tastie/order/get-promos-money";
+    const res = await axios.post(endpoint, body, config);
+    if (res.data.status) {
+      return res.data.promos_value;
+    }
+    return 0;
+  } catch (err) {
+    return 0;
+  }
+};
+export const getOrderPromotionDetailAPI = (code) => async (dispatch) => {
+  try {
+    const endpoint = `/v1/api/tastie/order/get-promos-detail/${code}`;
+    const res = await axios.get(endpoint);
+    if (res.data) {
+      return res.data.promotion_detail;
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+export const getOrderPromotionAPI = (id) => async (dispatch) => {
+  try {
+    const endpoint = `/v1/api/tastie/checkout/get-all-promos/${id}`;
+    const res = await axios.get(endpoint);
+    if (res.data) {
+      return res.data.response;
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
 export const getAllProductFromOrderAPI = (code) => async (dispatch) => {
   try {
     const endpoint = `/v1/api/tastie/order/get-all-products-from-order/${code}`;
@@ -164,5 +228,16 @@ export const ratingShipperAPI = (data) => async (dispatch) => {
     return false;
   } catch (err) {
     return false;
+  }
+};
+
+export const getProviderScheduleTime = (id) => async (dispatch) => {
+  try {
+    const endpoint = `/v1/api/tastie/checkout/get_schedule_time/${id}`;
+    const res = await axios.get(endpoint);
+    if (res.data) return res.data.response;
+    return {};
+  } catch (err) {
+    return {};
   }
 };

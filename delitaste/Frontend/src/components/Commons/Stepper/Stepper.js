@@ -1,7 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { Fragment, useEffect, useState } from "react";
 import "./Stepper.scss";
-import BreadcrumbIcon from "assets/Icon/BreadcrumbIcon.jpg";
 import StepperArrow from "assets/stepper-arrow.png";
 const Stepper = ({ steps }) => {
   const location = useLocation();

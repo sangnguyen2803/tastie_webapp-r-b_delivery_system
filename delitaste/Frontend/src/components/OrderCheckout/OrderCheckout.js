@@ -10,7 +10,19 @@ import "./OrderCheckout.scss";
 import OrderDetail from "components/OrderCheckout/OrderDetail/OrderDetail";
 import OrderReview from "components/OrderCheckout/OrderReview/OrderReview";
 import { getCart } from "store/actions/CartAction/CartAction";
+import { getPromotionAmountAPI } from "store/actions/OrderAction/OrderAction";
+
 function OrderCheckout(props) {
+  useEffect(() => {
+    if (
+      props.user.profile.user_id !== -1 &&
+      props.user.profile.user_id !== undefined
+    ) {
+      if (String(props.user.profile.user_id) !== props.match.params.uid)
+        props.history.replace("/");
+    }
+  }, [props.user.profile.user_id]);
+  const [promotionAmount, setPromotionAmount] = useState(0);
   const { user, getCart } = props;
   const [orderForm, setOrderForm] = useState({
     delivery_mode: 1,
@@ -28,7 +40,32 @@ function OrderCheckout(props) {
     tips: 0,
     total: 0,
   });
+
+  useEffect(() => {
+    async function getPromotionAmount() {
+      const amount = await props.getPromotionAmountAPI(
+        orderForm.promotion_code,
+        parseFloat(orderForm.subtotal)
+      );
+      setPromotionAmount(amount);
+    }
+    if (orderForm.promotion_code !== "") {
+      getPromotionAmount();
+    }
+  }, [orderForm?.promotion_code]);
   const [deliveryOption, setDeliveryOption] = useState(0);
+  useEffect(() => {
+    if (deliveryOption === 1)
+      setOrderForm((prevState) => ({
+        ...prevState,
+        delivery_mode: 2,
+      }));
+    else
+      setOrderForm((prevState) => ({
+        ...prevState,
+        delivery_mode: 1,
+      }));
+  }, [deliveryOption]);
   const [deliveryFee, setDeliveryFee] = useState(0); //(1)
   const [orderItem, setOrderItem] = useState([]);
   const [arrivalCoordinates, setArrivalCoordinates] = useState([
@@ -68,8 +105,10 @@ function OrderCheckout(props) {
           setArrivalCoordinates={setArrivalCoordinates}
           deliveryOption={deliveryOption}
           setDeliveryOption={setDeliveryOption}
+          setPromotionAmount={setPromotionAmount}
         />
         <OrderReview
+          promotionAmount={promotionAmount}
           orderForm={orderForm}
           setOrderForm={setOrderForm}
           deliveryFee={deliveryFee}
@@ -88,6 +127,7 @@ OrderCheckout.propTypes = {
   user: PropTypes.object.isRequired,
   product: PropTypes.object.isRequired,
   getCart: PropTypes.func.isRequired,
+  getPromotionAmountAPI: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -96,5 +136,7 @@ const mapStateToProps = (state) => ({
 });
 
 export default withRouter(
-  withAuth(connect(mapStateToProps, { getCart })(OrderCheckout))
+  withAuth(
+    connect(mapStateToProps, { getCart, getPromotionAmountAPI })(OrderCheckout)
+  )
 );

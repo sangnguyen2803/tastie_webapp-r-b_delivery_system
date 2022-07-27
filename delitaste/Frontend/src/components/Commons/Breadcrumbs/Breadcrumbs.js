@@ -8,8 +8,6 @@ import {
 } from "@fortawesome/fontawesome-free-solid";
 import "./Breadcrumbs.scss";
 import { routes } from "config/routes";
-import { noAuto } from "@fortawesome/fontawesome-svg-core";
-import BreadcrumbIcon from "assets/Icon/BreadcrumbIcon.jpg";
 const Breadcrumbs = (props) => {
   const breadcrumbs = useBreadcrumbs(routes);
   const isLast = (ci) => {

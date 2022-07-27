@@ -1,6 +1,4 @@
 import "./Sidebar.scss";
-import ProfilePhoto from "assets/avatar.jpg";
-import ProviderImage from "assets/provider_avatar.jpg";
 import { Fragment, useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { connect } from "react-redux";

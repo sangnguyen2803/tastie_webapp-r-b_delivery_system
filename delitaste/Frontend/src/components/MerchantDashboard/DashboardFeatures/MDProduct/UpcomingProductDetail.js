@@ -18,68 +18,22 @@ import {
 import "../Panel.scss";
 import { faFileDownload } from "@fortawesome/free-solid-svg-icons";
 import AddUpcomingProduct from "./UpcomingProductHandler/AddUpcomingProduct";
-import EditUpcomingProduct from "./UpcomingProductHandler/EditUpcomingProduct";
 import Chart from "react-apexcharts";
 import Metric from "components/MerchantDashboard/DashboardFeatures/Metric/Metric";
-const upcomingProduct = [
-  {
-    survey_id: 100001,
-    start_at: "2022-03-01 00:00:00",
-    expire_at: "2022-04-01 00:00:00",
-    product: {
-      upcoming_product_id: 100000,
-      product_name: "Smoked Salmon Tartine",
-      description:
-        "Salmon with organic butter, scallion, dill, and a side of herb aioli. [540 Cal.]",
-      estimated_price: 15.0,
-      release_date: "2022 March 28",
-      product_image:
-        "https://d1ralsognjng37.cloudfront.net/2cec0d90-b78c-488a-9e43-b97d589d8492.jpeg",
-    },
-    survey: {
-      question: "Are you eager to try this upcoming product?",
-      choices: [
-        "Absolutely yes! I cannot wait to try this!",
-        "It seems good. I am curious about its flavor.",
-        "Neutral. I am not sure.",
-        "I am not interested.",
-        "It is not my thing!",
-        "Other",
-      ],
-      rate: ["10%", "20%", "45%", "2%", "8%", "10%"],
-    },
-  },
-  {
-    survey_id: 100002,
-    start_at: "2022-03-01 00:00:00",
-    expire_at: "2022-04-01 00:00:00",
-    product: {
-      upcoming_product_id: 100000,
-      product_name: "Smoked Salmon Tartine",
-      description:
-        "Salmon with organic butter, scallion, dill, and a side of herb aioli. [540 Cal.]",
-      estimated_price: 15.0,
-      release_date: "2022 March 28",
-      product_image:
-        "https://tb-static.uber.com/prod/image-proc/processed_images/5a5e9e22b4efb745ad1629055cad13c5/859baff1d76042a45e319d1de80aec7a.jpeg",
-    },
-    survey: {
-      question: "Are you eager to try this upcoming product?",
-      choices: [
-        "Absolutely yes! I cannot wait to try this!",
-        "It seems good. I am curious about its flavor.",
-        "Neutral. I am not sure.",
-        "I am not interested.",
-        "It is not my thing!",
-        "Other",
-      ],
-      rate: ["10%", "20%", "45%", "2%", "8%", "10%"],
-    },
-  },
-];
-const DummyData = {
-  series: [44, 55, 13, 43, 22],
-  options: {
+import ViewUpcomingProduct from "./UpcomingProductHandler/ViewUpcomingProduct";
+
+function UpcomingProductDetail(props) {
+  const { user, product, getProductListAPI, getUpcomingProductAPI } = props;
+  const [items, setItems] = useState([]);
+  const [showHandlerPanel, setShowHandlerPanel] = useState(0);
+  const [selectedProduct, setSelectedProduct] = useState([]);
+
+  const [question, setQuestion] = useState(
+    "Are you eager to try this product?"
+  );
+  const [choice, setChoice] = useState([]);
+  const [series, setSeries] = useState([20, 20, 20, 20, 20]);
+  const [options, setOptions] = useState({
     colors: ["#1CBB9B", "#E11A22", "#F8A825", "#02ADC1", "#C5CFD1"],
     plotOptions: {
       pie: {
@@ -123,23 +77,36 @@ const DummyData = {
         },
       },
     ],
-  },
-};
-
-function UpcomingProductDetail(props) {
-  const { user, product, getProductListAPI, getUpcomingProductAPI } = props;
-  const [items, setItems] = useState([]);
-  const [showHandlerPanel, setShowHandlerPanel] = useState(0);
-  const [selectedProduct, setSelectedProduct] = useState([]);
-  const [productForEdit, setProductForEdit] = useState();
+  });
   useEffect(() => {
     async function fetchUpcomingProducts(id) {
       const result = await getUpcomingProductAPI(id);
-      console.log(result);
+      if (result.length === 0) return;
+      const seriesOnFirstRender = result[0]?.statistic?.map(
+        (s) => s.num_responses
+      );
+      setChoice(result[0]?.choice);
+      setQuestion(result[0]?.question);
+      setSeries(seriesOnFirstRender);
+      setOptions({
+        ...options,
+        labels: result[0]?.statistic?.map((s) => s.response),
+      });
       setItems(result);
     }
     fetchUpcomingProducts(user.provider_id);
   }, [user.provider_id]);
+  
+  const handleUpdateStatistics = (p) => {
+    setChoice(p.choice);
+    setQuestion(p.question);
+    const seriesOnFirstRender = p.statistic?.map((s) => s.num_responses);
+    setSeries(seriesOnFirstRender);
+    setOptions({
+      ...options,
+      labels: p.statistic?.map((s) => s.response),
+    });
+  };
   return (
     <Fragment>
       <div className="double-panel-container">
@@ -154,8 +121,8 @@ function UpcomingProductDetail(props) {
             }}
           >
             <Chart
-              options={DummyData.options}
-              series={DummyData.series}
+              options={options}
+              series={series}
               type="pie"
               width="400"
               height="220"
@@ -184,52 +151,23 @@ function UpcomingProductDetail(props) {
                   marginLeft: 25,
                 }}
               >
-                <b>Question: </b>Are you eager to try this product?
+                <b>Question: </b>
+                {question}
               </div>
               <div
                 className="homebody-sb-radio-detail-wrapper"
                 style={{ marginBottom: 10 }}
               >
-                <div className="option-answer ">
-                  <label className="hb-sb-type-wrapper radio">
-                    <input type="radio" value={"abc"} name="survey" />
-                    <span className="hb-sb-label-radio option-box-radio-label">
-                      A1: Yeah, it's perfect
-                    </span>
-                  </label>
-                </div>
-                <div className="option-answer ">
-                  <label className="hb-sb-type-wrapper radio">
-                    <input type="radio" value={"abc"} name="survey" />
-                    <span className="hb-sb-label-radio option-box-radio-label">
-                      A1: Yeah, it's perfect
-                    </span>
-                  </label>
-                </div>
-                <div className="option-answer ">
-                  <label className="hb-sb-type-wrapper radio">
-                    <input type="radio" value={"abc"} name="survey" />
-                    <span className="hb-sb-label-radio option-box-radio-label">
-                      A1: Yeah, it's perfect
-                    </span>
-                  </label>
-                </div>
-                <div className="option-answer ">
-                  <label className="hb-sb-type-wrapper radio">
-                    <input type="radio" value={"abc"} name="survey" />
-                    <span className="hb-sb-label-radio option-box-radio-label">
-                      A1: Yeah, it's perfect
-                    </span>
-                  </label>
-                </div>
-                <div className="option-answer ">
-                  <label className="hb-sb-type-wrapper radio">
-                    <input type="radio" value={"abc"} name="survey" />
-                    <span className="hb-sb-label-radio option-box-radio-label">
-                      A1: Yeah, it's perfect
-                    </span>
-                  </label>
-                </div>
+                {choice?.map((c, index) => (
+                  <div className="option-answer" key={index}>
+                    <label className="hb-sb-type-wrapper radio">
+                      <input type="radio" value={"abc"} name="survey" />
+                      <span className="hb-sb-label-radio option-box-radio-label">
+                        A{index + 1}: {c?.content}
+                      </span>
+                    </label>
+                  </div>
+                ))}
               </div>
             </Metric>
           </div>
@@ -242,6 +180,7 @@ function UpcomingProductDetail(props) {
               height={32}
               radius={"0px"}
               label={"Add upcoming product"}
+              onClick={() => setShowHandlerPanel(0)}
               prefix={
                 <FontAwesomeIcon icon={faPlus} style={{ color: "white" }} />
               }
@@ -254,8 +193,13 @@ function UpcomingProductDetail(props) {
                 selectedProduct[0] === "10000001" ? "#E4E4E4" : "white",
             }}
           >
-            {items.map((up, index) => (
+            {items?.map((up, index) => (
               <div
+                onClick={() => {
+                  setSelectedProduct(up);
+                  handleUpdateStatistics(up);
+                  setShowHandlerPanel(1);
+                }}
                 className="upcoming-product-item"
                 style={{
                   borderBottom:
@@ -292,7 +236,7 @@ function UpcomingProductDetail(props) {
           {showHandlerPanel === 0 ? (
             <AddUpcomingProduct />
           ) : (
-            <EditUpcomingProduct />
+            <ViewUpcomingProduct selectedProduct={selectedProduct} />
           )}
         </div>
       </div>

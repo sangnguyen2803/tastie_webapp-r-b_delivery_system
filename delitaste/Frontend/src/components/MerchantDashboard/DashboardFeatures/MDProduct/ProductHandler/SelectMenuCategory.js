@@ -9,28 +9,25 @@ import "components/MerchantRegistration/Forms/DetailMerchantForm/CategorySelecto
 import Button from "components/Commons/Button/Button";
 import ButtonGroup from "components/Commons/Button/ButtonGroup/ButtonGroup";
 
-import { faCommentsDollar } from "@fortawesome/free-solid-svg-icons";
 
-function AddMenuCategory(props) {
+function SelectMenuCategory(props) {
   const [categoryList, setCategoryList] = useState(props.list);
   return (
     <Fragment>
       <div className="category-selection-wrapper">
         <span className="category-selection-title">{props.title}</span>
         <div className="option-container">
-          {categoryList?.map((category) => (
-            <div className="option-row" key={category.menu_category_id}>
+          {categoryList.map((category) => (
+            <div className="option-row" key={category.category_id}>
               <Checkbox
                 checked={
-                  props.selectedCategory.indexOf(category.menu_category_id) !==
-                  -1
+                  props.selectedCategory.indexOf(category.category_id) !== -1
                     ? true
                     : false
                 }
                 disabled={
                   props.selectedCategory.length < props.required ||
-                  props.selectedCategory.indexOf(category.menu_category_id) !==
-                    -1
+                  props.selectedCategory.indexOf(category.category_id) !== -1
                     ? false
                     : true
                 }
@@ -53,12 +50,12 @@ function AddMenuCategory(props) {
                   if (value) {
                     props.setSelectedCategory([
                       ...props.selectedCategory,
-                      category.menu_category_id,
+                      category.category_id,
                     ]);
                     return;
                   } else {
                     let index = props.selectedCategory.indexOf(
-                      category.menu_category_id
+                      category.category_id
                     );
                     if (index != -1) {
                       var array = [...props.selectedCategory];
@@ -79,7 +76,7 @@ function AddMenuCategory(props) {
                   marginLeft: 15,
                   userSelect: "none",
                 }}
-                label={category.menu_category_name}
+                label={category.category_name}
               />
             </div>
           ))}
@@ -103,4 +100,4 @@ function AddMenuCategory(props) {
   );
 }
 
-export default AddMenuCategory;
+export default SelectMenuCategory;

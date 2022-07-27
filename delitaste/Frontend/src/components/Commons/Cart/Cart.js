@@ -18,7 +18,6 @@ const Cart = (props) => {
     async function fetchingCart(id) {
       const cart = await getCart(id);
       setCartItemList(cart);
-      console.log(cart);
     }
     if (user.isUserAuthenticated) {
       fetchingCart(user.profile?.user_id);
@@ -63,8 +62,8 @@ const Cart = (props) => {
           </div>
         ) : (
           <div className="cart-body">
-            {cartItemList?.cart?.map((cart) => (
-              <div className="cart-item-wrapper" key={cart.product_id}>
+            {cartItemList?.cart?.map((cart, index) => (
+              <div className="cart-item-wrapper" key={index}>
                 <span className="cart-item-quantity">
                   &times; {cart.quantity}
                 </span>
@@ -90,8 +89,8 @@ const Cart = (props) => {
                   >
                     € {cart.product_price}
                   </span>
-                  {cart?.product_options?.map((option) => (
-                    <Fragment>
+                  {cart?.product_options?.map((option, index) => (
+                    <Fragment key={index}>
                       {option.label !== "?" && (
                         <Fragment>
                           <span className="cart-item-option-text-1">{`${

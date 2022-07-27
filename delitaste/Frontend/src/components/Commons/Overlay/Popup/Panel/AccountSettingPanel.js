@@ -43,7 +43,7 @@ const AccountSettingPanel = ({ user, userSignOut, history }) => {
       ) : (
         <Fragment>
           <div
-            onClick={() => history.replace("sign-in")}
+            onClick={() => history.replace("/sign-in")}
             className="btn-panel btn-account-panel-position"
           >
             Sign in

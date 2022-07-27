@@ -1,4 +1,4 @@
-import { Fragment, useState, useEffect } from "react";
+import { Fragment, useState, useEffect, useRef } from "react";
 import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -23,6 +23,8 @@ import {
   getMenuCategoryAPI,
   addProductAPI,
 } from "store/actions/ProductAction/ProductAction";
+import SelectMenuCategory from "./SelectMenuCategory";
+import axios from "axios";
 
 const initialValues = {
   productName: "",
@@ -37,6 +39,7 @@ const initialValues = {
 };
 
 function AddProduct(props) {
+  const [productImage, setProductImage] = useState(null);
   const [showFoodCategory, setShowFoodCategory] = useState(false);
   const [showMainFoodCategory, setShowMainFoodCategory] = useState(false);
   const [showMenuCategory, setShowMenuCategory] = useState(false);
@@ -53,6 +56,9 @@ function AddProduct(props) {
   const [selectedMenu, setSelectedMenu] = useState([]);
   const [additionalOption, setAdditionalOption] = useState([]);
   const [selectedOption, setSelectedOption] = useState([]);
+  const [selectedMenuCategory, setSelectedMenuCategory] = useState([]);
+
+  const inputFile = useRef(null);
   const { user } = props;
   useEffect(() => {
     async function fetchingCategoryData() {
@@ -82,6 +88,32 @@ function AddProduct(props) {
   }, [selectedMainFood]);
 
   const addProduct = async (values) => {
+    
+    const data = JSON.stringify({
+      provider_id: user.provider_id,
+      upload: productImage,
+    });
+    /*
+    try {
+      const res = await axios.post(
+        `http://157.230.243.92:3777/upload/image-product`,
+        data,
+        {
+          headers: {
+            Accept: "application/json",
+            ContentType: "multipart/form-data",
+          },
+        }
+      );
+      if (res.data.status) {
+        console.log("hello");
+        console.log(res.data.url);
+      }
+      console.log("upload failed");
+    } catch (err) {
+      console.log("Cannot upload avatar", err);
+    }
+    return;*/
     const formData = {
       provider_id: user.provider_id,
       product_name: values.productName,
@@ -90,17 +122,20 @@ function AddProduct(props) {
       price: values.productPrice || 0,
       quantity: values.quantityAvailable || 0,
       product_image: "product-image",
-      menuCategoryID: [1000001],
+      menuCategoryID: selectedMenuCategory,
       mainCategoryID: selectedMainFood,
       foodCategoryID: selectedFood,
       additionalOptions: additionalOption,
     };
-    console.log(formData);
     if (user.provider_id !== -1 && user.provider_id !== null) {
       const status = await props.addProductAPI(formData);
       if (status) console.log("Thanh cong");
       else console.log("That bai");
     }
+  };
+
+  const handleUploadImage = () => {
+    inputFile.current.click();
   };
   return (
     <Formik initialValues={initialValues}>
@@ -134,9 +169,12 @@ function AddProduct(props) {
               </div>
               <span className="product-detail-form-label">Menu category</span>
               <div className="product-detail-tag-container">
-                {menuCategory.map((tag, index) =>
-                  selectedFood.includes(tag.category_id) ? (
-                    <Tag key={tag.category_id} text={tag.category_name} />
+                {props.menuCategory?.map((tag, index) =>
+                  selectedMenuCategory.includes(tag.menu_category_id) ? (
+                    <Tag
+                      key={tag.menu_category_id}
+                      text={tag.menu_category_name}
+                    />
                   ) : (
                     <></>
                   )
@@ -294,9 +332,20 @@ function AddProduct(props) {
                   prefix={
                     <FontAwesomeIcon className="button-icon" icon={faPlus} />
                   }
+                  onClick={handleUploadImage}
                   width="50%"
                   height={30}
                   label="Upload a photo"
+                />
+                <input
+                  hidden={true}
+                  name="product-image"
+                  type="file"
+                  ref={inputFile}
+                  onChange={(event) => {
+                    setProductImage(event.currentTarget.files[0]);
+                  }}
+                  className="form-control"
                 />
               </ButtonGroup>
               <span className="product-detail-form-label">Price</span>
@@ -314,8 +363,6 @@ function AddProduct(props) {
                   placeholder="Currency"
                 >
                   <option>USD</option>
-                  <option>VND</option>
-                  <option>EURO</option>
                 </Field>
               </div>
             </div>
@@ -338,7 +385,7 @@ function AddProduct(props) {
                 }
               />
               <Button
-                onClick={addProduct}
+                onClick={() => addProduct(values)}
                 buttonType="primary"
                 justifyContent={"center"}
                 width={100}
@@ -372,14 +419,20 @@ function AddProduct(props) {
               openModal={showCreateMenu}
               title={"Add Menu Category"}
               width={50}
-              height={500}
+              height={450}
               closeModal={() => {
                 setShowCreateMenu(false);
               }}
             >
               <AddMenuCategory
-                save={() => setShowCreateMenu(false)}
-                list={menuCategory}
+                save={() => {
+                  setShowCreateMenu(false);
+                }}
+                list={props.menuCategory}
+                selectedCategory={selectedMenuCategory}
+                setSelectedCategory={setSelectedMenuCategory}
+                title={"Select a menu category"}
+                required={1}
               />
             </Modal>
             <Modal

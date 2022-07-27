@@ -13,6 +13,10 @@ import Modal from "components/Commons/Overlay/Popup/Modal/Modal";
 import CategorySelector from "components/MerchantRegistration/Forms/DetailMerchantForm/CategorySelector/CategorySelector";
 import Button from "components/Commons/Button/Button";
 import ButtonGroup from "components/Commons/Button/ButtonGroup/ButtonGroup";
+import {
+  addUpcomingProductAPI,
+  addSurveyProductAPI,
+} from "store/actions/ProductAction/ProductAction";
 import Tag from "components/Commons/Tag/Tag";
 import {
   faPlus,
@@ -20,83 +24,75 @@ import {
   faUndo,
   faCircle,
 } from "@fortawesome/fontawesome-free-solid";
-import { getCategoryAPI } from "store/actions/ProviderAction/ProviderAction";
-import AddAdditionalOption from "components/MerchantDashboard/DashboardFeatures/MDProduct/ProductHandler/AddAdditionalOption";
-import UpdateAdditionalOption from "components/MerchantDashboard/DashboardFeatures/MDProduct/ProductHandler/UpdateAdditionalOption";
-import {
-  getMenuCategoryAPI,
-  addProductAPI,
-} from "store/actions/ProductAction/ProductAction";
 
 const initialValues = {
   productName: "",
-  description: "",
-  available: 0,
-  status: 1,
-  quantityAvailable: 0,
-  productStatus: 1,
-  productPrice: 0,
-  productPhoto: "",
-  position: 1,
+  productDescription: "",
+  estimatedPrice: 0,
+  productImage: "",
+  question: "Are you eager to try this product?",
+  upcoming_product_id: 1,
+  start_at: "2022-02-02",
+  expire_at: "2022-04-02",
+  choice: "abc",
+  a1: "",
+  a2: "",
+  a3: "",
+  a4: "",
+  a5: "",
 };
 
 function AddUpcomingProduct(props) {
-  const [showFoodCategory, setShowFoodCategory] = useState(false);
-  const [showMainFoodCategory, setShowMainFoodCategory] = useState(false);
-  const [showMenuCategory, setShowMenuCategory] = useState(false);
-  const [showCreateMenu, setShowCreateMenu] = useState(false);
-  const [showAdditionalOption, setShowAdditionalOption] = useState(false);
-  const [showUpdateAdditionalOption, setShowUpdateAdditionalOption] =
-    useState(false);
-  const [foodCategory, setFoodCategory] = useState([]);
-  const [filteredFoodCategory, setFilteredFoodCategory] = useState([]);
-  const [mainFoodCategory, setMainFoodCategory] = useState([]);
-  const [menuCategory, setMenuCategory] = useState([]);
-  const [selectedFood, setSelectedFood] = useState([]);
-  const [selectedMainFood, setSelectedMainFood] = useState([]);
-  const [selectedMenu, setSelectedMenu] = useState([]);
-  const [additionalOption, setAdditionalOption] = useState([]);
-  const [selectedOption, setSelectedOption] = useState([]);
-  const { user } = props;
-  useEffect(() => {
-    async function fetchingCategoryData() {
-      try {
-        let foodCategory = await props.getCategoryAPI("food");
-        let mainFoodCategory = await props.getCategoryAPI("main-food");
-        if (user.provider_id) {
-          var menuCategory = await props.getMenuCategoryAPI(user.provider_id);
-        }
-        setFoodCategory(foodCategory);
-        setMainFoodCategory(mainFoodCategory);
-        setMenuCategory(menuCategory);
-      } catch (err) {
-        console.log(err);
-      }
-    }
-    fetchingCategoryData();
-  }, []);
-
-  useEffect(() => {
-    setFilteredFoodCategory([]);
-    if (selectedMainFood.length !== 1) return;
-    const foodCategoryList = foodCategory.filter(
-      (item) => item.parent_category_id === selectedMainFood[0]
-    );
-    setFilteredFoodCategory(foodCategoryList);
-  }, [selectedMainFood]);
-
   const addProduct = async (values) => {
     const formData = {
-      provider_id: user.provider_id,
+      provider_id: props.user.provider_id,
       product_name: values.productName,
-      description: values.description,
-      price: values.productPrice || 0,
-      product_image: "product-image",
+      product_description: values.productDescription,
+      estimated_price: values.estimatedPrice,
+      product_image: "",
     };
-    if (user.provider_id !== -1 && user.provider_id !== null) {
-      const status = await props.addProductAPI(formData);
-      if (status) console.log("Thanh cong");
-      else console.log("That bai");
+    const result = await props.addUpcomingProductAPI(formData);
+    if (result.status) {
+      const surveyFormData1 = {
+        upcoming_product_id: result.upcoming_product_id,
+        question: values.question,
+        start_at: "2022-7-26",
+        expire_at: "2022-7-26",
+        choice: values.a1,
+      };
+      props.addSurveyProductAPI(surveyFormData1);
+      const surveyFormData2 = {
+        upcoming_product_id: result.upcoming_product_id,
+        question: values.question,
+        start_at: "2022-7-26",
+        expire_at: "2022-7-26",
+        choice: values.a2,
+      };
+      props.addSurveyProductAPI(surveyFormData2);
+      const surveyFormData3 = {
+        upcoming_product_id: result.upcoming_product_id,
+        question: values.question,
+        start_at: "2022-7-26",
+        expire_at: "2022-7-26",
+        choice: values.a3,
+      };
+      props.addSurveyProductAPI(surveyFormData3);
+      const surveyFormData4 = {
+        upcoming_product_id: result.upcoming_product_id,
+        question: values.question,
+        start_at: "2022-7-26",
+        expire_at: "2022-7-26",
+        choice: values.a4,
+      };
+      props.addSurveyProductAPI(surveyFormData4);
+      const surveyFormData5 = {
+        upcoming_product_id: result.upcoming_product_id,
+        question: values.question,
+        start_at: "2022-7-26",
+        expire_at: "2022-7-26",
+        choice: values.a5,
+      };
+      props.addSurveyProductAPI(surveyFormData5);
     }
   };
   return (
@@ -125,12 +121,7 @@ function AddUpcomingProduct(props) {
               >
                 <span style={{ width: "100%", marginBottom: 10, fontSize: 14 }}>
                   <b>Question: </b>
-                  <Field
-                    type="text"
-                    style={{ width: "90%" }}
-                    defaultValue={"Are you eager to try this product?"}
-                    name="question"
-                  />
+                  <Field type="text" style={{ width: "90%" }} name="question" />
                 </span>
               </span>
               <div className="homebody-sb-radio-detail-wrapper">
@@ -256,7 +247,7 @@ function AddUpcomingProduct(props) {
               <div className="form-label-description">
                 <span className="product-detail-form-label">Description</span>
                 <span className="letter-counter">
-                  {values.description.length} / 200
+                  {values.productDescription.length} / 200
                 </span>
               </div>
               <div className="product-detail-form-input-wrapper">
@@ -264,7 +255,7 @@ function AddUpcomingProduct(props) {
                   className="product-detail-textarea"
                   style={{ height: 80 }}
                   as="textarea"
-                  name="description"
+                  name="productDescription"
                   placeholder="Description about your product"
                 />
               </div>
@@ -288,7 +279,7 @@ function AddUpcomingProduct(props) {
                 <Field
                   className="input-price"
                   type="text"
-                  name="productPrice"
+                  name="estimatedPrice"
                   placeholder="Price"
                 />
                 <Field
@@ -323,7 +314,7 @@ function AddUpcomingProduct(props) {
                 }
               />
               <Button
-                onClick={addProduct}
+                onClick={() => addProduct(values)}
                 buttonType="primary"
                 justifyContent={"center"}
                 width={100}
@@ -345,9 +336,8 @@ function AddUpcomingProduct(props) {
 AddUpcomingProduct.propTypes = {
   user: PropTypes.object.isRequired,
   provider: PropTypes.object.isRequired,
-  getCategoryAPI: PropTypes.func.isRequired,
-  getMenuCategoryAPI: PropTypes.func.isRequired,
-  addProductAPI: PropTypes.func.isRequired,
+  addUpcomingProductAPI: PropTypes.func.isRequired,
+  addSurveyProductAPI: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -356,9 +346,7 @@ const mapStateToProps = (state) => ({
 });
 
 export default withRouter(
-  connect(mapStateToProps, {
-    getCategoryAPI,
-    getMenuCategoryAPI,
-    addProductAPI,
-  })(AddUpcomingProduct)
+  connect(mapStateToProps, { addUpcomingProductAPI, addSurveyProductAPI })(
+    AddUpcomingProduct
+  )
 );

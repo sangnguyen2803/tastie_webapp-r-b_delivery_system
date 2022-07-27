@@ -14,16 +14,12 @@ import {
   faExclamationCircle,
   faTimes,
   faCommentDots,
-  faPaperclip,
-  faImage,
-  faCheckCircle,
 } from "@fortawesome/fontawesome-free-solid";
 import Step1Image from "assets/order_progress/step1.gif";
 import Step3Image from "assets/order_progress/step3.gif";
 import Step4Image from "assets/order_progress/step4.gif";
 import Step5Image from "assets/order_progress/step5.gif";
-import { faPhotoVideo } from "@fortawesome/free-solid-svg-icons";
-import Avatar from "assets/avatar.jpg";
+import axios from "axios";
 const shipper = {
   name: "Terry Harrison",
   license_plate: "64B1 - 03663",
@@ -40,7 +36,23 @@ function OrderStatus(props) {
   const [showShipperChat, setShowShipperChat] = useState(false);
   let [loading, setLoading] = useState(true);
   let [color, setColor] = useState("#910000");
-
+  
+  const completePickUp = async () => {
+    try {
+      const res = await axios.post("/v1/api/tastie/order/update_order_status", {
+        order_code: props.match.params.order_code,
+        status: 5, // completed
+        shipper_id: null,
+        update_at: new Date().toISOString(),
+      });
+      if (res.status) {
+        props.setCompletedStatus(true);
+        props.setCurrentStatus(5);
+      }
+    } catch (error) {
+      console.error("Cannot update order status", error);
+    }
+  };
   const override = css`
     display: block;
     border-color: #910000;
@@ -100,7 +112,7 @@ function OrderStatus(props) {
               />
             </div>
           </div>
-          {status >= 2 && (
+          {status >= 2 && props.orderSummary.delivery_mode === 1 && (
             <div className="or-st-shipper">
               <img
                 className="or-st-shipper-image"
@@ -123,7 +135,7 @@ function OrderStatus(props) {
               </div>
             </div>
           )}
-          {showShipperChat ? (
+          {showShipperChat && props.orderSummary?.delivery_mode === 1 ? (
             <ChatBox
               shipper={shipper}
               message={message}
@@ -152,21 +164,55 @@ function OrderStatus(props) {
                 {statusMainText[status - 1]}
               </div>
               <div className="or-st-body-wrapper">
-                {statusSubText[status - 1]}
-              </div>
-              <ButtonGroup float="flex-start" mgTop={10} mgBottom={0}>
-                <Button
-                  color={"white"}
-                  bgColor={"#2c2c2c"}
-                  justifyContent={"center"}
-                  gap={"10px"}
-                  width={120}
-                  fontSize={14}
-                  height={35}
-                  label={`Delivery detail`}
+                {props.orderSummary.delivery_mode !== 2
+                  ? statusSubText[status - 1]
+                  : "Check and come to the restaurant to pick up your order."}
+              </div>{" "}
+              {props.orderSummary.delivery_mode === 2 &&
+                props.currentStatus === 3 && (
+                  <ButtonGroup float="flex-start" mgTop={10} mgBottom={0}>
+                    <Button
+                      color={"white"}
+                      bgColor={"#810000"}
+                      justifyContent={"center"}
+                      gap={"10px"}
+                      width={180}
+                      fontSize={14}
+                      height={40}
+                      label={`Complete order`}
+                      onClick={() => completePickUp()}
+                    />
+                  </ButtonGroup>
+                )}
+              {props.orderSummary?.delivery_mode !== 2 ? (
+                <ButtonGroup float="flex-start" mgTop={10} mgBottom={0}>
+                  <Button
+                    color={"white"}
+                    bgColor={"#2c2c2c"}
+                    justifyContent={"center"}
+                    gap={"10px"}
+                    width={120}
+                    fontSize={14}
+                    height={35}
+                    label={`Delivery detail`}
+                    onClick={() => props.setShowOrderDetail(true)}
+                  />
+                </ButtonGroup>
+              ) : (
+                <span
+                  style={{
+                    marginTop: 15,
+                    fontSize: 13,
+                    fontStyle: "italic",
+                    color: "#810000",
+                    textDecoration: "underline",
+                    cursor: "pointer",
+                  }}
                   onClick={() => props.setShowOrderDetail(true)}
-                />
-              </ButtonGroup>
+                >
+                  Order detail
+                </span>
+              )}
             </Fragment>
           )}
         </Fragment>

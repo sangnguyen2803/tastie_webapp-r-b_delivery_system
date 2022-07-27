@@ -11,21 +11,16 @@ function ChatBox(props) {
   const { message, setMessage, messages, setMessages, socket } = props;
   const { shipper } = props;
   const { order_code } = props.match.params;
-  const scrollRef = useRef();
-  const inputRef = useRef();
 
   useEffect(() => {
     socket.emit("join-room", order_code);
-    socket.on("receive-shipper-inbox", (message) => {
+    socket.on("receive-shipper-inbox", (message, order_code) => {
       setMessages((prev) => [
         ...prev,
-        { sender: "shipper", message: message.message },
+        { sender: "shipper", message: message.content },
       ]);
     });
   }, []);
-  useEffect(() => {
-    console.log(messages);
-  }, [messages]);
 
   return (
     <Fragment>
@@ -57,9 +52,7 @@ function ChatBox(props) {
                   ...prev,
                   { sender: "customer", message: message },
                 ]);
-                console.log(message, order_code);
                 socket.emit("customer-inbox", message, order_code);
-
                 setMessage("");
               }
             }}

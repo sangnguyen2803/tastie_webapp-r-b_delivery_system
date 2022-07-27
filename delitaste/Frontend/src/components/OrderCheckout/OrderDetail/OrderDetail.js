@@ -6,7 +6,7 @@ import Modal from "components/Commons/Overlay/Popup/Modal/Modal";
 import PDProductDetail from "components/ProviderDetail/PDBody/PDProductDetail/PDProductDetail";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ReactMapGl, { Source, Layer, Marker, Popup } from "react-map-gl";
-import { useCallback } from "react";
+import { setCurrentLocation } from "store/actions/UserAction/UserAction";
 import {
   faBook,
   faCircle,
@@ -29,9 +29,12 @@ import {
   getDeliveryFee,
 } from "store/actions/UserAction/UserAction";
 import { getProductListAPI } from "store/actions/ProductAction/ProductAction";
+import { getOrderPromotionAPI } from "store/actions/OrderAction/OrderAction";
 import SwitchSelector from "react-switch-selector";
 import ScheduleOrder from "./ScheduleOrder";
 import axios from "axios";
+import ApplyPromotion from "./ApplyPromotion";
+
 const optionSwitcher = [
   {
     label: "Delivery",
@@ -57,6 +60,7 @@ function OrderDetail(props) {
   const initialSelectedIndex = optionSwitcher.findIndex(
     ({ value }) => value === 0
   );
+  const [showPromotion, setShowPromotion] = useState(false);
   const { user, getAddressBookAPI, getDeliveryFee, setOrderForm } = props;
   const [addressBook, setAddressBook] = useState([]);
   const [currentPhone, setCurrentPhone] = useState("");
@@ -68,9 +72,19 @@ function OrderDetail(props) {
   const [showScheduleTable, setShowScheduleTable] = useState(false);
   const [showRemoveCartDialog, setShowRemoveCartDialog] = useState(false);
   const [selectedProductDetail, setSelectedProductDetail] = useState();
+  const [promotion, setPromotion] = useState({});
   const [location, setLocation] = useState([
     106.68057155417674, 10.768685473523648,
   ]);
+  useEffect(() => {
+    async function fetchPromotion(id) {
+      const result = await props.getOrderPromotionAPI(id);
+      setPromotion(result);
+    }
+    if (props.user.userCart.provider_id !== -1)
+      fetchPromotion(props.user.userCart.provider_id);
+  }, [props.user.userCart.provider_id]);
+
   useEffect(() => {
     setOrderForm((prevState) => ({
       ...prevState,
@@ -107,7 +121,7 @@ function OrderDetail(props) {
       setOrderForm((prevState) => ({
         ...prevState,
         customer_phone: addressBook.phone,
-        delivery_mode: !deliveryOption ? 1 : 2,
+        delivery_mode: deliveryOption === 0 ? 1 : 2,
       }));
     }
     fetchingAddressBook();
@@ -135,9 +149,6 @@ function OrderDetail(props) {
   const onChange = (newValue) => {
     setDeliveryOption(parseInt(newValue));
   }; //map
-  useEffect(() => {
-    console.log(location);
-  }, [location]);
   const [routes, setRoutes] = useState([]);
   const [viewport, setViewport] = useState({
     width: "100%",
@@ -279,6 +290,7 @@ function OrderDetail(props) {
                     className="oc-od-edit-address"
                     style={{ width: `${deliveryAddress?.length * 7}px` }}
                     value={deliveryAddress}
+                    onChange={(e) => setDeliveryAddress(e.target.value)}
                   />
                 )}
                 {enableAddressEdit && (
@@ -313,6 +325,11 @@ function OrderDetail(props) {
                         ...prevState,
                         delivery_address: deliveryAddress,
                       }));
+                      props.setCurrentLocation(
+                        location[1],
+                        location[0],
+                        deliveryAddress
+                      );
                     }}
                   >
                     Confirm
@@ -332,7 +349,6 @@ function OrderDetail(props) {
                       name="addressBook"
                       checked={user.currentAddress?.address === deliveryAddress}
                       value={user.currentAddress?.address}
-                      defaultChecked={true}
                       onChange={() => {
                         setDeliveryAddress(user.currentAddress?.address);
                         setLocation([
@@ -487,26 +503,16 @@ function OrderDetail(props) {
           </div>
           <div className="oc-od-promotion-wrapper">
             <div className="oc-od-promotion-input-wrapper">
-              <button className="oc-od-popup-button" type="submit">
-                <FontAwesomeIcon icon={faSearch} />
-                <span>Promotion</span>
-              </button>
-              <div className="oc-od-input-promos">
-                <input
-                  className="oc-od-form-text-field"
-                  type="text"
-                  name="promotionCode"
-                  placeholder="Promotion code"
-                  maxLength={50}
-                  autoComplete="on"
-                />
-              </div>
-              <button
-                className="oc-od-submit-button-2 oc-od-popup-button"
-                type="submit"
+              <div
+                className="oc-od-popup-button"
+                style={{ fontSize: 13, width: 180, gap: 10 }}
+                onClick={() => {
+                  promotion && setShowPromotion(true);
+                }}
               >
-                Apply
-              </button>
+                <FontAwesomeIcon icon={faSearch} />
+                <span>Apply Promotion</span>
+              </div>
             </div>
           </div>
           <div className="oc-od-items-container">
@@ -637,6 +643,28 @@ function OrderDetail(props) {
             }}
           />
         </Modal>
+
+        <Modal
+          openModal={showPromotion}
+          closeModal={() => {
+            setShowPromotion(false);
+          }}
+          title={"Promotion"}
+          width={35}
+          height={260}
+          padding="0% 0%"
+          transparent="30%"
+          hideHeader={true}
+        >
+          <ApplyPromotion
+            promotions={promotion}
+            orderForm={props.orderForm}
+            setOrderForm={props.setOrderForm}
+            closeModal={() => {
+              setShowPromotion(false);
+            }}
+          ></ApplyPromotion>
+        </Modal>
       </div>
     </Fragment>
   );
@@ -648,6 +676,8 @@ OrderDetail.propTypes = {
   getProductListAPI: PropTypes.func.isRequired,
   getAddressBookAPI: PropTypes.func.isRequired,
   getDeliveryFee: PropTypes.func.isRequired,
+  setCurrentLocation: PropTypes.func.isRequired,
+  getOrderPromotionAPI: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -660,53 +690,7 @@ export default withRouter(
     getProductListAPI,
     getAddressBookAPI,
     getDeliveryFee,
+    setCurrentLocation,
+    getOrderPromotionAPI,
   })(OrderDetail)
 );
-
-const checkout = {
-  provider_id: 1000001,
-  provider_name: "Le Pain Quotidien (81 W Broadway)",
-  latitude: "10.760489416636473",
-  longitude: "106.68064561161064",
-  delivery_mode: 3,
-  delivery_method: 1, // 1: standard 2:schedule
-  payment_method: 1, // 1: cash, 2: momo/zalo pay, 3: credit card
-  promo_code: "FREESHIP",
-  items: [
-    {
-      product_id: 1000001,
-      product_name: "Smoked Salmon Tartine",
-      product_image:
-        "https://d1ralsognjng37.cloudfront.net/e0fbee37-a7f4-4bb9-aeed-8f2bd60ea470.jpeg",
-      product_options: [
-        {
-          label: "Choose Bread",
-          value: "SuperSeed Bread",
-          price: 0,
-        },
-        {
-          label: "Add Edd?",
-          value: "Add Soft Boiled Egg",
-          price: 0,
-        },
-      ],
-      quantity: 1,
-      product_price: 15,
-      special_instruction: "",
-    },
-    {
-      product_id: 1000002,
-      product_name: "Organic Apple Juice",
-      product_image:
-        "https://d1ralsognjng37.cloudfront.net/c12a87ff-1f7b-4e45-9b79-c1e8333f59e9.jpeg",
-      product_options: [],
-      quantity: 1,
-      product_price: 5,
-      special_instruction: "",
-    },
-  ],
-  subtotal: 20.0,
-  delivery_fee: 1.5,
-  tips: "10%",
-  total: 22.5,
-};

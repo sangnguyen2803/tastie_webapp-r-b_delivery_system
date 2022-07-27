@@ -25,7 +25,10 @@ import Tag from "components/Commons/Tag/Tag";
 import { getCategoryAPI } from "store/actions/ProviderAction/ProviderAction";
 import AddAdditionalOption from "components/MerchantDashboard/DashboardFeatures/MDProduct/ProductHandler/AddAdditionalOption";
 import UpdateAdditionalOption from "components/MerchantDashboard/DashboardFeatures/MDProduct/ProductHandler/UpdateAdditionalOption";
-import { getProductListAPI } from "store/actions/ProductAction/ProductAction";
+import {
+  getProductListAPI,
+  updateProductAPI,
+} from "store/actions/ProductAction/ProductAction";
 
 function EditProduct(props) {
   const [showFoodCategory, setShowFoodCategory] = useState(false);
@@ -52,11 +55,14 @@ function EditProduct(props) {
     available: 0,
     status: 1,
     quantityAvailable: 0,
-    productStatus: 0,
-    productPrice: 0,
+    productStatus: 1,
+    productPrice: String(props.productForEdit?.price),
     productPhoto: "",
     position: 1,
   };
+  useEffect(() => {
+    console.log(props.productForEdit);
+  }, [props.productForEdit]);
   useEffect(() => {
     async function fetchMenuCategory(id) {
       if (id !== -1) {
@@ -89,21 +95,27 @@ function EditProduct(props) {
     setFilteredFoodCategory(foodCategoryList);
   }, [selectedMainFood]);
 
-  const updateProduct = (values) => {
+  const updateProduct = async (values) => {
     const { user } = props;
     const formData = {
-      provider_id: user.provider_id,
-      product_name: values.productName,
-      product_status: values.productStatus,
-      desciption: values.desciption,
-      price: values.price || 0,
-      quantity: values.quantityAvailable || 0,
-      product_image: "product-image",
-      additional_option: additionalOption,
-      menu_category: [100001],
-      main_food_category: selectedMainFood,
-      food_category: selectedFood,
+      productId: props.productForEdit.product_id,
+      productName: values.productName,
+      productStatus: values.productStatus,
+      description: values.description,
+      productPrice: parseFloat(values.productPrice),
+      productPhoto: props.productForEdit.product_image,
+      additionalOptions: additionalOption,
+      menuCategoryID: [props.productForEdit.menu_category_id],
+      mainCategoryID: selectedMainFood,
+      foodCategoryID: selectedFood,
+      position: props.productForEdit.product_position,
+      quantityAvailable: props.productForEdit.quantity,
     };
+    if (user.provider_id !== -1 && user.provider_id !== null) {
+      const status = await props.updateProductAPI(formData, user.provider_id);
+      if (status) console.log("Thanh cong");
+      else console.log("That bai");
+    }
   };
   return (
     <Formik
@@ -300,14 +312,6 @@ function EditProduct(props) {
                     </div>
                   ))}
                 </div>
-                <span className="product-detail-form-label">Available</span>
-                <div className="product-detail-form-input-wrapper">
-                  <Field
-                    type="text"
-                    name="quantityAvailable"
-                    placeholder="In stock"
-                  />
-                </div>
 
                 <span className="product-detail-form-label">Status</span>
                 <div className="product-detail-form-with-select-2">
@@ -336,8 +340,6 @@ function EditProduct(props) {
                     placeholder="Currency"
                   >
                     <option>USD</option>
-                    <option>VND</option>
-                    <option>EURO</option>
                   </Field>
                 </div>
               </div>
@@ -367,6 +369,7 @@ function EditProduct(props) {
                   height={36}
                   radius={"0px"}
                   label={"Update"}
+                  onClick={() => updateProduct(values)}
                   prefix={
                     <FontAwesomeIcon icon={faPlus} style={{ color: "white" }} />
                   }
@@ -473,6 +476,7 @@ EditProduct.propTypes = {
   provider: PropTypes.object.isRequired,
   getCategoryAPI: PropTypes.func.isRequired,
   getProductListAPI: PropTypes.func.isRequired,
+  updateProductAPI: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -484,5 +488,6 @@ export default withRouter(
   connect(mapStateToProps, {
     getCategoryAPI,
     getProductListAPI,
+    updateProductAPI,
   })(EditProduct)
 );

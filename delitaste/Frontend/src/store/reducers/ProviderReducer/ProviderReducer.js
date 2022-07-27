@@ -12,6 +12,7 @@ import {
   SET_CURRENT_ORDER_LIST,
   SET_TOP_CATEGORY_BY_UNIT,
   ADD_ORDER_TO_ORDER_LIST,
+  UPDATE_ORDER_IN_ORDER_LIST,
 } from "store/actions/types";
 import {} from "store/actions/types";
 import io from "socket.io-client";
@@ -58,6 +59,12 @@ const ProviderReducer = (state = initialState, action) => {
       state.orderList = copy;
       state.orderList.unshift(payload.order);
       return { ...state, ...payload };
+
+    case UPDATE_ORDER_IN_ORDER_LIST:
+      state.orderList.forEach((item) => {
+        if (item.order_code === payload.order.order_code) item.status = 6;
+        return { ...state, ...payload };
+      });
     case SET_ORDER_LIST:
       return { ...state, ...payload };
     case CREATE_MERCHANT:

@@ -91,6 +91,44 @@ export const addProductAPI = (data) => async (dispatch) => {
   try {
     const endpoint = `/v1/api/provider/dashboard/menu-overview/add-item`;
     const res = await axios.post(endpoint, body, config);
+    console.log(body);
+    console.log(res.data);
+    if (res.data?.status) {
+      return true;
+    }
+    return false;
+  } catch (err) {
+    console.log(err.response.data.errors);
+    return false;
+  }
+};
+
+//Add product
+export const updateProductAPI = (data, providerId) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  var today = new Date();
+  var currentDateTime =
+    today.getFullYear() +
+    "-" +
+    (today.getMonth() + 1) +
+    "-" +
+    today.getDate() +
+    " " +
+    today.getHours() +
+    ":" +
+    today.getMinutes() +
+    ":" +
+    today.getSeconds();
+  data.update_at = currentDateTime;
+  const body = JSON.stringify(data);
+  try {
+    const endpoint = `/v1/api/provider/dashboard/menu-overview/${providerId}/update-product`;
+    const res = await axios.post(endpoint, body, config);
+    console.log(body);
     console.log(res.data);
     if (res.data?.status) {
       return true;
@@ -151,5 +189,65 @@ export const getUpcomingProductAPI = (id) => async (dispatch) => {
   } catch (err) {
     console.log(err);
     return [];
+  }
+};
+
+export const addUpcomingProductAPI = (data) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  const body = JSON.stringify(data);
+  try {
+    const endpoint = `/v1/api/provider/dashboard/add-up-coming-product`;
+    const res = await axios.post(endpoint, body, config);
+    if (res.data?.status) {
+      return res.data;
+    }
+    return {};
+  } catch (err) {
+    console.log(err.response.data.errors);
+    return {};
+  }
+};
+
+export const addSurveyProductAPI = (data) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  const body = JSON.stringify(data);
+  try {
+    const endpoint = `/v1/api/provider/dashboard/add-survey-question`;
+    const res = await axios.post(endpoint, body, config);
+    if (res.data?.status) {
+      return true;
+    }
+    return false;
+  } catch (err) {
+    console.log(err.response.data.errors);
+    return false;
+  }
+};
+
+export const submitSurveyUpcomingProductAPI = (data) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  const body = JSON.stringify(data);
+  try {
+    const endpoint = `/v1/api/tastie/home/submit-upcoming-product-review`;
+    const res = await axios.post(endpoint, body, config);
+    if (res.data?.status) {
+      return true;
+    }
+    return false;
+  } catch (err) {
+    console.log(err.response.data.errors);
+    return false;
   }
 };

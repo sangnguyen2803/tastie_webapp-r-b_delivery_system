@@ -25,9 +25,6 @@ import {
 } from "store/actions/OrderAction/OrderAction";
 import MDHeader from "components/MerchantDashboard/MDHeader/MDHeader";
 import Loader from "react-spinners/ScaleLoader";
-import ProviderList from "components/HomePage/MainContent/ProviderList/ProviderList";
-import { faEllipsisV } from "@fortawesome/free-solid-svg-icons";
-// let socket;
 
 function OrderDetail(props) {
   const [loading, setLoading] = useState(false);
@@ -38,15 +35,10 @@ function OrderDetail(props) {
     getAllProductFromOrderAPI,
     getOrderStatusAPI,
   } = props;
-  const [statusOnView, setStatusOnView] = useState();
+  const [statusOnView, setStatusOnView] = useState(-1);
   const [orderList, setOrderList] = useState([]);
   const [orderSummary, setOrderSummary] = useState(orderList[0]);
   const [orderItems, setOrderItems] = useState([]);
-  const [incomingOrder, setIncomingOrder] = useState({
-    order: null,
-    customer: null,
-    order_code: null,
-  });
   let [color, setColor] = useState("#910000");
   const override = css`
     display: block;
@@ -82,32 +74,37 @@ function OrderDetail(props) {
   }, [user.provider_id]);
 
   useEffect(() => {
-    provider.socket.emit("join-room", `provider-${user.provider_id}`);
-    provider.socket.on(
-      "provider-received-order",
-      async (orderData, customerData, order_code) => {
-        console.log("orderData:", orderData);
-        console.log("customerData:", customerData);
-        console.log("order code", order_code);
-        const result1 = await getAllProductFromOrderAPI(order_code);
-        const result2 = await getOrderStatusAPI(order_code);
-        let limit = 20;
-        let offset = 1;
-        const result3 = await getAllOrderAPI(user.provider_id, limit, offset);
-        Promise.all([result1, result2, result3]).then((data) => {
-          setOrderItems(data[0]);
-          setOrderSummary(data[1]);
-          setOrderList(data[2]);
-        });
-      }
-    );
+    if (user.provider_id !== -1) {
+      provider.socket.emit("join-room", `provider-${user.provider_id}`);
+      console.log(`provider-${user.provider_id}`);
+      provider.socket.on(
+        "provider-received-order",
+        async (orderData, customerData, order_code, pricing) => {
+          console.log("check:", orderData, customerData, order_code, pricing);
+
+          const result1 = await getAllProductFromOrderAPI(order_code);
+          const result2 = await getOrderStatusAPI(order_code);
+          Promise.all([result1, result2]).then((data) => {
+            setOrderItems(data[0]);
+            setOrderSummary(data[1]);
+            if (pricing.deliveryMode === 2) {
+              setStatusOnView(2);
+            } else {
+              setStatusOnView(1);
+            }
+          });
+        }
+      );
+      provider.socket.on("order-accepted", (data) => {
+        setStatusOnView(2);
+      });
+    }
   }, [user.provider_id]);
 
   const viewOrderDetail = (code) => {
     async function fetchOrderDetail(orderCode) {
       const result1 = await getAllProductFromOrderAPI(orderCode);
       const result2 = await getOrderStatusAPI(orderCode);
-
       Promise.all([result1, result2]).then((data) => {
         setOrderItems(data[0]);
         setOrderSummary(data[1]);
@@ -255,6 +252,8 @@ function OrderDetail(props) {
         </div>
         <div className="sub-detail-panel-wrapper" style={{ paddingTop: "0" }}>
           <ViewOrderDetail
+            setOrderItems={setOrderItems}
+            setOrderSummary={setOrderSummary}
             orderItems={orderItems}
             orderSummary={orderSummary}
             orderStatus={statusOnView}

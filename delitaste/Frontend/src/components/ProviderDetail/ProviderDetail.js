@@ -92,7 +92,6 @@ function ProviderDetail(props) {
   useEffect(() => {
     async function fetchingDataAPI() {
       const productList = await props.getProductListAPI(props.match.params?.id);
-      console.log(productList);
       if (productList) setItems([...productList]);
       const upcomingProductList = await props.getUpcomingProductAPI(
         props.match.params?.id

@@ -8,7 +8,7 @@ import Button from "components/Commons/Button/Button";
 import ButtonGroup from "components/Commons/Button/ButtonGroup/ButtonGroup";
 import "../PDProductDetail/PDProductDetail.scss";
 import { addToCart } from "store/actions/CartAction/CartAction";
-
+import { submitSurveyUpcomingProductAPI } from "store/actions/ProductAction/ProductAction";
 function PDUpcomingProduct(props) {
   const [choice, setChoice] = useState("");
   const [heightViewPort, setHeightViewPort] = useState(180);
@@ -16,18 +16,19 @@ function PDUpcomingProduct(props) {
   const [isViewPortExpanded, setIsViewPortExpanded] = useState(false);
   const { upcomingProduct } = props;
   const heightForExpansion = 50;
-  const submitSurvey = async (item) => {
+  const submitSurvey = async () => {
     const data = {
-      upcoming_product_id: item.upcoming_product_id,
-      question: item.question,
-      start_at: "2022-02-02",
-      expire_at: "2022-04-02",
-      choice: "abc",
+      upcoming_product_id: upcomingProduct.upcoming_product_id,
+      customer_id: props.user.profile.user_id,
+      response: choice,
     };
+    const result = await props.submitSurveyUpcomingProductAPI(data);
+    if (result) props.setShowProductDetail(false);
   };
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "auto" });
   }, []);
+
   return (
     <Fragment>
       <div className="pd-pr-d-header" style={{ height: `${heightViewPort}px` }}>
@@ -125,7 +126,7 @@ function PDUpcomingProduct(props) {
 PDUpcomingProduct.propTypes = {
   user: PropTypes.object.isRequired,
   product: PropTypes.object.isRequired,
-  addToCart: PropTypes.func.isRequired,
+  submitSurveyUpcomingProductAPI: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -134,5 +135,7 @@ const mapStateToProps = (state) => ({
 });
 
 export default withRouter(
-  connect(mapStateToProps, { addToCart })(PDUpcomingProduct)
+  connect(mapStateToProps, { submitSurveyUpcomingProductAPI })(
+    PDUpcomingProduct
+  )
 );

@@ -151,13 +151,13 @@ function OTOrderDetail(props) {
                 Subtotal ({orderDetail?.cart?.length} items)
               </span>
               <span className="ot-od-body-item-right-text">
-                $ {props.orderSummary.subtotal?.toFixed(2)}
+                $ {props.orderSummary.subtotal?.toFixed(2) || 0?.toFixed(2)}
               </span>
             </div>
             <div className="ot-od-body-item">
               <span className="ot-od-body-item-left-text">Delivery fee</span>
               <span className="ot-od-body-item-right-text">
-                $ {props.orderSummary.delivery_fee?.toFixed(2)}
+                $ {props.orderSummary.delivery_fee?.toFixed(2) || 0?.toFixed(2)}
               </span>
             </div>
             <div
@@ -166,13 +166,13 @@ function OTOrderDetail(props) {
             >
               <span className="ot-od-body-item-left-text">Coupon</span>
               <span className="ot-od-body-item-right-text">
-                <span className="ot-od-minus">-</span>€ 1.50
+                <span className="ot-od-minus">-</span>$ 1.50
               </span>
             </div>
             <div className="ot-od-body-item">
               <span className="ot-od-body-item-left-text">Tip</span>
               <span className="ot-od-body-item-right-text">
-                $ {props.orderSummary.tip?.toFixed(2)}
+                $ {props.orderSummary.tip?.toFixed(2) || 0?.toFixed(2)}
               </span>
             </div>
             <div className="ot-od-body-item">

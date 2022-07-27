@@ -12,16 +12,6 @@ import FormHeader from "./FormHeader/FormHeader";
 import ImagePreview from "components/Commons/ImageHandlers/ImagePreview/ImagePreview";
 import { updateProductDetailInfoFormAPI } from "store/actions/ProviderAction/ProviderAction";
 
-const priceRangeOptions = [
-  "0 - 20.000đ",
-  "20.000đ - 50.000đ",
-  "50.000đ - 100.000đ",
-  "100.000đ - 200.000đ",
-  "200.000đ - 500.000đ",
-  "500.000đ - 1.000.000đ",
-  "1.000.000đ - 2.000.000đ",
-  "2.000.000đ - 5.000.000đ",
-];
 const initialValues = {
   menu: null,
   priceRange: null,
@@ -36,8 +26,9 @@ function ProductDetailForm(props) {
   const [menu, setMenu] = useState(null);
   const handleSubmitForm = async (values) => {
     const formData = {
-      menu_image: "a",
+      menu_image: "abc",
       price_range: values.priceRange,
+      update_at: new Date().toISOString().split("T")[0],
     };
     console.log(formData);
     if (!props.match.params.id) return;
@@ -115,21 +106,9 @@ function ProductDetailForm(props) {
                     <Field
                       className="form-text-field-select"
                       style={{ width: "100%", height: "35px" }}
-                      as="select"
+                      type="text"
                       name="priceRange"
-                    >
-                      <option value="" selected disabled hidden>
-                        Select a price range...
-                      </option>
-                      <option value={0} label={"0 - 20.000đ"} />
-                      <option value={1} label={"20.000đ - 50.000đ"} />
-                      <option value={2} label={"50.000đ - 100.000đ"} />
-                      <option value={3} label={"100.000đ - 200.000đ"} />
-                      <option value={4} label={"200.000đ - 500.000đ"} />
-                      <option value={5} label={"500.000đ - 1.000.000đ"} />
-                      <option value={5} label={"1.000.000đ - 2.000.000đ"} />
-                      <option value={6} label={"2.000.000đ - 5.000.000đ"} />
-                    </Field>
+                    />
                   </div>
                 </div>
                 <div className="field-bottom-side-wrapper">

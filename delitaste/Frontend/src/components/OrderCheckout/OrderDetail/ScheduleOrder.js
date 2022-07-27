@@ -5,10 +5,10 @@ import ButtonGroup from "components/Commons/Button/ButtonGroup/ButtonGroup";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { getScheduleTime } from "store/actions/ProviderAction/ProviderAction";
+import { getProviderScheduleTime } from "store/actions/OrderAction/OrderAction";
 
 function ScheduleOrder(props) {
-  const { user, getScheduleTime } = props;
+  const { user, getProviderScheduleTime } = props;
   const [schedule, setSchedule] = useState([]);
   const [scheduleDate, setScheduleDate] = useState([]);
   const [scheduleTime, setScheduleTime] = useState([]);
@@ -16,17 +16,22 @@ function ScheduleOrder(props) {
 
   useEffect(() => {
     async function fetchScheduleDateTime(id) {
-      const result = await getScheduleTime(id);
+      const result = await getProviderScheduleTime(id);
+      console.log(result);
       if (result) setSchedule(result);
-      setScheduleDate(result[0].schedule_date);
-      setScheduleTime(result[0].schedule_time[0]);
+      setScheduleDate(result[0]?.day);
+      setScheduleTime(result[0]?.schedule_time[0]);
     }
     fetchScheduleDateTime(user?.userCart?.provider_id);
   }, []);
 
   const submitScheduleTime = () => {
-    var pickedDay = new Date(scheduleDate);
-    var current = new Date();
+    var dateFormatted = `${scheduleDate} ${scheduleTime}`;
+    /*
+    var dateFormatted = `${pickedDay.getFullYear()}-${(
+      "0" +
+      (pickedDay.getMonth() + 1)
+    ).slice(-2)}-${("0" + pickedDay.getDate()).slice(-2)} ${scheduleTime}`;
     const sameDate = pickedDay.getDate() === current.getDate();
     if (sameDate) {
       var startTime = scheduleTime?.split(" - ")[0];
@@ -46,7 +51,8 @@ function ScheduleOrder(props) {
       /\s/g,
       ""
     )}`;
-    props.setOrderScheduleTime(scheduleOnFormat);
+    */
+    props.setOrderScheduleTime(dateFormatted);
     props.closeModal();
   };
   return (
@@ -65,8 +71,8 @@ function ScheduleOrder(props) {
               Select a date...
             </option>
             {schedule.map((sch) => (
-              <option key={sch.schedule_date} value={sch.schedule_date}>
-                {sch.schedule_date}
+              <option key={sch.day} value={sch.day}>
+                {sch.day}
               </option>
             ))}
           </select>
@@ -82,7 +88,7 @@ function ScheduleOrder(props) {
               Select a time...
             </option>
             {schedule
-              .filter((sch) => sch.schedule_date === scheduleDate)
+              .filter((sch) => sch.day === scheduleDate)
               .map((time) =>
                 time?.schedule_time?.map((t) => (
                   <option key={t} value={t}>
@@ -119,14 +125,14 @@ function ScheduleOrder(props) {
 
 ScheduleOrder.propTypes = {
   user: PropTypes.object.isRequired,
-  getScheduleTime: PropTypes.func.isRequired,
+  getProviderScheduleTime: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   user: state.UserReducer,
 });
 export default withRouter(
-  connect(mapStateToProps, { getScheduleTime })(ScheduleOrder)
+  connect(mapStateToProps, { getProviderScheduleTime })(ScheduleOrder)
 );
 /*
 const SCHEDULE_DATE = 10;
