@@ -155,7 +155,7 @@ function OrderReview(props) {
         <div className="oc-or-main-text">
           <span className="oc-or-pre-text">Delivery option:</span>
           <span className="oc-or-sur-text" style={{ color: "#810000" }}>
-            - ${orderForm.delivery_mode}
+            {orderForm.delivery_mode === 1 ? "Delivery" : "Pickup"}
           </span>
         </div>
         <div className="oc-or-main-text">

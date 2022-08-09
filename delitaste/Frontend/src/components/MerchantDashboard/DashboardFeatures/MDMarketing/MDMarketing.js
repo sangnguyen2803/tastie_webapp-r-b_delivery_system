@@ -1,32 +1,26 @@
 import { Fragment, useState, useEffect } from "react";
-import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCalendarPlus,
-  faPlus,
-  faQuestionCircle,
-} from "@fortawesome/fontawesome-free-solid";
-import Switch from "react-switch";
+import { faPlus, faQuestionCircle } from "@fortawesome/fontawesome-free-solid";
 import ButtonGroup from "components/Commons/Button/ButtonGroup/ButtonGroup";
 import Button from "components/Commons/Button/Button";
 import "./MDMarketing.scss";
-import { faThumbsUp, faThumbsDown } from "@fortawesome/fontawesome-free-solid";
 import PropTypes from "prop-types";
 import Metric from "../Metric/Metric";
 import MDHeader from "components/MerchantDashboard/MDHeader/MDHeader";
 import ProgressBar from "components/Commons/ProgressBar/ProgressBar";
 import Tabs from "components/MerchantDashboard/DashboardFeatures/Tabs";
-import Modal from "components/Commons/Overlay/Popup/Modal/Modal";
 import CreateVoucher from "./VoucherHandlers/CreateVoucher";
 import UpdatePromotion from "./VoucherHandlers/UpdatePromotion";
 import {
   getAllPromotionAPI,
   getAllEcouponAPI,
   subscribeEcouponAPI,
+  getPromotionStatisticsAPI,
 } from "store/actions/ProviderAction/ProviderAction";
 import { validateDateBetweenTwoDates } from "utils/DateUtils";
+import DialogBox from "components/Commons/Overlay/DialogBox/DialogBox";
 
 const ProductFilterTab = {
   filterTabs: [
@@ -42,7 +36,13 @@ const metricDescription = [
   "Usage Rate: Total number of seller-absorbed vouchers claimed by users over the selected time period.",
 ];
 function MDMarketing(props) {
-  const { user, provider, getAllPromotionAPI, getAllEcouponAPI } = props;
+  const {
+    user,
+    provider,
+    getAllPromotionAPI,
+    getAllEcouponAPI,
+    getPromotionStatisticsAPI,
+  } = props;
   const [currentTab, setCurrentTab] = useState(0);
   const [showCreateVoucher, setShowCreateVoucher] = useState(false);
   const [promotionType, setPromotionType] = useState(0);
@@ -52,6 +52,14 @@ function MDMarketing(props) {
   const [discount, setDiscount] = useState([]);
   const [ecoupon, setEcoupon] = useState([]);
   const [registeredEcoupon, setRegisteredEcoupon] = useState([]);
+  const [addStatus, setAddStatus] = useState(false);
+  const [showPromotionDialog, setShowPromotionDialog] = useState(false);
+  const [dialogContent, setDialogContent] = useState({
+    header: "no-title",
+    text1: " no-header-content",
+    text2: "no-sub-header-content",
+  });
+
   useEffect(() => {
     async function fetchPromotion(id) {
       const res1 = await getAllPromotionAPI(id);
@@ -66,6 +74,16 @@ function MDMarketing(props) {
       }
     }
     fetchPromotion(user.provider_id);
+  }, [user.provider_id, addStatus]);
+  const [promotionStatitstics, setPromotionStatistics] = useState([
+    150, 100, 1.5,
+  ]);
+  useEffect(() => {
+    async function fetchPromotionStatistic(id) {
+      const res = await getPromotionStatisticsAPI(id);
+      setPromotionStatistics(res);
+    }
+    fetchPromotionStatistic(user.provider_id);
   }, [user.provider_id]);
 
   const subscribeEcoupon = async (id) => {
@@ -166,7 +184,7 @@ function MDMarketing(props) {
             width={"100%"}
             height={240}
             radius={5}
-            numeric_data={120}
+            numeric_data={promotionStatitstics[0]}
             border={"2px solid #eeeeee"}
           >
             <span className="metric-title">
@@ -182,7 +200,7 @@ function MDMarketing(props) {
             width={"100%"}
             height={240}
             radius={5}
-            numeric_data={"12"}
+            numeric_data={promotionStatitstics[1]}
             border={"2px solid #eeeeee"}
           >
             <span className="metric-title">
@@ -198,7 +216,7 @@ function MDMarketing(props) {
             width={"100%"}
             height={240}
             radius={5}
-            numeric_data={"43"}
+            numeric_data={promotionStatitstics[2]}
             border={"2px solid #eeeeee"}
           >
             <span className="metric-title">
@@ -229,92 +247,105 @@ function MDMarketing(props) {
                   <th>Usage limit</th>
                   <th>Status</th>
                 </tr>
-                {voucher?.map((item, index) => (
-                  <tr
-                    className="table-row-wrapper"
-                    key={item.promotion_id}
-                    style={{ cursor: "pointer" }}
-                    onClick={() => {
-                      setPromotionType(0);
-                      setSelectedPromotion(item);
-                      setShowUpdatePromotion(true);
-                    }}
-                  >
-                    <td
-                      className="product-name"
-                      style={{
-                        textAlign: "left",
-                        width: "12.5%",
+                {voucher && voucher?.length !== 0 ? (
+                  voucher?.map((item, index) => (
+                    <tr
+                      className="table-row-wrapper"
+                      key={item.promotion_id}
+                      style={{ cursor: "pointer" }}
+                      onClick={() => {
+                        setPromotionType(0);
+                        setSelectedPromotion(item);
+                        setShowUpdatePromotion(true);
                       }}
                     >
-                      {item.promotion_code || "—"}
-                    </td>
-                    <td
-                      className="field-hidden"
-                      style={{
-                        textAlign: "center",
-                        width: "12.5%",
-                      }}
-                    >
-                      {item.promotion_name || "—"}
-                    </td>
-                    <td
-                      className="field-hidden"
-                      style={{
-                        textAlign: "left",
-                        width: "25%",
-                      }}
-                    >
-                      {item.promotion_description || "—"}
-                    </td>
-                    <td
-                      style={{
-                        textAlign: "center",
-                        width: "10%",
-                      }}
-                    >
-                      $ {item?.promotion_value?.toFixed(2) || "—"}
-                    </td>
-                    <td
-                      style={{
-                        textAlign: "center",
-                        width: "10%",
-                      }}
-                    >
-                      {new Date(item.start_at).toLocaleDateString() || "—"}
-                    </td>
-                    <td
-                      style={{
-                        textAlign: "center",
-                        width: "10%",
-                      }}
-                    >
-                      {new Date(item.expire_at).toLocaleDateString() || "—"}
-                    </td>
-                    <td
-                      style={{
-                        textAlign: "center",
-                        width: "10%",
-                      }}
-                    >
-                      {item.limited_offer || "—"}
-                    </td>
-                    <td
-                      style={{
-                        textAlign: "center",
-                        width: "10%",
-                      }}
-                    >
-                      {validateDateBetweenTwoDates(
-                        new Date(item.start_at),
-                        new Date(item.expire_at),
-                        new Date()
-                      ) === true
-                        ? "Available"
-                        : "Expired"}
-                    </td>
+                      <td
+                        className="product-name"
+                        style={{
+                          textAlign: "left",
+                          width: "12.5%",
+                        }}
+                      >
+                        {item.promotion_code || "—"}
+                      </td>
+                      <td
+                        className="field-hidden"
+                        style={{
+                          textAlign: "center",
+                          width: "12.5%",
+                        }}
+                      >
+                        {item.promotion_name || "—"}
+                      </td>
+                      <td
+                        className="field-hidden"
+                        style={{
+                          textAlign: "left",
+                          width: "25%",
+                        }}
+                      >
+                        {item.promotion_description || "—"}
+                      </td>
+                      <td
+                        style={{
+                          textAlign: "center",
+                          width: "10%",
+                        }}
+                      >
+                        {item?.promotion_value?.toFixed(1) * 100 + " %" || "—"}
+                      </td>
+                      <td
+                        style={{
+                          textAlign: "center",
+                          width: "10%",
+                        }}
+                      >
+                        {new Date(item.start_at).toLocaleDateString() || "—"}
+                      </td>
+                      <td
+                        style={{
+                          textAlign: "center",
+                          width: "10%",
+                        }}
+                      >
+                        {new Date(item.expire_at).toLocaleDateString() || "—"}
+                      </td>
+                      <td
+                        style={{
+                          textAlign: "center",
+                          width: "10%",
+                        }}
+                      >
+                        {item.limited_offer || "—"}
+                      </td>
+                      <td
+                        style={{
+                          textAlign: "center",
+                          width: "10%",
+                        }}
+                      >
+                        {validateDateBetweenTwoDates(
+                          new Date(item.start_at),
+                          new Date(item.expire_at),
+                          new Date()
+                        ) === true
+                          ? "Available"
+                          : "Expired"}
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr className="table-row-wrapper">
+                    <td></td>
+                    <td></td>
+                    <td>No voucher available</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                   </tr>
-                ))}
+                )}
               </tbody>
             </table>
           </div>
@@ -337,84 +368,96 @@ function MDMarketing(props) {
                   <th>Usage limit</th>
                   <th>Status</th>
                 </tr>
-                {discount?.map((item, index) => (
-                  <tr
-                    className="table-row-wrapper"
-                    key={index}
-                    style={{ cursor: "pointer" }}
-                    onClick={() => {
-                      setPromotionType(1);
-                      setSelectedPromotion(item);
-                      setShowUpdatePromotion(true);
-                    }}
-                  >
-                    <td
-                      className="product-name"
-                      style={{
-                        textAlign: "left",
-                        width: "25%",
+                {discount && discount?.length !== 0 ? (
+                  discount?.map((item, index) => (
+                    <tr
+                      className="table-row-wrapper"
+                      key={index}
+                      style={{ cursor: "pointer" }}
+                      onClick={() => {
+                        setPromotionType(1);
+                        setSelectedPromotion(item);
+                        setShowUpdatePromotion(true);
                       }}
                     >
-                      {item.discount_name || "P_SALEOFF10USD"}
-                    </td>
-                    <td
-                      className="field-hidden"
-                      style={{
-                        textAlign: "center",
-                        width: "25%",
-                      }}
-                    >
-                      {item.discount_description || "—"}
-                    </td>
-                    <td
-                      style={{
-                        textAlign: "center",
-                        width: "10%",
-                      }}
-                    >
-                      {`${(item.discount_value * 100).toFixed(0)}%` || "—"}
-                    </td>
-                    <td
-                      style={{
-                        textAlign: "center",
-                        width: "10%",
-                      }}
-                    >
-                      {new Date(item.start_at).toLocaleDateString() || "—"}
-                    </td>
+                      <td
+                        className="product-name"
+                        style={{
+                          textAlign: "left",
+                          width: "25%",
+                        }}
+                      >
+                        {item.discount_name || "P_SALEOFF10USD"}
+                      </td>
+                      <td
+                        className="field-hidden"
+                        style={{
+                          textAlign: "center",
+                          width: "25%",
+                        }}
+                      >
+                        {item.discount_description || "—"}
+                      </td>
+                      <td
+                        style={{
+                          textAlign: "center",
+                          width: "10%",
+                        }}
+                      >
+                        {`${(item.discount_value * 100).toFixed(0)}%` || "—"}
+                      </td>
+                      <td
+                        style={{
+                          textAlign: "center",
+                          width: "10%",
+                        }}
+                      >
+                        {new Date(item.start_at).toLocaleDateString() || "—"}
+                      </td>
 
-                    <td
-                      style={{
-                        textAlign: "center",
-                        width: "10%",
-                      }}
-                    >
-                      {new Date(item.expire_at).toLocaleDateString() || "—"}
-                    </td>
-                    <td
-                      style={{
-                        textAlign: "center",
-                        width: "10%",
-                      }}
-                    >
-                      0
-                    </td>
-                    <td
-                      style={{
-                        textAlign: "center",
-                        width: "10%",
-                      }}
-                    >
-                      {validateDateBetweenTwoDates(
-                        new Date(item.start_at),
-                        new Date(item.expire_at),
-                        new Date()
-                      ) === true
-                        ? "Available"
-                        : "Expired"}
-                    </td>
+                      <td
+                        style={{
+                          textAlign: "center",
+                          width: "10%",
+                        }}
+                      >
+                        {new Date(item.expire_at).toLocaleDateString() || "—"}
+                      </td>
+                      <td
+                        style={{
+                          textAlign: "center",
+                          width: "10%",
+                        }}
+                      >
+                        0
+                      </td>
+                      <td
+                        style={{
+                          textAlign: "center",
+                          width: "10%",
+                        }}
+                      >
+                        {validateDateBetweenTwoDates(
+                          new Date(item.start_at),
+                          new Date(item.expire_at),
+                          new Date()
+                        ) === true
+                          ? "Available"
+                          : "Expired"}
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr className="table-row-wrapper">
+                    <td></td>
+                    <td></td>
+                    <td>No discount available</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                   </tr>
-                ))}
+                )}
               </tbody>
             </table>
           </div>
@@ -649,15 +692,53 @@ function MDMarketing(props) {
         </div>
       </div>
       <CreateVoucher
+        setShowPromotionDialog={setShowPromotionDialog}
+        setDialogContent={setDialogContent}
         visible={showCreateVoucher}
         setVisible={setShowCreateVoucher}
+        setAddStatus={setAddStatus}
       />
       <UpdatePromotion
+        setShowPromotionDialog={setShowPromotionDialog}
+        setDialogContent={setDialogContent}
         promotionType={promotionType}
         selectedPromotion={selectedPromotion}
         visible={showUpdatePromotion}
         setVisible={setShowUpdatePromotion}
+        setAddStatus={setAddStatus}
       />
+      <DialogBox
+        visibility={showPromotionDialog}
+        headerText={dialogContent.header}
+        close={() => setShowPromotionDialog(false)}
+      >
+        <div className="dialog-detail-wrapper">
+          <div className="dialogbox-content">
+            <span className="dialogbox-content-detail-main">
+              {dialogContent.text1}
+            </span>
+            <span className="dialogbox-content-detail-sub">
+              {dialogContent.text2}
+            </span>
+          </div>
+          <div className="dialogbox-action">
+            <ButtonGroup gap={5} mgRight={5}>
+              <Button
+                color={"white"}
+                bgColor={"#800000"}
+                justifyContent={"center"}
+                gap={"10px"}
+                width={80}
+                height={30}
+                label={"OK"}
+                onClick={() => {
+                  setShowPromotionDialog(false);
+                }}
+              />
+            </ButtonGroup>
+          </div>
+        </div>
+      </DialogBox>
     </Fragment>
   );
 }
@@ -668,6 +749,7 @@ MDMarketing.propTypes = {
   getAllPromotionAPI: PropTypes.func.isRequired,
   getAllEcouponAPI: PropTypes.func.isRequired,
   subscribeEcouponAPI: PropTypes.func.isRequired,
+  getPromotionStatisticsAPI: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -680,5 +762,6 @@ export default withRouter(
     getAllPromotionAPI,
     getAllEcouponAPI,
     subscribeEcouponAPI,
+    getPromotionStatisticsAPI,
   })(MDMarketing)
 );

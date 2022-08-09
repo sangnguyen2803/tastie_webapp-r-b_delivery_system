@@ -24,6 +24,7 @@ const formHeaderText = {
 };
 function ProductDetailForm(props) {
   const [menu, setMenu] = useState(null);
+  const [menuReview, setMenuReview] = useState(null);
   const handleSubmitForm = async (values) => {
     const formData = {
       menu_image: "abc",
@@ -80,6 +81,10 @@ function ProductDetailForm(props) {
                             name="menu"
                             onChange={(event) => {
                               setMenu(event.target.files[0]);
+                              const objectUrl = URL.createObjectURL(
+                                event.target.files[0]
+                              );
+                              setMenuReview(objectUrl);
                             }}
                           />
                         </label>
@@ -105,7 +110,7 @@ function ProductDetailForm(props) {
                   <div className="merchant-form-input-wrapper">
                     <Field
                       className="form-text-field-select"
-                      style={{ width: "100%", height: "35px" }}
+                      style={{ width: "30%", height: "35px" }}
                       type="text"
                       name="priceRange"
                     />

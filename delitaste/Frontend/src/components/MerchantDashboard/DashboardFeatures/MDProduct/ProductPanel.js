@@ -24,7 +24,7 @@ function ProductPanel(props) {
   const mappingTab = () => {
     switch (currentTab) {
       case 0:
-        return <ProductOverview />;
+        return <ProductOverview setCurrentTab={setCurrentTab} />;
       case 1:
         return <ProductDetail />;
       case 2:
@@ -58,7 +58,7 @@ function ProductPanel(props) {
     default:
       return (
         <div className="panel-container">
-          <div className="panel-center">ABC</div>
+          <div className="panel-center">Product detail</div>
         </div>
       );
   }

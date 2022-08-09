@@ -19,18 +19,16 @@ function AddMenuCategory(props) {
         <span className="category-selection-title">{props.title}</span>
         <div className="option-container">
           {categoryList?.map((category) => (
-            <div className="option-row" key={category.menu_category_id}>
+            <div className="option-row" key={category.menu_id}>
               <Checkbox
                 checked={
-                  props.selectedCategory.indexOf(category.menu_category_id) !==
-                  -1
+                  props.selectedCategory.indexOf(category.menu_id) !== -1
                     ? true
                     : false
                 }
                 disabled={
                   props.selectedCategory.length < props.required ||
-                  props.selectedCategory.indexOf(category.menu_category_id) !==
-                    -1
+                  props.selectedCategory.indexOf(category.menu_id) !== -1
                     ? false
                     : true
                 }
@@ -53,12 +51,12 @@ function AddMenuCategory(props) {
                   if (value) {
                     props.setSelectedCategory([
                       ...props.selectedCategory,
-                      category.menu_category_id,
+                      category.menu_id,
                     ]);
                     return;
                   } else {
                     let index = props.selectedCategory.indexOf(
-                      category.menu_category_id
+                      category.menu_id
                     );
                     if (index != -1) {
                       var array = [...props.selectedCategory];
@@ -79,7 +77,7 @@ function AddMenuCategory(props) {
                   marginLeft: 15,
                   userSelect: "none",
                 }}
-                label={category.menu_category_name}
+                label={category.name}
               />
             </div>
           ))}

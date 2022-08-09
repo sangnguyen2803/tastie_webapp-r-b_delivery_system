@@ -65,7 +65,8 @@ function MDHeader(props) {
             </span>
             <span className="md-head-sub-text-large">
               <FontAwesomeIcon icon={faMapMarkedAlt} className="md-text-icon" />
-              277, Nguyen Van Cu, ward Nguyen Cu Trinh, district 5, Ho Chi Minh
+              {provider.address ||
+                "277, Nguyen Van Cu, ward Nguyen Cu Trinh, district 5, Ho Chi Minh"}
               city
             </span>
             <span
@@ -73,7 +74,7 @@ function MDHeader(props) {
               style={{ margin: "5px 0" }}
             >
               <FontAwesomeIcon icon={faPhone} className="md-text-icon" />
-              033-790-7047
+              {provider.hotline || "033-790-7047"}
             </span>
             <span className="md-head-sub-text-large">
               {[...Array(provider.rating || 5)].map((e, index) => (
@@ -100,7 +101,7 @@ function MDHeader(props) {
               className="md-head-sub-text-medium"
               style={{ color: "#101010" }}
             >
-              Cooking time: {provider.estimated_cooking_time} mins
+              Cooking time: {provider.estimated_cooking_time || "30"} mins
             </span>
             <span
               className="md-head-sub-text-large"

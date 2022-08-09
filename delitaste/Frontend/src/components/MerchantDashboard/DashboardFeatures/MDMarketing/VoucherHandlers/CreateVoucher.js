@@ -44,8 +44,8 @@ const initialValues = {
   start_at: new Date(),
   expire_at: new Date(),
   promotion_value: 0,
-  min_order_value: "2.00",
-  max_discount_value: "50.00",
+  min_order_value: "50.00",
+  max_discount_value: "1.00",
   payment_method_id: 1,
   limited_offer: 1,
   weekly_usage_limit: 1,
@@ -97,7 +97,24 @@ function CreateVoucher(props) {
     };
     const status = await props.addPromotionAPI(data);
     console.log(status);
-    if (status) props.setVisible(false);
+    if (status) {
+      props.setAddStatus((prev) => !prev);
+      props.setVisible(false);
+      props.setDialogContent({
+        header: "Add promotion",
+        text1: `Successfully added a new promotion`,
+        text2: "A new promotion has been added. Please check it out",
+      });
+      props.setShowPromotionDialog(true);
+    } else {
+      props.setVisible(false);
+      props.setDialogContent({
+        header: "Add promotion",
+        text1: `Fail to addea new promotion`,
+        text2: "A new promotion has not been added. Please try again",
+      });
+      props.setShowPromotionDialog(true);
+    }
     return;
   };
   return (

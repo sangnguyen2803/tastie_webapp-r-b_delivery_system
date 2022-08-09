@@ -90,13 +90,7 @@ function ApplyPromotion(props) {
                 let promo = promotions.promotion.filter(
                   (item) => item.code === promotionSelected
                 )[0];
-                if (
-                  props.orderForm.subtotal < promo.min_order_value ||
-                  props.orderForm.subtotal > promo.max_discount_value
-                ) {
-                  setPromotionInvalid(true);
-                  return;
-                }
+                setPromotionInvalid(true);
                 props.setOrderForm((prevState) => ({
                   ...prevState,
                   promotion_code: promotionSelected,
@@ -106,13 +100,7 @@ function ApplyPromotion(props) {
                 let promo = promotions.ecoupon.filter(
                   (item) => item.code === promotionSelected
                 )[0];
-                if (
-                  props.orderForm.subtotal < promo.min_order_value ||
-                  props.orderForm.subtotal > promo.max_discount_value
-                ) {
-                  setPromotionInvalid(true);
-                  return;
-                }
+                setPromotionInvalid(true);
                 props.setOrderForm((prevState) => ({
                   ...prevState,
                   promotion_code: "",

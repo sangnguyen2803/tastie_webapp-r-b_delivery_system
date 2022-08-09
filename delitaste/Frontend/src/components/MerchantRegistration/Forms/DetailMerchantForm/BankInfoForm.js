@@ -48,11 +48,7 @@ function BankInfoForm(props) {
       bank_branch: values.bankBranch,
     };
     if (!props.match.params.id) return;
-    const updateStatus = await props.updateBankInfoFormAPI(
-      props.match.params.id,
-      formData
-    );
-    if (updateStatus) props.history.push("/merchant-dashboard");
+    props.history.push("/merchant-dashboard/provider/general");
   };
   return (
     <Formik

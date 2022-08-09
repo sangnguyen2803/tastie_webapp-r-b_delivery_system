@@ -5,7 +5,7 @@ import { Formik, ErrorMessage, Form, Field } from "formik";
 import { Link } from "react-router-dom";
 import { withRouter } from "react-router-dom";
 import { validateMerchantForm2 } from "utils/FormUtils/MerchantFormValidate";
-
+import axios from "axios";
 import "./DetailMerchantForm.scss";
 import "style/Common.scss";
 import { updateRepresentativeInfoFormAPI } from "store/actions/ProviderAction/ProviderAction";
@@ -47,6 +47,7 @@ const formHeaderText = {
   bodyText:
     "The representative’s infos must also be the provider’s infos. Our staff will contact via phone number within 24 hours to confirm the provided information.",
 };
+
 function RegisteredRepresentativeForm(props) {
   const [showRegisterAsEnterprise, setShowRegisterAsEnterprise] =
     useState(false);
@@ -57,6 +58,7 @@ function RegisteredRepresentativeForm(props) {
   const initialSelectedIndex = options.findIndex(({ value }) => value === 0);
 
   const handleSubmitForm = async (values) => {
+    if (!props.match.params.id) return;
     const formData = {
       role: values.companyName && values.companyAddress ? 2 : 1,
       company_name: values.companyName,
@@ -69,7 +71,6 @@ function RegisteredRepresentativeForm(props) {
       owner_card_image2: values.idCardBack || "back-card",
       tax_code: values.taxCode,
     };
-    if (!props.match.params.id) return;
     const updateStatus = await props.updateRepresentativeInfoFormAPI(
       props.match.params.id,
       formData

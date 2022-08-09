@@ -21,6 +21,8 @@ import Picture5 from "assets/FoodImg/picture5.jpg";
 import ProgressBar from "components/Commons/ProgressBar/ProgressBar";
 import { getProductListAPI } from "store/actions/ProductAction/ProductAction";
 import Tabs from "../Tabs";
+import { faScroll } from "@fortawesome/free-solid-svg-icons";
+import { faStickyNote } from "@fortawesome/free-regular-svg-icons";
 
 const productList = [
   {
@@ -169,21 +171,6 @@ function ProductOverview(props) {
               />
             </div>
           </div>
-          <Metric width={"20%"} radius={5}>
-            <span className="metric-title">
-              Ranking by sales
-              <FontAwesomeIcon
-                className="question-icon"
-                icon={faQuestionCircle}
-              />
-            </span>
-          </Metric>
-          <Metric width={"20%"} radius={5}>
-            <span className="metric-title">Ranking by sales</span>
-          </Metric>
-          <Metric width={"20%"} radius={5}>
-            <span className="metric-title">Ranking by sales</span>
-          </Metric>
         </div>
         <div className="panel-detail-title">Product Details</div>
         <div className="search-product-container">
@@ -205,26 +192,29 @@ function ProductOverview(props) {
           <Button
             left={20}
             buttonType="primary"
-            width={150}
+            width={140}
             height={36}
             radius={"0px"}
-            label={"Add"}
+            label={"Add product"}
             prefix={
               <FontAwesomeIcon icon={faPlus} style={{ color: "white" }} />
             }
+            onClick={() => props.setCurrentTab(1)}
           />
           <Button
-            left={10}
+            left={20}
             buttonType="primary"
-            width={150}
+            width={140}
             height={36}
             radius={"0px"}
-            label={"Save"}
+            label={"Add Survey"}
             prefix={
-              <FontAwesomeIcon icon={faSave} style={{ color: "white" }} />
+              <FontAwesomeIcon icon={faStickyNote} style={{ color: "white" }} />
             }
+            onClick={() => props.setCurrentTab(2)}
           />
         </div>
+
         <div className="product-table-container">
           <Tabs
             tabs={ProductFilterTab.filterTabs}
@@ -235,52 +225,91 @@ function ProductOverview(props) {
             current={currentTab}
             selectItem={handleSelectTab}
           />
-          <div className="product-table">
-            <table className="table table-wrapper">
-              <tbody className="text-capitalize">
-                {searchResult?.map((product, index) => (
-                  <tr
-                    className="table-row-wrapper"
-                    style={{ cursor: "pointer" }}
-                    key={index}
-                  >
-                    <td className="product-img">
-                      <img
-                        src={product.product_image}
-                        height={50}
-                        width={50}
-                        alt=""
-                      />
-                    </td>
-                    <td
-                      className="product-name"
-                      style={{
-                        textAlign: "left",
-                        width: 200,
-                      }}
+          {products?.length !== 0 ? (
+            <div className="product-table">
+              <table className="table table-wrapper">
+                <tbody className="text-capitalize">
+                  {searchResult?.map((product, index) => (
+                    <tr
+                      className="table-row-wrapper"
+                      style={{ cursor: "pointer" }}
+                      key={index}
                     >
-                      {product.product_name || "—"}
-                    </td>
-                    <td
-                      className="field-hidden"
-                      style={{
-                        textAlign: "left",
-                        width: 400,
-                      }}
-                    >
-                      {product.description || "—"}
-                    </td>
+                      <td className="product-img">
+                        <img
+                          src={product.product_image}
+                          height={50}
+                          width={50}
+                          alt=""
+                        />
+                      </td>
+                      <td
+                        className="product-name"
+                        style={{
+                          textAlign: "left",
+                          width: 200,
+                        }}
+                      >
+                        {product.product_name || "—"}
+                      </td>
+                      <td
+                        className="field-hidden"
+                        style={{
+                          textAlign: "left",
+                          width: 400,
+                        }}
+                      >
+                        {product.description || "—"}
+                      </td>
 
-                    <td style={{ width: 60 }}>
-                      $ {product?.price?.toFixed(2) || "—"}
-                    </td>
-                    <td>{product.update_at || "—"}</td>
-                    <td>Stock: {product.quantity || "—"}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                      <td style={{ width: 60 }}>
+                        $ {product?.price?.toFixed(2) || "—"}
+                      </td>
+                      <td>{product.update_at || "—"}</td>
+                      <td>Stock: {product.quantity || "—"}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ) : (
+            <div
+              style={{
+                height: 300,
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "center",
+                alignItems: "center",
+                border: "2px solid #E6E6E6",
+              }}
+            >
+              <tr className="table-row-wrapper">
+                <td className="product-img"></td>
+                <td
+                  className="field-hidden"
+                  style={{
+                    textAlign: "center",
+                    width: 600,
+                    fontSize: 14,
+                  }}
+                >
+                  Your restaurant has no products at the moment. <br />
+                  Please add a new product.{" "}
+                </td>
+                <td
+                  className="product-name"
+                  style={{
+                    textAlign: "left",
+                    width: 0,
+                  }}
+                ></td>
+
+                <td style={{ width: 60 }}></td>
+                <td></td>
+                <td></td>
+              </tr>
+            </div>
+          )}
         </div>
       </div>
     </Fragment>

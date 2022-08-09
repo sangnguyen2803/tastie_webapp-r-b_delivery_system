@@ -1,10 +1,10 @@
-import { Fragment, useState, useEffect } from "react";
+import { Fragment, useState, useRef } from "react";
 import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Formik, ErrorMessage, Form, Field } from "formik";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
+import axios from "axios";
 import "../ProductHandler/ProductHandler.scss";
 import "components/MerchantDashboard/DashboardFeatures/Panel.scss";
 import "style/Common.scss";
@@ -43,13 +43,32 @@ const initialValues = {
 };
 
 function AddUpcomingProduct(props) {
+  const [upcomingProductImage, setUpcomingProductImage] = useState(null);
+  const [upcomingProductReview, setUpcomingProductReview] = useState(null);
+
+  const inputFile = useRef(null);
   const addProduct = async (values) => {
+    const uploadImageConfig = {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "multipart/form-data",
+      },
+    };
+    const image_upload_endpoint = `http://157.230.243.92:3777/upload`;
+    let image_data = new FormData();
+    image_data.append("upload", upcomingProductImage);
+    const response = await axios.post(
+      image_upload_endpoint,
+      image_data,
+      uploadImageConfig
+    );
+    console.log(response);
     const formData = {
       provider_id: props.user.provider_id,
       product_name: values.productName,
       product_description: values.productDescription,
       estimated_price: values.estimatedPrice,
-      product_image: "",
+      product_image: response.data.url,
     };
     const result = await props.addUpcomingProductAPI(formData);
     if (result.status) {
@@ -94,6 +113,9 @@ function AddUpcomingProduct(props) {
       };
       props.addSurveyProductAPI(surveyFormData5);
     }
+  };
+  const handleUploadImage = () => {
+    inputFile.current.click();
   };
   return (
     <Formik initialValues={initialValues}>
@@ -232,6 +254,42 @@ function AddUpcomingProduct(props) {
                 </label>
               </div>
             </div>
+            <span className="product-detail-form-label">Photo</span>
+            <ButtonGroup float="flex-start" mgTop={10} mgBottom={5}>
+              <Button
+                color={"black"}
+                bglight={true}
+                border={"#5d5d5d 1.5px solid"}
+                prefix={
+                  <FontAwesomeIcon className="button-icon" icon={faPlus} />
+                }
+                width="50%"
+                height={30}
+                label="Upload a photo"
+                onClick={handleUploadImage}
+              />
+              <input
+                hidden={true}
+                name="upload"
+                type="file"
+                ref={inputFile}
+                onChange={(event) => {
+                  setUpcomingProductImage(event.target.files[0]);
+                  const objectUrl = URL.createObjectURL(event.target.files[0]);
+                  setUpcomingProductReview(objectUrl);
+                }}
+                className="form-control"
+              />
+              {upcomingProductReview && (
+                <img
+                  src={upcomingProductReview}
+                  alt="review"
+                  width={100}
+                  height={100}
+                  style={{ objectFit: "cover", marginLeft: 20 }}
+                />
+              )}
+            </ButtonGroup>
             <div
               className="product-handler-container"
               style={{ marginBottom: 50 }}
@@ -259,21 +317,7 @@ function AddUpcomingProduct(props) {
                   placeholder="Description about your product"
                 />
               </div>
-              <span className="product-detail-form-label">Photo</span>
 
-              <ButtonGroup float="flex-start" mgTop={10} mgBottom={5}>
-                <Button
-                  color={"black"}
-                  bglight={true}
-                  border={"#5d5d5d 1.5px solid"}
-                  prefix={
-                    <FontAwesomeIcon className="button-icon" icon={faPlus} />
-                  }
-                  width="50%"
-                  height={30}
-                  label="Upload a photo"
-                />
-              </ButtonGroup>
               <span className="product-detail-form-label">Estimated Price</span>
               <div className="product-detail-form-with-select">
                 <Field

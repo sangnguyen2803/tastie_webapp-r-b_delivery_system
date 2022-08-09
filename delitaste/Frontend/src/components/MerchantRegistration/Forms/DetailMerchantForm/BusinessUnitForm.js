@@ -19,7 +19,7 @@ import { setDialogBox } from "store/actions/UIComponentAction/DialogBoxAction";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAsterisk, faImage } from "@fortawesome/fontawesome-free-solid";
 import Switch from "react-switch";
-
+import axios from "axios";
 const formHeaderText = {
   title: "3. Business unit information",
   headerText:
@@ -71,6 +71,7 @@ function BusinessUnitForm(props) {
   const [cuisineCategory, setCuisineCategory] = useState([]);
   const [selectedRestaurant, setSelectedRestaurant] = useState([]);
   const [selectedCuisine, setSelectedCuisine] = useState([]);
+
   useEffect(async () => {
     try {
       let restaurantCategory = await props.getCategoryAPI("provider");
@@ -143,7 +144,10 @@ function BusinessUnitForm(props) {
   const [checkedThursday, setCheckedThursday] = useState(true);
   const [checkedFriday, setCheckedFriday] = useState(true);
   const [checkedSaturday, setCheckedSaturday] = useState(true);
-
+  const [providerImage, setProviderImage] = useState(null);
+  const [providerReview, setProviderReview] = useState(null);
+  const [facadeReview, setFacadeReview] = useState(null);
+  const [coverReview, setCoverReview] = useState(null);
   const handleSubmitForm = async (values) => {
     const { operating, rushHour, searchKeyword, description } = values;
     if (!rushHour || !searchKeyword || !description) {
@@ -154,7 +158,6 @@ function BusinessUnitForm(props) {
       );
       return;
     }
-
     const formData = {
       keyword: searchKeyword,
       description: description,
@@ -207,6 +210,22 @@ function BusinessUnitForm(props) {
       props.match.params.id,
       formData
     );
+    const uploadImageConfig = {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "multipart/form-data",
+      },
+    };
+    const image_upload_endpoint = `http://157.230.243.92:3777/upload/provider/avatar`;
+    let image_data = new FormData();
+    image_data.append("provider_id", props.match.params.id);
+    image_data.append("upload", providerImage);
+    const response = await axios.post(
+      image_upload_endpoint,
+      image_data,
+      uploadImageConfig
+    );
+    if (!response.data.status) return;
     if (updateStatus) props.history.push("product-detail");
   };
 
@@ -566,7 +585,7 @@ function BusinessUnitForm(props) {
                   </div>
                 </div>
                 <div className="tag-container">
-                  {restaurantCategory.map((tag, index) =>
+                  {restaurantCategory?.map((tag, index) =>
                     selectedRestaurant.includes(tag.category_id) ? (
                       <Tag key={tag.category_id} text={tag.category_name} />
                     ) : (
@@ -597,7 +616,7 @@ function BusinessUnitForm(props) {
                   </div>
                 </div>
                 <div className="tag-container">
-                  {cuisineCategory.map((tag, index) =>
+                  {cuisineCategory?.map((tag, index) =>
                     selectedCuisine.includes(tag.category_id) ? (
                       <Tag key={tag.category_id} text={tag.category_name} />
                     ) : (
@@ -632,9 +651,31 @@ function BusinessUnitForm(props) {
                             icon={faImage}
                           />
                           <span>Choose a file to upload</span>
-                          <input type="file" id="upload" />
+                          <input
+                            type="file"
+                            id="upload"
+                            onChange={(event) => {
+                              const objectUrl = URL.createObjectURL(
+                                event.target.files[0]
+                              );
+                              setCoverReview(objectUrl);
+                            }}
+                          />
                         </label>
                       </div>
+                      {coverReview && (
+                        <img
+                          src={coverReview}
+                          height={100}
+                          width={100}
+                          style={{
+                            objectFit: "cover",
+                            borderRadius: 10,
+                            border: "2px solid #E6E6E6",
+                          }}
+                          alt="review"
+                        />
+                      )}
                     </div>
                   </div>
                   <div className="merchant-form-field-wrapper-file">
@@ -649,14 +690,36 @@ function BusinessUnitForm(props) {
                             icon={faImage}
                           />
                           <span>Choose a file to upload</span>
-                          <input type="file" id="upload" />
+                          <input
+                            type="file"
+                            id="upload"
+                            onChange={(event) => {
+                              const objectUrl = URL.createObjectURL(
+                                event.target.files[0]
+                              );
+                              setFacadeReview(objectUrl);
+                            }}
+                          />
                         </label>
-                      </div>
+                      </div>{" "}
+                      {facadeReview && (
+                        <img
+                          src={facadeReview}
+                          height={100}
+                          width={100}
+                          style={{
+                            objectFit: "cover",
+                            borderRadius: 10,
+                            border: "2px solid #E6E6E6",
+                          }}
+                          alt="review"
+                        />
+                      )}
                     </div>
                   </div>
                   <div className="merchant-form-field-wrapper-file">
                     <div className="merchant-form-label-wrapper-file">
-                      Avatar
+                      Provider Image:
                     </div>
                     <div className="merchant-form-input-wrapper-file">
                       <div className="business-registration-browse">
@@ -666,9 +729,32 @@ function BusinessUnitForm(props) {
                             icon={faImage}
                           />
                           <span>Choose a file to upload</span>
-                          <input type="file" id="upload" />
+                          <input
+                            type="file"
+                            id="upload"
+                            onChange={(event) => {
+                              setProviderImage(event.target.files[0]);
+                              const objectUrl = URL.createObjectURL(
+                                event.target.files[0]
+                              );
+                              setProviderReview(objectUrl);
+                            }}
+                          />
                         </label>
                       </div>
+                      {providerReview && (
+                        <img
+                          src={providerReview}
+                          height={100}
+                          width={100}
+                          style={{
+                            objectFit: "cover",
+                            borderRadius: 10,
+                            border: "2px solid #E6E6E6",
+                          }}
+                          alt="review"
+                        />
+                      )}
                     </div>
                   </div>
                 </div>

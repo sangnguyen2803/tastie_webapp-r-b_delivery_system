@@ -1,9 +1,10 @@
-import { Fragment, useState, useEffect } from "react";
+import { Fragment, useState, useEffect, useRef } from "react";
 import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Formik, ErrorMessage, Form, Field } from "formik";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import DialogBox from "components/Commons/Overlay/DialogBox/DialogBox";
 import {
   faPlus,
   faSearch,
@@ -29,8 +30,11 @@ import {
   getProductListAPI,
   updateProductAPI,
 } from "store/actions/ProductAction/ProductAction";
-
+import SelectMenuCategory from "./SelectMenuCategory";
+import { getMenuCategoryAPI } from "store/actions/ProductAction/ProductAction";
 function EditProduct(props) {
+  const [editProductImage, setEditProductImage] = useState(null);
+  const [editProductReview, setEditProductReview] = useState(null);
   const [showFoodCategory, setShowFoodCategory] = useState(false);
   const [showMainFoodCategory, setShowMainFoodCategory] = useState(false);
   const [showMenuCategory, setShowMenuCategory] = useState(false);
@@ -48,6 +52,9 @@ function EditProduct(props) {
   const [currentId, setCurrentId] = useState(0);
   const [additionalOption, setAdditionalOption] = useState([]);
   const [selectedOption, setSelectedOption] = useState([]);
+  const [selectedMenuCategory, setSelectedMenuCategory] = useState([]);
+  const inputFile = useRef(null);
+
   const initialValues = {
     productName: props.productForEdit?.product_name || "",
     description: props.productForEdit?.description || "",
@@ -61,8 +68,10 @@ function EditProduct(props) {
     position: 1,
   };
   useEffect(() => {
-    console.log(props.productForEdit);
+    if (props.productForEdit?.menu_category_id)
+      setSelectedMenuCategory([props.productForEdit.menu_category_id]);
   }, [props.productForEdit]);
+
   useEffect(() => {
     async function fetchMenuCategory(id) {
       if (id !== -1) {
@@ -74,10 +83,27 @@ function EditProduct(props) {
   }, [props.user.provider_id]);
 
   useEffect(() => {
+    async function fetchMenuCategory() {
+      try {
+        if (props.user.provider_id) {
+          var menuCategory = await props.getMenuCategoryAPI(
+            props.user.provider_id
+          );
+          setMenuCategory(menuCategory);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    fetchMenuCategory();
+  }, [props.productForEdit]);
+
+  useEffect(() => {
     async function fetchCategory() {
       try {
         let foodCategory = await props.getCategoryAPI("food");
         let mainFoodCategory = await props.getCategoryAPI("main-food");
+
         setFoodCategory(foodCategory);
         setMainFoodCategory(mainFoodCategory);
       } catch (err) {
@@ -105,17 +131,41 @@ function EditProduct(props) {
       productPrice: parseFloat(values.productPrice),
       productPhoto: props.productForEdit.product_image,
       additionalOptions: additionalOption,
-      menuCategoryID: [props.productForEdit.menu_category_id],
+      menuCategoryID: selectedMenuCategory,
       mainCategoryID: selectedMainFood,
       foodCategoryID: selectedFood,
       position: props.productForEdit.product_position,
       quantityAvailable: props.productForEdit.quantity,
     };
     if (user.provider_id !== -1 && user.provider_id !== null) {
-      const status = await props.updateProductAPI(formData, user.provider_id);
-      if (status) console.log("Thanh cong");
-      else console.log("That bai");
+      const status = await props.updateProductAPI(
+        formData,
+        user.provider_id,
+        props.productForEdit.product_id,
+        editProductImage
+      );
+      if (status) {
+        props.setShowHandlerPanel(0);
+        props.setDialogContent({
+          header: "Edit Product",
+          text1: `Successfully updated your product ${values.productName}`,
+          text2:
+            "Your product has been updated to the selected menu category. Please check it out",
+        });
+        props.setShowEditDialog(true);
+      } else {
+        props.setDialogContent({
+          header: "Edit Product",
+          text1: `Fail to update your product ${values.productName}`,
+          text2: "Your product has not been updated. Please try again",
+        });
+        props.setShowEditDialog(true);
+      }
     }
+  };
+
+  const handleUploadImage = () => {
+    inputFile.current.click();
   };
   return (
     <Formik
@@ -152,9 +202,33 @@ function EditProduct(props) {
                       width={160}
                       height={30}
                       label="Change Photo"
+                      onClick={handleUploadImage}
+                    />
+                    <input
+                      hidden={true}
+                      name="upload"
+                      type="file"
+                      ref={inputFile}
+                      onChange={(event) => {
+                        setEditProductImage(event.target.files[0]);
+                        const objectUrl = URL.createObjectURL(
+                          event.target.files[0]
+                        );
+                        setEditProductReview(objectUrl);
+                      }}
+                      className="form-control"
                     />
                   </ButtonGroup>
-                  <img src={values.productImage} width={100} height={100} />
+                  <img
+                    src={
+                      editProductReview
+                        ? editProductReview
+                        : values.productImage
+                    }
+                    alt="review"
+                    width={100}
+                    height={100}
+                  />
                 </div>
                 <span className="product-detail-form-label">Name</span>
                 <div className="product-detail-form-input-wrapper">
@@ -179,18 +253,7 @@ function EditProduct(props) {
                   />
                 </div>
                 <span className="product-detail-form-label">Menu category</span>
-                <div className="product-detail-tag-container">
-                  {menuCategory.map((tag, index) =>
-                    selectedFood.includes(tag.menu_category_id) ? (
-                      <Tag
-                        key={tag.menu_category_id}
-                        text={tag.menu_category_name}
-                      />
-                    ) : (
-                      <></>
-                    )
-                  )}
-                </div>
+
                 <ButtonGroup
                   float="flex-start"
                   mgTop={10}
@@ -215,7 +278,15 @@ function EditProduct(props) {
                     onClick={() => setShowMenuCategory(true)}
                   />
                 </ButtonGroup>
-
+                <div className="product-detail-tag-container">
+                  {menuCategory?.map((tag, index) =>
+                    selectedMenuCategory?.includes(tag.menu_id) ? (
+                      <Tag key={tag.menu_id} text={tag.name} />
+                    ) : (
+                      <></>
+                    )
+                  )}
+                </div>
                 <span className="product-detail-form-label">Food category</span>
 
                 <ButtonGroup float="flex-start" mgTop={10} mgBottom={5}>
@@ -384,11 +455,11 @@ function EditProduct(props) {
                   setShowMenuCategory(false);
                 }}
               >
-                <CategorySelector
+                <SelectMenuCategory
                   menu={true}
                   save={() => setShowMenuCategory(false)}
-                  selectedCategory={selectedMenu}
-                  setSelectedCategory={setSelectedMenu}
+                  selectedCategory={selectedMenuCategory}
+                  setSelectedCategory={setSelectedMenuCategory}
                   list={menuCategory}
                   title={"Select categories for menu (maximum: 1)"}
                   required={1}
@@ -477,6 +548,7 @@ EditProduct.propTypes = {
   getCategoryAPI: PropTypes.func.isRequired,
   getProductListAPI: PropTypes.func.isRequired,
   updateProductAPI: PropTypes.func.isRequired,
+  getMenuCategoryAPI: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -488,6 +560,7 @@ export default withRouter(
   connect(mapStateToProps, {
     getCategoryAPI,
     getProductListAPI,
+    getMenuCategoryAPI,
     updateProductAPI,
   })(EditProduct)
 );

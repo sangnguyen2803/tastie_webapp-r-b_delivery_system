@@ -1,25 +1,20 @@
 import { Fragment, useState, useEffect } from "react";
-import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAsterisk, faImage } from "@fortawesome/fontawesome-free-solid";
 import Switch from "react-switch";
 import { Formik, ErrorMessage, Form, Field } from "formik";
 import "./MDHome.scss";
-import { faSearch } from "@fortawesome/fontawesome-free-solid";
 import PropTypes from "prop-types";
 import ButtonGroup from "components/Commons/Button/ButtonGroup/ButtonGroup";
 import Button from "components/Commons/Button/Button";
-import Metric from "../Metric/Metric";
-import ProgressBar from "components/Commons/ProgressBar/ProgressBar";
 import { getProductListAPI } from "store/actions/ProductAction/ProductAction";
-import Tabs from "../Tabs";
 import MDHeader from "components/MerchantDashboard/MDHeader/MDHeader";
-
+import DialogBox from "components/Commons/Overlay/DialogBox/DialogBox";
 import Modal from "components/Commons/Overlay/Popup/Modal/Modal";
 import ReactMapGl, { Source, Layer, Marker, Popup } from "react-map-gl";
 import { faMapMarkedAlt } from "@fortawesome/free-solid-svg-icons";
+import axios from "axios";
 
 function MDHome(props) {
   const { user, provider } = props;
@@ -36,10 +31,90 @@ function MDHome(props) {
   const [checkedThursday, setCheckedThursday] = useState(true);
   const [checkedFriday, setCheckedFriday] = useState(true);
   const [checkedSaturday, setCheckedSaturday] = useState(true);
-
-  const handleSubmitForm = (values) => {
-    console.log(values);
-    console.log(restaurantStatus);
+  const [dialogContent, setDialogContent] = useState({
+    header: "no-title",
+    text1: " no-header-content",
+    text2: "no-sub-header-content",
+  });
+  const [showUpdateDialog, setShowUpdateDialog] = useState(false);
+  const handleSubmitForm = async (values) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const endpoint = `/v1/api/provider/dashboard/${user.provider_id}/update-provider`;
+    let body1 = JSON.stringify({
+      provider_status: restaurantStatus,
+      day: "1",
+      open_time: values.operating?.sunday?.openTime || "",
+      close_time: values.operating?.sunday?.closeTime || "",
+      estimated_cooking_time: values.ect,
+      update_at: "2022-02-19",
+    });
+    let body2 = JSON.stringify({
+      provider_status: restaurantStatus,
+      day: "2",
+      open_time: values.operating?.monday?.openTime || "",
+      close_time: values.operating?.monday?.closeTime || "",
+      estimated_cooking_time: values.ect,
+      update_at: "2022-02-19",
+    });
+    let body3 = JSON.stringify({
+      provider_status: restaurantStatus,
+      day: "3",
+      open_time: values.operating?.tuesday?.openTime || "",
+      close_time: values.operating?.tuesday?.closeTime || "",
+      estimated_cooking_time: values.ect,
+      update_at: "2022-02-19",
+    });
+    let body4 = JSON.stringify({
+      provider_status: restaurantStatus,
+      day: "4",
+      open_time: values.operating?.wednesday?.openTime || "",
+      close_time: values.operating?.wednesday?.closeTime || "",
+      estimated_cooking_time: values.ect,
+      update_at: "2022-02-19",
+    });
+    let body5 = JSON.stringify({
+      provider_status: restaurantStatus,
+      day: "5",
+      open_time: values.operating?.thursday?.openTime || "",
+      close_time: values.operating?.thursday?.closeTime || "",
+      estimated_cooking_time: values.ect,
+      update_at: "2022-02-19",
+    });
+    let body6 = JSON.stringify({
+      provider_status: restaurantStatus,
+      day: "6",
+      open_time: values.operating?.friday?.openTime || "",
+      close_time: values.operating?.friday?.closeTime || "",
+      estimated_cooking_time: values.ect,
+      update_at: "2022-02-19",
+    });
+    let body7 = JSON.stringify({
+      provider_status: restaurantStatus,
+      day: "7",
+      open_time: values.operating?.saturday?.openTime || "",
+      close_time: values.operating?.saturday?.closeTime || "",
+      estimated_cooking_time: values.ect,
+      update_at: "2022-02-19",
+    });
+    console.log(body1, body2, body3, body4, body5, body6, body7);
+    const result1 = await axios.post(endpoint, body1, config);
+    const result2 = await axios.post(endpoint, body2, config);
+    const result3 = await axios.post(endpoint, body3, config);
+    const result4 = await axios.post(endpoint, body4, config);
+    const result5 = await axios.post(endpoint, body5, config);
+    const result6 = await axios.post(endpoint, body6, config);
+    const result7 = await axios.post(endpoint, body7, config);
+    console.log(result1, result2, result3, result4, result5, result6, result7);
+    setShowUpdateDialog(true);
+    setDialogContent({
+      header: "Update provider detail",
+      text1: `Successfully updated your business information`,
+      text2: "Your business information has been updated. Please check it out",
+    });
   };
 
   return (
@@ -457,6 +532,38 @@ function MDHome(props) {
           </Formik>
         )}
       </div>
+      <DialogBox
+        visibility={showUpdateDialog}
+        headerText={dialogContent.header}
+        close={() => setShowUpdateDialog(false)}
+      >
+        <div className="dialog-detail-wrapper">
+          <div className="dialogbox-content">
+            <span className="dialogbox-content-detail-main">
+              {dialogContent.text1}
+            </span>
+            <span className="dialogbox-content-detail-sub">
+              {dialogContent.text2}
+            </span>
+          </div>
+          <div className="dialogbox-action">
+            <ButtonGroup gap={5} mgRight={5}>
+              <Button
+                color={"white"}
+                bgColor={"#800000"}
+                justifyContent={"center"}
+                gap={"10px"}
+                width={80}
+                height={30}
+                label={"OK"}
+                onClick={() => {
+                  setShowUpdateDialog(false);
+                }}
+              />
+            </ButtonGroup>
+          </div>
+        </div>
+      </DialogBox>
       <Modal
         openModal={mapView}
         title={"Restaurant Location"}

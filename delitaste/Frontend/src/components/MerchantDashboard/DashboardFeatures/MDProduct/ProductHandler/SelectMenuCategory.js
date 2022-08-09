@@ -9,25 +9,27 @@ import "components/MerchantRegistration/Forms/DetailMerchantForm/CategorySelecto
 import Button from "components/Commons/Button/Button";
 import ButtonGroup from "components/Commons/Button/ButtonGroup/ButtonGroup";
 
-
 function SelectMenuCategory(props) {
   const [categoryList, setCategoryList] = useState(props.list);
+  useEffect(() => {
+    console.log(categoryList);
+  }, [categoryList]);
   return (
     <Fragment>
       <div className="category-selection-wrapper">
         <span className="category-selection-title">{props.title}</span>
         <div className="option-container">
-          {categoryList.map((category) => (
-            <div className="option-row" key={category.category_id}>
+          {props.list?.map((category) => (
+            <div className="option-row" key={category.menu_id}>
               <Checkbox
                 checked={
-                  props.selectedCategory.indexOf(category.category_id) !== -1
+                  props.selectedCategory.indexOf(category.menu_id) !== -1
                     ? true
                     : false
                 }
                 disabled={
                   props.selectedCategory.length < props.required ||
-                  props.selectedCategory.indexOf(category.category_id) !== -1
+                  props.selectedCategory.indexOf(category.menu_id) !== -1
                     ? false
                     : true
                 }
@@ -50,12 +52,12 @@ function SelectMenuCategory(props) {
                   if (value) {
                     props.setSelectedCategory([
                       ...props.selectedCategory,
-                      category.category_id,
+                      category.menu_id,
                     ]);
                     return;
                   } else {
                     let index = props.selectedCategory.indexOf(
-                      category.category_id
+                      category.menu_id
                     );
                     if (index != -1) {
                       var array = [...props.selectedCategory];
@@ -76,7 +78,7 @@ function SelectMenuCategory(props) {
                   marginLeft: 15,
                   userSelect: "none",
                 }}
-                label={category.category_name}
+                label={category.name}
               />
             </div>
           ))}

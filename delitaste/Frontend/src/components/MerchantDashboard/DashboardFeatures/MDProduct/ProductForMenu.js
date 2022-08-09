@@ -51,7 +51,6 @@ function ProductForMenu(props) {
     if (status) {
       if (user.provider_id !== -1 && user.provider_id !== null) {
         const productList = await props.getProductListAPI(user.provider_id);
-        console.log(productList);
         props.setShowHandlerPanel(0);
         props.setSelectedProduct([]);
         props.setProductForEdit();
@@ -115,7 +114,7 @@ function ProductForMenu(props) {
               </div>
             </div>
           </DialogBox>
-          {props.subItems.map((item, index) => (
+          {props.subItems?.map((item, index) => (
             <Draggable
               key={String(item.product_id)}
               draggableId={String(item.product_id)}

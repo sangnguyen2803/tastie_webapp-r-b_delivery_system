@@ -6,6 +6,8 @@ import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faDownload,
+  faExclamation,
+  faExclamationCircle,
   faPlus,
   faQuestionCircle,
   faTrashAlt,
@@ -87,7 +89,11 @@ function UpcomingProductDetail(props) {
       );
       setChoice(result[0]?.choice);
       setQuestion(result[0]?.question);
-      setSeries(seriesOnFirstRender);
+      setSeries(
+        seriesOnFirstRender.length !== 0
+          ? seriesOnFirstRender
+          : [20, 20, 20, 20, 20]
+      );
       setOptions({
         ...options,
         labels: result[0]?.statistic?.map((s) => s.response),
@@ -96,12 +102,16 @@ function UpcomingProductDetail(props) {
     }
     fetchUpcomingProducts(user.provider_id);
   }, [user.provider_id]);
-  
+
   const handleUpdateStatistics = (p) => {
     setChoice(p.choice);
     setQuestion(p.question);
     const seriesOnFirstRender = p.statistic?.map((s) => s.num_responses);
-    setSeries(seriesOnFirstRender);
+    setSeries(
+      seriesOnFirstRender.length !== 0
+        ? seriesOnFirstRender
+        : [20, 20, 20, 20, 20]
+    );
     setOptions({
       ...options,
       labels: p.statistic?.map((s) => s.response),
@@ -189,10 +199,35 @@ function UpcomingProductDetail(props) {
           <div
             className="upcoming-product-table-wrapper"
             style={{
+              border: "1px solid #E6E6E6",
               backgroundColor:
                 selectedProduct[0] === "10000001" ? "#E4E4E4" : "white",
             }}
           >
+            {items?.length === 0 && (
+              <Fragment>
+                {" "}
+                <div
+                  className="o-order-container"
+                  style={{
+                    height: 500,
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    borderBottom: "2px solid #d8d8d8",
+                    borderLeft: "2px solid #d8d8d8",
+                    borderRight: "2px solid #d8d8d8",
+                    gap: 20,
+                    fontSize: 14,
+                  }}
+                >
+                  <span className="o-order-container-text">
+                    Upcoming product not found.
+                  </span>
+                </div>
+              </Fragment>
+            )}
             {items?.map((up, index) => (
               <div
                 onClick={() => {

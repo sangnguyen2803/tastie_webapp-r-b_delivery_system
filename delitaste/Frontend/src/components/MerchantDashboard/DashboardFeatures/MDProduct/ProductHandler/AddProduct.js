@@ -25,6 +25,7 @@ import {
 } from "store/actions/ProductAction/ProductAction";
 import SelectMenuCategory from "./SelectMenuCategory";
 import axios from "axios";
+import AddMenu from "./AddMenu";
 
 const initialValues = {
   productName: "",
@@ -57,9 +58,12 @@ function AddProduct(props) {
   const [additionalOption, setAdditionalOption] = useState([]);
   const [selectedOption, setSelectedOption] = useState([]);
   const [selectedMenuCategory, setSelectedMenuCategory] = useState([]);
-
+  const [productReview, setProductReview] = useState(null);
   const inputFile = useRef(null);
   const { user } = props;
+
+  const [showAddMenu, setShowAddMenu] = useState(false);
+
   useEffect(() => {
     async function fetchingCategoryData() {
       try {
@@ -88,11 +92,6 @@ function AddProduct(props) {
   }, [selectedMainFood]);
 
   const addProduct = async (values) => {
-    
-    const data = JSON.stringify({
-      provider_id: user.provider_id,
-      upload: productImage,
-    });
     /*
     try {
       const res = await axios.post(
@@ -128,9 +127,26 @@ function AddProduct(props) {
       additionalOptions: additionalOption,
     };
     if (user.provider_id !== -1 && user.provider_id !== null) {
-      const status = await props.addProductAPI(formData);
-      if (status) console.log("Thanh cong");
-      else console.log("That bai");
+      const result = await props.addProductAPI(formData, productImage); //event.target.file[0]
+      if (result) {
+        props.setShowHandlerPanel(1);
+        props.setShowHandlerPanel(0);
+        props.setDialogContent({
+          header: "Add product",
+          text1: `Successfully added your product ${values.productName}`,
+          text2:
+            "Your product has been added to the selected menu category. Please check it out",
+        });
+        props.setShowEditDialog(true);
+      } else {
+        props.setDialogContent({
+          header: "Edit Product",
+          text1: `Fail to add your product ${values.productName}`,
+          text2: "Your product has not been added. Please try again",
+        });
+        props.setShowEditDialog(true);
+      }
+      return;
     }
   };
 
@@ -168,19 +184,23 @@ function AddProduct(props) {
                 />
               </div>
               <span className="product-detail-form-label">Menu category</span>
-              <div className="product-detail-tag-container">
-                {props.menuCategory?.map((tag, index) =>
-                  selectedMenuCategory.includes(tag.menu_category_id) ? (
-                    <Tag
-                      key={tag.menu_category_id}
-                      text={tag.menu_category_name}
-                    />
-                  ) : (
-                    <></>
-                  )
-                )}
-              </div>
+
               <ButtonGroup float="flex-start" mgTop={10} gap={12} mgBottom={5}>
+                <Button
+                  color={"black"}
+                  bglight={true}
+                  border={"#5d5d5d 1.5px solid"}
+                  prefix={
+                    <FontAwesomeIcon className="button-icon" icon={faSearch} />
+                  }
+                  gap={"10px"}
+                  justifyContent={"center"}
+                  width="44%"
+                  height={30}
+                  label="Select menu"
+                  onClick={() => setShowCreateMenu(true)}
+                  disabled={menuCategory?.length ? false : true}
+                />
                 <Button
                   color={"black"}
                   bglight={true}
@@ -193,25 +213,18 @@ function AddProduct(props) {
                   width="44%"
                   height={30}
                   label="Add menu"
-                  onClick={() => setShowCreateMenu(true)}
-                />
-                <Button
-                  disabled={menuCategory.length ? false : true}
-                  color={"black"}
-                  bglight={true}
-                  border={"#5d5d5d 1.5px solid"}
-                  prefix={
-                    <FontAwesomeIcon className="button-icon" icon={faSearch} />
-                  }
-                  gap={"10px"}
-                  justifyContent={"center"}
-                  width="44%"
-                  height={30}
-                  label="Select menu"
-                  onClick={() => setShowMenuCategory(true)}
+                  onClick={() => setShowAddMenu(true)}
                 />
               </ButtonGroup>
-
+              <div className="product-detail-tag-container">
+                {menuCategory?.map((tag, index) =>
+                  selectedMenuCategory.includes(tag.menu_id) ? (
+                    <Tag key={index} text={tag.name} />
+                  ) : (
+                    <></>
+                  )
+                )}
+              </div>
               <span className="product-detail-form-label">Food category</span>
 
               <ButtonGroup float="flex-start" mgTop={10} mgBottom={5}>
@@ -231,9 +244,9 @@ function AddProduct(props) {
                 />
               </ButtonGroup>
               <div className="product-detail-tag-container">
-                {mainFoodCategory.map((tag, index) =>
+                {mainFoodCategory?.map((tag, index) =>
                   selectedMainFood.includes(tag.category_id) ? (
-                    <Tag key={tag.category_id} text={tag.category_name} />
+                    <Tag key={index} text={tag.category_name} />
                   ) : (
                     <></>
                   )
@@ -246,7 +259,7 @@ function AddProduct(props) {
               <ButtonGroup float="flex-start" mgTop={10} mgBottom={5}>
                 <Button
                   color={"black"}
-                  disabled={selectedMainFood.length ? false : true}
+                  disabled={selectedMainFood?.length ? false : true}
                   bglight={true}
                   border={"#5d5d5d 1.5px solid"}
                   prefix={
@@ -261,7 +274,7 @@ function AddProduct(props) {
                 />
               </ButtonGroup>
               <div className="product-detail-tag-container">
-                {filteredFoodCategory.map((tag, index) =>
+                {filteredFoodCategory?.map((tag, index) =>
                   selectedFood.includes(tag.category_id) ? (
                     <Tag key={tag.category_id} text={tag.category_name} />
                   ) : (
@@ -323,8 +336,19 @@ function AddProduct(props) {
                 </Field>
               </div>
               <span className="product-detail-form-label">Photo</span>
-
-              <ButtonGroup float="flex-start" mgTop={10} mgBottom={5}>
+              <div
+                className="product-image"
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: productReview
+                    ? "space-between"
+                    : "flex-start",
+                  alignItems: "center",
+                  width: "92%",
+                  gap: "10px",
+                }}
+              >
                 <Button
                   color={"black"}
                   bglight={true}
@@ -333,21 +357,34 @@ function AddProduct(props) {
                     <FontAwesomeIcon className="button-icon" icon={faPlus} />
                   }
                   onClick={handleUploadImage}
-                  width="50%"
+                  width={180}
                   height={30}
                   label="Upload a photo"
                 />
                 <input
                   hidden={true}
-                  name="product-image"
+                  name="upload"
                   type="file"
                   ref={inputFile}
                   onChange={(event) => {
-                    setProductImage(event.currentTarget.files[0]);
+                    setProductImage(event.target.files[0]);
+                    const objectUrl = URL.createObjectURL(
+                      event.target.files[0]
+                    );
+                    setProductReview(objectUrl);
                   }}
                   className="form-control"
                 />
-              </ButtonGroup>
+                {productReview && (
+                  <img
+                    src={productReview}
+                    alt="review"
+                    width={100}
+                    height={100}
+                    style={{ objectFit: "cover" }}
+                  />
+                )}
+              </div>
               <span className="product-detail-form-label">Price</span>
               <div className="product-detail-form-with-select">
                 <Field
@@ -428,7 +465,7 @@ function AddProduct(props) {
                 save={() => {
                   setShowCreateMenu(false);
                 }}
-                list={props.menuCategory}
+                list={menuCategory}
                 selectedCategory={selectedMenuCategory}
                 setSelectedCategory={setSelectedMenuCategory}
                 title={"Select a menu category"}
@@ -469,6 +506,27 @@ function AddProduct(props) {
                 list={filteredFoodCategory}
                 title={"Select categories for food specialty (maximum: 3)"}
                 required={3}
+              />
+            </Modal>
+            <Modal
+              openModal={showAddMenu}
+              title={"Add Menu category"}
+              width={35}
+              height={490}
+              closeModal={() => {
+                setShowAddMenu(false);
+              }}
+            >
+              <AddMenu
+                title={"Add a new menu category"}
+                menuCategory={menuCategory}
+                setMenuCategory={setMenuCategory}
+                save={() => {
+                  setShowAddMenu(false);
+                }}
+                close={() => {
+                  setShowAddMenu(false);
+                }}
               />
             </Modal>
             <Modal

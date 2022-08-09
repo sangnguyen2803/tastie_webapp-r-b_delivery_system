@@ -66,10 +66,17 @@ export const getProductListAPI = (providerId) => async (dispatch) => {
 };
 
 //Add product
-export const addProductAPI = (data) => async (dispatch) => {
+export const addProductAPI = (data, image) => async (dispatch) => {
   const config = {
     headers: {
       "Content-Type": "application/json",
+    },
+  };
+
+  const uploadImageConfig = {
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "multipart/form-data",
     },
   };
   var today = new Date();
@@ -91,58 +98,83 @@ export const addProductAPI = (data) => async (dispatch) => {
   try {
     const endpoint = `/v1/api/provider/dashboard/menu-overview/add-item`;
     const res = await axios.post(endpoint, body, config);
-    console.log(body);
     console.log(res.data);
     if (res.data?.status) {
+      const image_upload_endpoint = `http://157.230.243.92:3777/upload/product/avatar`;
+      let image_data = new FormData();
+      image_data.append("product_id", res.data.infor.product_id);
+      image_data.append("upload", image);
+      const response = await axios.post(
+        image_upload_endpoint,
+        image_data,
+        uploadImageConfig
+      );
       return true;
     }
     return false;
   } catch (err) {
-    console.log(err.response.data.errors);
     return false;
   }
 };
 
 //Add product
-export const updateProductAPI = (data, providerId) => async (dispatch) => {
-  const config = {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  };
-  var today = new Date();
-  var currentDateTime =
-    today.getFullYear() +
-    "-" +
-    (today.getMonth() + 1) +
-    "-" +
-    today.getDate() +
-    " " +
-    today.getHours() +
-    ":" +
-    today.getMinutes() +
-    ":" +
-    today.getSeconds();
-  data.update_at = currentDateTime;
-  const body = JSON.stringify(data);
-  try {
-    const endpoint = `/v1/api/provider/dashboard/menu-overview/${providerId}/update-product`;
-    const res = await axios.post(endpoint, body, config);
-    console.log(body);
-    console.log(res.data);
-    if (res.data?.status) {
-      return true;
+export const updateProductAPI =
+  (data, providerId, productId, image) => async (dispatch) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const uploadImageConfig = {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "multipart/form-data",
+      },
+    };
+    var today = new Date();
+    var currentDateTime =
+      today.getFullYear() +
+      "-" +
+      (today.getMonth() + 1) +
+      "-" +
+      today.getDate() +
+      " " +
+      today.getHours() +
+      ":" +
+      today.getMinutes() +
+      ":" +
+      today.getSeconds();
+    data.update_at = currentDateTime;
+    const body = JSON.stringify(data);
+    try {
+      const endpoint = `/v1/api/provider/dashboard/menu-overview/${providerId}/update-product`;
+      console.log(body);
+      const res = await axios.post(endpoint, body, config);
+      console.log(res);
+      if (res.data?.status) {
+        const image_upload_endpoint = `http://157.230.243.92:3777/upload/product/avatar`;
+        let image_data = new FormData();
+        image_data.append("product_id", productId);
+        image_data.append("upload", image);
+        const response = await axios.post(
+          image_upload_endpoint,
+          image_data,
+          uploadImageConfig
+        );
+        console.log(response);
+        return true;
+      }
+      return false;
+    } catch (err) {
+      console.log(err.response.data.errors);
+      return false;
     }
-    return false;
-  } catch (err) {
-    console.log(err.response.data.errors);
-    return false;
-  }
-};
+  };
 
 //Remove product
 export const removeProductAPI = (id) => async (dispatch) => {
   try {
+    console.log(id);
     const endpoint = `/v1/api/provider/dashboard/menu-overview/${id}/remove-item`;
     const res = await axios.delete(endpoint);
     if (res.data?.status) {
@@ -165,12 +197,12 @@ export const getMenuCategoryAPI = (id) => async (dispatch) => {
     const endpoint = `/v1/api/provider/dashboard/menu-overview/${id}/get-menu-items`;
     const res = await axios.get(endpoint);
     if (res.data?.status) {
-      if (!res.data.result) return [];
+      if (!res.data.menuItems) return [];
       dispatch({
         type: GET_PRODUCT_LIST,
-        payload: { productList: res.data.result },
+        payload: { productList: res.data.menuItems },
       });
-      return res.data.result;
+      return res.data.menuItems;
     }
     return [];
   } catch (err) {

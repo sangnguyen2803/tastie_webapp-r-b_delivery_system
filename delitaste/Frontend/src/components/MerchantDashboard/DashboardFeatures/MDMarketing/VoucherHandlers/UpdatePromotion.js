@@ -75,7 +75,25 @@ function UpdatePromotion(props) {
     };
     const status = await props.updatePromotionAPI(data);
     console.log(status);
-    if (status) props.setVisible(false);
+    if (status) {
+      props.setAddStatus(values.promotion_code || values.discount_name);
+      props.setVisible(false);
+      props.setDialogContent({
+        header: "Update promotion",
+        text1: `Successfully updated this promotion`,
+        text2: "This promotion has been updated. Please check it out",
+      });
+      props.setShowPromotionDialog(true);
+    } else {
+      props.setAddStatus(values.promotion_code || values.discount_name);
+      props.setVisible(false);
+      props.setDialogContent({
+        header: "Update promotion",
+        text1: `Fail to update this promotion`,
+        text2: "This promotion has yet to update. Please try again",
+      });
+      props.setShowPromotionDialog(true);
+    }
     return;
   };
   return (

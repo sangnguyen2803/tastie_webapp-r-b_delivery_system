@@ -71,13 +71,13 @@
   flex-direction: row;
   flex-wrap: nowrap;
   align-self: flex-start;
-  justify-content: center;
+  justify-content: flex-start;
   align-content: center;
   height: 30px;
-  width: 60% !important;
+  width: 80% !important;
 
   input {
-    width: 100%;
+    width: 60%;
   }
 
   .search-product-term {

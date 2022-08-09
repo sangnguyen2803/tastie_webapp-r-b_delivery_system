@@ -192,7 +192,7 @@ function OrderDetail(props) {
               <div className="o-order o-order-price">Total</div>
             </div>
           </div>
-          {loading ? (
+          {loading && provider?.orderList?.length !== 0 ? (
             <div className="o-order-container">
               {provider.orderList?.map((order) => (
                 <div
@@ -244,7 +244,11 @@ function OrderDetail(props) {
                 margin={3}
                 speedMultiplier={0.8}
               />
-              <span className="o-order-container-text">
+              <span
+                className="o-order-container-text"
+                style={{ fontSize: 14, textAlign: "center" }}
+              >
+                Data is fetching. <br />
                 Please wait for a while ...
               </span>
             </div>

@@ -20,7 +20,9 @@ import ProductForMenu from "components/MerchantDashboard/DashboardFeatures/MDPro
 import { getProductListAPI } from "store/actions/ProductAction/ProductAction";
 import { getAllPromotionAPI } from "store/actions/ProviderAction/ProviderAction";
 import "../Panel.scss";
-
+import DialogBox from "components/Commons/Overlay/DialogBox/DialogBox";
+import ButtonGroup from "components/Commons/Button/ButtonGroup/ButtonGroup";
+import { faScroll } from "@fortawesome/free-solid-svg-icons";
 function ProductDetail(props) {
   const { user, product, getProductListAPI } = props;
   const [discountList, setDiscountList] = useState([]);
@@ -29,6 +31,12 @@ function ProductDetail(props) {
   const [selectedProduct, setSelectedProduct] = useState([]);
   const [productForEdit, setProductForEdit] = useState();
   const [menuCategory, setMenuCategory] = useState();
+  const [showEditDialog, setShowEditDialog] = useState(false);
+  const [dialogContent, setDialogContent] = useState({
+    header: "no-title",
+    text1: " no-header-content",
+    text2: "no-sub-header-content",
+  });
   useEffect(() => {
     async function fetchMenuCategory(id) {
       if (id !== -1) {
@@ -51,11 +59,12 @@ function ProductDetail(props) {
     async function fetchingData() {
       if (user.provider_id !== -1 && user.provider_id !== null) {
         const productList = await getProductListAPI(user.provider_id);
-        setItems(productList);
+        console.log(productList);
+        setItems(productList !== undefined ? productList : []);
       }
     }
     fetchingData();
-  }, []);
+  }, [showHandlerPanel]);
 
   useEffect(() => {
     if (items && selectedProduct[0] && selectedProduct[1]) {
@@ -146,86 +155,163 @@ function ProductDetail(props) {
                 <FontAwesomeIcon icon={faPlus} style={{ color: "white" }} />
               }
             />
+            <div style={{ marginLeft: 10 }}></div>
+            <Button
+              buttonType="primary"
+              justifyContent={"center"}
+              onClick={() => {
+                setShowHandlerPanel(0);
+                setSelectedProduct([]);
+              }}
+              width={160}
+              height={32}
+              radius={"0px"}
+              label={"Add menu"}
+              prefix={
+                <FontAwesomeIcon icon={faScroll} style={{ color: "white" }} />
+              }
+            />
           </div>
-          <div className="menu-table">
-            <DragDropContext onDragEnd={onDragEnd}>
-              <Droppable droppableId="droppable" type="droppableItem">
-                {(provided, snapshot) => (
-                  <div
-                    ref={provided.innerRef}
-                    style={getListStyle(snapshot.isDraggingOver)}
-                  >
-                    {items.map((item, index) => (
-                      <Draggable
-                        key={String(item.menu_category_id)}
-                        draggableId={String(item.menu_category_id)}
-                        index={index}
-                      >
-                        {(provided, snapshot) => (
-                          <div>
-                            <div
-                              className="menu-category-row-container"
-                              ref={provided.innerRef}
-                              {...provided.draggableProps}
-                              style={getItemStyle(
-                                snapshot.isDragging,
-                                provided.draggableProps.style
-                              )}
-                            >
-                              <div className="menu-category-wrapper">
-                                <span
-                                  className="menu-category-drag-icon"
-                                  {...provided.dragHandleProps}
-                                >
-                                  <svg
-                                    width="30"
-                                    height="30"
-                                    viewBox="0 0 20 20"
+          {items?.length !== 0 ? (
+            <div className="menu-table">
+              <DragDropContext onDragEnd={onDragEnd}>
+                <Droppable droppableId="droppable" type="droppableItem">
+                  {(provided, snapshot) => (
+                    <div
+                      ref={provided.innerRef}
+                      style={getListStyle(snapshot.isDraggingOver)}
+                    >
+                      {items?.map((item, index) => (
+                        <Draggable
+                          key={String(item.menu_category_id)}
+                          draggableId={String(item.menu_category_id)}
+                          index={index}
+                        >
+                          {(provided, snapshot) => (
+                            <div>
+                              <div
+                                className="menu-category-row-container"
+                                ref={provided.innerRef}
+                                {...provided.draggableProps}
+                                style={getItemStyle(
+                                  snapshot.isDragging,
+                                  provided.draggableProps.style
+                                )}
+                              >
+                                <div className="menu-category-wrapper">
+                                  <span
+                                    className="menu-category-drag-icon"
+                                    {...provided.dragHandleProps}
                                   >
-                                    <path
-                                      fill="currentColor"
-                                      d="M3,15H21V13H3V15M3,19H21V17H3V19M3,11H21V9H3V11M3,5V7H21V5H3Z"
-                                    />
-                                  </svg>{" "}
-                                </span>
-                                <span className="menu-category-name">
-                                  {" "}
-                                  {item.menu_category_name}
-                                </span>
+                                    <svg
+                                      width="30"
+                                      height="30"
+                                      viewBox="0 0 20 20"
+                                    >
+                                      <path
+                                        fill="currentColor"
+                                        d="M3,15H21V13H3V15M3,19H21V17H3V19M3,11H21V9H3V11M3,5V7H21V5H3Z"
+                                      />
+                                    </svg>{" "}
+                                  </span>
+                                  <span className="menu-category-name">
+                                    {" "}
+                                    {item.menu_category_name}
+                                  </span>
+                                </div>
+                                <ProductForMenu
+                                  items={items}
+                                  setItems={setItems}
+                                  setShowHandlerPanel={setShowHandlerPanel}
+                                  selectedProduct={selectedProduct}
+                                  setSelectedProduct={setSelectedProduct}
+                                  setProductForEdit={setProductForEdit}
+                                  discounts={discountList}
+                                  subItems={item.products}
+                                  type={item.menu_category_id}
+                                />
                               </div>
-                              <ProductForMenu
-                                items={items}
-                                setItems={setItems}
-                                setShowHandlerPanel={setShowHandlerPanel}
-                                selectedProduct={selectedProduct}
-                                setSelectedProduct={setSelectedProduct}
-                                setProductForEdit={setProductForEdit}
-                                discounts={discountList}
-                                subItems={item.products}
-                                type={item.menu_category_id}
-                              />
+                              {provided.placeholder}
                             </div>
-                            {provided.placeholder}
-                          </div>
-                        )}
-                      </Draggable>
-                    ))}
-                    {provided.placeholder}
-                  </div>
-                )}
-              </Droppable>
-            </DragDropContext>
-          </div>
+                          )}
+                        </Draggable>
+                      ))}
+                      {provided.placeholder}
+                    </div>
+                  )}
+                </Droppable>
+              </DragDropContext>
+            </div>
+          ) : (
+            <div
+              className="menu-table"
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "center",
+                alignItems: "center",
+                width: "100%",
+                height: 600,
+                fontSize: 14,
+                border: "2px solid #E6E6E6",
+                textAlign: "center",
+              }}
+            >
+              Your restaurant has 0 product at the moment.
+              <br />
+              Please create a menu first.
+            </div>
+          )}
         </div>
         <div className="sub-detail-panel-wrapper">
           {showHandlerPanel === 0 ? (
-            <AddProduct menuCategory={menuCategory} />
+            <AddProduct
+              menuCategory={menuCategory}
+              setShowHandlerPanel={setShowHandlerPanel}
+              setShowEditDialog={setShowEditDialog}
+              setDialogContent={setDialogContent}
+            />
           ) : (
             <EditProduct
               productForEdit={productForEdit}
               setProductForEdit={setProductForEdit}
+              setShowHandlerPanel={setShowHandlerPanel}
+              setShowEditDialog={setShowEditDialog}
+              setDialogContent={setDialogContent}
             />
           )}
+          <DialogBox
+            visibility={showEditDialog}
+            headerText={dialogContent.header}
+            close={() => setShowEditDialog(false)}
+          >
+            <div className="dialog-detail-wrapper">
+              <div className="dialogbox-content">
+                <span className="dialogbox-content-detail-main">
+                  {dialogContent.text1}
+                </span>
+                <span className="dialogbox-content-detail-sub">
+                  {dialogContent.text2}
+                </span>
+              </div>
+              <div className="dialogbox-action">
+                <ButtonGroup gap={5} mgRight={5}>
+                  <Button
+                    color={"white"}
+                    bgColor={"#800000"}
+                    justifyContent={"center"}
+                    gap={"10px"}
+                    width={80}
+                    height={30}
+                    label={"OK"}
+                    onClick={() => {
+                      setShowEditDialog(false);
+                    }}
+                  />
+                </ButtonGroup>
+              </div>
+            </div>
+          </DialogBox>
         </div>
       </div>
     </Fragment>

@@ -58,9 +58,11 @@ export const updateServiceInfoFormAPI = (id, data) => async (dispatch) => {
     },
   };
   const body = JSON.stringify(data);
+  console.log(body);
   try {
     const endpoint = `/v1/api/provider/register/${id}/basic-info`;
     const res = await axios.post(endpoint, body, config);
+    console.log(res);
     if (res.data?.state) {
       dispatch({
         type: UPDATE_SERVICE_INFO_FORM,
@@ -156,6 +158,8 @@ export const updateProductDetailInfoFormAPI =
     };
     const body = JSON.stringify(data);
     try {
+      console.log(id);
+      console.log(body);
       const endpoint = `/v1/api/provider/register/${id}/menu-photo`;
       const res = await axios.post(endpoint, body, config);
       console.log(res);
@@ -350,6 +354,7 @@ export const addPromotionAPI = (data) => async (dispatch) => {
     },
   };
   const body = JSON.stringify(data);
+  console.log(body);
   try {
     const endpoint = "/v1/api/tastie/provider/add-promotion";
     const res = await axios.post(endpoint, body, config);
@@ -358,7 +363,7 @@ export const addPromotionAPI = (data) => async (dispatch) => {
     }
     return false;
   } catch (err) {
-    console.log(err.response.data?.errors);
+    console.log(err.response?.data?.errors);
     return false;
   }
 };
@@ -394,6 +399,29 @@ export const getAllPromotionAPI = (id) => async (dispatch) => {
   } catch (err) {
     console.log(err);
     return {};
+  }
+};
+
+export const getPromotionStatisticsAPI = (id) => async (dispatch) => {
+  try {
+    const endpoint1 = `/v1/api/provider/dashboard/get-voucher-claims/${id}`;
+    const endpoint2 = `/v1/api/provider/dashboard/get-voucher-costs/${id}`;
+    const res1 = await axios.get(endpoint1);
+    const res2 = await axios.get(endpoint2);
+    console.log(res1, res2);
+    if (res1.data.status && res2.data.status) {
+      return [
+        res1.data.count.total_claims,
+        res2.data.total_cost,
+        res1.data.count.total_claims === 0 && res2.data.total_cost === 0
+          ? 0
+          : res1.data.count.total_claims / res2.data.total_cost,
+      ];
+    }
+    return [1, 1, 1];
+  } catch (err) {
+    console.log(err);
+    return [1, 1, 1];
   }
 };
 
@@ -447,6 +475,7 @@ export const addMenuCategoryAPI = (id, name) => async (dispatch) => {
   try {
     const endpoint = `/v1/api/provider/dashboard/menu-overview/add-menu-category`;
     const res = await axios.post(endpoint, body, config);
+    console.log(res);
     if (res.data.status) {
       return true;
     }

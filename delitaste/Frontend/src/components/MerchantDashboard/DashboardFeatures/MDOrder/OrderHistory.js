@@ -154,7 +154,7 @@ function OrderHistory(props) {
             </div>
           </div>
         </div>
-        {loading ? (
+        {loading && provider?.orderList?.length !== 0 ? (
           <div className="o-order-container">
             {provider.orderList.map((order) => (
               <div

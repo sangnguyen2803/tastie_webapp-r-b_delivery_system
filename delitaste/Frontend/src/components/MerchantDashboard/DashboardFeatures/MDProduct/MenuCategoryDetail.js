@@ -65,7 +65,7 @@ function MenuCategoryDetail(props) {
             onClick={() => setShowAddDialog(true)}
           />
         </div>
-        {menuCategory && (
+        {menuCategory ? (
           <table border={2} className="table table-wrapper">
             <tbody>
               <tr className="table-row-wrapper">
@@ -110,6 +110,25 @@ function MenuCategoryDetail(props) {
               ))}
             </tbody>
           </table>
+        ) : (
+          <div
+            className="menu-table"
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center",
+              width: "100%",
+              height: 600,
+              fontSize: 14,
+              border: "2px solid #E6E6E6",
+              textAlign: "center",
+            }}
+          >
+            Your restaurant has 0 menu at the moment.
+            <br />
+            Please create add your first menu.
+          </div>
         )}
       </div>
       <DialogBox
