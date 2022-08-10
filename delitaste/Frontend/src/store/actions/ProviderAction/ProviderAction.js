@@ -411,17 +411,17 @@ export const getPromotionStatisticsAPI = (id) => async (dispatch) => {
     console.log(res1, res2);
     if (res1.data.status && res2.data.status) {
       return [
-        res1.data.count.total_claims,
-        res2.data.total_cost,
-        res1.data.count.total_claims === 0 && res2.data.total_cost === 0
-          ? 0
-          : res1.data.count.total_claims / res2.data.total_cost,
+        res1.data.count[0].total_claims || "—",
+        res2.data.total_cost != 0 ? res2.data.total_cost : "—",
+        res1.data.count[0].total_claims === 0 && res2.data.total_cost === 0
+          ? "—"
+          : String(res1.data.count[0].total_claims / res2.data.total_cost),
       ];
     }
-    return [1, 1, 1];
+    return ["—", "—", "—"];
   } catch (err) {
     console.log(err);
-    return [1, 1, 1];
+    return ["—", "—", "—"];
   }
 };
 

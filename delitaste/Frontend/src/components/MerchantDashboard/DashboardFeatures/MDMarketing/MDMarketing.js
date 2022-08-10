@@ -75,12 +75,15 @@ function MDMarketing(props) {
     }
     fetchPromotion(user.provider_id);
   }, [user.provider_id, addStatus]);
-  const [promotionStatitstics, setPromotionStatistics] = useState([
-    150, 100, 1.5,
+  const [promotionStatistics, setPromotionStatistics] = useState([
+    "—",
+    "—",
+    "—",
   ]);
   useEffect(() => {
     async function fetchPromotionStatistic(id) {
       const res = await getPromotionStatisticsAPI(id);
+      console.log(res);
       setPromotionStatistics(res);
     }
     fetchPromotionStatistic(user.provider_id);
@@ -184,7 +187,7 @@ function MDMarketing(props) {
             width={"100%"}
             height={240}
             radius={5}
-            numeric_data={promotionStatitstics[0]}
+            numeric_data={promotionStatistics[0]}
             border={"2px solid #eeeeee"}
           >
             <span className="metric-title">
@@ -200,7 +203,7 @@ function MDMarketing(props) {
             width={"100%"}
             height={240}
             radius={5}
-            numeric_data={promotionStatitstics[1]}
+            numeric_data={promotionStatistics[1]}
             border={"2px solid #eeeeee"}
           >
             <span className="metric-title">
@@ -216,7 +219,7 @@ function MDMarketing(props) {
             width={"100%"}
             height={240}
             radius={5}
-            numeric_data={promotionStatitstics[2]}
+            numeric_data={promotionStatistics[2]}
             border={"2px solid #eeeeee"}
           >
             <span className="metric-title">
