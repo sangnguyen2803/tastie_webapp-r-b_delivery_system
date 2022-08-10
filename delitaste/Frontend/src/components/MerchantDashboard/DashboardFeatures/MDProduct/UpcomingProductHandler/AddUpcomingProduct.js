@@ -62,7 +62,6 @@ function AddUpcomingProduct(props) {
       image_data,
       uploadImageConfig
     );
-    console.log(response);
     const formData = {
       provider_id: props.user.provider_id,
       product_name: values.productName,
@@ -126,174 +125,184 @@ function AddUpcomingProduct(props) {
             <div className="panel-detail-title" style={{ marginTop: 0 }}>
               Create surveillance
             </div>
-            <div
-              className="option-box-wrapper-survey"
-              style={{ marginBottom: 5 }}
-            >
-              <span
-                className="option-box-title-main-survey"
-                style={{
-                  fontSize: 14,
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "flex-start",
-                  alignItems: "center",
-                  gap: 10,
-                }}
-              >
-                <span style={{ width: "100%", marginBottom: 10, fontSize: 14 }}>
-                  <b>Question: </b>
-                  <Field type="text" style={{ width: "90%" }} name="question" />
-                </span>
-              </span>
-              <div className="homebody-sb-radio-detail-wrapper">
-                <label
-                  className="hb-sb-type-wrapper radio"
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    justifyContent: "flex-start",
-                    alignItems: "center",
-                    gap: 10,
-                  }}
-                >
-                  <input type="radio" checked={false} />
-                  <span className="hb-sb-label-radio option-box-radio-label">
-                    A1:{" "}
-                    <Field
-                      type="text"
-                      style={{ border: "none", background: "transparent" }}
-                      placeholder={"Type your answer here"}
-                      name="a1"
-                    />
-                  </span>
-                </label>
-                <label
-                  className="hb-sb-type-wrapper radio"
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    justifyContent: "flex-start",
-                    alignItems: "center",
-                    gap: 10,
-                  }}
-                >
-                  <input type="radio" checked={false} />
-                  <span className="hb-sb-label-radio option-box-radio-label">
-                    A2:{" "}
-                    <Field
-                      type="text"
-                      style={{ border: "none", background: "transparent" }}
-                      placeholder={"Type your answer here"}
-                      name="a2"
-                    />
-                  </span>
-                </label>
-                <label
-                  className="hb-sb-type-wrapper radio"
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    justifyContent: "flex-start",
-                    alignItems: "center",
-                    gap: 10,
-                  }}
-                >
-                  <input type="radio" checked={false} />
-                  <span className="hb-sb-label-radio option-box-radio-label">
-                    A3:{" "}
-                    <Field
-                      type="text"
-                      style={{ border: "none", background: "transparent" }}
-                      placeholder={"Type your answer here"}
-                      name="a3"
-                    />
-                  </span>
-                </label>
-                <label
-                  className="hb-sb-type-wrapper radio"
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    justifyContent: "flex-start",
-                    alignItems: "center",
-                    gap: 10,
-                  }}
-                >
-                  <input type="radio" checked={false} />
-                  <span className="hb-sb-label-radio option-box-radio-label">
-                    A4:{" "}
-                    <Field
-                      type="text"
-                      style={{ border: "none", background: "transparent" }}
-                      placeholder={"Type your answer here"}
-                      name="a4"
-                    />
-                  </span>
-                </label>
-                <label
-                  className="hb-sb-type-wrapper radio"
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    justifyContent: "flex-start",
-                    alignItems: "center",
-                    gap: 10,
-                  }}
-                >
-                  <input type="radio" checked={false} />
-                  <span className="hb-sb-label-radio option-box-radio-label">
-                    A5:{" "}
-                    <Field
-                      type="text"
-                      style={{ border: "none", background: "transparent" }}
-                      placeholder={"Type your answer here"}
-                      name="a5"
-                    />
-                  </span>
-                </label>
-              </div>
-            </div>
-            <span className="product-detail-form-label">Photo</span>
-            <ButtonGroup float="flex-start" mgTop={10} mgBottom={5}>
-              <Button
-                color={"black"}
-                bglight={true}
-                border={"#5d5d5d 1.5px solid"}
-                prefix={
-                  <FontAwesomeIcon className="button-icon" icon={faPlus} />
-                }
-                width="50%"
-                height={30}
-                label="Upload a photo"
-                onClick={handleUploadImage}
-              />
-              <input
-                hidden={true}
-                name="upload"
-                type="file"
-                ref={inputFile}
-                onChange={(event) => {
-                  setUpcomingProductImage(event.target.files[0]);
-                  const objectUrl = URL.createObjectURL(event.target.files[0]);
-                  setUpcomingProductReview(objectUrl);
-                }}
-                className="form-control"
-              />
-              {upcomingProductReview && (
-                <img
-                  src={upcomingProductReview}
-                  alt="review"
-                  width={100}
-                  height={100}
-                  style={{ objectFit: "cover", marginLeft: 20 }}
-                />
-              )}
-            </ButtonGroup>
+
             <div
               className="product-handler-container"
-              style={{ marginBottom: 50 }}
+              style={{ marginBottom: 50, maxHeight: 500 }}
             >
+              {" "}
+              <div
+                className="option-box-wrapper-survey"
+                style={{ marginBottom: 5 }}
+              >
+                <span
+                  className="option-box-title-main-survey"
+                  style={{
+                    fontSize: 14,
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "flex-start",
+                    alignItems: "center",
+                    gap: 10,
+                  }}
+                >
+                  <span
+                    style={{ width: "100%", marginBottom: 10, fontSize: 14 }}
+                  >
+                    <b>Question: </b>
+                    <Field
+                      type="text"
+                      style={{ width: "90%" }}
+                      name="question"
+                    />
+                  </span>
+                </span>
+                <div className="homebody-sb-radio-detail-wrapper">
+                  <label
+                    className="hb-sb-type-wrapper radio"
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "flex-start",
+                      alignItems: "center",
+                      gap: 10,
+                    }}
+                  >
+                    <input type="radio" checked={false} />
+                    <span className="hb-sb-label-radio option-box-radio-label">
+                      A1:{" "}
+                      <Field
+                        type="text"
+                        style={{ border: "none", background: "transparent" }}
+                        placeholder={"Type your answer here"}
+                        name="a1"
+                      />
+                    </span>
+                  </label>
+                  <label
+                    className="hb-sb-type-wrapper radio"
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "flex-start",
+                      alignItems: "center",
+                      gap: 10,
+                    }}
+                  >
+                    <input type="radio" checked={false} />
+                    <span className="hb-sb-label-radio option-box-radio-label">
+                      A2:{" "}
+                      <Field
+                        type="text"
+                        style={{ border: "none", background: "transparent" }}
+                        placeholder={"Type your answer here"}
+                        name="a2"
+                      />
+                    </span>
+                  </label>
+                  <label
+                    className="hb-sb-type-wrapper radio"
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "flex-start",
+                      alignItems: "center",
+                      gap: 10,
+                    }}
+                  >
+                    <input type="radio" checked={false} />
+                    <span className="hb-sb-label-radio option-box-radio-label">
+                      A3:{" "}
+                      <Field
+                        type="text"
+                        style={{ border: "none", background: "transparent" }}
+                        placeholder={"Type your answer here"}
+                        name="a3"
+                      />
+                    </span>
+                  </label>
+                  <label
+                    className="hb-sb-type-wrapper radio"
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "flex-start",
+                      alignItems: "center",
+                      gap: 10,
+                    }}
+                  >
+                    <input type="radio" checked={false} />
+                    <span className="hb-sb-label-radio option-box-radio-label">
+                      A4:{" "}
+                      <Field
+                        type="text"
+                        style={{ border: "none", background: "transparent" }}
+                        placeholder={"Type your answer here"}
+                        name="a4"
+                      />
+                    </span>
+                  </label>
+                  <label
+                    className="hb-sb-type-wrapper radio"
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "flex-start",
+                      alignItems: "center",
+                      gap: 10,
+                    }}
+                  >
+                    <input type="radio" checked={false} />
+                    <span className="hb-sb-label-radio option-box-radio-label">
+                      A5:{" "}
+                      <Field
+                        type="text"
+                        style={{ border: "none", background: "transparent" }}
+                        placeholder={"Type your answer here"}
+                        name="a5"
+                      />
+                    </span>
+                  </label>
+                </div>
+              </div>
+              <span className="product-detail-form-label">Photo</span>
+              <ButtonGroup float="flex-start" mgTop={10} mgBottom={5}>
+                <Button
+                  color={"black"}
+                  bglight={true}
+                  border={"#5d5d5d 1.5px solid"}
+                  prefix={
+                    <FontAwesomeIcon className="button-icon" icon={faPlus} />
+                  }
+                  width="50%"
+                  height={30}
+                  label="Upload a photo"
+                  onClick={handleUploadImage}
+                />
+                <input
+                  hidden={true}
+                  name="upload"
+                  type="file"
+                  ref={inputFile}
+                  onChange={(event) => {
+                    setUpcomingProductImage(event.target.files[0]);
+                    const objectUrl = URL.createObjectURL(
+                      event.target.files[0]
+                    );
+                    setUpcomingProductReview(objectUrl);
+                  }}
+                  className="form-control"
+                />
+                {upcomingProductReview && (
+                  <img
+                    src={upcomingProductReview}
+                    alt="review"
+                    width={100}
+                    height={100}
+                    style={{ objectFit: "cover", marginLeft: 20 }}
+                  />
+                )}
+              </ButtonGroup>
               <span className="product-detail-form-label">Name</span>
               <div className="product-detail-form-input-wrapper">
                 <Field
@@ -317,7 +326,6 @@ function AddUpcomingProduct(props) {
                   placeholder="Description about your product"
                 />
               </div>
-
               <span className="product-detail-form-label">Estimated Price</span>
               <div className="product-detail-form-with-select">
                 <Field

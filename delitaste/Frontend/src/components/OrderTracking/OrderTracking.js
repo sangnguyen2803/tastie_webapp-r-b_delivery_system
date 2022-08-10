@@ -88,7 +88,14 @@ function OrderTracking(props) {
             "Confirmed",
             "Picked",
             "Completed",
+            "Cancel",
           ];
+          for (let i = 0; i < data[1].order_status.length; i++) {
+            if (data[1].order_status[i].order_status_name === "Canceled") {
+              setCurrentStatus(6);
+              return;
+            }
+          }
           setCurrentStatus(
             status.indexOf(
               data[1].order_status[data[1].order_status.length - 1]
@@ -142,7 +149,13 @@ function OrderTracking(props) {
       setPickedStatus(true);
       setCurrentStatus(5);
     });
+    
     user.socket.on("order-canceled", (message) => {
+      setCancelStatus(true);
+      setCurrentStatus(6);
+    });
+
+    user.socket.on("provider-decline-order", (message) => {
       setCancelStatus(true);
       setCurrentStatus(6);
     });
@@ -175,7 +188,6 @@ function OrderTracking(props) {
   return (
     <Fragment>
       <NavBar fixed={true} />
-
       <div className="order-tracking-container">
         <div className="order-tracking-left-side">
           <ReactMapGl

@@ -36,7 +36,7 @@ function OrderStatus(props) {
   const [showShipperChat, setShowShipperChat] = useState(false);
   let [loading, setLoading] = useState(true);
   let [color, setColor] = useState("#910000");
-  
+
   const completePickUp = async () => {
     try {
       const res = await axios.post("/v1/api/tastie/order/update_order_status", {
@@ -67,6 +67,7 @@ function OrderStatus(props) {
     Step1Image,
     Step3Image,
     Step4Image,
+    Step5Image,
     Step5Image,
   ];
   const waitingMessage = [

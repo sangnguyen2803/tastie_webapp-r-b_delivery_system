@@ -8,6 +8,7 @@ import {
   faDotCircle,
   faEllipsisH,
   faTimesCircle,
+  faUndo,
   faUtensils,
 } from "@fortawesome/fontawesome-free-solid";
 import { css } from "@emotion/react";
@@ -39,6 +40,7 @@ function OrderDetail(props) {
   const [orderList, setOrderList] = useState([]);
   const [orderSummary, setOrderSummary] = useState(orderList[0]);
   const [orderItems, setOrderItems] = useState([]);
+  const [refresh, setRefresh] = useState(false);
   let [color, setColor] = useState("#910000");
   const override = css`
     display: block;
@@ -55,7 +57,6 @@ function OrderDetail(props) {
   useEffect(() => {
     filterOrderList(props.type);
   }, [props.type]);
-
   //fetch order list for the first time
   useEffect(() => {
     async function fetchAllOrders(id) {
@@ -64,14 +65,19 @@ function OrderDetail(props) {
       let offset = 1;
       const result = await getAllOrderAPI(id, limit, offset);
       setLoading(true);
+      setRefresh(false);
     }
     //fetch new order list when order in store is empty
     if (user.provider_id !== -1 && !provider.orderList.length) {
       fetchAllOrders(user.provider_id);
       return;
     }
+    if (refresh === true) {
+      fetchAllOrders(user.provider_id);
+      return;
+    }
     setLoading(true);
-  }, [user.provider_id]);
+  }, [user.provider_id, refresh]);
 
   useEffect(() => {
     if (user.provider_id !== -1) {
@@ -164,7 +170,15 @@ function OrderDetail(props) {
         <div className="main-detail-panel-wrapper">
           <MDHeader visible={false} />
           <div className="panel-detail-title">Your orders</div>
-          <div className="product-list-info-row">
+          <div
+            className="product-list-info-row"
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "flex-start",
+              justifyContent: "space-between",
+            }}
+          >
             <div className="product-list-info">
               <div className="product-stock-quantity">
                 {provider.orderList.length} Orders
@@ -180,6 +194,27 @@ function OrderDetail(props) {
                   length={50}
                 />
               </div>
+            </div>
+            <div
+              className="order-refresh"
+              style={{
+                border: "1px solid #000000",
+                backgroundColor: "#FAFAFA",
+                color: "#505050",
+                width: 100,
+                height: 30,
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: 10,
+                fontSize: 14,
+                cursor: "pointer",
+              }}
+              onClick={() => setRefresh(true)}
+            >
+              <FontAwesomeIcon icon={faUndo} />
+              <span>Refresh</span>
             </div>
           </div>
           <div className="o-order-container">
