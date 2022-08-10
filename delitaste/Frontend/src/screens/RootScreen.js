@@ -42,15 +42,27 @@ function RootScreen(props) {
   };
   useEffect(() => {
     async function getUserLocation() {
-      var position = await getPosition();
-      const { latitude, longitude } = position.coords;
-      const endpoint = `https://api.geoapify.com/v1/geocode/reverse?lat=${latitude}&lon=${longitude}&apiKey=05e76b96155e447ba0391d645ce81d27`;
-      let res = await axios.get(endpoint);
-      var address = "";
-      if (res.data) {
-        address = res.data?.features[0]?.properties?.formatted || "";
+      let permissions = await navigator.permissions.query({
+        name: "geolocation",
+      });
+      if (permissions.state === "granted") {
+        var position = await getPosition();
+        const { latitude, longitude } = position.coords;
+        const endpoint = `https://api.geoapify.com/v1/geocode/reverse?lat=${latitude}&lon=${longitude}&apiKey=05e76b96155e447ba0391d645ce81d27`;
+        let res = await axios.get(endpoint);
+        var address = "";
+        if (res.data) {
+          address = res.data?.features[0]?.properties?.formatted || "";
+        }
+        props.setCurrentLocation(latitude, longitude, address);
+      } else {
+        address = " 227, Nguyen Van Cu, District 5, HCMC, Vietnam";
+        props.setCurrentLocation(
+          10.763805287683576,
+          106.68231073861413,
+          address
+        );
       }
-      props.setCurrentLocation(latitude, longitude, address);
     }
     getUserLocation();
   }, []);

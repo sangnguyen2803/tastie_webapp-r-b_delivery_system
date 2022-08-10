@@ -65,13 +65,13 @@ const categories = [
   [
     {
       category_id: 1000003,
-      type: 1,
+      type: 2,
       category_name: "Coffee and Tea",
       category_image: CategoryImage3,
     },
     {
-      category_id: 1000004,
-      type: 1,
+      category_id: 1000001,
+      type: 2,
       category_name: "American",
       category_image: CategoryImage4,
     },
