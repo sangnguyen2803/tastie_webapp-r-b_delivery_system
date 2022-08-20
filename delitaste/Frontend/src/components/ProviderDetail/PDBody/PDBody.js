@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import React, { Fragment, useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import DefaultProduct from "assets/default-product.png";
 import {
   faHeart as faHeart2,
   faBars,
@@ -231,7 +232,11 @@ function PDBody({
                   <div className="pd-pl-up-img-wrapper">
                     <img
                       className="pd-pl-up-product-img"
-                      src={up.product_image}
+                      src={
+                        up.product_status === 5
+                          ? DefaultProduct
+                          : up.product_image
+                      }
                       alt="product_photo"
                     />
                   </div>
@@ -277,8 +282,9 @@ function PDBody({
                           <img
                             className="pd-pl-product-img"
                             src={
-                              product.product_image ||
-                              "https://www.lyon-ortho-clinic.com/files/cto_layout/img/placeholder/camera.jpg"
+                              product.product_status === 5
+                                ? DefaultProduct
+                                : product.product_image
                             }
                             alt="product_photo"
                           />

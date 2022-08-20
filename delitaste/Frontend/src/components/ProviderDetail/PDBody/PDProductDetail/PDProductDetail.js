@@ -43,6 +43,9 @@ function PDProductDetail(props) {
     }
   }, []);
   const navigateAddToCart = () => {
+    if (user.isUserAuthenticated === false) {
+      props.history.push("/sign-in");
+    }
     if (match.params.id) {
       //to check whether cart provider id is different from provider id in current page
       if (

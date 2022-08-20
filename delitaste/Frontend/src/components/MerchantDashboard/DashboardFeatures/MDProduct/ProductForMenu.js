@@ -140,7 +140,24 @@ function ProductForMenu(props) {
                     className="menu-product-item"
                     {...provided.dragHandleProps}
                   >
-                    <div className="menu-product-img">
+                    <div
+                      className="menu-product-img"
+                      style={{ position: "relative" }}
+                    >
+                      {item.product_status === 5 && (
+                        <span
+                          style={{
+                            fontSize: 10,
+                            position: "absolute",
+                            color: "red",
+                            top: 70,
+                            width: 300,
+                          }}
+                        >
+                          Product images are not related. Please upload a new
+                          photo.
+                        </span>
+                      )}
                       <img alt="product_image" src={item.product_image} />
                     </div>
                     <span className="menu-product-name">

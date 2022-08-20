@@ -89,7 +89,7 @@ const AccountSettingPanel = ({ user, userSignOut, history }) => {
           </div>
           <div
             onClick={() => {
-              if (user.provider_id !== -1 && user.profile.user_id) {
+              if (user?.provider_id !== -1 && user?.profile.user_id) {
                 history.push(`/merchant-dashboard/provider/general`);
               } else {
                 history.replace(`/merchant-registration`);

@@ -145,9 +145,9 @@ function HomeBodyContent(props) {
               setProviderList={setGroup2}
             />{" "}
             <PickupProvider
-              providerList={group5}
-              setProviderList={setGroup5}
-              providerNearby={allProvider}
+              providerList={group2}
+              setProviderList={setGroup2}
+              providerNearby={group2}
               currentLatitude={
                 user.currentAddress.latitude || 10.773031146281017
               }
