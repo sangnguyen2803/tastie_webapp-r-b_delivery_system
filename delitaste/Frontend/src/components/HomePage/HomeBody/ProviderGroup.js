@@ -15,6 +15,7 @@ import { withRouter } from "react-router-dom";
 import { faHeart as faHeart2 } from "@fortawesome/fontawesome-free-solid";
 import { faHeart as faHeart1 } from "@fortawesome/fontawesome-free-regular";
 import { faGetPocket } from "@fortawesome/free-brands-svg-icons";
+import DefaultImage from "assets/SlideShowImg/Picture1.jpg";
 // skeleton
 import ProviderGroupSkeleton from "components/Skeleton/ProviderGroupSkeleton";
 // favorite
@@ -134,7 +135,9 @@ function ProviderGroup({
                       className="provider-card-container"
                       key={item.provider_id}
                       style={{
-                        backgroundImage: `url(${item.profile_pic})`,
+                        backgroundImage: `url(${
+                          item.profile_pic || DefaultImage
+                        })`,
                         backgroundPosition: "center",
                         backgroundRepeat: "no-repeat",
                         backgroundSize: "cover",

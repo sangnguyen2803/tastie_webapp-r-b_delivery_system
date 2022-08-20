@@ -23,6 +23,7 @@ import "../Panel.scss";
 import DialogBox from "components/Commons/Overlay/DialogBox/DialogBox";
 import ButtonGroup from "components/Commons/Button/ButtonGroup/ButtonGroup";
 import { faScroll } from "@fortawesome/free-solid-svg-icons";
+
 function ProductDetail(props) {
   const { user, product, getProductListAPI } = props;
   const [discountList, setDiscountList] = useState([]);

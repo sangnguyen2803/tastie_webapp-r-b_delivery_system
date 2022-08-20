@@ -42,10 +42,7 @@ function RootScreen(props) {
   };
   useEffect(() => {
     async function getUserLocation() {
-      let permissions = await navigator.permissions.query({
-        name: "geolocation",
-      });
-      if (permissions.state === "granted") {
+      try {
         var position = await getPosition();
         const { latitude, longitude } = position.coords;
         const endpoint = `https://api.geoapify.com/v1/geocode/reverse?lat=${latitude}&lon=${longitude}&apiKey=05e76b96155e447ba0391d645ce81d27`;
@@ -55,7 +52,7 @@ function RootScreen(props) {
           address = res.data?.features[0]?.properties?.formatted || "";
         }
         props.setCurrentLocation(latitude, longitude, address);
-      } else {
+      } catch (err) {
         address = " 227, Nguyen Van Cu, District 5, HCMC, Vietnam";
         props.setCurrentLocation(
           10.763805287683576,

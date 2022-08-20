@@ -338,8 +338,9 @@ function PDBody({
                           <img
                             className="pd-pl-product-img"
                             src={
-                              product.product_image ||
-                              "https://www.lyon-ortho-clinic.com/files/cto_layout/img/placeholder/camera.jpg"
+                              product.product_status === 5
+                                ? DefaultProduct
+                                : product.product_image
                             }
                             alt="product_photo"
                           />
