@@ -136,7 +136,7 @@ function ProductGroup({
                       className="product-card-container"
                       style={{
                         backgroundImage: `url(${
-                          item.product_infor.product_image || DefaultImage
+                          item.product_infor?.product_image || DefaultImage
                         })`,
                         backgroundPosition: "center",
                         backgroundRepeat: "no-repeat",
@@ -147,7 +147,7 @@ function ProductGroup({
 
                   <div className="r-product-info-wrapper">
                     <span className="r-p-info-main-text">
-                      {item.product_infor.product_name}
+                      {item.product_infor?.product_name}
                     </span>
                   </div>
                   <div className="r-product-sub-info-wrapper">
