@@ -68,6 +68,8 @@ function PickupProvider(props) {
   const [viewport, setViewport] = useState({
     height: "550px",
     zoom: 14,
+    latitude: props.currentLatitude,
+    longitude: props.currentLongitude,
   });
   return (
     <Fragment>
@@ -233,8 +235,6 @@ function PickupProvider(props) {
         <ReactMapGl
           transitionDuration={1000}
           {...viewport}
-          latitude={props.currentLatitude}
-          longitude={props.currentLongitude}
           width={"100%"}
           onViewportChange={(viewport) => setViewport(viewport)}
           mapStyle="mapbox://styles/mapbox/streets-v11"

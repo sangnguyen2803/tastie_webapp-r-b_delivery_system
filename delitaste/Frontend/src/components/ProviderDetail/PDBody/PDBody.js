@@ -80,7 +80,7 @@ function PDBody({
           <span className="pd-sb-cart-info-wrapper">
             <span className="pd-sb-cart-info-main-text">
               <FontAwesomeIcon className="pd-sb-icon" icon={faCartPlus} />
-              <span>3 items in your cart</span>
+              <span>{user.userCart?.cart?.length || 0} items in your cart</span>
             </span>
           </span>
           <span className="pd-sb-menu-title">
@@ -147,67 +147,70 @@ function PDBody({
             </div>
             {showCustomerReview ? (
               <div className="customer-review-container">
-                {customerReviews?.map((review) => (
-                  <div className="customer-review-wrapper">
-                    <img
-                      src={
-                        "https://cdn2.iconfinder.com/data/icons/flatfaces-everyday-people-square/128/beard_male_man_face_avatar-512.png"
-                      }
-                      alt="avatar"
-                      className="cr-customer-avatar"
-                      width={50}
-                      height={50}
-                    />
-                    <div className="cr-content-container">
-                      <div className="cr-text-wrapper">
-                        <span className="cr-main-text-wrapper">
-                          {review.customer_info?.username}
-                        </span>
-                        <span className="cr-sub-text-wrapper">
-                          {[...Array(review.stars || 5)].map((e, index) => (
-                            <FontAwesomeIcon
-                              key={index}
-                              icon={faStar}
-                              className="md-text-icon"
-                              style={{
-                                color: "rgb(255, 221, 0)",
-                                fontSize: 16,
-                              }}
-                            />
-                          ))}
-                          {[...Array(5 - (review.stars || 5))].map(
-                            (e, index) => (
-                              <FontAwesomeIcon
-                                key={index}
-                                icon={faStar}
-                                className="md-text-icon"
-                                style={{
-                                  color: "rgb(200, 200, 200)",
-                                  fontSize: 16,
-                                }}
-                              />
-                            )
-                          )}
-                          {`(${review.stars?.toFixed(1)} / 5.0)`}
-                        </span>
-                        <span className="cr-sub-text-wrapper">
-                          {getDifference(
-                            new Date(review.create_at.split("T")[0]),
-                            new Date()
-                          )}
-                        </span>
-                      </div>
-                      <span className="cr-comment">{review.content}</span>
-                      {review.image && (
+                {customerReviews?.map(
+                  (review, index) =>
+                    index <= 5 && (
+                      <div className="customer-review-wrapper">
                         <img
-                          className="cr-image-review"
-                          src={review?.image}
-                          alt="image_review"
+                          src={
+                            "https://cdn2.iconfinder.com/data/icons/flatfaces-everyday-people-square/128/beard_male_man_face_avatar-512.png"
+                          }
+                          alt="avatar"
+                          className="cr-customer-avatar"
+                          width={50}
+                          height={50}
                         />
-                      )}
-                    </div>
-                  </div>
-                ))}
+                        <div className="cr-content-container">
+                          <div className="cr-text-wrapper">
+                            <span className="cr-main-text-wrapper">
+                              {review.customer_info?.username}
+                            </span>
+                            <span className="cr-sub-text-wrapper">
+                              {[...Array(review.stars || 5)].map((e, index) => (
+                                <FontAwesomeIcon
+                                  key={index}
+                                  icon={faStar}
+                                  className="md-text-icon"
+                                  style={{
+                                    color: "rgb(255, 221, 0)",
+                                    fontSize: 16,
+                                  }}
+                                />
+                              ))}
+                              {[...Array(5 - (review.stars || 5))].map(
+                                (e, index) => (
+                                  <FontAwesomeIcon
+                                    key={index}
+                                    icon={faStar}
+                                    className="md-text-icon"
+                                    style={{
+                                      color: "rgb(200, 200, 200)",
+                                      fontSize: 16,
+                                    }}
+                                  />
+                                )
+                              )}
+                              {`(${review.stars?.toFixed(1)} / 5.0)`}
+                            </span>
+                            <span className="cr-sub-text-wrapper">
+                              {getDifference(
+                                new Date(review.create_at.split("T")[0]),
+                                new Date()
+                              )}
+                            </span>
+                          </div>
+                          <span className="cr-comment">{review.content}</span>
+                          {review.image && (
+                            <img
+                              className="cr-image-review"
+                              src={review?.image}
+                              alt="image_review"
+                            />
+                          )}
+                        </div>
+                      </div>
+                    )
+                )}
               </div>
             ) : (
               <span className="pd-fb-sub-text">

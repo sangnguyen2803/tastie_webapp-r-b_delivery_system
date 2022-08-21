@@ -8,7 +8,7 @@ import {
   faCalendarPlus,
   faInfoCircle,
 } from "@fortawesome/fontawesome-free-solid";
-
+import DefaultImage from "assets/SlideShowImg/Picture1.jpg";
 import { withRouter } from "react-router-dom";
 import { faHeart as faHeart2 } from "@fortawesome/fontawesome-free-solid";
 import { faHeart as faHeart1 } from "@fortawesome/fontawesome-free-regular";
@@ -53,7 +53,7 @@ function ProviderShowAll({ providerList, history }) {
                   className="apro-provider-card-container"
                   onClick={() => handleOnClickProvider(item.provider_id)}
                   style={{
-                    backgroundImage: `url(${item.profile_pic})`,
+                    backgroundImage: `url(${item.profile_pic || DefaultImage})`,
                     backgroundPosition: "center",
                     backgroundRepeat: "no-repeat",
                     backgroundSize: "cover",

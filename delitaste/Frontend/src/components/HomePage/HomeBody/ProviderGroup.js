@@ -76,8 +76,6 @@ function ProviderGroup({
     }
     let status = await rest.addFavoriteProvider(rest.user.profile.user_id, pid);
     if (status) {
-      console.log("successfully added to favorite list");
-      console.log(providerList);
       setProviderList((prevState) =>
         prevState.map((item) =>
           item.provider_id === pid ? { ...item, isFavorite: true } : item

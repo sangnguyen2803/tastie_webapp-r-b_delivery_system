@@ -60,7 +60,7 @@ const initialState = {
   phone: null,
   location: [],
   notifications: [],
-  socket: io(`http://157.230.243.92:3015`),
+  socket: io(`ws://157.230.243.92:3015`),
   userCart: {
     cart: [],
     date: "",

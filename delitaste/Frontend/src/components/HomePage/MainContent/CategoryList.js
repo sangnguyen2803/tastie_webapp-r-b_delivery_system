@@ -21,7 +21,9 @@ function CategoryList(props) {
             <div className="category-main-icon">
               <img src={CategoryIcon1} />
             </div>
-            <a className="category-main-label">Organic Fruit & Vegetables</a>
+            <span className="category-main-label">
+              Organic Fruit & Vegetables
+            </span>
           </div>
           <FontAwesomeIcon
             className="category-direct-icon"
