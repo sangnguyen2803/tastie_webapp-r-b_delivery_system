@@ -208,7 +208,7 @@ function PickupProvider(props) {
                       </span>
                       &nbsp;•&nbsp;
                       <div className="p-sub-info-cooking-time">
-                        {item.mean_estimated_cooking_time || "30 mins"}
+                        {item.estimated_cooking_time + " mins" || "30 mins"}
                       </div>
                       &nbsp;•&nbsp;
                       <span className="p-sub-info-main-text">

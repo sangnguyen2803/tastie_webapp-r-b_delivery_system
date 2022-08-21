@@ -43,7 +43,7 @@ function SignContractForm(props) {
   return (
     <>
       <div className="sign-contract-form navbar-state">
-        <NavBar hideBreadcrumb={false} fixed={true} />
+        <NavBar hideBreadcrumb={true} fixed={true} />
 
         <div className="contract-form-wrapper">
           <div className="contract-form">

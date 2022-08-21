@@ -120,7 +120,7 @@ function ProviderDetail(props) {
 
   return (
     <Fragment>
-      <NavBar fixed={true} />
+      <NavBar fixed={true} hideBreadcrumb={true}/>
       <div className="main">
         <PDHeader />
         <PDBody

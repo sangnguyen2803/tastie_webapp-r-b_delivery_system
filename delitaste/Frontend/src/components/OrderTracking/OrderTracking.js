@@ -187,7 +187,7 @@ function OrderTracking(props) {
 
   return (
     <Fragment>
-      <NavBar fixed={true} />
+      <NavBar fixed={true} hideBreadcrumb={true}/>
       <div className="order-tracking-container">
         <div className="order-tracking-left-side">
           <ReactMapGl

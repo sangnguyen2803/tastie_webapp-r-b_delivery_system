@@ -38,7 +38,7 @@ function MerchantForm({ children }) {
   ];
   return (
     <div className="merchant-registration-page navbar-state">
-      <NavBar hideBreadcrumb={false} fixed={true} />
+      <NavBar hideBreadcrumb={true} fixed={true} />
       <div
         className="merchant-registration-form-container"
         style={backgroundStyling}

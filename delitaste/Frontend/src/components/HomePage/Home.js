@@ -37,7 +37,7 @@ function Home(props) {
 
   return (
     <Fragment>
-      <NavBar fixed={true} />
+      <NavBar fixed={true} hideBreadcrumb={true} />
       <div className="main">
         {currentSortMode == 1 && (
           <Fragment>

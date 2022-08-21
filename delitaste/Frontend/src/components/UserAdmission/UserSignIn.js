@@ -31,7 +31,7 @@ function UserSignIn(props) {
           backgroundSize: "cover",
         }}
       >
-        <NavBar fixed={true} />
+        <NavBar fixed={true} hideBreadcrumb={true} />
         <div className="login-wrapper">
           <div className="brand-banner">
             <div className="slide-show-wrapper">

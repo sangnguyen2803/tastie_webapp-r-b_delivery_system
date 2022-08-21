@@ -10,7 +10,7 @@ function GuidePage(props) {
   return (
     <>
       <div className="guide-page navbar-state">
-        <NavBar fixed={true} />
+        <NavBar fixed={true} hideBreadcrumb={true}/>
         <div className="guide-page-containter">
           <GuideBanner />
           <Tutorial />
