@@ -20,13 +20,14 @@ import { faCandyCane, faCarrot } from "@fortawesome/free-solid-svg-icons";
 const HOME_RENDER = 1;
 const SEARCH_RENDER = 2;
 function HomeBodySidebar(props) {
+  const [showFeature, setShowFeature] = useState(false);
   const { type, totalResult, query } = props;
   const [checkedOption1, setCheckedOption1] = useState(false);
   const [checkedOption2, setCheckedOption2] = useState(false);
   const [showFunction1, setShowFunction1] = useState(true);
-  const [showFunction2, setShowFunction2] = useState(true);
-  const [showFunction3, setShowFunction3] = useState(true);
-  const [showFunction4, setShowFunction4] = useState(true);
+  const [showFunction2, setShowFunction2] = useState(false);
+  const [showFunction3, setShowFunction3] = useState(false);
+  const [showFunction4, setShowFunction4] = useState(false);
   const [showAddressPanel, setShowAddressPanel] = useState(false);
   const dietary = [
     { id: 1, dietary_name: "Vegetarian", dietary_icon: faCarrot },
@@ -130,73 +131,79 @@ function HomeBodySidebar(props) {
                   value={4}
                   onChange={(e) => props.setCurrentSortMode(e.target.value)}
                 />
-                <span className="hb-sb-label-radio">Delivery time</span>
+                <span className="hb-sb-label-radio">Cooking time</span>
               </label>
             </div>
           )}
         </div>
-        <div className="homebody-sb-function">
-          <div className="homebody-sb-function-title-wrapper">
-            <span className="homebody-sb-function-title">Just For You </span>
-            <FontAwesomeIcon
-              className="homebody-sb-function-title-icon"
-              onClick={() => setShowFunction2((prev) => !prev)}
-              icon={showFunction2 ? faChevronUp : faChevronDown}
-            />
+        {showFeature && (
+          <div className="homebody-sb-function">
+            <div className="homebody-sb-function-title-wrapper">
+              <span className="homebody-sb-function-title">Just For You </span>
+              <FontAwesomeIcon
+                className="homebody-sb-function-title-icon"
+                onClick={() => setShowFunction2((prev) => !prev)}
+                icon={showFunction2 ? faChevronUp : faChevronDown}
+              />
+            </div>
+            {showFunction2 && (
+              <>
+                <div className="hb-sb-switch-wrapper">
+                  <FontAwesomeIcon
+                    icon={faRibbon}
+                    className="hb-sb-icon-color"
+                  />
+                  <span className="hb-sb-switch-label">Deals</span>
+                  <Switch
+                    onChange={() => {
+                      setCheckedOption1((prev) => !prev);
+                    }}
+                    checked={checkedOption1}
+                    onColor="#E2E2E2"
+                    offColor="#E2E2E2"
+                    onHandleColor="#666666"
+                    handleDiameter={20}
+                    uncheckedIcon={false}
+                    checkedIcon={false}
+                    boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"
+                    activeBoxShadow="0px 0px 1px 5px rgba(0, 0, 0, 0.2)"
+                    height={15}
+                    width={40}
+                    className="react-switch"
+                    id="material-switch"
+                  />
+                </div>
+                <div className="hb-sb-switch-wrapper">
+                  <FontAwesomeIcon
+                    icon={faUtensils}
+                    className="hb-sb-icon-color"
+                  />
+                  <span className="hb-sb-switch-label">Most order</span>
+                  <Switch
+                    onChange={() => {
+                      setCheckedOption2((prev) => !prev);
+                    }}
+                    checked={checkedOption2}
+                    onColor="#E2E2E2"
+                    offColor="#E2E2E2"
+                    onHandleColor="#666666"
+                    handleDiameter={20}
+                    uncheckedIcon={false}
+                    checkedIcon={false}
+                    boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"
+                    activeBoxShadow="0px 0px 1px 5px rgba(0, 0, 0, 0.2)"
+                    height={15}
+                    width={40}
+                    className="react-switch"
+                    id="material-switch"
+                  />
+                </div>
+              </>
+            )}
           </div>
-          {showFunction2 && (
-            <>
-              <div className="hb-sb-switch-wrapper">
-                <FontAwesomeIcon icon={faRibbon} className="hb-sb-icon-color" />
-                <span className="hb-sb-switch-label">Deals</span>
-                <Switch
-                  onChange={() => {
-                    setCheckedOption1((prev) => !prev);
-                  }}
-                  checked={checkedOption1}
-                  onColor="#E2E2E2"
-                  offColor="#E2E2E2"
-                  onHandleColor="#666666"
-                  handleDiameter={20}
-                  uncheckedIcon={false}
-                  checkedIcon={false}
-                  boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"
-                  activeBoxShadow="0px 0px 1px 5px rgba(0, 0, 0, 0.2)"
-                  height={15}
-                  width={40}
-                  className="react-switch"
-                  id="material-switch"
-                />
-              </div>
-              <div className="hb-sb-switch-wrapper">
-                <FontAwesomeIcon
-                  icon={faUtensils}
-                  className="hb-sb-icon-color"
-                />
-                <span className="hb-sb-switch-label">Most order</span>
-                <Switch
-                  onChange={() => {
-                    setCheckedOption2((prev) => !prev);
-                  }}
-                  checked={checkedOption2}
-                  onColor="#E2E2E2"
-                  offColor="#E2E2E2"
-                  onHandleColor="#666666"
-                  handleDiameter={20}
-                  uncheckedIcon={false}
-                  checkedIcon={false}
-                  boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"
-                  activeBoxShadow="0px 0px 1px 5px rgba(0, 0, 0, 0.2)"
-                  height={15}
-                  width={40}
-                  className="react-switch"
-                  id="material-switch"
-                />
-              </div>
-            </>
-          )}
-        </div>
-        {type === HOME_RENDER ? (
+        )}
+
+        {type === HOME_RENDER && showFeature ? (
           <div className="homebody-sb-function">
             <div className="homebody-sb-function-title-wrapper">
               <span className="homebody-sb-function-title">Price Range</span>
@@ -263,7 +270,7 @@ function HomeBodySidebar(props) {
         ) : (
           <></>
         )}
-        {type === HOME_RENDER ? (
+        {type === HOME_RENDER && showFeature ? (
           <div className="homebody-sb-function">
             <div className="homebody-sb-function-title-wrapper">
               <span className="homebody-sb-function-title">Dietary</span>

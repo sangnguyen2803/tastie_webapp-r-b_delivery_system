@@ -88,7 +88,9 @@ function ProviderShowAll({ providerList, history }) {
                 <span className="apro-p-info-main-text">
                   {item.provider_name || item.name}
                 </span>
-                <div className="apro-p-info-rating">{item.rating || "5.0"}</div>
+                <div className="apro-p-info-rating">
+                  {item.customer_rating?.toFixed(1) || "5.0"}
+                </div>
               </div>
               <div
                 className="product-sub-info-wrapper"
@@ -101,7 +103,7 @@ function ProviderShowAll({ providerList, history }) {
                 </span>
                 &nbsp;•&nbsp;
                 <div className="p-sub-info-cooking-time">
-                  {item.mean_estimated_cooking_time || "30 mins"}
+                  {item.estimated_cooking_time + " mins" || "30 mins"}
                 </div>
                 &nbsp;•&nbsp;
                 <span className="p-sub-info-main-text">

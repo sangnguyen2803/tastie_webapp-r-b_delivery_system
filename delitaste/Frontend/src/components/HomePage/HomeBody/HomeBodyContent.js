@@ -127,6 +127,30 @@ function HomeBodyContent(props) {
       setAllProvider(newList);
     }
   };
+  useEffect(() => {
+    if (props.currentSortMode == 2) {
+      setAllProvider(
+        allProvider.sort((a, b) => b.order_totals - a.order_totals)
+      );
+      return;
+    }
+    if (props.currentSortMode == 3) {
+      setAllProvider(
+        allProvider.sort((a, b) => b.customer_rating - a.customer_rating)
+      );
+      return;
+    }
+    if (props.currentSortMode == 4) {
+      setAllProvider(
+        allProvider.sort(
+          (a, b) =>
+            parseInt(a.estimated_cooking_time) -
+            parseInt(b.estimated_cooking_time)
+        )
+      );
+      return;
+    }
+  }, [props.currentSortMode]);
   return (
     <Fragment>
       <div className="home-content-provider">
