@@ -74,12 +74,14 @@ function HomeBodySidebar(props) {
               {props.user?.currentAddress?.address ||
                 "Please wait for a while..."}
             </span>
-            <span
-              className="address-book-button"
-              onClick={() => setShowAddressPanel(true)}
-            >
-              Change
-            </span>
+            {props.user?.profile?.user_id && (
+              <span
+                className="address-book-button"
+                onClick={() => setShowAddressPanel(true)}
+              >
+                Update
+              </span>
+            )}
           </div>
         ) : (
           <></>

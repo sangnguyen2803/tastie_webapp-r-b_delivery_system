@@ -124,7 +124,7 @@ function HomeBodyContent(props) {
       setRecommendProducts(res.data.response);
     }
     getRecommendationProducts();
-  }, [user.profile.user_id]);
+  }, [user?.profile?.user_id]);
 
   const fetchMoreProvider = async () => {
     if (user.currentAddress.loading) {

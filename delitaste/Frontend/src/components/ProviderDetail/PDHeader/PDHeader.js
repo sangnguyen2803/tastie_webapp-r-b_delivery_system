@@ -19,6 +19,7 @@ import {
   faCopy,
   faSearch,
 } from "@fortawesome/fontawesome-free-solid";
+import { scroller } from "react-scroll";
 import { faHeart as faHeart1 } from "@fortawesome/fontawesome-free-regular";
 import Background from "assets/home_banner.png";
 import "../ProviderDetail.scss";
@@ -206,6 +207,14 @@ function PDHeader(props) {
                   bgColor={"#ECECEC"}
                   justifyContent={"center"}
                   label={"Feedback"}
+                  onClick={() => {
+                    scroller.scrollTo("pd-pl-title", {
+                      duration: 800,
+                      delay: 0,
+                      smooth: "easeInOutQuart",
+                      offset: -100,
+                    });
+                  }}
                   width={100}
                   height={30}
                 />

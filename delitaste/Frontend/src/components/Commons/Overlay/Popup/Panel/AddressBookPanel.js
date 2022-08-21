@@ -49,7 +49,7 @@ function AddressBookPanel(props) {
   const [longitude, setLongitude] = useState(106.68057155417674);
   const [viewport, setViewport] = useState({
     width: "100%",
-    height: "200px",
+    height: "220px",
     latitude: 10.768685473523648,
     longitude: 106.68057155417674,
     zoom: 12,
@@ -125,6 +125,25 @@ function AddressBookPanel(props) {
                 navigator.geolocation.getCurrentPosition(res, rej);
               });
             };
+            const handleUpdate = async (values) => {
+              const data = {
+                customer_id: user.profile.user_id,
+                address: getFullAddress(
+                  values.road,
+                  values.city,
+                  values.district,
+                  values.ward
+                ),
+                city: values.city,
+                longtitude: longitude,
+                latitude: latitude,
+                type: addressType,
+              };
+              await addAddressAPI(data);
+              fetchAddressBook();
+              props.setVisible(false);
+            };
+
             const relocating = async (values) => {
               var position = await getPosition();
               const { latitude, longitude } = position.coords;
@@ -393,6 +412,7 @@ function AddressBookPanel(props) {
                       </ReactMapGl>
                     </div>
                   </div>
+
                   <ButtonGroup mgTop={5} float="center" mgBottom={15}>
                     <Button
                       color={"white"}
@@ -402,6 +422,7 @@ function AddressBookPanel(props) {
                       width={120}
                       height={35}
                       label={"Update"}
+                      onClick={() => handleUpdate(values)}
                     />
                   </ButtonGroup>
                 </Fragment>
@@ -418,13 +439,16 @@ AddressBookPanel.propTypes = {
   user: PropTypes.object.isRequired,
   getAddressBookAPI: PropTypes.func.isRequired,
   setCurrentLocation: PropTypes.func.isRequired,
+  addAddressAPI: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   user: state.UserReducer,
 });
 export default withRouter(
-  connect(mapStateToProps, { getAddressBookAPI, setCurrentLocation })(
-    AddressBookPanel
-  )
+  connect(mapStateToProps, {
+    getAddressBookAPI,
+    addAddressAPI,
+    setCurrentLocation,
+  })(AddressBookPanel)
 );
