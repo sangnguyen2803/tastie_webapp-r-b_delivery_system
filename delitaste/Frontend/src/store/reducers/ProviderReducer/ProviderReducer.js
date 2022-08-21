@@ -31,7 +31,7 @@ const initialState = {
     longitude: 106.68057155417674,
     latitude: 10.768685473523648,
   },
-  socket: io(`ws://157.230.243.92:3015`),
+  socket: io(`https://157.230.243.92:3015`),
   providerNotifications: [],
   currentOrderList: [],
   operation: [],

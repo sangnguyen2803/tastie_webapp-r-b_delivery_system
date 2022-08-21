@@ -92,7 +92,7 @@ function OrderCheckout(props) {
   }, []);
   return (
     <Fragment>
-      <NavBar fixed={true} hideBreadcrumb={true}/>
+      <NavBar fixed={true} hideBreadcrumb={true}  />
       <div className="order-checkout-container">
         <OrderDetail
           orderForm={orderForm}

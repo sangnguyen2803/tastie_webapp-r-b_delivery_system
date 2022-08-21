@@ -11,7 +11,7 @@ import {
 } from "@fortawesome/fontawesome-free-solid";
 import CategoryDetail from "./CategoryDetail";
 import "./SubNavBar.scss";
-
+import { scroller } from "react-scroll";
 function SubNavBar(variant = true) {
   const [showCategoryLevel2, setShowCategoryLevel2] = useState(false);
   const [categoryContent, setCategoryContent] = useState({
@@ -57,17 +57,50 @@ function SubNavBar(variant = true) {
             </div>
           </div>
           <div className="nav-feature-1">
-            <div className="nav-category" style={{ width: 120 }}>
-              <div className="nav-text"> Today's Deals</div>
+            <div
+              className="nav-category"
+              style={{ width: 120 }}
+              onClick={() => {
+                scroller.scrollTo("home-product-row-container", {
+                  duration: 800,
+                  delay: 0,
+                  smooth: "easeInOutQuart",
+                  offset: -100,
+                });
+              }}
+            >
+              <div className="nav-text"> Today's Offers</div>
             </div>
             <div className="nav-category" style={{ width: 120 }}>
               <div className="nav-text"> Recommend</div>
             </div>
-            <div className="nav-category" style={{ width: 120 }}>
-              <div className="nav-text"> Pick up </div>
+            <div
+              className="nav-category"
+              onClick={() => {
+                scroller.scrollTo("provider-on-map", {
+                  duration: 800,
+                  delay: 0,
+                  smooth: "easeInOutQuart",
+                  offset: -100,
+                });
+              }}
+              style={{ width: 120 }}
+            >
+              <div className="nav-text"> Pick up for you</div>
             </div>
-            <div className="nav-category" style={{ width: 120 }}>
-              <div className="nav-text"> Promotions </div>
+            <div
+              className="nav-category"
+              onClick={() => {
+                scroller.scrollTo("apro-home-product-slider-all", {
+                  duration: 800,
+                  delay: 0,
+                  smooth: "easeInOutQuart",
+                  offset: -100,
+                });
+              }}
+              style={{ width: 120 }}
+            >
+              <div className="nav-text">All stores</div>
             </div>
           </div>
         </div>

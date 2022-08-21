@@ -15,6 +15,8 @@ import Button from "components/Commons/Button/Button";
 import ButtonGroup from "components/Commons/Button/ButtonGroup/ButtonGroup";
 import PickupProvider from "./PickupProvider";
 import CategoryGroup from "./CategoryGroup";
+import axios from "axios";
+import ProductGroup from "./ProductGroup";
 const providerGroup = [
   {
     group_title: "In a rush?",
@@ -50,6 +52,7 @@ function HomeBodyContent(props) {
   const [curLimit, setCurLimit] = useState(30);
   const [curOffset, setCurOffset] = useState(1);
   const [allProvider, setAllProvider] = useState([]);
+  const [recommendProducts, setRecommendProducts] = useState([]);
   useEffect(() => {
     async function fetchingDataAPI(la, lo) {
       const result1 = await getProviderGroup(
@@ -114,6 +117,15 @@ function HomeBodyContent(props) {
       );
   }, [user.currentAddress.loading]);
 
+  useEffect(() => {
+    async function getRecommendationProducts() {
+      const endpoint = `/v1/api/tastie/get-recommendations-for-customers/${user?.profile?.user_id}`;
+      const res = await axios.get(endpoint);
+      setRecommendProducts(res.data.response);
+    }
+    getRecommendationProducts();
+  }, [user.profile.user_id]);
+
   const fetchMoreProvider = async () => {
     if (user.currentAddress.loading) {
       const result = await getAllProvider(
@@ -156,6 +168,12 @@ function HomeBodyContent(props) {
       <div className="home-content-provider">
         {props.currentSortMode == 1 && (
           <Fragment>
+            <ProductGroup
+              groupTitle="Recommend for you"
+              groupDescription="Product recommendations section for users"
+              providerList={recommendProducts}
+              setProviderList={recommendProducts}
+            />
             <ProviderGroup
               groupTitle={providerGroup[0].group_title}
               groupDescription={providerGroup[0].group_description}

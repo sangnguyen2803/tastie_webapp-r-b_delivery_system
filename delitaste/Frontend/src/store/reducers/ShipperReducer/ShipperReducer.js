@@ -1,7 +1,7 @@
 import io from "socket.io-client";
 
 const initialState = {
-  socket: io(`ws://157.230.243.92:3015`),
+  socket: io(`https://157.230.243.92:3015`),
 };
 
 const ShipperReducer = (state = initialState, action) => {
