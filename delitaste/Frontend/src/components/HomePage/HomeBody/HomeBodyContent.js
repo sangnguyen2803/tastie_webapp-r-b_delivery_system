@@ -168,12 +168,14 @@ function HomeBodyContent(props) {
       <div className="home-content-provider">
         {props.currentSortMode == 1 && (
           <Fragment>
-            <ProductGroup
-              groupTitle="Recommend for you"
-              groupDescription="Product recommendations section for users"
-              providerList={recommendProducts}
-              setProviderList={recommendProducts}
-            />
+            {recommendProducts.length !== 0 && (
+              <ProductGroup
+                groupTitle="Recommend for you"
+                groupDescription="Product recommendations section for users"
+                providerList={recommendProducts}
+                setProviderList={recommendProducts}
+              />
+            )}
             <ProviderGroup
               groupTitle={providerGroup[0].group_title}
               groupDescription={providerGroup[0].group_description}

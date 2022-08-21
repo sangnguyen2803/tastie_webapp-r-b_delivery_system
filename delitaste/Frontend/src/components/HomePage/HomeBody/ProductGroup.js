@@ -124,15 +124,16 @@ function ProductGroup({
               renderButtonGroupOutside={true}
               customTransition={"transform 500ms ease-in-out"}
             >
-              {providerList?.map((item) => (
+              {providerList?.map((item, index) => (
                 <div
-                  key={item.provider_id}
-                  onClick={(e) => handleOnClickProvider(e, item.provider_id)}
+                  key={index}
+                  onClick={(e) =>
+                    handleOnClickProvider(e, item.product_infor.provider_id)
+                  }
                 >
                   <LazyLoad style={{ width: "100%" }}>
                     <div
                       className="product-card-container"
-                      key={item.provider_id}
                       style={{
                         backgroundImage: `url(${
                           item.product_infor.product_image || DefaultImage
