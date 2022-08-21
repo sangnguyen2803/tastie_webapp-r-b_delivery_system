@@ -31,7 +31,7 @@ const initialState = {
     longitude: 106.68057155417674,
     latitude: 10.768685473523648,
   },
-  socket: io(`wss://socket.tastie18vp.co`),
+  socket: io("wss://socket.tastie18vp.com", { transport: ["websocket"] }),
   providerNotifications: [],
   currentOrderList: [],
   operation: [],

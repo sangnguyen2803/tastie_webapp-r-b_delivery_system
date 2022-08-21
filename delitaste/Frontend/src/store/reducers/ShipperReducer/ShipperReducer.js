@@ -1,7 +1,7 @@
 import io from "socket.io-client";
 
 const initialState = {
-  socket: io(`wss://socket.tastie18vp.co`),
+  socket: io("wss://socket.tastie18vp.com", { transport: ["websocket"] }),
 };
 
 const ShipperReducer = (state = initialState, action) => {

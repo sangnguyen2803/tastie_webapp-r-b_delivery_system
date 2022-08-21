@@ -60,7 +60,7 @@ const initialState = {
   phone: null,
   location: [],
   notifications: [],
-  socket: io(`wss://socket.tastie18vp.co`),
+  socket: io("wss://socket.tastie18vp.com", { transport: ["websocket"] }),
   userCart: {
     cart: [],
     date: "",
