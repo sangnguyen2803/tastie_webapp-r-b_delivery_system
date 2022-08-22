@@ -274,7 +274,7 @@ function PDBody({
                   <div className="pd-pl-product-group">
                     {menu.products.map((product) => (
                       <div
-                        className="pd-pl-product-item"
+                        className={`pd-pl-product-item ${product?.product_id}`}
                         onClick={() => {
                           setShowProductDetail(true);
                           setSelectedProductDetail(product);

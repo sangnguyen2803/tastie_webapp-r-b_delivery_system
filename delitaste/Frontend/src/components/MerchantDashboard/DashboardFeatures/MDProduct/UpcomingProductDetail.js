@@ -33,6 +33,7 @@ function UpcomingProductDetail(props) {
   const [question, setQuestion] = useState(
     "Are you eager to try this product?"
   );
+  const [refetchData, setRefetchData] = useState(false);
   const [choice, setChoice] = useState([]);
   const [series, setSeries] = useState([20, 20, 20, 20, 20]);
   const [options, setOptions] = useState({
@@ -99,9 +100,11 @@ function UpcomingProductDetail(props) {
         labels: result[0]?.statistic?.map((s) => s.response),
       });
       setItems(result);
+      setRefetchData(false);
     }
-    fetchUpcomingProducts(user.provider_id);
-  }, [user.provider_id]);
+    if (refetchData === true || user.provider_id !== -1)
+      fetchUpcomingProducts(user.provider_id);
+  }, [user.provider_id, refetchData]);
 
   const handleUpdateStatistics = (p) => {
     setChoice(p.choice);
@@ -269,7 +272,7 @@ function UpcomingProductDetail(props) {
         </div>
         <div className="sub-detail-panel-wrapper">
           {showHandlerPanel === 0 ? (
-            <AddUpcomingProduct />
+            <AddUpcomingProduct setRefetchData={setRefetchData} />
           ) : (
             <ViewUpcomingProduct selectedProduct={selectedProduct} />
           )}

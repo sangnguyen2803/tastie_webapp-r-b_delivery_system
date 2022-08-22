@@ -111,6 +111,7 @@ function AddUpcomingProduct(props) {
         choice: values.a5,
       };
       props.addSurveyProductAPI(surveyFormData5);
+      props.setRefetchData(true);
     }
   };
   const handleUploadImage = () => {

@@ -62,6 +62,7 @@ function OrderStatus(props) {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "auto" });
   }, []);
+
   const stepImage = [
     Step1Image,
     Step1Image,

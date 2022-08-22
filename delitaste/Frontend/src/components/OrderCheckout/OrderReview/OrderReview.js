@@ -43,61 +43,61 @@ function OrderReview(props) {
       code = await submitOrderPickupCheckoutAPI(orderForm);
     }
 
-    const cartItem = user.userCart?.cart?.map((item) => {
-      return {
-        productName: item.product_name,
-        quantity: item.quantity,
-        price: item.product_price,
-        specialInstruction: item.note || "",
-      };
-    });
-    //socket params
-    const customerData = {
-      name: `${user.profile.first_name} ${user.profile.last_name}`,
-      phone: orderForm.customer_phone,
-      address: orderForm.delivery_address,
-      user_id: orderForm.customer_id,
-      location: {
-        latitude: parseFloat(user.currentAddress.latitude),
-        longitude: parseFloat(user.currentAddress.longitude),
-      },
-    };
-    const providerData = {
-      name: user.userCart.provider_name,
-      address: "",
-      provider_id: user.userCart.provider_id,
-      location: {
-        latitude: parseFloat(user.userCart.latitude),
-        longitude: parseFloat(user.userCart.longitude),
-      },
-    };
-    const pricing = {
-      delivery_fee: deliveryOption === 0 ? orderForm.delivery_fee : 0,
-      total: parseFloat(
-        orderForm.subtotal - props.promotionAmount < 0
-          ? 0?.toFixed(2)
-          : (orderForm.subtotal - props.promotionAmount).toFixed(2)
-      ), // delivery_fee excluded
-      paymentMethod: orderForm.payment_method
-        ? "Cash"
-        : "E-wallet | Credit card",
-      deliveryMode: deliveryOption === 0 ? 1 : 2,
-      deliveryMethod: orderForm.delivery_method ? "Standard" : "Schedule",
-      scheduleTime: orderForm.schedule_time,
-    };
-    if (!code) return;
-    console.log(pricing);
-    user.socket.emit("join-room", code);
-    user.socket.emit(
-      "customer-submit-order",
-      cartItem,
-      customerData,
-      providerData,
-      code,
-      pricing
-    );
     if (code && uid !== -1) {
       let submitOrder = await submitOrderItemAPI(uid, code);
+      const cartItem = user.userCart?.cart?.map((item) => {
+        return {
+          productName: item.product_name,
+          quantity: item.quantity,
+          price: item.product_price,
+          specialInstruction: item.note || "",
+        };
+      });
+      //socket params
+      const customerData = {
+        name: `${user.profile.first_name} ${user.profile.last_name}`,
+        phone: orderForm.customer_phone,
+        address: orderForm.delivery_address,
+        user_id: orderForm.customer_id,
+        location: {
+          latitude: parseFloat(user.currentAddress.latitude),
+          longitude: parseFloat(user.currentAddress.longitude),
+        },
+      };
+      const providerData = {
+        name: user.userCart.provider_name,
+        address: "",
+        provider_id: user.userCart.provider_id,
+        location: {
+          latitude: parseFloat(user.userCart.latitude),
+          longitude: parseFloat(user.userCart.longitude),
+        },
+      };
+      const pricing = {
+        delivery_fee: deliveryOption === 0 ? orderForm.delivery_fee : 0,
+        total: parseFloat(
+          orderForm.subtotal - props.promotionAmount < 0
+            ? 0?.toFixed(2)
+            : (orderForm.subtotal - props.promotionAmount).toFixed(2)
+        ), // delivery_fee excluded
+        paymentMethod: orderForm.payment_method
+          ? "Cash"
+          : "E-wallet | Credit card",
+        deliveryMode: deliveryOption === 0 ? 1 : 2,
+        deliveryMethod: orderForm.delivery_method ? "Standard" : "Schedule",
+        scheduleTime: orderForm.schedule_time,
+      };
+      if (!code) return;
+      console.log(pricing);
+      user.socket.emit("join-room", code);
+      user.socket.emit(
+        "customer-submit-order",
+        cartItem,
+        customerData,
+        providerData,
+        code,
+        pricing
+      );
       if (submitOrder) props.history.push(`/order-tracking/${code}`);
     }
   };
@@ -149,7 +149,7 @@ function OrderReview(props) {
         <div className="oc-or-main-text">
           <span className="oc-or-pre-text">Promotion amount:</span>
           <span className="oc-or-sur-text" style={{ color: "#810000" }}>
-            - ${props.promotionAmount}
+            - ${props.promotionAmount?.toFixed(2)}
           </span>
         </div>
         <div className="oc-or-main-text">

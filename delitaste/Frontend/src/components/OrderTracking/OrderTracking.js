@@ -21,6 +21,9 @@ import {
   getOrderStatusAPI,
 } from "store/actions/OrderAction/OrderAction";
 import RateProvider from "./RateProvider/RateProvider";
+import ButtonGroup from "components/Commons/Button/ButtonGroup/ButtonGroup";
+import Button from "components/Commons/Button/Button";
+import DialogBox from "components/Commons/Overlay/DialogBox/DialogBox";
 
 function OrderTracking(props) {
   const { user, getAllProductFromOrderAPI, getOrderStatusAPI, match } = props;
@@ -43,7 +46,6 @@ function OrderTracking(props) {
   const [showPopup, setShowPopup] = useState(false);
   const [showRatingShipper, setShowRatingShipper] = useState(false);
   const [showRatingProvider, setShowRatingProvider] = useState(false);
-
   const [currentStatus, setCurrentStatus] = useState(1);
   const [submittedStatus, setSubmittedStatus] = useState(true);
   const [assignedStatus, setAssignedStatus] = useState(false);
@@ -54,6 +56,13 @@ function OrderTracking(props) {
   const [orderItems, setOrderItems] = useState([]);
   const [orderSummary, setOrderSummary] = useState([]);
   const [showOrderDetail, setShowOrderDetail] = useState(false);
+  const [showUpdateDialog, setShowUpdateDialog] = useState(false);
+  const [dialogContent, setDialogContent] = useState({
+    header: "",
+    text1: "",
+    text2: "",
+  });
+
   useEffect(() => {
     if (currentStatus === 5 && orderSummary) {
       if (orderSummary.delivery_mode !== 2) {
@@ -65,6 +74,7 @@ function OrderTracking(props) {
       }
     }
   }, [currentStatus, orderSummary]);
+
   useEffect(() => {
     const code = match.params.order_code;
     async function fetchingOrder(orderCode) {
@@ -149,7 +159,7 @@ function OrderTracking(props) {
       setPickedStatus(true);
       setCurrentStatus(5);
     });
-    
+
     user.socket.on("order-canceled", (message) => {
       setCancelStatus(true);
       setCurrentStatus(6);
@@ -187,7 +197,7 @@ function OrderTracking(props) {
 
   return (
     <Fragment>
-      <NavBar fixed={true} hideBreadcrumb={true}/>
+      <NavBar fixed={true} hideBreadcrumb={true} />
       <div className="order-tracking-container">
         <div className="order-tracking-left-side">
           <ReactMapGl
@@ -393,7 +403,6 @@ function OrderTracking(props) {
               </div>
             </div>
           )}
-
           <OTOrderDetail
             orderItems={orderItems}
             orderSummary={orderSummary}
@@ -414,6 +423,39 @@ function OrderTracking(props) {
           )}
         </div>
       </div>
+      <DialogBox
+        visibility={showUpdateDialog}
+        headerText={dialogContent.header}
+        close={() => setShowUpdateDialog(false)}
+      >
+        <div className="dialog-detail-wrapper">
+          <div className="dialogbox-content">
+            <span className="dialogbox-content-detail-main">
+              {dialogContent.text1}
+            </span>
+            <span className="dialogbox-content-detail-sub">
+              {dialogContent.text2}
+            </span>
+          </div>
+          <div className="dialogbox-action">
+            <ButtonGroup gap={5} mgRight={5}>
+              <Button
+                color={"white"}
+                bgColor={"#800000"}
+                justifyContent={"center"}
+                gap={"10px"}
+                width={80}
+                height={30}
+                label={"Confirm"}
+                onClick={() => {
+                  props.history.push("/");
+                  setShowUpdateDialog(false);
+                }}
+              />
+            </ButtonGroup>
+          </div>
+        </div>
+      </DialogBox>
       <Modal
         openModal={showRatingShipper}
         closeModal={() => {
@@ -436,6 +478,13 @@ function OrderTracking(props) {
         openModal={showRatingProvider}
         closeModal={() => {
           setShowRatingProvider(false);
+          setShowUpdateDialog(true);
+          setDialogContent({
+            header: "Order completed",
+            text1: `Redirect to your home page`,
+            text2:
+              "Order details will be displayed in Profile at Order History.",
+          });
         }}
         transparent={0.5}
         title={"Rate Order"}

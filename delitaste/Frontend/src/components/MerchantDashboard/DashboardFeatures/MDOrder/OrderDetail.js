@@ -87,7 +87,7 @@ function OrderDetail(props) {
         "provider-received-order",
         async (orderData, customerData, order_code, pricing) => {
           console.log("check:", orderData, customerData, order_code, pricing);
-
+          
           const result1 = await getAllProductFromOrderAPI(order_code);
           const result2 = await getOrderStatusAPI(order_code);
           Promise.all([result1, result2]).then((data) => {

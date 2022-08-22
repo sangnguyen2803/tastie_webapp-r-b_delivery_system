@@ -12,6 +12,7 @@ import PDHeader from "components/ProviderDetail/PDHeader/PDHeader";
 import PDBody from "components/ProviderDetail/PDBody/PDBody";
 import { getProductListAPI } from "store/actions/ProductAction/ProductAction";
 import { getCustomerReviewAPI } from "store/actions/ProviderAction/ProviderAction";
+import { scroller } from "react-scroll";
 
 function ProviderDetail(props) {
   useEffect(() => {
@@ -93,6 +94,16 @@ function ProviderDetail(props) {
     async function fetchingDataAPI() {
       const productList = await props.getProductListAPI(props.match.params?.id);
       if (productList) setItems([...productList]);
+      let targetId = localStorage.getItem("target_product");
+      if (targetId) {
+        scroller.scrollTo(targetId, {
+          duration: 800,
+          delay: 0,
+          smooth: "easeInOutQuart",
+          offset: -100,
+        });
+        localStorage.removeItem("target_product");
+      }
       const upcomingProductList = await props.getUpcomingProductAPI(
         props.match.params?.id
       );

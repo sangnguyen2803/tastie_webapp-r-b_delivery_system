@@ -144,13 +144,6 @@ function PDHeader(props) {
           <div className="p-d-header-container">
             <div className="p-d-provider-image">
               <img src={`${providerDetail.avatar}`} alt="provider_avatar" />
-              <div className="p-d-provider-interaction-wrapper">
-                <FontAwesomeIcon
-                  className="p-d-icon-for-liking"
-                  style={{ zIndex: 1 }}
-                  icon={faHeart1}
-                />
-              </div>
             </div>
             <div className="p-d-provider-info">
               <div className="p-d-sub-head-title">Restaurant</div>

@@ -127,9 +127,13 @@ function ProductGroup({
               {providerList?.map((item, index) => (
                 <div
                   key={index}
-                  onClick={(e) =>
-                    handleOnClickProvider(e, item.product_infor.provider_id)
-                  }
+                  onClick={(e) => {
+                    handleOnClickProvider(e, item.product_infor.provider_id);
+                    localStorage.setItem(
+                      "target_product",
+                      item.product_infor.product_id
+                    );
+                  }}
                 >
                   <LazyLoad style={{ width: "100%" }}>
                     <div
