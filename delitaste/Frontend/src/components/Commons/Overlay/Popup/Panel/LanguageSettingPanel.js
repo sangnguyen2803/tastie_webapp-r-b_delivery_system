@@ -8,14 +8,15 @@ import "style/Common.scss";
 //i18next
 import { useTranslation } from "react-i18next";
 
+/*const languages = [
+  { key: "vi", name: "Tiếng Việt" },
+  { key: "en", name: "English" },
+  { key: "fr", name: "Français" },
+];*/
 const LanguageSettingPanel = (props) => {
   const { i18n } = useTranslation();
   const [selectedLanguage, setSelectedLanguage] = useState("");
-  const languages = [
-    { key: "vi", name: "Tiếng Việt" },
-    { key: "en", name: "English" },
-    { key: "fr", name: "Français" },
-  ];
+  const languages = [{ key: "en", name: "English" }];
   const languagePanelHandler = () => {
     i18n.changeLanguage(selectedLanguage);
     const url = `/${selectedLanguage}`;
