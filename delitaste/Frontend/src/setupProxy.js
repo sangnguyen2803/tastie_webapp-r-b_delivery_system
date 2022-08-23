@@ -21,6 +21,11 @@ module.exports = function (app) {
       target: "http://157.230.243.92:3007/",
     })
   );
+  app.use(
+    createProxyMiddleware("/upload", {
+      target: "http://157.230.243.92:3777/",
+    })
+  );
 
   // app.use(
   //   createProxyMiddleware("/socket.io", {
