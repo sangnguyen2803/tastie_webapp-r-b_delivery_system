@@ -50,22 +50,22 @@ const responsive = {
 const categories = [
   [
     {
-      category_id: 1000038,
-      type: 1,
+      category_id: 1000010,
+      type: 2,
       category_name: "Dessert",
       category_image: CategoryImage1,
     },
     {
-      category_id: 1000008,
-      type: 1,
+      category_id: 1000014,
+      type: 2,
       category_name: "Bakery",
       category_image: CategoryImage2,
     },
   ],
   [
     {
-      category_id: 1000029,
-      type: 1,
+      category_id: 1000016,
+      type: 2,
       category_name: "Coffee and Tea",
       category_image: CategoryImage3,
     },
@@ -79,13 +79,13 @@ const categories = [
   [
     {
       category_id: 1000016,
-      type: 1,
+      type: 2,
       category_name: "Bread",
       category_image: CategoryImage5,
     },
     {
-      category_id: 1000021,
-      type: 1,
+      category_id: 1000008,
+      type: 2,
       category_name: "Cake",
       category_image: CategoryImage6,
     },
@@ -98,21 +98,21 @@ const categories = [
       category_image: CategoryImage7,
     },
     {
-      category_id: 1000057,
-      type: 1,
+      category_id: 1000004,
+      type: 2,
       category_name: "Vegetable",
       category_image: CategoryImage8,
     },
   ],
   [
     {
-      category_id: 1000088,
-      type: 1,
+      category_id: 1000011,
+      type: 2,
       category_name: "Pizza",
       category_image: CategoryImage11,
     },
     {
-      category_id: 1000039,
+      category_id: 1000005,
       type: 2,
       category_name: "Dim-Sum",
       category_image: CategoryImage10,

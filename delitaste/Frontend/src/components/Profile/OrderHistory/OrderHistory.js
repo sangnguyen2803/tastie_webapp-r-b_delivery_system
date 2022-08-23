@@ -27,7 +27,7 @@ function OrderHistory(props) {
       const result = await getOrderHistoryAPI(id);
       console.log(result);
       if (result) {
-        result.sort(function (a, b) {
+        result?.sort(function (a, b) {
           return (
             new Date(b.completed_at.split(", ")[1]) -
             new Date(a.completed_at.split(", ")[1])
@@ -37,10 +37,7 @@ function OrderHistory(props) {
         setFilterOrderHistory(result);
       }
     }
-    fetchOrderHistory(user.profile?.user_id);
-    return function cleanup() {
-      setOrderHistory([]);
-    };
+    if (user.profile?.user_id) fetchOrderHistory(user.profile?.user_id);
   }, [user.profile?.user_id]);
   const filterItems = (status) => {
     if (parseInt(status) !== 0) {
