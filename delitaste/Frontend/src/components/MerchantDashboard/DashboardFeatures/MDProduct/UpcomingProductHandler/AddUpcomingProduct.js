@@ -54,7 +54,7 @@ function AddUpcomingProduct(props) {
         "Content-Type": "multipart/form-data",
       },
     };
-    const image_upload_endpoint = `http://157.230.243.92:3777/upload`;
+    const image_upload_endpoint = `https://157.230.243.92:3777/upload`;
     let image_data = new FormData();
     image_data.append("upload", upcomingProductImage);
     const response = await axios.post(
