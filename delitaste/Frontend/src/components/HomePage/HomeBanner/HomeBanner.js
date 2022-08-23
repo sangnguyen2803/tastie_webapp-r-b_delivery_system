@@ -60,8 +60,13 @@ function HomeBanner(props) {
               }}
             />
             <span className="hb-sub-text-italic">
-              You got 3 discounts at the moments,{" "}
-              <strong style={{ color: "rgb(148, 0, 0)", cursor: "pointer" }}>
+              100+ stores and restaurants are available for you to try, <br />
+              <strong
+                onClick={() => {
+                  scrollToSection(`apro-home-product-slider-all`);
+                }}
+                style={{ color: "rgb(148, 0, 0)", cursor: "pointer" }}
+              >
                 check now
               </strong>
               .
