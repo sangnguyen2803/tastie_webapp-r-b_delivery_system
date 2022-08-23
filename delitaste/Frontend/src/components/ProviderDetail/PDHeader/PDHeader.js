@@ -50,7 +50,7 @@ const promotions = [
     promotion_code: "FREESHIP",
     promotion_name: "FREESHIP",
     promotion_value: 10,
-    promotion_description: "Discount €2.99 delivery free",
+    promotion_description: "Discount $2.99 delivery free",
     min_order_value: 5,
     max_discount_value: 3,
     start_at: "2022 March 21",
@@ -149,13 +149,16 @@ function PDHeader(props) {
               <div className="p-d-sub-head-title">Restaurant</div>
               <div className="p-d-title">{providerDetail.merchant_name}</div>
               <div className="p-d-note">
-                € 0.49 Delivery Fee&nbsp;•&nbsp;Delivered in 35 to 45 min
+                &nbsp;•&nbsp;Cooking within{" "}
+                {providerDetail?.estimated_cooking_time} mins
               </div>
               <div className="p-d-sub-title-1">
                 <div className="p-d-sub-title-content">
                   <FontAwesomeIcon className="p-d-icon" icon={faMapMarkerAlt} />
                   &nbsp;
-                  <span>{providerDetail.address}</span>
+                  <span>
+                    {`${providerDetail?.address} ${providerDetail?.road}`}{" "}
+                  </span>
                 </div>
               </div>
               <div className="p-d-sub-title-1">

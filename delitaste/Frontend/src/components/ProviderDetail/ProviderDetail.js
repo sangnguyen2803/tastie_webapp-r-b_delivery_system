@@ -26,7 +26,7 @@ function ProviderDetail(props) {
     provider_name: "Burger King - Lyon Garibaldi Davinci",
     rating: "4.5",
     rating_total: "59",
-    price_range: "3.49€-5.49€",
+    price_range: "3.49$-5.49$",
     cooking_time: "30 - 40 min",
     dietary: "Alergy-friendly",
     provider_photo:

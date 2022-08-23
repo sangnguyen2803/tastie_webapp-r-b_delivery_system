@@ -100,7 +100,6 @@ function MDHome(props) {
       estimated_cooking_time: values.ect,
       update_at: "2022-02-19",
     });
-    console.log(body1, body2, body3, body4, body5, body6, body7);
     const result1 = await axios.post(endpoint, body1, config);
     const result2 = await axios.post(endpoint, body2, config);
     const result3 = await axios.post(endpoint, body3, config);
@@ -108,7 +107,6 @@ function MDHome(props) {
     const result5 = await axios.post(endpoint, body5, config);
     const result6 = await axios.post(endpoint, body6, config);
     const result7 = await axios.post(endpoint, body7, config);
-    console.log(result1, result2, result3, result4, result5, result6, result7);
     setShowUpdateDialog(true);
     setDialogContent({
       header: "Update provider detail",

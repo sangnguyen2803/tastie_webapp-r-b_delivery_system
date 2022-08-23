@@ -321,7 +321,7 @@ function PDBody({
                           {product.product_name}
                         </span>
                         <span className="pd-pl-sub-text">
-                          € {product.price?.toFixed(2)}
+                          $ {product.price?.toFixed(2)}
                         </span>
                       </div>
                     ))}
@@ -353,7 +353,7 @@ function PDBody({
                             {product.product_name}
                           </span>
                           <span className="pd-pl-sub-text">
-                            € {product.price?.toFixed(2)}
+                            $ {product.price?.toFixed(2)}
                           </span>
                           <span
                             className="pd-pl-sub-text"

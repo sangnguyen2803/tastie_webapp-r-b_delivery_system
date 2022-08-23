@@ -233,7 +233,7 @@ function PDProductDetail(props) {
           label={
             props.buttonTitle
               ? props.buttonTitle
-              : `Add to order • € ${(totalPrice * quantity).toFixed(2)}`
+              : `Add to order • $ ${(totalPrice * quantity).toFixed(2)}`
           }
           onClick={navigateAddToCart}
         />

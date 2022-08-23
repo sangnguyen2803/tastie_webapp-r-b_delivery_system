@@ -71,7 +71,6 @@ function ProductGroup({
           item.provider_id === pid ? { ...item, isFavorite: false } : item
         )
       );
-      console.log(providerList);
       if (status) console.log("successfully removed from favorite list");
       return;
     }

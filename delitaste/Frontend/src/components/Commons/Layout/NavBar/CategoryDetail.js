@@ -27,7 +27,6 @@ function CategoryDetail({
   useEffect(() => {
     async function fetchAllCategory() {
       const result = await getAllCategoryAPI();
-      console.log(result);
       setCategories(result);
     }
     fetchAllCategory();

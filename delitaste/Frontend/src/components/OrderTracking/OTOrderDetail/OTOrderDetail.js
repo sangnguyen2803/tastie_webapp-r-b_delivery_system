@@ -53,7 +53,7 @@ function OTOrderDetail(props) {
                     {order.product_name}
                   </span>
                   <span className="oc-od-mt-2">
-                    € {order.price?.toFixed(2)}
+                    $ {order.price?.toFixed(2)}
                   </span>
                   {order.special_instruction && (
                     <span className="oc-od-cart-note">
@@ -125,7 +125,7 @@ function OTOrderDetail(props) {
                   )}
                 </div>
                 <div className="ot-od-item-sub-text">
-                  € {order?.product_price?.toFixed(2)}
+                  $ {order?.product_price?.toFixed(2)}
                 </div>
               </div>
             ))}

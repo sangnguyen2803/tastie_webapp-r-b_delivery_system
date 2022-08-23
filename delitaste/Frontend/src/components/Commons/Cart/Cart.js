@@ -87,7 +87,7 @@ const Cart = (props) => {
                     className="cart-item-sub-text"
                     style={{ alignSelf: "flex-start", fontSize: 12 }}
                   >
-                    € {cart.product_price}
+                    $ {cart.product_price}
                   </span>
                   {cart?.product_options?.map((option, index) => (
                     <Fragment key={index}>
@@ -98,7 +98,7 @@ const Cart = (props) => {
                           } ${
                             parseInt(option.price) === 0
                               ? "(FREE)"
-                              : `(€ ${option.price})`
+                              : `($ ${option.price})`
                           }:`}</span>
                           <span className="cart-item-option-text-2">
                             • {`${option.value} `}
@@ -112,7 +112,7 @@ const Cart = (props) => {
                   )}
                 </div>
                 <span className="cart-item-sub-text">
-                  € {((cart.product_price || 0.0) * cart.quantity).toFixed(2)}
+                  $ {((cart.product_price || 0.0) * cart.quantity).toFixed(2)}
                 </span>
                 <span className="cart-surfix-pos-wrapper">
                   <FontAwesomeIcon
@@ -138,7 +138,7 @@ const Cart = (props) => {
               width={"100%"}
               fontSize={16}
               height={45}
-              label={`Go to checkout • € ${parseFloat(subTotal).toFixed(2)}`}
+              label={`Go to checkout • $ ${parseFloat(subTotal).toFixed(2)}`}
               onClick={() => {
                 props.history.push(`/order-checkout/${user.userCart?.user_id}`);
               }}

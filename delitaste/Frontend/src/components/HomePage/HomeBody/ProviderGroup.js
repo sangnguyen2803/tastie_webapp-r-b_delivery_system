@@ -70,7 +70,6 @@ function ProviderGroup({
           item.provider_id === pid ? { ...item, isFavorite: false } : item
         )
       );
-      console.log(providerList);
       if (status) console.log("successfully removed from favorite list");
       return;
     }
@@ -155,7 +154,7 @@ function ProviderGroup({
                         />
                         {!item.tag_name && (
                           <div className="provider-card-tag">
-                            {item.tag_name || "3 orders until €5 reward"}
+                            {item.tag_name || "3 orders until $5 reward"}
                           </div>
                         )}
                       </div>

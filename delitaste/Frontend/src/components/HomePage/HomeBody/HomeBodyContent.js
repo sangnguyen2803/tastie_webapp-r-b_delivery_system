@@ -63,7 +63,6 @@ function HomeBodyContent(props) {
         lo,
         user.profile?.user_id
       );
-      console.log(result1);
       setGroup1(result1);
       const result2 = await getProviderGroup(
         5,

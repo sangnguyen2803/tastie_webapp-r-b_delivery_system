@@ -559,7 +559,7 @@ function OrderDetail(props) {
                         {order.product_name}
                       </span>
                       <span className="oc-od-mt-2">
-                        € {order.product_price}
+                        $ {order.product_price}
                       </span>
                       {order.note && (
                         <span className="oc-od-cart-note">

@@ -167,7 +167,7 @@ function PickupProvider(props) {
                       />
                       {!item.tag_name && (
                         <div className="provider-card-tag">
-                          {item.tag_name || "3 orders until €5 reward"}
+                          {item.tag_name || "3 orders until $5 reward"}
                         </div>
                       )}
                     </div>
@@ -310,7 +310,7 @@ function PickupProvider(props) {
                     {!selectedProvider.tag_name && (
                       <div className="provider-card-tag">
                         {selectedProvider.tag_name ||
-                          "3 orders until €5 reward"}
+                          "3 orders until $5 reward"}
                       </div>
                     )}
                   </div>
