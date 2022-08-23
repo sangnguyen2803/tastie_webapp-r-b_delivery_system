@@ -216,7 +216,7 @@ function BusinessUnitForm(props) {
         "Content-Type": "multipart/form-data",
       },
     };
-    const image_upload_endpoint = `https://157.230.243.92:3777/upload/provider/avatar`;
+    const image_upload_endpoint = `https://tastie18vp.com/upload/provider/avatar`;
     let image_data = new FormData();
     image_data.append("provider_id", props.match.params.id);
     image_data.append("upload", providerImage);

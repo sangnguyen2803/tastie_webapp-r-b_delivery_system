@@ -100,7 +100,7 @@ export const addProductAPI = (data, image) => async (dispatch) => {
     const res = await axios.post(endpoint, body, config);
     console.log(res.data);
     if (res.data?.status) {
-      const image_upload_endpoint = `https://157.230.243.92:3777/upload/product/avatar`;
+      const image_upload_endpoint = `https://tastie18vp.com/upload/product/avatar`;
       let image_data = new FormData();
       image_data.append("product_id", res.data.infor.product_id);
       image_data.append("upload", image);
@@ -152,7 +152,7 @@ export const updateProductAPI =
       const res = await axios.post(endpoint, body, config);
       console.log(res);
       if (res.data?.status) {
-        const image_upload_endpoint = `https://157.230.243.92:3777/upload/product/avatar`;
+        const image_upload_endpoint = `https://tastie18vp.com/upload/product/avatar`;
         let image_data = new FormData();
         image_data.append("product_id", productId);
         image_data.append("upload", image);
