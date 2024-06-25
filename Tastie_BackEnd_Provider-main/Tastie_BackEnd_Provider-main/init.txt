@@ -1,0 +1,357 @@
+// http://localhost:3008/v1/api/provider/sign-contract : POST
+{
+    "user_id" : "1000002",
+    "registered_at" : "",
+    "provider_update_at" : ""
+}
+
+
+// http://localhost:3008/v1/api/provider/register/1000002/basic-info : POST // 1000002 la id a nha
+{
+    "merchant_name" : "abc def",
+    "address" : "123 THD, COL, Q1, HCM",
+    "road" : "THD",
+    "hotline" : "123456789",
+    "city_id" : 3,
+    "district_id" : 4,
+    "ward_id" : 22,
+    "latitude" : 32432,
+    "longitude" : 32432,
+    "registered_at" : "2021-04-04",
+    "update_at" : "2021-04-04"
+}
+
+
+// http://localhost:3008/v1/api/provider/register/1000002/representive : POST
+{
+    "company_name" : "AAABBBCCC",
+    "company_address" : "321 THD, TP Quy Nhon",
+    "owner_name" : "Shop cua Trung :)))))",
+    "email" : "abzd@gmail.com",
+    "owner_phone" : "321321321",
+    "owner_card_id" : "123321321123",
+    "role" : 1,
+    "create_at" : "2021-04-02",
+    "update_at" : "2021-08-04",
+    "owner_card_image1" : "2021-09-04",
+    "owner_card_image2" : "2021-07-04",
+    "tax_code" : "abcdefghi"
+}
+
+///
+Insert Into `providercategory` (provider_category_id, provider_category_name) Values (1, 'abc');
+Insert Into `providercategory` (provider_category_id, provider_category_name) Values (2, 'abc');
+Insert Into `providercategory` (provider_category_id, provider_category_name) Values (3, 'abc');
+
+Insert Into `CuisineCategory` (cuisine_category_id, cuisine_category_name) Values (2, 'abc');
+Insert Into `CuisineCategory` (cuisine_category_id, cuisine_category_name) Values (3, 'abc');
+
+
+
+// http://localhost:3008/v1/api/provider/register/1000000/detail-info : POST
+// Luu y hai field provider_category_name va cuisine_category_name k duoc thay doi gia tri khac khi chay api
+{
+    "keyword" : "abc",
+    "description" : "abc",
+    "avatar" : "abc",
+    "cover_picture" : "abc",
+    "facade_photo" : "abc",
+    "provider_category_id" : [1000000, 1000001, 1000002],
+    "cuisine_category_id" : [1000000, 1000001],
+    "rush_hour" : "15:20:20",
+    "create_at" : "2021-03-03",
+    "update_at" : "2021-03-03",
+    "operating" : {
+        "sunday": {
+            "is_day_off": false,
+            "open_time": "08:20:00",
+            "close_time": "22:00:00"
+          },
+          "monday": {
+            "is_day_off": true,
+            "open_time": "09:20:00",
+            "close_time": "22:00:00"
+          },
+          "tuesday": {
+            "is_day_off": true,
+            "open_time": "10:20:00",
+            "close_time": "22:00:00"
+          },
+          "wednesday": {
+            "is_day_off": true,
+            "open_time": "08:20:00",
+            "close_time": "22:00:00"
+          },
+          "thursday": {
+            "is_day_off": true,
+            "open_time": "08:20:00",
+            "close_time": "22:00:00"
+          },
+          "friday": {
+            "is_day_off": false,
+            "open_time": "08:20:00",
+            "close_time": "22:00:00"
+          },
+          "saturday": {
+            "is_day_off": true,
+            "open_time": "08:20:00",
+            "close_time": "22:00:00"
+          }
+    }
+}
+
+
+// http://localhost:3008/v1/api/provider/register/1000000/menu-photo
+{
+    "price_range" : 2000,
+    "menu_image" : "Abc",
+    "delivery_mode" : 1,
+    "update_at" : "2022-03-12"
+}
+
+// http://localhost:3008/v1/api/provider/register/1000000/bank-info
+{
+    "id_card_number" : "123321",
+    "date_of_issue" : "2021-12-30",
+    "bank_beneficiary_name" : "abc",
+    "bank_account_number" : "abc",
+    "bank_name" : "abc",
+    "bank_province" : "abc",
+    "bank_branch" : "abc",
+    "user_role" : 2,
+    "update_at" : "2022-03-12"
+}
+
+// http://localhost:3008/v1/api/provider/dashboard/menu-overview/add-item : POST
+{
+  "provider_id": 1000001,
+  "product_name": "Tra Vai Trang",
+  "product_status": 1,
+  "description": "Chuc mung nam moi :)))))",
+  "price": 3,
+  "quantity": 100,
+  "product_image": "img url",
+  "create_at": "2022-01-18",
+  "update_at": "2022-02-20 20:00:00",
+  "menuCategoryID": [1000001, 1000002, 1000003],
+  "foodCategoryID": [1000000, 1000001],
+  "mainCategoryID" : [1000000, 1000001],
+  "additionalOptions": [
+      {
+        "name": "Viande au choix",
+        "option_description" : "abc",
+        "is_required" : 1,
+        "optionList": [
+          {
+            "optionName": "Tenders",
+            "addtionalPrice": 5
+          },
+          {
+            "optionName": "Nuggets",
+            "addtionalPrice": 10
+          },
+          {
+            "optionName": "Cordon bleu",
+            "addtionalPrice": 15
+          }
+        ]
+      },
+      {
+        "name": "Garnitures supplémentaires",
+        "option_description" : "abc",
+        "is_required" : 1,
+        "optionList": [
+          {
+            "optionName": "Oeuf",
+            "addtionalPrice": 20
+          },
+          {
+            "optionName": "Cheddar",
+            "addtionalPrice": 25
+          },
+          {
+            "optionName": "Boursin",
+            "addtionalPrice": 30
+          }
+        ]
+      }
+    ]
+}
+
+// http://localhost:3008/v1/api/provider/dashboard/menu-overview/1000000/get-menu-items : GET
+
+// http://localhost:3008/v1/api/provider/dashboard/menu-overview/1000000/update-product : POST
+{
+    "productId": 1000000,
+    "productName": "Tacos Simple",
+    "description":
+      "1 viande au choix, frites, sauce au choix et sauce fromagère maison.",
+    "menuCategoryID": [1000001, 1000002, 1000003],
+    "foodCategoryID": [1000000, 1000001],
+    "mainCategoryID" : [1000000, 1000001],
+    "additionalOptions": [
+      {
+        "name": "Viande au choix",
+        "option_description" : "abc",
+        "is_required" : 1,
+        "optionList": [
+          {
+            "optionName": "Tenders",
+            "addtionalPrice": 5
+          },
+          {
+            "optionName": "Nuggets",
+            "addtionalPrice": 10
+          },
+          {
+            "optionName": "Cordon bleu",
+            "addtionalPrice": 15
+          }
+        ]
+      },
+      {
+        "name": "Garnitures supplémentaires",
+        "option_description" : "abc",
+        "is_required" : 1,
+        "optionList": [
+          {
+            "optionName": "Oeuf",
+            "addtionalPrice": 20
+          },
+          {
+            "optionName": "Cheddar",
+            "addtionalPrice": 25
+          },
+          {
+            "optionName": "Boursin",
+            "addtionalPrice": 30
+          }
+        ]
+      }
+    ],
+    "productPhoto":
+      "https://d1ralsognjng37.cloudfront.net/3852bd2f-c835-4e5d-9332-a6bf4d503dfb.jpeg",
+    "productPrice": 15,
+    "quantityAvailable": 100,
+    "productStatus": 3,
+    "position": 1,
+    "update_at" : "2022-1-1"
+  }
+
+
+  // http://localhost:3008/v1/api/provider/dashboard/menu-overview/1000000/get-list-product : GET
+
+  http://localhost:3008/v1/api/provider/dashboard/menu-overview/1000006/remove-item : DELETE
+
+
+  // Insert data product
+
+INSERT INTO `Product` (`product_id`,`provider_id`,`product_name`,`product_status`,`description`,`price`,`quantity`,`sold_quantity`,`position`,`rating`,`create_at`,`update_at`,`delete_at`) VALUES (1000000,1000001,'trà',1,'uống zô mất ngủ',5,100,6,2,4,'2021-01-01', NOW(),NULL);
+INSERT INTO `Product` (`product_id`,`provider_id`,`product_name`,`product_status`,`description`,`price`,`quantity`,`sold_quantity`,`position`,`rating`,`create_at`,`update_at`,`delete_at`) VALUES (1000001,1000001,'nước',1,NULL,100,3,4,NULL,NULL,NOW(),NOW(),NULL);
+INSERT INTO `Product` (`product_id`,`provider_id`,`product_name`,`product_status`,`description`,`price`,`quantity`,`sold_quantity`,`position`,`rating`,`create_at`,`update_at`,`delete_at`) VALUES (1000002,1000001,'bánh',2,NULL,200,5,6,NULL,NULL,'2021-01-01',NOW(),NULL);
+INSERT INTO `Product` (`product_id`,`provider_id`,`product_name`,`product_status`,`description`,`price`,`quantity`,`sold_quantity`,`position`,`rating`,`create_at`,`update_at`,`delete_at`) VALUES (1000003,1000001,'trái cây',3,NULL,300,7,8,NULL,NULL,'2021-01-01',NOW(),NULL);
+INSERT INTO `Product` (`product_id`,`provider_id`,`product_name`,`product_status`,`description`,`price`,`quantity`,`sold_quantity`,`position`,`rating`,`create_at`,`update_at`,`delete_at`) VALUES (1000004,1000001,'cái gì nhỉ',4,NULL,400,9,10,NULL,NULL,'2021-01-01',NOW(),NULL);
+INSERT INTO `Product` (`product_id`,`provider_id`,`product_name`,`product_status`,`description`,`price`,`quantity`,`sold_quantity`,`position`,`rating`,`create_at`,`update_at`,`delete_at`) VALUES (1000005,1000001,'kẹo',6,NULL,500,11,12,NULL,NULL,NOW(),NOW(),NULL);
+
+
+// localhost:3008/v1/api/provider/dashboard/menu-overview/1000001/add-menu-category : POST
+{
+    "menu_name" : "abc def ghi"
+}
+
+// localhost:3008/v1/api/provider/dashboard/menu-overview/1000001/add-product-into-menu-category : POST
+{
+    "menu_category_id" : 1000004,
+    "product_id" : [1000003, 1000004, 1000005]
+}
+
+// http://localhost:3008/v1/api/provider/dashboard/1000001/get-info : GET
+
+
+// http://localhost:3008/v1/api/provider/dashboard/menu-overview/1000001/update-product-status : POST
+{
+    "product_id" : 1000001,
+    "product_status" : 1,
+    "update_at" : "2014-02-01"
+}
+
+// localhost:3008/v1/api/provider/dashboard/1000001/update-provider
+{
+  "provider_status" : 1,
+   "day" : "Monday",
+   "open_time" : "08:15:00",
+   "close_time" : "20:30:00",
+   "estimated_cooking_time" : "15-20 min",
+   "update_at" : "2022-02-19"
+}
+
+// localhost:3008/v1/api/provider/dashboard/home/get-group-provider : POST
+{
+    "group_provider_id": 7,
+    "limit": 6,
+    "offset": 1,
+    "latitude" : 10.763019107348029,
+    "longitude" : 106.68250448518744 
+}
+
+// localhost:3008/v1/api/provider/dashboard/home/get-near-by-provider : POST
+{
+    "latitude" : 10.763019107348029,
+    "longitude" : 106.68250448518744,
+    "limit": 6,
+    "offset": 1
+}
+
+// http://:3008/v1/api/tastie/provider/add-promotion : POST
+{
+    "provider_id" : 1000001,
+    "promotion_code" : "LEHOI123",
+    "promotion_name" : "LEHOI123",
+	"promotion_value" : 123,
+    "promotion_description" :  "LEHOI123",
+    "min_order_value" : 123,
+    "max_discount_value" : 123,
+	"start_at" : "2022-02-12",
+    "expire_at" : "2022-02-12",
+    "payment_method_id" : 1,
+    "limited_offer" : 1,
+    "weekly_usage_limit_per_user" :  12,
+    "delivery_mode" : 1
+}
+
+// http://:3008/v1/api/tastie/provider/update-promotion : POST
+{
+    "promotion_id" : 1,
+    "provider_id" : 1000001,
+    "promotion_code" : "Hello3",
+    "promotion_name" : "LEHOI123",
+	"promotion_value" : 123,
+    "promotion_description" :  "LEHOI123",
+    "min_order_value" : 123,
+    "max_discount_value" : 123,
+	"start_at" : "2022-02-12",
+    "expire_at" : "2022-02-12",
+    "payment_method_id" : 1,
+    "limited_offer" : 1,
+    "weekly_usage_limit_per_user" :  12,
+    "delivery_mode" : 1,
+    "update_at" : "2022-02-12"
+}
+
+
+
+
+// http://:3008/v1/api/provider/order/get-all-order : POST
+{
+    "provider_id" : 1000047,
+    "limit" : 20,
+    "offset" : 1
+}
+
+// http://:3008/v1/api/provider/order/get-all-products-from-order/b20eb67e-7c8b-4331-ac96-276af4eb8538
+
+// http://localhost:3008/v1/api/provider/dashboard/register-ecoupon : POST
+{
+    "ecoupon_id": 1,
+    "provider_id" : 1000003
+}

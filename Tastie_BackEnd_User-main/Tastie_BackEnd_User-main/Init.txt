@@ -1,0 +1,299 @@
+-- Environnement : node js, nodemon, express, morgan
+
+
+// Api
+
+// /v1/api/auth/sign-in : POST
+{
+    "phone" : "111222333",
+    "password" : "C9vvCi"
+}
+
+///v1/api/auth/sign-up : POST
+{
+    "email": "abcdef@gmail.com",
+    "password": "abcdef",
+    "phone" : "111222333",
+    "first_name" : "abc",
+    "last_name" : "abc",
+    "role" : 1,
+    "registered_at" : "2021-11-11"
+}
+
+// /v1/api/auth/login-with-otp : POST // defaut la 123456 de test truoc
+{
+    "phone" : "111222333",
+    "otp" : "123456"
+}
+
+// /v1/api/auth/update : POST // cac field them bot tuy y
+{
+    "account_id" : 1000003,
+    "email": "aaabbb@gmail.com",
+    "role" : "C"
+}
+
+// /v1/auth/resest-password : POST
+{
+    "phone" : "111222333",
+    "email" : "sangnguyen280300@gmail.com"
+}
+
+// /v1/api/auth/get-access-token // token trong body la refresh token va co the lay tu login, register hoac login with otp
+{
+    "token" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwaG9uZSI6IjExMTIyMjMzMyIsIm90cCI6IjEyMzQ1NiIsImlhdCI6MTYzNzU2NjE2Mn0.6RVpEyoz7i0sPvGPEJVXTSuukHrnA6puEvbVervDFQU"
+
+}
+
+// http://localhost:3007/v1/api/auth/send-code-with-email
+{
+    "email" : "thanhviet0167@gmail.com"
+}
+
+// http://localhost:3007/v1/api/auth/verify-code-with-email
+{
+    "verifyEmailToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRoYW5odmlldDAxNjdAZ21haWwuY29tIiwiaWF0IjoxNjM4OTQ5MTk2LCJleHAiOjE2Mzg5NDk0OTZ9.siPkLdYHJ62_pi2ukSCBQnxFXLEPV_aizUalJ9cv7jA",
+    "code": "UywP1r",
+    "email" : "thanhviet0167@gmail.com"
+}
+
+// http://localhost:3007/v1/api/auth/get_profile
+{
+    "accessToken" : ""
+}
+
+// /v1/api/auth/check-exist-email-and-phone // khong bat buoc phai truyen du 2 tham so phone voi email, co the 
+{
+    "phone" : "abc",
+    "email" : "abc"
+}
+//// OR
+{
+    "email" : "abc"
+}
+// OR
+{
+    "phone" : "abc",
+}
+
+
+
+// http://localhost:3007/v1/api/auth/logout
+{
+    "email" : "abc@gmail.com" // co the thay bang tham so phone
+}
+
+// http://localhost:3007/v1/api/auth/change-password
+{
+    "phone" : "111222333", co the thay bang tham so email
+    "password" : "123321"
+}
+
+
+// http://localhost:3007/v1/api/auth/get_provider
+{
+    "accessToken" : ""
+}
+
+// http://localhost:3007/v1/api/tastie/store/customer_review/1000001 : GET
+
+// localhost:3007/v1/api/tastie/tastie/get_cart/1000005 : GET
+
+// localhost:3007/v1/api/tastie/tastie/update-quantity-and-note-into-cart : POST 
+{
+    "user_id" : 1000005,
+    "product_id" :1000001 ,
+    "special_instruction" : "hahahahahahahahaha",
+    "quantity" : 75,
+    "item_code" : "6fd85abd-34a5-4273-b7b7-fe23eb8d15fe"
+
+}
+
+
+// localhost:3007/v1/api/tastie/tastie/update-value-of-label-into-cart
+{
+    "user_id" : 1000005,
+    "product_id" :1000001 ,
+    "label" : "Size",
+    "value" : "L",
+    "item_code" : "6fd85abd-34a5-4273-b7b7-fe23eb8d15fe"
+
+}
+
+// localhost:3007/v1/api/tastie/tastie/update-label-of-product-into-cart
+
+{
+    "user_id" : 1000005,
+    "product_id" :1000001 ,
+    "label" : "Topping",
+    "value" : "Thach tran chau den",
+    "item_code" : "6fd85abd-34a5-4273-b7b7-fe23eb8d15fe",
+    "type" : 2
+}
+
+// localhost:3007/v1/api/tastie/tastie/insert_product-into-cart
+{
+    "user_id" : 1000005,
+    "product_id" : 1000001,
+    "quantity" : 15,
+    "special_instruction" : "abccba",
+    "additional_option" : 
+    [
+        {
+        "label": "Sugar",
+        "value" : "100%"
+        },{
+        "label": "Size",
+        "value" : "XL"
+        }
+    ]
+
+}
+
+
+// /v1/api/tastie/tastie/delete_cart
+
+// localhost:3007/v1/api/tastie/tastie/delivery-fee-to-checkout
+{
+    "longitude" : 106.68250448518744,
+    "latitude" : 10.763019107348029,
+    "provider_id" : 1000005
+}
+
+// localhost:3007/v1/api/tastie/search : POST
+{
+    "q" : "Ham",
+    "type" : "2",
+    "longitude" : 106.68250448518744,
+    "latitude" : 10.763019107348029,
+    "category_infor" : {
+        "category_type" : "2",
+        "category_id" : 1000000
+    }
+}
+
+
+// localhost:3007/v1/api/tastie/checkout/get_contact/1000001 : GET
+
+// localhost:3007/v1/api/tastie/checkout/get_schedule_time/1000000 : GET
+
+
+
+// localhost:3007/v1/api/tastie/order/submit-order-info-pickup : POST
+
+
+// localhost:3007/v1/api/tastie/order/submit-order-info-delivery : POST
+{
+    "delivery_mode": 1,
+    "customer_id": 1000005,
+    "delivery_address": "This is delivery address field",	
+    "customer_phone": "0123456789",
+    "payment_method": 1, 
+    "payment_status": 1, 
+    "promotion_code": "P_FREESHIP",
+    "ecoupon_code": "",
+    "delivery_method": 1, 
+    "schedule_time": "2022-04-08 9:15-9:30", 
+    "tips": 0.1,
+    "delivery_fee": 1.50, 
+    "subtotal": 20.00,
+    "total": 22.50
+}
+
+// localhost:3007/v1/api/tastie/order/submit-order-items : POST
+{
+    "customer_id" : ,
+    "order_code" : ""
+}
+
+// localhost:3007/v1/api/tastie/order/get-all-products-from-order/1 : GET
+
+// localhost:3007/v1/api/tastie/order/get-order-summary/b20eb67e-7c8b-4331-ac96-276af4eb8538 : GET
+
+// localhost:3007/v1/api/tastie/order/get-shipper-info/1000001 : GET
+
+// localhost:3007/v1/api/tastie/order/get-order-history/1000005 : GET
+
+
+// localhost:3007/v1/api/tastie/order/update_order_status : POST
+{
+    "order_code" : "abc",
+    "status" : 4,
+    "shipper_id" : 1000005
+}
+
+// localhost:3007/v1/api/tastie/tastie/clear-cart/:customer_id : DELETE
+
+
+// localhost:3007/v1/api/tastie/order/get-promos-detail/E_SUMMER_40 : GET
+
+// localhost:3007/v1/api/tastie/order/get-promos-money : POST
+{
+    "code" : "P_FREESHIP",
+    "sub_total" : 55
+}
+
+// localhost:3007/v1/api/tastie/order/add-order-review : POST
+{
+    "order_id" : 1, "create_at" : "2022-04-12", "content" : "abc", "image" : "url", "stars" : 5
+}
+
+// localhost:3007/v1/api/tastie/order/add-shipper-review : POST
+{
+    "order_id" : 1, "create_at" : "2022-04-12", "content" : "abc", "stars" : 5
+}
+
+
+// /v1/api/tastie/checkout/get_promotion/:provider_id
+
+
+// http://localhost:3007/v1/api/tastie/add-customer-address
+{
+    "customer_id" : 1000005,
+    "address" : "abc def dbc",
+    "city" : "Sai Gon",
+    "type" : 4,
+    "longtitude" : "116.6805406",
+    "latitude" : "12.762328"
+}
+
+// http://localhost:3007/v1/api/tastie/update-customer-address
+{
+    "customer_id" : 1000005,
+    "address" : "abc def dbc",
+    "city" : "Sai Gon",
+    "type" : 4,
+    "longtitude" : "116.6805406",
+    "latitude" : "12.762328"
+}
+
+
+// http://localhost:3007/v1/api/tastie/order/payment-by-momo
+{
+    "order_code" : "c8c81cde-e434-4c28-bb53-58ae7e3f4346",
+    "orderInfo" : "Thanh toan tra sua",
+    "amount" : 550000
+}
+
+// http://localhost:3007/v1/api/tastie/order/payment-by-zalo
+{
+    "customer_id" : 1000000,
+    "customer_name" : "Abc",
+    "amount" : 2200000,
+    "description" : "Thanh toan tien com"
+}
+
+// http://localhost:3007/v1/api/tastie/checkout/get-all-promos/1000001 : GET
+
+// localhost:3007/v1/api/tastie/home/get-all-category : GET
+
+// http://localhost:3007/v1/api/tastie/order/get-all-notification/1000002 : GET
+
+// localhost:3007/v1/api/tastie/order/add-notification : POST
+{
+    "user_id" : 1000002,
+    "content" : "Bạn đã nhận đơn hàng thành công",
+    "create_at" : "2022-05-05"
+}
+
+
