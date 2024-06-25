@@ -70,4 +70,3 @@
 ![13-order-checkout-tips](https://github.com/sangnguyen2803/React.js_tastie_e_commerce_system_webapp/assets/68097971/1337c528-efe7-4580-b72b-2ce970ce82c9)
 ![13-order-checkout-schedule-time](https://github.com/sangnguyen2803/React.js_tastie_e_commerce_system_webapp/assets/68097971/eac06fb4-542e-4433-8bfa-033651b4f092)
 
-II Demo Video (French version)
