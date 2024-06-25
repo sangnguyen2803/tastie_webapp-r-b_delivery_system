@@ -1,0 +1,4 @@
+user_id,first_name,last_name,gender,birthday,email,phone,password,role,user_token,registered_at,last_login_at,delete_at
+1000000,"Customer 1",NULL,NULL,NULL,NULL,1111111111,AAAAAA,1,NULL,NULL,NULL,NULL
+1000001,Ty,Teo,NULL,NULL,B@gmail.com,222222222,BBBBBB,1,NULL,NULL,NULL,NULL
+1000002,"Customer 3",NULL,NULL,NULL,NULL,333333333,CCCCCC,1,NULL,NULL,NULL,NULL

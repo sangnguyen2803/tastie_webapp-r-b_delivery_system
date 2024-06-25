@@ -1,0 +1,4 @@
+provider_id,merchant_name,address,road,ward_id,district_id,city_id,description,keyword,hotline,rating,total_review,price_range,avatar,cover_picture,facade_photo,latitude,longitude,erc,registered_at,update_at,delete_at,user_id,owner_id,provider_category_id,cuisine_category_id,menu_id
+1,"Shop của Trung","227 NVC, Px, Q5, TPHCM",NVC,22,4,3,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,32432,32432,NULL,2021-12-11,2021-12-11,NULL,NULL,1,NULL,NULL,NULL
+2,"Shop X","229BVC, Q5, TPHCM",BVC,3,2,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2021-12-11,2021-12-11,NULL,NULL,NULL,NULL,NULL,NULL
+3,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2021-12-11,2021-12-11,NULL,2,NULL,NULL,NULL,NULL

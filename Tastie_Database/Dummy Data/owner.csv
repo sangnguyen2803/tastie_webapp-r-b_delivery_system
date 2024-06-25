@@ -1,0 +1,3 @@
+owner_id,owner_card_id,owner_phone,owner_name,email,company_name,company_address,create_at,update_at,delete_at
+1,23313223,2131323,Trung,a@gmail.com,Trung Company,227 NVC,12/11/2021,12/11/2021,NULL
+2,43312321,34123123,Sleep,sleep@gmail.com,Dormir Company,228NVC,12/11/2021,12/11/2021,NULL
