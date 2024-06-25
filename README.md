@@ -1,4 +1,8 @@
-I Screenshots
+**I. Demo video**
+youtu.be/jpoMcxk8yYA?si=x0ofn3cuWybscoqk
+
+**II. Screenshots**
+
 ![6-profile-detail-full](https://github.com/sangnguyen2803/React.js_tastie_e_commerce_system_webapp/assets/68097971/c418dda2-65d1-4a45-a479-e8df62c89b68)
 ![13-order-checkout-edit-address](https://github.com/sangnguyen2803/React.js_tastie_e_commerce_system_webapp/assets/68097971/0fa5ee59-6293-4e2b-92bc-17421ecb6958)
 ![13-order_checkout-full](https://github.com/sangnguyen2803/React.js_tastie_e_commerce_system_webapp/assets/68097971/8aadbd5c-38a2-46b4-b824-9c3aaeaaeac2)
