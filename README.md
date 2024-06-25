@@ -1,3 +1,5 @@
+I Screenshots
+![6-profile-detail-full](https://github.com/sangnguyen2803/React.js_tastie_e_commerce_system_webapp/assets/68097971/c418dda2-65d1-4a45-a479-e8df62c89b68)
 ![13-order-checkout-edit-address](https://github.com/sangnguyen2803/React.js_tastie_e_commerce_system_webapp/assets/68097971/0fa5ee59-6293-4e2b-92bc-17421ecb6958)
 ![13-order_checkout-full](https://github.com/sangnguyen2803/React.js_tastie_e_commerce_system_webapp/assets/68097971/8aadbd5c-38a2-46b4-b824-9c3aaeaaeac2)
 ![12-upcoming-product](https://github.com/sangnguyen2803/React.js_tastie_e_commerce_system_webapp/assets/68097971/803788d8-807c-457c-b7ae-03f9580fd8d3)
@@ -6,7 +8,6 @@
 ![9-account-settings](https://github.com/sangnguyen2803/React.js_tastie_e_commerce_system_webapp/assets/68097971/0383da5f-da05-48a1-90a5-9a0b7f7d6cbc)
 ![8-order-history-customer-side](https://github.com/sangnguyen2803/React.js_tastie_e_commerce_system_webapp/assets/68097971/34b4ca78-c769-4eaa-8403-dc9c1d0a7c7d)
 ![7-favorites](https://github.com/sangnguyen2803/React.js_tastie_e_commerce_system_webapp/assets/68097971/00f82264-a37f-4654-9e4d-9d01a09b9cab)
-![6-profile-detail-full](https://github.com/sangnguyen2803/React.js_tastie_e_commerce_system_webapp/assets/68097971/c418dda2-65d1-4a45-a479-e8df62c89b68)
 ![5-cart-empty_cart](https://github.com/sangnguyen2803/React.js_tastie_e_commerce_system_webapp/assets/68097971/5eae93ef-17bd-45f9-aabb-d694ead53da1)
 ![5-cart-cart_contains_items](https://github.com/sangnguyen2803/React.js_tastie_e_commerce_system_webapp/assets/68097971/e60b045b-e81a-4d6a-b2dd-e131514b1d4e)
 ![4-home-popup-pick-up](https://github.com/sangnguyen2803/React.js_tastie_e_commerce_system_webapp/assets/68097971/d2c12dc3-1343-4bf2-a87f-4049833ef27a)
@@ -63,3 +64,5 @@
 ![13-order-checkout-update-cart-items](https://github.com/sangnguyen2803/React.js_tastie_e_commerce_system_webapp/assets/68097971/e4dc35ba-01f7-48f1-92ed-f6c657cff240)
 ![13-order-checkout-tips](https://github.com/sangnguyen2803/React.js_tastie_e_commerce_system_webapp/assets/68097971/1337c528-efe7-4580-b72b-2ce970ce82c9)
 ![13-order-checkout-schedule-time](https://github.com/sangnguyen2803/React.js_tastie_e_commerce_system_webapp/assets/68097971/eac06fb4-542e-4433-8bfa-033651b4f092)
+
+II Demo Video (French version)
