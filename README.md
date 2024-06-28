@@ -1,8 +1,11 @@
-**I. Demo video**
+**I. Introduction**
+Tastie is a web and mobile application enabling customers to browse restaurants and place orders. It includes interfaces for providers and admins to manage business operations, alongside a simulated application for shippers. The project also utilizes data science to implement a recommender system by collecting a vast amount of data. 
+
+**II. Demo video**
 
 https://www.youtube.com/watch?v=jpoMcxk8yYA
 
-**I. Screenshots**
+**III. Screenshots**
 
 ![6-profile-detail-full](https://github.com/sangnguyen2803/React.js_tastie_e_commerce_system_webapp/assets/68097971/c418dda2-65d1-4a45-a479-e8df62c89b68)
 ![13-order-checkout-edit-address](https://github.com/sangnguyen2803/React.js_tastie_e_commerce_system_webapp/assets/68097971/0fa5ee59-6293-4e2b-92bc-17421ecb6958)
