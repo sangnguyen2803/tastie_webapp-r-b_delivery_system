@@ -1,4 +1,5 @@
 **I. Introduction**
+
 Tastie is a web and mobile application enabling customers to browse restaurants and place orders. It includes interfaces for providers and admins to manage business operations, alongside a simulated application for shippers. The project also utilizes data science to implement a recommender system by collecting a vast amount of data. 
 
 **II. Demo video**
